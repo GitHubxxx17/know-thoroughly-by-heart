@@ -1,0 +1,167 @@
+import { $, ajax } from './base.js'
+
+// function $(selectors) {
+//     if (document.querySelectorAll(selectors).length != 1)
+//         return document.querySelectorAll(selectors);
+//     else
+//         return document.querySelector(selectors);
+// }
+
+let code = "";
+//将函数返回值赋给code
+createCode();
+//点击canvas图片更换验证码
+$('canvas').onclick = function () {
+    createCode();
+};
+
+function rand() {
+    //去掉i,I,l,o,O等易混淆字母
+    var str = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
+    //将字符串分隔为数组
+    var arr = str.split("");
+    //随机字符在[0,56]之间
+    var ranNum = Math.floor(Math.random() * 57);
+    var captcha = arr[ranNum];
+    return captcha;
+}
+
+function drawline(canvas, context) {
+    //若省略beginPath，则每点击一次验证码会累积干扰线的条数
+    context.beginPath();
+    //起点与终点在canvas宽高内随机
+    context.moveTo(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+    context.lineTo(Math.floor(Math.random() * canvas.width), Math.floor(Math.random() * canvas.height));
+    context.lineWidth = 1;
+    context.strokeStyle = '#000';
+    context.stroke();
+}
+
+
+
+/*生成验证码*/
+function createCode() {
+    //每次生成code先将其清空防止叠加
+    code = "";
+    var canvas = $('canvas');
+    var context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = "#FFF";
+    context.strokeRect(0, 0, canvas.width, canvas.height);
+
+    //生成干扰线，数量随意
+    for (var i = 0; i < 30; i++) {
+        drawline(canvas, context);
+    }
+
+    //循环生成5位验证码
+    for (var k = 0; k < 5; k++) {
+        context.font = '76px Arial';
+        //将初始状态保存
+        context.save();
+        //获得-1到1的随机数
+        var rA = 1 - Math.random() * 2;
+        //获取随机倾斜角
+        var angle = rA / 8;
+        var ranNum = rand();
+        //旋转生成的随机字符
+        context.rotate(angle);
+        //把rand()生成的随机数文本依次填充到canvas中，注意x坐标
+        context.fillText(ranNum, 20 + 45 * k, 100);
+        //恢复初始状态，以便下一次循环
+        context.restore();
+        code += ranNum;
+    }
+    //返回生成的验证码字符串
+    return code;
+}
+
+let inputs = $('.form-control input');
+for(let i = 1;i < inputs.length;i++){
+    inputs[i].onfocus = () => {
+            $('label')[i].classList.add('label_change');
+    }
+    inputs[i].onblur = () => {
+        if(inputs[i].value != ''){
+            $('label')[i].classList.add('label_change');
+        }else{
+            $('label')[i].classList.remove('label_change');
+        }
+    }
+}
+
+let phone = $('input[name="phone"]')
+let username = $('input[name="username"]')
+let reg1 = new RegExp(`${phone.pattern}`)
+let reg2 = new RegExp(`${username.pattern}`)
+phone.onblur = (e) => {
+    if (reg1.test(phone.value)) {
+        // ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/user.do/Reg?phone=${phone.value}`, 'get', phone.value, (str) => {
+        //     console.log(str);
+        //     if (str == '该手机号已注册') {
+        //         $('.phoneErr').classList.add('show');
+        //         e.stopPropagation();
+        //     }
+        // })
+    }
+    if(phone.value != ''){
+        $('label')[0].classList.add('label_change');
+    }else{
+        $('label')[0].classList.remove('label_change');
+    }
+}
+
+phone.onfocus = () => {
+    $('.phoneErr').classList.remove('show');
+    $('label')[0].classList.add('label_change');
+}
+
+
+
+let pw = $('input[type="password"]');
+
+//点击注册后进行判断
+$('button').onclick = (e) => {
+    let n = 0;
+
+    //判断手机号格式是否正确
+    if (reg1.test(phone.value)) {
+        n++;
+    }
+
+    //判断昵称格式是否正确
+    if (reg2.test(username.value)) {
+        n++;
+    }
+
+    //判断两次密码是否一致
+    if (pw[0].value != '' && pw[1].value != '' && pw[0].value != pw[1].value) {
+        $('.passwordErr').classList.add('show');
+        e.stopPropagation();
+    } else {
+        n++;
+    }
+
+    //判断验证码是否正确
+    if ($('.captcha input').value.toUpperCase() != code.toUpperCase()) {
+        $('.captchaErr').classList.add('show');
+        e.stopPropagation();
+    }else{
+        n++;
+    }
+    // http://192.168.43.169:8000/server
+    if (n == 4) {
+        let a = [];
+        for (let x of $('.register-data')) {
+            a.push(x.value);
+        }
+        ajax('http://8.134.104.234:8080/ReciteMemory/user.do/user.do/Reg', 'post', `phone=${a[0]}&username=${a[1]}&password=${a[2]}`, (str) => {
+            console.log(str);
+        })
+    }
+}
+
+document.onclick = () => {
+    $('.captchaErr').classList.remove('show');
+    $('.passwordErr').classList.remove('show');
+}

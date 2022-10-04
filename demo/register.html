@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册页面</title>
+    <link rel="stylesheet" href="./css/register.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo"></div>
+        <form action="javascript:;">
+            <div class="err phoneErr">
+                <div class="errtext">该手机号已注册</div>
+            </div>
+            <div class="form-control">
+                <input class='register-data' type="text" name="phone" required="required" 
+                pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
+                <label>请输入手机号</label>
+            </div>
+            <div class="form-control">
+                <input class='register-data' type="text" name="username" required="required" pattern="^[0-9a-zA-Z\u4e00-\u9fa5]{1,6}$"  title="请输入正确的昵称,不包括特殊字符"/>
+                <label>请输入昵称</label>
+            </div>
+            <div class="form-control">
+                <input class='register-data' type="password" name="password1" required="required" pattern="^[a-zA-Z0-9_]{6,16}$"
+                 title="密码为4到16位（字母，数字，下划线）" />
+                <label>请输入密码</label>
+            </div>
+            <div class="form-control">
+                <input type="password" name="password2" required="required" pattern="^[a-zA-Z0-9_]{6,16}$"
+                 title="密码为4到16位（字母，数字，下划线）" />
+                <label>请确认密码</label>
+            </div>
+            
+            <div class="err passwordErr">
+                <div class="errtext">两次密码不一致</div>
+            </div>
+            <div class="captcha">
+                <div class="err captchaErr">
+                    <div class="errtext">验证码错误</div>
+                </div>
+                <div class="form-control">
+                    <input type="text" name="captcha" required="required">
+                    <label>请输入验证码</label>
+                </div>
+                <canvas class="search_canvas" style="border:1px solid #000000;"></canvas>
+            </div>
+            <button>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                注册
+            </button>
+        </form>
+        <div class="edition">copyright©2003-2022Recite Memory 中文</div>
+    </div>
+    
+
+</body>
+<script src="./js/register.js" type="module"></script>
+
+</html>
