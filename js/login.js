@@ -2,7 +2,7 @@
 window.onload = () => {
     $(".container").style.opacity = '1';
     $('.login').style.top = '142vw';
-    $('.container_bg').style.transform = 'translateX(-50%)';
+    // $('.container_bg').style.transform = 'translateX(-50%)';
 }
 
 
@@ -79,14 +79,14 @@ $('.register').onclick = () => {
     $('.login').style.top = '142vw';
     $('.change').style.top = '-8vw';
     $('.change').innerHTML = '已有账号，去登录'
-    $('.container_bg').style.transform = 'translateX(-50%)';
+    // $('.container_bg').style.transform = 'translateX(-50%)';
 }
 
 $('.login').onclick = () => {
     $('.login').style.top = '38vw';
     $('.change').style.top = '-25vw';
     $('.change').innerHTML = '没有账号，去注册'
-    $('.container_bg').style.transform = 'translateX(-50%) scale(3)';
+    // $('.container_bg').style.transform = 'translateX(-50%) scale(3)';
 }
 
 
@@ -124,19 +124,20 @@ for (let i = 0; i < inputs.length; i++) {
                 $('label')[i].style.color = 'red';
             }
         }
-        else if (i < 5 && inputs[i].value != '') {
-            if(inputs[4].value.toUpperCase() != code.toUpperCase()){
-                $('label')[i].innerHTML = '验证码错误';
-                $('label')[i].style.color = 'red';
+        else if (i < 5) {
+            if(inputs[4].value != '' && inputs[4].value.toUpperCase() != code.toUpperCase()){
+                $('label')[4].innerHTML = '验证码错误';
+                $('label')[4].style.color = 'red';
             }
                     
-            if (!reg.test(inputs[i].value)) {
+            if (!reg.test(inputs[i].value) && inputs[i].value != '') {
                 if (i == 2)
-                    $('label')[i].innerHTML = '密码为6到16位(字母,数字,下划线)';
+                    $('label')[2].innerHTML = '密码为6到16位(字母,数字,下划线)';
                 else if (i == 3 && inputs[2].value != inputs[3].value)
-                    $('label')[i].innerHTML = '两次密码不一致';               
+                    $('label')[3].innerHTML = '两次密码不一致';  
+                $('label')[i].style.color = 'red';             
             }
-
+            
         }
         //当input失焦时，如果内容为空删除动画，否则添加
         if (inputs[i].value != '') {

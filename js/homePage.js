@@ -16,8 +16,6 @@ function moveLoad() {
         if (document.documentElement.scrollTop > 82) {
             nav.style.height = "0rem";
         }
-        console.log(document.documentElement.scrollTop);
-
     }
 }
 
@@ -34,21 +32,20 @@ window.onscroll = function() {
             } else {
                 pics[i].classList.add('appearLeft');
             }
-
-        } else {
-            if (i % 2 == 0) {
-                pics[i].classList.remove('appearRight');
-            } else {
-                pics[i].classList.remove('appearLeft');
-            }
         }
+        //  else {
+        //     if (i % 2 == 0) {
+        //         pics[i].classList.remove('appearRight');
+        //     } else {
+        //         pics[i].classList.remove('appearLeft');
+        //     }
+        // }
     }
     let threeGridTop = container.offsetTop - document.documentElement.clientHeight;
     if (window.scrollY > threeGridTop) {
-        console.log(threeGrid.classList)
         threeGrid.classList.add("fadeIn");
-        console.log(threeGrid.classList)
-    } else {
-        threeGrid.classList.remove("fadeIn");
     }
+    // else {
+    //threeGrid.classList.remove("fadeIn");
+    //}
 };
