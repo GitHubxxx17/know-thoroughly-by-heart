@@ -157,6 +157,8 @@ for (let i = 0; i < inputs.length; i++) {
         $('label')[i].innerHTML = labelStrArr[i];
         $('label')[i].style.color = '#000';
         $('label')[i].classList.add('label_change');
+        $('.login .err').style.opacity = '0';
+        $('.register .err').style.opacity = '0';
     }
 }
 
@@ -219,6 +221,8 @@ $('.register button').onclick = (e) => {
                 alert('注册失败，请重新注册');
             }
         }, true)
+    }else{
+        $('.register .err').style.opacity = '1';
     }
 }
 
@@ -257,10 +261,10 @@ $('.login button').onclick = (e) => {
             }
             //如果返回的结果错误则提醒
             else {
-                $('.err').style.opacity = '1';
+                $('.login .err').style.opacity = '1';
             }
         },true);
     }else {
-        $('.err').style.opacity = '1';
+        $('.login .err').style.opacity = '1';
     }
 }

@@ -164,7 +164,7 @@ ul li{
             width: (230 / @vw);
             height: (43 / @vw);
             background-size: cover;
-            margin: 0 auto (30 / @vw);
+            margin: 0 auto (20 / @vw);
 
         }
 
@@ -174,6 +174,15 @@ ul li{
             align-items: center;
             position: relative;
 
+            .err {
+                opacity: 0;
+                position: absolute;
+                top: 78%;
+                left: 10%;
+                color: red;
+                transition: .2s;
+            }
+
             .show {
                 display: block;
             }
@@ -182,7 +191,7 @@ ul li{
                 position: relative;
                 height: (58 / @vw);
                 width: (248 / @vw);
-                margin: (20 / @vw) 0 (6 / @vw);
+                margin: (20 / @vw) 0 0;
                 display: flex;
                 justify-content: space-between;
                 color: #fac0e7;
@@ -250,7 +259,7 @@ ul li{
     button {
         position: relative;
         cursor: pointer;
-        margin-top: (10 / @vw);
+        margin-top: (26 / @vw);
         font-size: (20 / @vw);
         height: (58 / @vw);
         width: (248 / @vw);
@@ -326,6 +335,7 @@ ul li{
             font-size: (14/@vw);
             color: rgba(16, 16, 16, 1);
             transition: all .4s linear;
+            pointer-events: none;
         }
 
 
