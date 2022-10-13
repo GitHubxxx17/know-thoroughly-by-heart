@@ -1,23 +1,134 @@
 @import 'base';
 @vw: 3.95vw;
 
-body {
+// body {
+//     position: relative;
+//     height: 100vh;
+//     width: 100vw;
+//     background-color: aliceblue;
+// }
+
+*{
+    /* 初始化 */
+    margin: 0;
+    padding: 0;
+}
+body{
+    /* 100%窗口高度 */
     height: 100vh;
-    background-color: aliceblue;
+    /* 弹性布局 居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 渐变背景 */
+    background: linear-gradient(200deg,#e3c5eb,#a9c1ed);
+    /* 溢出隐藏 */
     overflow: hidden;
+}
+ul li{
+    position: absolute;
+    border: 1px solid #fff;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    list-style: none;
+    opacity: 0;
+}
+.square li{
+    top: 40vh;
+    left: 60vw;
+    /* 执行动画：动画名 时长 线性的 无限次播放 */
+    animation: square 10s linear infinite;
+}
+.square li:nth-child(2){
+    top: 80vh;
+    left: 10vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 2s;
+}
+.square li:nth-child(3){
+    top: 80vh;
+    left: 85vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 4s;
+}
+.square li:nth-child(4){
+    top: 10vh;
+    left: 70vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 6s;
+}
+.square li:nth-child(5){
+    top: 10vh;
+    left: 10vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 8s;
+}
+.circle li{
+    bottom: 0;
+    left: 15vw;
+    /* 执行动画 */
+    animation: circle 10s linear infinite;
+}
+.circle li:nth-child(2){
+    left: 35vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 2s;
+}
+.circle li:nth-child(3){
+    left: 55vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 6s;
+}
+.circle li:nth-child(4){
+    left: 75vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 4s;
+}
+.circle li:nth-child(5){
+    left: 90vw;
+    /* 设置动画延迟时间 */
+    animation-delay: 8s;
+}
+
+/* 定义动画 */
+@keyframes square {
+    0%{
+        transform: scale(0) rotateY(0deg);
+        opacity: 1;
+    }
+    100%{
+        transform: scale(5) rotateY(1000deg);
+        opacity: 0;
+    }
+}
+@keyframes circle {
+    0%{
+        transform: scale(0) rotateY(0deg);
+        opacity: 1;
+        bottom: 0;
+        border-radius: 0;
+    }
+    100%{
+        transform: scale(5) rotateY(1000deg);
+        opacity: 0;
+        bottom: 90vh;
+        border-radius: 50%;
+    }
 }
 
 .container_bg {
     position: absolute;
     top: (70 / @vw);
     left: 50%;
-    transform: translateX(-50%) scale(3);
+    transform: translateX(-50%) scale(1);
     margin-bottom: (70 / @vw);
-    width: (304 / @vw);
-    height: (574 / @vw);
-    border-radius: (5 / @vw);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     transition: all .3s linear;
     background: linear-gradient(to bottom, #d6c3ff, #ad6cff);
+
 }
 
 .container {
@@ -32,6 +143,8 @@ body {
     overflow: hidden;
     transition: all .5s linear;
     opacity: 0;
+    background-color: rgba(255, 255, 255, 0.526);
+    
 
     .register {
         width: 100%;
@@ -39,7 +152,7 @@ body {
         padding-top: (28 / @vw);
         // background: linear-gradient(to bottom, #a7bfe8, #6190e8);
         transition: all .3s linear;
-
+        // backdrop-filter: blur(20px);
         .logo {
             width: (230 / @vw);
             height: (43 / @vw);
@@ -65,7 +178,7 @@ body {
                 margin: (20 / @vw) 0 (6 / @vw);
                 display: flex;
                 justify-content: space-between;
-                color: #9102ff;
+                color: #fac0e7;
 
                 label {
                     top: (16 / @vw);
@@ -94,7 +207,7 @@ body {
     .form_control {
         position: relative;
         font-size: (16 / @vw);
-        color: #9102ff;
+        color: #000;
 
         label {
             position: absolute;
@@ -117,11 +230,12 @@ body {
             margin: (6 / @vw) 0;
             font-size: (16 / @vw);
             border: none;
-            color: #9102ff;
-            border-bottom: (2 / @vw) solid #000;
+            color: #000;
+            border-bottom: (1 / @vw) solid #000;
             transition: all .5s;
+
             &:focus {
-                border-bottom: (2 / @vw) solid #9102ff;
+                border-bottom: (2 / @vw) solid #fac0e7;
             }
         }
     }
@@ -138,8 +252,8 @@ body {
         font-weight: bolder;
         border: 0;
         overflow: hidden;
-        background-color: transparent;
-        color: #9102ff;
+        background-image: linear-gradient(200deg,#e3c5eb,#a9c1ed);
+        color: #000;
 
         span {
             position: absolute;
@@ -150,7 +264,7 @@ body {
                 left: -100%;
                 width: 100%;
                 height: (2 / @vw);
-                background: linear-gradient(90deg, transparent, #9102ff);
+                background: linear-gradient(90deg, transparent, #3a7fff);
                 animation: btn-anim1 1s linear infinite;
             }
 
@@ -159,7 +273,7 @@ body {
                 right: 0;
                 width: (2 / @vw);
                 height: 100%;
-                background: linear-gradient(180deg, transparent, #9102ff);
+                background: linear-gradient(180deg, transparent, #3a7fff);
                 animation: btn-anim2 1s linear infinite;
                 animation-delay: .25s;
             }
@@ -169,7 +283,7 @@ body {
                 right: -100%;
                 width: 100%;
                 height: (2 / @vw);
-                background: linear-gradient(270deg, transparent, #9102ff);
+                background: linear-gradient(270deg, transparent, #3a7fff);
                 animation: btn-anim3 1s linear infinite;
                 animation-delay: .5s;
             }
@@ -179,7 +293,7 @@ body {
                 left: 0;
                 width: (2 / @vw);
                 height: 100%;
-                background: linear-gradient(360deg, transparent, #9102ff);
+                background: linear-gradient(360deg, transparent, #3a7fff);
                 animation: btn-anim4 1s linear infinite;
                 animation-delay: .75s;
             }

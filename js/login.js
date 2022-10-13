@@ -148,7 +148,7 @@ for (let i = 0; i < inputs.length; i++) {
     //当点击input给label添加动画
     inputs[i].onfocus = () => {
         $('label')[i].innerHTML = labelStrArr[i];
-        $('label')[i].style.color = '#9102ff';
+        $('label')[i].style.color = '#000';
         $('label')[i].classList.add('label_change');
     }
 }

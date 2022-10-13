@@ -7,8 +7,6 @@
 }
 body {
   font-family: '微软雅黑';
-  background-image: url(../images/背景.jpg);
-  background-size: cover;
 }
 img {
   vertical-align: middle;
@@ -67,13 +65,11 @@ a {
   font-style: normal;
   font-display: block;
 }
-body {
-  background-image: none;
-}
 .wrapper {
   width: 100%;
   background-color: #a879a8;
   border-radius: 0 0 50% 50% / 4%;
+  overflow: hidden;
 }
 .wrapper nav {
   position: relative;
