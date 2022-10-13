@@ -9,6 +9,8 @@
 
 body {
     font-family: '微软雅黑';
+    background-image: url(../images/背景.jpg);
+    background-size: cover;
 }
 
 img {
@@ -27,13 +29,14 @@ button,
 select,
 textarea {
     outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.ellipsis-2 {
+.ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
@@ -52,6 +55,7 @@ p {
 a {
     color: #333;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /*清空浮动的代码-start*/
@@ -67,3 +71,16 @@ a {
 
 /*清空浮动的代码-end*/
 /* 页面元素初始化和常用样式定义-end */
+
+//引入字体
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?19tb89');
+    src:  url('../fonts/icomoon.eot?19tb89#iefix') format('embedded-opentype'),
+      url('../fonts/icomoon.ttf?19tb89') format('truetype'),
+      url('../fonts/icomoon.woff?19tb89') format('woff'),
+      url('../fonts/icomoon.svg?19tb89#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
