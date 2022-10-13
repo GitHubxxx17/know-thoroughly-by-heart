@@ -131,11 +131,17 @@ for (let i = 0; i < inputs.length; i++) {
             }
                     
             if (!reg.test(inputs[i].value) && inputs[i].value != '') {
-                if (i == 2)
+                if (i == 2){
                     $('label')[2].innerHTML = '密码为6到16位(字母,数字,下划线)';
-                else if (i == 3 && inputs[2].value != inputs[3].value)
-                    $('label')[3].innerHTML = '两次密码不一致';  
-                $('label')[i].style.color = 'red';             
+                    $('label')[2].style.color = 'red'; 
+                }
+                    
+                else if (i == 3 && inputs[2].value != inputs[3].value){
+                    $('label')[3].innerHTML = '两次密码不一致'; 
+                    $('label')[3].style.color = 'red'; 
+                }
+                     
+                            
             }
             
         }
