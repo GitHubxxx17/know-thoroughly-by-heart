@@ -99,9 +99,7 @@ for (let i = 0; i < inputs.length; i++) {
         //获取对应的正则表达式
         let reg = new RegExp(`${inputs[i].pattern}`);
         if (i < 2) {
-
             let url = '';
-
             if (i == 0)
                 url = `http://8.134.104.234:8080/ReciteMemory/inf.get/checkUsedNumber?phone=${inputs[i].value}`;
             else
@@ -124,26 +122,19 @@ for (let i = 0; i < inputs.length; i++) {
                 $('label')[i].style.color = 'red';
             }
         }
-        else if (i < 5) {
-            if(inputs[4].value != '' && inputs[4].value.toUpperCase() != code.toUpperCase()){
-                $('label')[4].innerHTML = '验证码错误';
-                $('label')[4].style.color = 'red';
-            }
-                    
-            if (!reg.test(inputs[i].value) && inputs[i].value != '') {
-                if (i == 2){
-                    $('label')[2].innerHTML = '密码为6到16位(字母,数字,下划线)';
-                    $('label')[2].style.color = 'red'; 
-                }
-                    
-                else if (i == 3 && inputs[2].value != inputs[3].value){
-                    $('label')[3].innerHTML = '两次密码不一致'; 
-                    $('label')[3].style.color = 'red'; 
-                }
-                     
-                            
-            }
-            
+        if (i == 4 && inputs[i].value != '' && inputs[i].value.toUpperCase() != code.toUpperCase()) {
+            $('label')[i].innerHTML = '验证码错误';
+            $('label')[i].style.color = 'red';
+        }
+
+        if (i == 2 && inputs[i].value != '' && !reg.test(inputs[i].value)) {
+            $('label')[2].innerHTML = '密码为6到16位(字母,数字,下划线)';
+            $('label')[2].style.color = 'red';
+        }
+
+        if (inputs[2].value != inputs[3].value && inputs[2].value != '' && inputs[3].value != '') {
+            $('label')[3].innerHTML = '两次密码不一致';
+            $('label')[3].style.color = 'red';
         }
         //当input失焦时，如果内容为空删除动画，否则添加
         if (inputs[i].value != '') {
@@ -221,7 +212,7 @@ $('.register button').onclick = (e) => {
                 alert('注册失败，请重新注册');
             }
         }, true)
-    }else{
+    } else {
         $('.register .err').style.opacity = '1';
     }
 }
@@ -246,7 +237,7 @@ $('.login button').onclick = (e) => {
                 //如果用户勾选自动登录，则将数据存储在本地
                 if ($('.auto').checked) {
                     curr['auto'] = true;
-                }else{
+                } else {
                     curr['auto'] = false;
                 }
                 // 获取登录用户的信息
@@ -257,14 +248,14 @@ $('.login button').onclick = (e) => {
                     console.log(curr);
                     saveData('current_user', curr);
                     location.href = './index.html';
-                })             
+                })
             }
             //如果返回的结果错误则提醒
             else {
                 $('.login .err').style.opacity = '1';
             }
-        },true);
-    }else {
+        }, true);
+    } else {
         $('.login .err').style.opacity = '1';
     }
 }

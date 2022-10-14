@@ -75,13 +75,8 @@ body {
   /* 100%窗口高度 */
   height: 100vh;
   /* 弹性布局 居中 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
   /* 渐变背景 */
-  background: linear-gradient(200deg, #e3c5eb, #a9c1ed);
-  /* 溢出隐藏 */
-  overflow: hidden;
+  background: linear-gradient(to top, #e3c5eb, #a9c1ed, #e3c5eb);
 }
 .bg {
   z-index: -1;
@@ -180,23 +175,31 @@ ul li {
     border-radius: 50%;
   }
 }
-.container_bg {
-  position: absolute;
-  top: 17.72151899vw;
-  left: 50%;
-  transform: translateX(-50%) scale(1);
-  margin-bottom: 17.72151899vw;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  transition: all 0.3s linear;
-  background: linear-gradient(to bottom, #d6c3ff, #ad6cff);
+header {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 15.18987342vw;
+  width: 100%;
+  padding: 2.53164557vw;
+}
+header .header_btn {
+  width: 10.12658228vw;
+  height: 10.12658228vw;
+  background-color: rgba(255, 255, 255, 0.681);
+  border-radius: 50%;
+  font-size: 3.5443038vw;
+}
+header .header_btn a {
+  text-align: center;
+  line-height: 10.12658228vw;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 .container {
   position: relative;
-  top: 17.72151899vw;
   margin: 0 auto;
-  margin-bottom: 17.72151899vw;
   width: 76.96202532vw;
   height: 145.3164557vw;
   border-radius: 1.26582278vw;

@@ -8,23 +8,23 @@
 //     background-color: aliceblue;
 // }
 
-*{
+* {
     /* 初始化 */
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     /* 100%窗口高度 */
     height: 100vh;
     /* 弹性布局 居中 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     /* 渐变背景 */
-    background: linear-gradient(200deg,#e3c5eb,#a9c1ed);
-    /* 溢出隐藏 */
-    overflow: hidden;
+    background: linear-gradient(to top, #e3c5eb, #a9c1ed, #e3c5eb);
 }
+
 .bg {
     z-index: -1;
     position: absolute;
@@ -32,7 +32,8 @@ body{
     height: 100vh;
     overflow: hidden;
 }
-ul li{
+
+ul li {
     position: absolute;
     border: 1px solid #fff;
     background-color: #fff;
@@ -41,58 +42,68 @@ ul li{
     list-style: none;
     opacity: 0;
 }
-.square li{
+
+.square li {
     top: 40vh;
     left: 60vw;
     /* 执行动画：动画名 时长 线性的 无限次播放 */
     animation: square 10s linear infinite;
 }
-.square li:nth-child(2){
+
+.square li:nth-child(2) {
     top: 80vh;
     left: 10vw;
     /* 设置动画延迟时间 */
     animation-delay: 2s;
 }
-.square li:nth-child(3){
+
+.square li:nth-child(3) {
     top: 80vh;
     left: 85vw;
     /* 设置动画延迟时间 */
     animation-delay: 4s;
 }
-.square li:nth-child(4){
+
+.square li:nth-child(4) {
     top: 10vh;
     left: 70vw;
     /* 设置动画延迟时间 */
     animation-delay: 6s;
 }
-.square li:nth-child(5){
+
+.square li:nth-child(5) {
     top: 10vh;
     left: 10vw;
     /* 设置动画延迟时间 */
     animation-delay: 8s;
 }
-.circle li{
+
+.circle li {
     bottom: 0;
     left: 15vw;
     /* 执行动画 */
     animation: circle 10s linear infinite;
 }
-.circle li:nth-child(2){
+
+.circle li:nth-child(2) {
     left: 35vw;
     /* 设置动画延迟时间 */
     animation-delay: 2s;
 }
-.circle li:nth-child(3){
+
+.circle li:nth-child(3) {
     left: 55vw;
     /* 设置动画延迟时间 */
     animation-delay: 6s;
 }
-.circle li:nth-child(4){
+
+.circle li:nth-child(4) {
     left: 75vw;
     /* 设置动画延迟时间 */
     animation-delay: 4s;
 }
-.circle li:nth-child(5){
+
+.circle li:nth-child(5) {
     left: 90vw;
     /* 设置动画延迟时间 */
     animation-delay: 8s;
@@ -100,23 +111,26 @@ ul li{
 
 /* 定义动画 */
 @keyframes square {
-    0%{
+    0% {
         transform: scale(0) rotateY(0deg);
         opacity: 1;
     }
-    100%{
+
+    100% {
         transform: scale(5) rotateY(1000deg);
         opacity: 0;
     }
 }
+
 @keyframes circle {
-    0%{
+    0% {
         transform: scale(0) rotateY(0deg);
         opacity: 1;
         bottom: 0;
         border-radius: 0;
     }
-    100%{
+
+    100% {
         transform: scale(5) rotateY(1000deg);
         opacity: 0;
         bottom: 90vh;
@@ -124,25 +138,33 @@ ul li{
     }
 }
 
-.container_bg {
-    position: absolute;
-    top: (70 / @vw);
-    left: 50%;
-    transform: translateX(-50%) scale(1);
-    margin-bottom: (70 / @vw);
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    transition: all .3s linear;
-    background: linear-gradient(to bottom, #d6c3ff, #ad6cff);
+header {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: (60 / @vw);
+    width: 100%;
+    padding: (10 / @vw);
+    .header_btn {
+        width: (40 / @vw);
+        height: (40 / @vw);
+        background-color: rgba(255, 255, 255, 0.681);
+        border-radius: 50%;
+        font-size: (14 / @vw);
 
+        a {
+            text-align: center;
+            line-height: (40 / @vw);
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
 
 .container {
     position: relative;
-    top: (70 / @vw);
     margin: 0 auto;
-    margin-bottom: (70 / @vw);
     width: (304 / @vw);
     height: (574 / @vw);
     border-radius: (5 / @vw);
@@ -151,7 +173,7 @@ ul li{
     transition: all .5s linear;
     opacity: 0;
     background-color: rgba(255, 255, 255, 0.526);
-    
+
 
     .register {
         width: 100%;
@@ -159,6 +181,7 @@ ul li{
         padding-top: (28 / @vw);
         // background: linear-gradient(to bottom, #a7bfe8, #6190e8);
         transition: all .3s linear;
+
         // backdrop-filter: blur(20px);
         .logo {
             width: (230 / @vw);
@@ -268,7 +291,7 @@ ul li{
         font-weight: bolder;
         border: 0;
         overflow: hidden;
-        background-image: linear-gradient(200deg,#e3c5eb,#a9c1ed,#e3c5eb);
+        background-image: linear-gradient(200deg, #e3c5eb, #a9c1ed, #e3c5eb);
         color: #000;
         transition: all .1s;
         box-shadow: (3 / @vw) (3 / @vw) (6 / @vw) rgba(0, 0, 0, 0.526);

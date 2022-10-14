@@ -70,6 +70,50 @@ header {
   width: 100%;
   height: 14.6835443vw;
   border: 0.25316456vw solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.79746835vw;
+}
+header .header_btn {
+  width: 10.12658228vw;
+  height: 10.12658228vw;
+  border-radius: 50%;
+  border: 0.25316456vw solid #000;
+  text-align: center;
+  line-height: 10.12658228vw;
+}
+.container .my_base {
+  width: 100%;
+}
+.container .my_base li {
+  position: relative;
+  left: 0;
+  margin-top: 2.53164557vw;
+  width: 132.91139241vw;
+  height: 20.25316456vw;
+  border: 0.25316456vw solid #000;
+  display: flex;
+  align-items: center;
+  padding: 0 2.53164557vw;
+}
+.container .my_base li .content {
+  width: 72.91139241vw;
+}
+.container .my_base li .content h3 {
+  width: 68.35443038vw;
+  margin: 1.26582278vw 0;
+  font-size: 5.06329114vw;
+}
+.container .my_base li .content .info {
+  font-size: 3.5443038vw;
+  width: 68.35443038vw;
+}
+.container .my_base li .tip {
+  font-size: 3.5443038vw;
+}
+.container .my_base li .tip .date {
+  margin: 2.27848101vw 0;
 }
 footer {
   position: fixed;
@@ -91,8 +135,43 @@ footer li {
   height: 100%;
   flex: 5;
   font-size: 4.05063291vw;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #5e5e5e;
+  transition: all 0.3s linear;
 }
 footer li .icon {
   font-size: 10.12658228vw;
+  transition: all 0.3s linear;
+}
+footer li .name {
+  position: relative;
+  transition: all 0.3s linear;
+}
+footer li .made {
+  margin: 2.27848101vw auto;
+  width: 12.65822785vw;
+  height: 12.65822785vw;
+  border-radius: 2.53164557vw;
+  background-color: #ff3d3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}
+footer li .made span {
+  width: 7.59493671vw;
+  height: 1.26582278vw;
+  background-color: #fff;
+  border-radius: 40%;
+  position: absolute;
+  transition: all 0.4s;
+}
+footer li .made span:nth-child(1) {
+  transform: rotate(90deg);
+}
+footer li .made span:nth-child(2) {
+  transform: rotate(180deg);
 }
