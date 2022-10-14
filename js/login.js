@@ -83,7 +83,7 @@ $('.register').onclick = () => {
 }
 
 $('.login').onclick = () => {
-    $('.login').style.top = '38vw';
+    $('.login').style.top = '36vw';
     $('.change').style.top = '-25vw';
     $('.change').innerHTML = '没有账号，去注册'
     // $('.container_bg').style.transform = 'translateX(-50%) scale(3)';
