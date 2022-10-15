@@ -66,11 +66,16 @@ a {
   font-style: normal;
   font-display: block;
 }
-body {
-  background-color: #aba3ca;
-}
 .Making_page {
-  position: relative;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #aba3ca;
+  overflow: scroll;
+  transition: all 0.4s;
 }
 .Making_page .bg {
   z-index: -1;
@@ -124,7 +129,7 @@ body {
 .Making_page .container {
   width: 100%;
   margin-top: 5.06329114vw;
-  margin-bottom: 17.72151899vw;
+  margin-bottom: 20.25316456vw;
 }
 .Making_page .container .title {
   margin: 0 auto;

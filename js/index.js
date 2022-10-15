@@ -1,9 +1,26 @@
-
-for (let i = 0; i < $('footer li').length; i++) {
-    $('footer li')[i].onclick = () => {
-        for(let x of $('footer li'))
+for (let i = 0; i < $('.footer_nav li').length; i++) {
+    $('.footer_nav li')[i].onclick = () => {
+        for(let x of $('.footer_nav li'))
             x.style.color = '#9fa7ba'
-        $('footer li')[i].style.color = '#5184ff'
+        $('.footer_nav li')[i].style.color = '#5184ff';
+        pageReset();
+        if(i == 0){
+            $('.memory_base header').classList.remove('scroll_top');
+        }else if(i == 1){
+            $('.pk_page .pk_footer').classList.remove('scroll_top');
+        }
+        if(i == 3)
+            return;
+        $('.main_page')[i].classList.remove('scroll_top');
+        
+    }
+}
+$('.footer_nav li')[0].onclick();
+function pageReset() {
+    $('.memory_base header').classList.add('scroll_top');
+    $('.pk_page .pk_footer').classList.add('scroll_top');
+    for(let x of $('.main_page')) {
+        x.classList.add('scroll_top');
     }
 }
 //页面开始记忆库模板的动画
@@ -28,7 +45,7 @@ Array.from($('.tp_inner')).forEach((x,i) => {
         // 滑动模板出现按钮
         x.addEventListener('touchmove', function (e) {
             l = e.changedTouches[0].clientX - disX;
-            if (l < -10)
+            if (l < -40)
                 x.style.left = '-40vw';
             if (l > 10)
                 x.style.left = '0';
@@ -106,5 +123,15 @@ $('.icon_btn').onclick = () => {
 //点击返回隐藏学习页面
 $('.learn_page .header_left').onclick = () => {
     $('.learn_page').style.left = '100%';
+}
+
+//点击出现打卡页面
+$('.memory_base .header_left').onclick = () => {
+    $('.calendar_page').style.top = '0';
+}
+
+//打卡页面点击返回
+$('.calendar_page .left').onclick = () => {
+    $('.calendar_page').style.top = '-100%';
 }
 

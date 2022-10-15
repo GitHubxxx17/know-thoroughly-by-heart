@@ -6,20 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/enterPK.css">
 </head>
 
 <body>
-    <div class="pk_infer">
-        <div class="person_pk">
-            <div class="person"></div>
+    <div class="enterPK">
+        <div class="pk_infer">
+            <div class="pk_box">
+                <div class="person_pk">
+                    <div class="person_blood_bar">
+                        <div class="blood_red"></div>
+                    </div>
+                    <div class="person_role">
+                        <img src="./images/gif小人/红色小人.gif" alt="" class="per_role">
+                    </div>
+                    <div class="idname">发际线与我作队</div>
+                </div>
+                <!-- <div class="pk_logo">
+                    <img src="./images/pk/pk.png" alt="" class="loading_icon">
+                </div> -->
+                <div class="other_pk">
+                    <div class="person_blood_bar">
+                        <div class="blood_red"></div>
+                    </div>
+                    <div class="person_role">
+                        <img src="./images/gif（反）/漂亮小人.gif" alt="" class="other_role">
+                    </div>
+                    <div class="idname">xxxxx队
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pk_logo">
-            <img src="" alt="">
-        </div>
-        <div class="other_pk">
+        <div class="editor">
 
         </div>
     </div>
+
 </body>
+<script>
+    let per_role = document.querySelector(".per_role");
+    let other_role = document.querySelector(".other_role");
+    setInterval(() => {
+        per_role.src = './images/gif小人/红色小人.gif';
+        other_role.src = '../images/gif（反）/漂亮小人.gif'
+    }, 600);
+</script>
 
 </html>

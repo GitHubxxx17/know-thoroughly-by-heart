@@ -2,13 +2,18 @@
 @import 'base';
 @vw: 3.95vw;
 
-body {
-    background-color:#aba3ca;
-    // background-image: linear-gradient(to bottom,#9d8fcc,#dcd7ed,#fff);
-}
 
 .Making_page {
-    position: relative;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color:#aba3ca;
+    overflow: scroll;
+    transition: all .4s;
+
     .bg {
         z-index: -1;
         width: 100%;
@@ -65,7 +70,7 @@ body {
     .container {
         width: 100%;
         margin-top: (20 / @vw);
-        margin-bottom: (70 / @vw);
+        margin-bottom: (80 / @vw);
         .title {
             margin: 0 auto;
             width: (370 / @vw);

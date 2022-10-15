@@ -8,16 +8,19 @@
     <title>主页</title>
     <link rel="stylesheet" href="./iconfont/iconfont.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/calendar.css">
+    <link rel="stylesheet" href="./css/pk.css">
+    <link rel="stylesheet" href="./css/MakingTemplates.css">
+    <link rel="stylesheet" href="./css/personal.css">
 </head>
 
 <body>
     <div class="scroll_box">
-        <div class="memory_base">
+        <!-- 记忆库 -->
+        <div class="memory_base main_page">
             <header>
                 <div class="header_left">
-                    <a href="#">
-                        <span class="icon iconfont icon-a-riqirili"></span>
-                    </a>
+                    <span class="icon iconfont icon-a-riqirili"></span>
                 </div>
                 <div class="header_search">
                     <input type="text">
@@ -315,38 +318,9 @@
                     <div class="base_bottom"></div>
                 </div>
             </div>
-            <footer>
-                <ul>
-                    <li>
-                        <span class="icon iconfont icon-tiku1"></span>
-                        <div class="name">记忆库</div>
-                    </li>
-                    <li>
-                        <span class="icon iconfont icon-PK1"></span>
-                        <div class="name">
-                            PK
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon iconfont icon-tianjia1"></span>
-                        <div class="name"></div>
-                    </li>
-                    <li>
-                        <span class="icon iconfont icon-ziyuangongxiang"></span>
-                        <div class="name">
-                            社区
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon iconfont icon-yonghu"></span>
-                        <div class="name">
-                            我的
-                        </div>
-                    </li>
-                </ul>
-            </footer>
+            
         </div>
-
+        <!-- 学习页面 -->
         <div class="learn_page">
             <header>
                 <div class="header_left">
@@ -381,7 +355,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- 再编辑页面 -->
         <div class="edit_page">
             <header>
                 <div class="header_left">
@@ -420,6 +394,353 @@
                 </div>
             </div>
         </div>
+        <!-- 打卡页面 -->
+        <div class="calendar_page">
+            <div class="left">
+                <span class="icon iconfont icon-fanhui"></span>
+            </div>
+            <!-- 背景紫色 -->
+            <div class="bcg"></div>
+            <div class="calendar">
+                <div class="calendar_header">
+                    <span class="month_picker" id="month_picker">February</span>
+                    <div class="year_picker">
+                        <span class="year_change" id="prev_year">
+                            <pre><</pre>
+                        </span>
+                        <span id="year">2021</span>
+                        <span class="year_change" id="next_year">
+                            <pre>></pre>
+                        </span>
+                    </div>
+                </div>
+                <div class="calendar_body">
+                    <div class="calendar_week_day">
+                        <div>周日</div>
+                        <div>周一</div>
+                        <div>周二</div>
+                        <div>周三</div>
+                        <div>周四</div>
+                        <div>周五</div>
+                        <div>周六</div>
+                    </div>
+                    <!-- 存放日期 -->
+                    <div class="calendar_days"></div>
+                </div>
+                <div class="month_list" id="month_list"></div>
+                <div class="calendar_footer">
+                    <div class="clock">
+                        <div class="situation">今日还未打卡</div>
+                        <button class="situation">签到</button>
+                    </div>
+                    <div class="title">今日学习数据</div>
+                    <div class="record_box">
+                        <div class="box">
+                            <div class="com time">
+                                <div class="com_title"> <i class="iconfont icon-shijian"></i> 学习时长</div>
+                                <div class="data">28min</div>
+                            </div>
+                            <div class="com  page">
+                                <div class="com_title"> <i class="iconfont icon-tongji1"></i> 学习篇数</div>
+                                <div class="data">2篇</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- pk页面 -->
+        <div class="pk_page main_page scroll_top">
+            <div class="main">
+                <div class="header">
+                    <div class="head_portrait">
+                        <img src="./images/头像/头像-女学生2.png" alt="">
+                    </div>
+                    <div class="info">
+                        <div class="com idname">发际线与我作队</div>
+                        <div class="com integral">
+        
+                            <i class="iconfont icon-bonus-line"></i> <i class="cur">120</i> <i class="fixed"> / 120</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="competition_season">
+                    <div class="season_title"> <i>S1</i> 赛季</div>
+                    <div class="season_box">
+                        <div class="rank">
+                            <div class="season_name">初等学士</div>
+                            <div class="start">
+                                <i class="active iconfont icon-shoucang
+                                "></i>
+                                <i class="iconfont icon-shoucang
+                                "></i>
+                                <i class="iconfont icon-shoucang
+                                "></i>
+                                <i class="iconfont icon-shoucang
+                                "></i>
+                                <i class="iconfont icon-shoucang
+                                "></i>
+                            </div>
+                        </div>
+                        <div class="role">
+                            <img src="./images/gif小人/红色小人.gif" class="loading_icon">
+                        </div>
+                        <div class="start_game">
+                            <input type="submit" value="开始匹配">
+                        </div>
+                    </div>
+                </div>
+                <div class="pk_footer_bg"></div>
+                <div class="pk_footer scroll_top">
+                    <div class="ranking_list" id="ranking_list">
+                        <div class="laiqu" id="laiqu">一</div>
+                        <div class="title_nav">
+                            <div class="rank_title">
+                                <i class="iconfont icon-paihangbang_paiming
+                                "></i> 排行榜公示
+                            </div>
+                            <div class="rank_pic">
+                                <!-- <img src="" alt=""> -->
+                            </div>
+                        </div>
+                        <div class="mine">
+                            <div class="com mine_title">
+                                <p>我的</p>
+                                <p>成绩</p>
+                            </div>
+                            <div class="head_portrait">
+                                <img src="./images/头像/头像-女学生2.png" alt="">
+                            </div>
+                            <div class="idname">发际线与我作队</div>
+                            <div class="com rank">第1名</div>
+                            <div class="com score">100分</div>
+                        </div>
+                        <div class="others">
+                            <div class="others_nav">
+                                <div class="left">
+                                    <span class="rank">排名</span class = "name"><span>姓名</span>
+                                </div>
+                                <div class="right">星星</div>
+                            </div>
+                            <div class="others_nav">
+                                <div class="left one">
+                                    <span class="rank"><img src="./images/pk/银牌.png" ></img></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right one">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>2</i></span class = "name"><span>hahah</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>3</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>4</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>5</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>6</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>7</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>8</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i>9</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                            <div class="others_nav others_infor">
+                                <div class="left">
+                                    <span class="rank"><i class="ten">10</i></span class = "name"><span>队名</span>
+                                </div>
+                                <div class="right">xx分</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- 编辑页面 -->
+        <div class="Making_page main_page scroll_top">
+            <div class="bg"></div>
+            <header>
+                <div class="header_left">
+                    <span class="icon iconfont icon-daoru"></span>
+                    <div class="name">导入</div>
+                    <form enctype="multipart/form-data" class="upload_form">
+                        <input type="file" accept="application/pdf" name="testFile">
+                    </form>
+                </div>
+                <div class="header_right">
+                    <span class="icon iconfont icon-gongxiangtubiaozhuangtaileicaozuolei37"></span>
+                    <div class="name">保存</div>
+                </div>
+            </header>
+    
+            <div class="container">
+                <div class="title">
+                    <div class="label">
+                        <span>标签</span>
+                        <span class="icon iconfont icon-xiangxiajiantou"></span>
+                    </div>
+                    <input type="text">
+                </div>
+                <div class="text_box" contenteditable="true">
+    
+                </div>
+            </div>
+            <footer>
+                <ul>
+                    <li>
+                        <span class="icon iconfont icon-tiku1"></span>
+                        <div class="name">记忆库</div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-PK1"></span>
+                        <div class="name">
+                            PK
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-tianjia1"></span>
+                        <div class="name"></div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-ziyuangongxiang"></span>
+                        <div class="name">
+                            社区
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-yonghu"></span>
+                        <div class="name">
+                            我的
+                        </div>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+        <div class="main_page"></div>
+        <!-- 个人页面 -->
+        <div class="personal main_page scroll_top">
+            <div class="person_main" style="display:block ;">
+                <div class="personal_box">
+                    <div class="head_portrait">
+                        <img src="./images/头像/头像-女学生2.png" alt="">
+                    </div>
+                    <div class="idname_box">
+                        <div class="nicheng">昵称</div>
+                        <div class="right">
+                            <div class="idname">发际线与我作队 </div>
+                            <i class="iconfont icon-xiangyoujiantou"></i>
+                        </div>
+                    </div>
+                    <div class="common mail_box">
+                        <div class="title_box">修改手机号</div>
+                        <i class="right iconfont icon-xiangyoujiantou"></i>
+    
+                    </div>
+                    <div class="common">
+                        <div class="title_box">修改密码</div>
+                        <i class="right iconfont icon-xiangyoujiantou"></i>
+                    </div>
+                </div>
+                <div class="system_settings">
+                    <div class="common">
+                        <div class="title_box">新手教程</div>
+                        <i class="right iconfont icon-xiangyoujiantou"></i>
+                    </div>
+                    <div class="common">
+                        <div class="title_box">显示设置</div>
+                        <i class="right iconfont icon-xiangyoujiantou"></i>
+                    </div>
+                    <div class="common">
+                        <div class="title_box">关于我们</div>
+                        <i class="right iconfont icon-xiangyoujiantou"></i>
+                    </div>
+                </div>
+                <div class="exit">
+                    <button>退出登录</button>
+                </div>
+                <div class="pm_footer"></div>
+            </div>
+        
+            <div class="modify" style="display:none;">
+                <div class="modify_box">
+                    <div class="modify_title">
+                        <i class="iconfont icon-xiangzuojiantou"></i>
+                        <div class="modify_what">修改昵称</div>
+                    </div>
+                </div>
+                <div class="Modify_interface">
+                    <input type="text" name="" id="">
+                    <div class="confirm">
+                        <button>确认修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 底栏 -->
+        <div class="footer_nav">
+            <footer>
+                <ul>
+                    <li>
+                        <span class="icon iconfont icon-tiku1"></span>
+                        <div class="name">记忆库</div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-PK1"></span>
+                        <div class="name">
+                            PK
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-tianjia1"></span>
+                        <div class="name"></div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-ziyuangongxiang"></span>
+                        <div class="name">
+                            社区
+                        </div>
+                    </li>
+                    <li>
+                        <span class="icon iconfont icon-yonghu"></span>
+                        <div class="name">
+                            我的
+                        </div>
+                    </li>
+                </ul>
+            </footer>
+        </div>
     </div>
 
 
@@ -428,4 +749,6 @@
 <script src="./js/index.js"></script>
 <script src="./js/edit.js"></script>
 <script src="./js/learning.js"></script>
+<script src="./js/calendar.js"></script>
+<script src="./js/pk.js"></script>
 </html>

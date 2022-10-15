@@ -30,7 +30,7 @@ btns[1].onclick = () => {
     btns[1].classList.add('choice');
     flag = true;
     //当长按屏幕触屏结束时，选中文本 
-    $('.text_page').ontouchend = (e) => {
+    $('.text_page').onmouseup = (e) => {
         //判断当前是否为挖空模式
         if (btns[1].classList.contains('choice')) {
             flag = true;

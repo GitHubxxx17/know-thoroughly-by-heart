@@ -11,6 +11,10 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+
+    .scroll_top {
+        top: 100% !important;
+    }
 }
 
 .memory_base {
@@ -20,12 +24,14 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: scroll;
+    transition: all .4s;
 
     header {
         z-index: 1000;
         position: fixed;
         left: 0;
         top: 0;
+        transition: all .4s;
         width: 100vw;
         height: (58 / @vw);
         background-color: #fff;
@@ -35,10 +41,6 @@ body {
         padding: 0 (15 / @vw);
 
         .header_left {
-            a {
-                display: inline-block;
-            }
-
             .icon {
                 font-size: (35 / @vw);
             }
@@ -141,11 +143,13 @@ body {
                 0% {
                     height: (100 / @vw);
                 }
+
                 99% {
                     margin-top: 0;
                     height: 0;
                 }
-                100%{
+
+                100% {
                     margin-top: 0;
                     height: 0;
                     display: none;
@@ -261,43 +265,6 @@ body {
             transform: scale(1) rotate(0);
         }
     }
-
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        height: (70 / @vw);
-        width: 100vw;
-        background-color: aliceblue;
-
-        ul {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-        }
-
-        li {
-            height: 100%;
-            flex: 5;
-            font-size: (14/ @vw);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #9fa7ba;
-            transition: all .2s ease-in-out;
-
-            .icon {
-                font-size: (30 / @vw);
-            }
-
-            .name {
-                position: relative;
-            }
-        }
-    }
 }
 
 .learn_page {
@@ -355,7 +322,7 @@ body {
 
     .container {
         width: 100%;
-        
+
         .title {
             margin: (10 / @vw) auto;
             width: (370 / @vw);
@@ -405,7 +372,7 @@ body {
                 display: inline;
                 background: aquamarine;
                 transition: all .3s;
-    
+
                 &::selection {
                     background: aquamarine !important;
                 }
@@ -494,7 +461,7 @@ body {
 
     .container {
         width: 100%;
-        
+
         .title {
             margin: (10 / @vw) auto;
             width: (370 / @vw);
@@ -539,7 +506,7 @@ body {
             overflow: scroll;
             font-size: (18 / @vw);
             box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
-            
+
 
             .text_page {
                 width: (370 / @vw);
@@ -550,15 +517,15 @@ body {
                 outline: none;
 
                 &::selection {
-                    background:  aquamarine;
+                    background: aquamarine;
                     color: black;
                 }
-        
+
                 .highlight {
                     display: inline;
                     background: aquamarine;
                     transition: all .3s;
-        
+
                     &::selection {
                         background: aquamarine !important;
                     }
@@ -569,6 +536,58 @@ body {
                 &::selection {
                     background: transparent !important;
                 }
+            }
+        }
+    }
+}
+
+.calendar_page {
+    z-index: 10000;
+    top: -100%;
+    left: 0;
+}
+
+.pk_page {
+    z-index: 1000;
+    transition: all .4s;
+}
+
+.footer_nav {
+    z-index: 2000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    footer {
+        height: (70 / @vw);
+        width: 100vw;
+        background-color: aliceblue;
+
+        ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        li {
+            height: 100%;
+            flex: 5;
+            font-size: (14/ @vw);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #9fa7ba;
+            transition: all .2s ease-in-out;
+
+            .icon {
+                font-size: (30 / @vw);
+            }
+
+            .name {
+                position: relative;
             }
         }
     }

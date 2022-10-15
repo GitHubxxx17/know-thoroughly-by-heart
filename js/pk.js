@@ -1,6 +1,4 @@
-setInterval(() => {
-    $('.loading_icon').src = './images/gif小人/红色小人.gif';
-}, 600);
+setInterval(() => $('.loading_icon').src = './images/gif小人/红色小人.gif', 600);
 
 //拉取排行榜
 let laqu = document.getElementById("laiqu");
@@ -8,10 +6,12 @@ let rankingList = document.getElementById("ranking_list");
 let judge = true;
 laqu.onclick = function() {
     if (judge) {
-        rankingList.style.top = "28.582278vw";
+        $('.pk_footer').style.overflow = "scroll";
+        $('.pk_footer').style.top = "0";
         judge = false;
     } else {
-        rankingList.style.top = "126.58227848vw";
+        $('.pk_footer').style.overflow = "hidden";
+        $('.pk_footer').style.top = "70%";
         judge = true;
     }
 }

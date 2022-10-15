@@ -66,7 +66,71 @@ a {
   font-style: normal;
   font-display: block;
 }
+body {
+  background-color: #f4f4f4;
+}
 .pk_infer {
   width: 100%;
   overflow: hidden;
+  padding: 5.06329114vw 3.79746835vw;
+}
+.pk_infer .pk_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(#6b61a8, #c7d2e8);
+  border-radius: 1.26582278vw 1.26582278vw 1.26582278vw 1.26582278vw;
+}
+.pk_infer .pk_box .other_pk,
+.pk_infer .pk_box .person_pk {
+  padding: 2.53164557vw 0vw;
+  width: 100%;
+}
+.pk_infer .pk_box .other_pk .person_blood_bar,
+.pk_infer .pk_box .person_pk .person_blood_bar {
+  margin: 0 auto;
+  width: 25.3164557vw;
+  height: 3.79746835vw;
+  border-radius: 1.26582278vw 1.26582278vw 1.26582278vw 1.26582278vw;
+  background-color: rgba(120, 119, 119, 0.38);
+}
+.pk_infer .pk_box .other_pk .person_blood_bar .blood_red,
+.pk_infer .pk_box .person_pk .person_blood_bar .blood_red {
+  width: 12.65822785vw;
+  height: 3.79746835vw;
+  background-color: red;
+  border-radius: 1.26582278vw 1.26582278vw 1.26582278vw 1.26582278vw;
+}
+.pk_infer .pk_box .other_pk .person_role,
+.pk_infer .pk_box .person_pk .person_role {
+  margin: 0 auto ;
+  margin-top: 2.53164557vw;
+  width: 25.3164557vw;
+  height: 25.3164557vw;
+}
+.pk_infer .pk_box .other_pk .person_role img,
+.pk_infer .pk_box .person_pk .person_role img {
+  width: 25.3164557vw;
+  height: 20.25316456vw;
+}
+.pk_infer .pk_box .other_pk .other_role,
+.pk_infer .pk_box .person_pk .other_role {
+  margin-left: 0vw;
+}
+.pk_infer .pk_box .other_pk .idname,
+.pk_infer .pk_box .person_pk .idname {
+  color: #000000;
+  margin-top: 0vw;
+  text-align: center;
+}
+.pk_infer .pk_box .pk_logo {
+  width: 25.3164557vw;
+  height: 25.3164557vw;
+}
+.editor {
+  margin: 0 auto;
+  margin-top: 3.79746835vw;
+  width: 93.67088608vw;
+  height: 151.89873418vw;
+  background-color: #fff;
 }

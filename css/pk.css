@@ -69,13 +69,22 @@ a {
 body {
   background-color: #f4f4f4;
 }
-.main {
+.pk_page {
+  background-color: #f4f4f4;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+}
+.pk_page .main {
+  font-size: 4.05063291vw;
   position: relative;
   width: 100%;
-  height: 216.70886076vw;
-  overflow: hidden;
 }
-.main .header {
+.pk_page .main .header {
   background-color: #a89cd4;
   display: flex;
   justify-content: flex-start;
@@ -85,50 +94,50 @@ body {
   width: 100%;
   height: 25.3164557vw;
 }
-.main .header .head_portrait {
+.pk_page .main .header .head_portrait {
   width: 15.18987342vw;
   height: 15.18987342vw;
   border-radius: 100%;
 }
-.main .header .head_portrait img {
+.pk_page .main .header .head_portrait img {
   border-radius: 100%;
 }
-.main .header .info .com {
+.pk_page .main .header .info .com {
   margin-left: 3.79746835vw;
   margin-top: 2.53164557vw;
 }
-.main .header .info .name {
+.pk_page .main .header .info .name {
   margin-bottom: -1.26582278vw;
   color: #fff;
 }
-.main .header .info .integral {
+.pk_page .main .header .info .integral {
   background-color: #e8e5e5;
   opacity: 0.4;
   text-align: center;
 }
-.main .header .info .integral i {
+.pk_page .main .header .info .integral i {
   font-size: 5.06329114vw;
   font-style: normal;
 }
-.main .header .info .integral .icon-bonus-line {
+.pk_page .main .header .info .integral .icon-bonus-line {
   color: #fdb717;
   font-size: 5.06329114vw;
   font-weight: 1000;
 }
-.main .header .info .integral .cur {
+.pk_page .main .header .info .integral .cur {
   color: #000;
   opacity: 1;
   font-size: 4.55696203vw;
   font-weight: 700;
 }
-.main .header .info .integral .fixed {
+.pk_page .main .header .info .integral .fixed {
   color: #000;
   opacity: 1;
   font-size: 3.03797468vw;
   font-weight: 700;
 }
-.main .competition_season {
-  z-index: 100000;
+.pk_page .main .competition_season {
+  z-index: 1000;
   margin: 0 auto;
   width: 81.01265823vw;
   margin-top: 7.59493671vw;
@@ -136,15 +145,15 @@ body {
   background-color: rgba(152, 116, 180, 0.798);
   box-shadow: 0.25316456vw 0.50632911vw 1.26582278vw 0.50632911vw rgba(159, 157, 157, 0.381);
 }
-.main .competition_season .season_title {
+.pk_page .main .competition_season .season_title {
   padding: 2.02531646vw 4.55696203vw;
   width: 75.94936709vw;
   font-size: 5.06329114vw;
 }
-.main .competition_season .season_title i {
+.pk_page .main .competition_season .season_title i {
   font-size: 8.86075949vw;
 }
-.main .competition_season .season_box {
+.pk_page .main .competition_season .season_box {
   margin-left: -0.50632911vw;
   margin-bottom: 6.32911392vw;
   width: 82.02531646vw;
@@ -152,41 +161,41 @@ body {
   background-color: #fff;
   border: 5px solid #b5a9e1;
 }
-.main .competition_season .season_box .rank {
+.pk_page .main .competition_season .season_box .rank {
   margin: 0  auto;
   margin-top: 3.79746835vw;
   width: 37.97468354vw;
   text-align: center;
 }
-.main .competition_season .season_box .rank .season_name {
+.pk_page .main .competition_season .season_box .rank .season_name {
   font-size: 5.06329114vw;
 }
-.main .competition_season .season_box .rank i {
+.pk_page .main .competition_season .season_box .rank i {
   font-style: normal;
 }
-.main .competition_season .season_box .rank .icon-shoucang {
+.pk_page .main .competition_season .season_box .rank .icon-shoucang {
   color: #a1a1a1;
 }
-.main .competition_season .season_box .rank .active {
+.pk_page .main .competition_season .season_box .rank .active {
   color: #fdb717;
 }
-.main .competition_season .season_box .role {
+.pk_page .main .competition_season .season_box .role {
   margin: 0  auto;
   margin-top: 5.06329114vw;
   width: 37.97468354vw;
 }
-.main .competition_season .season_box .role img {
+.pk_page .main .competition_season .season_box .role img {
   margin-left: 5.06329114vw;
   width: 100%;
   height: 100%;
 }
-.main .competition_season .season_box .start_game {
+.pk_page .main .competition_season .season_box .start_game {
   margin: 0 auto;
   margin-top: 5.06329114vw;
   margin-bottom: 5.06329114vw;
   width: 45.56962025vw;
 }
-.main .competition_season .season_box .start_game input {
+.pk_page .main .competition_season .season_box .start_game input {
   display: inline-block;
   width: 100%;
   height: 11.39240506vw;
@@ -194,42 +203,55 @@ body {
   border: 0;
   background-color: #ffd161;
 }
-.main .ranking_list {
-  z-index: 100;
-  position: absolute;
-  top: 126.58227848vw;
+.pk_page .main .pk_footer {
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  top: 70%;
+  left: 0;
+  transition: all 0.5s;
+}
+.pk_page .main .pk_footer_bg {
+  width: 100%;
+  height: 40vw;
+}
+.pk_page .main .ranking_list {
+  z-index: 100;
+  width: 100vw;
+  height: 211.89873418vw;
   transition: all 0.5s;
   background-color: #fff;
-  border-radius: 6% 6% 0 0 ;
+  border-radius: 6% 6% 0 0;
   background-image: url(../images/pk/排行榜.png);
 }
-.main .ranking_list .laiqu {
+.pk_page .main .ranking_list .laiqu {
   width: 100%;
   height: 12.65822785vw;
   text-align: center;
   background-color: #fff;
   border-radius: 6% 6% 0 0 ;
 }
-.main .ranking_list .title_nav {
+.pk_page .main .ranking_list .title_nav {
   display: flex;
   justify-content: space-around;
   padding: 0 6.32911392vw;
 }
-.main .ranking_list .title_nav .rank_title {
+.pk_page .main .ranking_list .title_nav .rank_title {
   width: 100%;
   height: 15.18987342vw;
   line-height: 10.12658228vw;
   font-size: 6.32911392vw;
 }
-.main .ranking_list .title_nav .rank_title .icon-paihangbang_paiming {
+.pk_page .main .ranking_list .title_nav .rank_title .icon-paihangbang_paiming {
   font-size: 6.32911392vw;
 }
-.main .ranking_list .title_nav .rank_pic {
+.pk_page .main .ranking_list .title_nav .rank_pic {
   width: 10.12658228vw;
   height: 10.12658228vw;
 }
-.main .ranking_list .mine {
+.pk_page .main .ranking_list .mine {
+  font-size: 4.05063291vw;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -240,19 +262,19 @@ body {
   border-radius: 5% 5% 5% 5%;
   box-shadow: 0.25316456vw 0.50632911vw 1.26582278vw 0.50632911vw rgba(159, 157, 157, 0.381);
 }
-.main .ranking_list .mine .com {
+.pk_page .main .ranking_list .mine .com {
   color: #998bce;
   font-weight: 700;
 }
-.main .ranking_list .mine .head_portrait {
+.pk_page .main .ranking_list .mine .head_portrait {
   width: 12.65822785vw;
   height: 12.65822785vw;
   border-radius: 100%;
 }
-.main .ranking_list .mine .head_portrait img {
+.pk_page .main .ranking_list .mine .head_portrait img {
   border-radius: 100%;
 }
-.main .ranking_list .others {
+.pk_page .main .ranking_list .others {
   margin: 0 auto ;
   margin-top: 5.06329114vw;
   margin-bottom: 5.06329114vw;
@@ -260,44 +282,48 @@ body {
   background-color: rgba(255, 255, 255, 0.905);
   box-shadow: 0.25316456vw 0.50632911vw 0.75949367vw 0.25316456vw rgba(159, 157, 157, 0.381);
 }
-.main .ranking_list .others .others_nav {
+.pk_page .main .ranking_list .others .others_nav {
   display: flex;
   justify-content: space-between;
   padding: 0 5.06329114vw;
   padding-top: 2.53164557vw;
 }
-.main .ranking_list .others .others_nav .left {
+.pk_page .main .ranking_list .others .others_nav .left {
   display: flex;
   justify-content: flex-start;
 }
-.main .ranking_list .others .others_nav .left .rank {
+.pk_page .main .ranking_list .others .others_nav .left .rank {
   display: inline-block;
   width: 15.18987342vw;
 }
-.main .ranking_list .others .others_nav .left .rank i {
+.pk_page .main .ranking_list .others .others_nav .left .rank i {
   display: inline-block;
   width: 15.18987342vw;
   height: 10.12658228vw;
   padding: 0 2.02531646vw;
 }
-.main .ranking_list .others .others_nav .left .rank img {
+.pk_page .main .ranking_list .others .others_nav .left .rank img {
   display: inline-block;
   width: 6.07594937vw;
   height: 6.58227848vw;
   margin-left: 0.50632911vw;
 }
+.main .ranking_list .others .others_nav .left .rank .tong {
+  width: 5.56962025vw;
+  height: 6.07594937vw;
+}
 .main .ranking_list .others .others_nav .left .rank .ten {
   padding: 0 0.75949367vw;
 }
-.main .ranking_list .others .others_nav .left .name {
+.pk_page .main .ranking_list .others .others_nav .left .name {
   display: inline-block;
   text-align: right;
   width: 22.78481013vw;
 }
-.main .ranking_list .others .others_nav .right {
+.pk_page .main .ranking_list .others .others_nav .right {
   display: flex;
   justify-content: flex-end;
 }
-.one {
+.pk_page .one {
   margin-top: 2.53164557vw;
 }

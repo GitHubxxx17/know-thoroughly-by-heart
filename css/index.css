@@ -75,6 +75,9 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+.scroll_box .scroll_top {
+  top: 100% !important;
+}
 .memory_base {
   position: absolute;
   top: 0;
@@ -82,12 +85,14 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: scroll;
+  transition: all 0.4s;
 }
 .memory_base header {
   z-index: 1000;
   position: fixed;
   left: 0;
   top: 0;
+  transition: all 0.4s;
   width: 100vw;
   height: 14.6835443vw;
   background-color: #fff;
@@ -95,9 +100,6 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 3.79746835vw;
-}
-.memory_base header .header_left a {
-  display: inline-block;
 }
 .memory_base header .header_left .icon {
   font-size: 8.86075949vw;
@@ -288,38 +290,6 @@ body {
   100% {
     transform: scale(1) rotate(0);
   }
-}
-.memory_base footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 17.72151899vw;
-  width: 100vw;
-  background-color: aliceblue;
-}
-.memory_base footer ul {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.memory_base footer li {
-  height: 100%;
-  flex: 5;
-  font-size: 3.5443038vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #9fa7ba;
-  transition: all 0.2s ease-in-out;
-}
-.memory_base footer li .icon {
-  font-size: 7.59493671vw;
-}
-.memory_base footer li .name {
-  position: relative;
 }
 .learn_page {
   z-index: 10000;
@@ -544,4 +514,48 @@ body {
 }
 .edit_page .container .text_box .del::selection {
   background: transparent !important;
+}
+.calendar_page {
+  z-index: 10000;
+  top: -100%;
+  left: 0;
+}
+.pk_page {
+  z-index: 1000;
+  transition: all 0.4s;
+}
+.footer_nav {
+  z-index: 2000;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.footer_nav footer {
+  height: 17.72151899vw;
+  width: 100vw;
+  background-color: aliceblue;
+}
+.footer_nav footer ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.footer_nav footer li {
+  height: 100%;
+  flex: 5;
+  font-size: 3.5443038vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9fa7ba;
+  transition: all 0.2s ease-in-out;
+}
+.footer_nav footer li .icon {
+  font-size: 7.59493671vw;
+}
+.footer_nav footer li .name {
+  position: relative;
 }

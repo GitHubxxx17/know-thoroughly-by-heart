@@ -24,15 +24,16 @@ generateCalendar = (month, year) => {
     //获取时间Date对象用于处理日期和时间
     let currDate = new Date();
     //返回表示月份的数字
-    if (!month) {
-        month = currDate.getMonth();
-    }
+    // if (!month) {
+    //     month = currDate.getMonth();
+    // }
     //返回表示年份的4位数
     if (!year) { year = currDate.getFullYear(); }
 
 
     let curr_month = `${month_names[month]}`
     monthPicker.innerHTML = curr_month;
+    console.log(curr_month);
     calendar_header_year.innerHTML = year;
 
     //获取每个月的第一天
@@ -61,7 +62,7 @@ let month_list = calendar.querySelector('.month_list');
 month_names.forEach((e, index) => {
     let month = document.createElement('div')
     month.innerHTML = `<div data-month="${index}">${e}</div>`
-    month.querySelector('div').onclick = () => {
+    month.querySelector('div').onclick = (e) => {
         month_list.classList.remove('show');
         curr_month.value = index;
         generateCalendar(index, curr_year.value);
@@ -70,12 +71,6 @@ month_names.forEach((e, index) => {
     month_list.appendChild(month);
 })
 
-// window.onclick = function(e) {
-//     if (month_list.classList.contains('show')) {
-//         month_list.classList.remove('show');
-//     }
-//     e.stopPropagation();
-// }
 
 document.onclick = () => {
     month_list.classList.remove('show');
