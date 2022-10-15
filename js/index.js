@@ -45,7 +45,7 @@ Array.from($('.tp_inner')).forEach((x,i) => {
         // 滑动模板出现按钮
         x.addEventListener('touchmove', function (e) {
             l = e.changedTouches[0].clientX - disX;
-            if (l < -40)
+            if (l < -30)
                 x.style.left = '-40vw';
             if (l > 10)
                 x.style.left = '0';
