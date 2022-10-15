@@ -1,0 +1,141 @@
+//out:../css/
+@import 'base';
+@vw: 3.95vw;
+body{
+    background-color: #f4f4f4;
+}
+
+.personal{
+    width: 100%;
+    height: (856/@vw);
+    overflow: hidden;
+    .person_main{
+        width: 100%;
+        overflow: hidden;
+    
+        .system_settings,
+        .personal_box{
+            margin-top: (15/@vw);
+            background-color: #fff;
+            padding: 0 (30/@vw);
+            border-radius: 5%;
+            .head_portrait{
+                width: 100%;
+                height: (120/@vw);
+                display: flex;
+                justify-content: center;
+                padding-top: (20/@vw);
+                img{
+                    width: (120/@vw);
+                    height: (120/@vw);
+                    border-radius: 100%;
+                }
+            }
+    
+            .idname_box{
+                margin-top: (20/@vw);
+                display: flex;
+                justify-content:space-between;
+    
+                .nicheng{
+                    height: (60/@vw);
+                    line-height:(60/@vw);
+                }
+                .right{
+                    display: flex;
+                    justify-content:space-between;
+                    height: (60/@vw);
+                    line-height:(60/@vw);
+                    .idname{
+                        color: #8d8a8a;
+                        margin-right: (5/@vw);
+                    }
+                }
+            }
+    
+            .common{
+                display: flex;
+                justify-content:space-between;
+    
+                .title_box{
+                    height: (70/@vw);
+                    line-height:(70/@vw);
+                }
+                
+                .right{
+                    display: flex;
+                    justify-content:space-between;
+                    height: (70/@vw);
+                    line-height:(70/@vw);
+                }  
+            }
+        } 
+        .exit{
+            margin: 0 auto;
+            margin-top: (20/@vw);
+            width: (250/@vw);
+            button{
+                width: (250/@vw);
+                height: (50/@vw);
+                background-color: rgba(248, 8, 8, 0.425);
+                border: 0;
+                font-size: (20/@vw);
+                border-radius: 5%;
+            }
+        }
+        
+    }
+    
+    .modify{
+        .modify_box{
+            background-color: #fff;
+            padding: 0 (30/@vw);
+            border-radius: 10%;
+            .modify_title{
+                display: flex;
+                justify-content: space-between;
+                height: (60/@vw);
+                line-height: (60/@vw);
+                font-size: (20/@vw);
+                
+                .icon-xiangzuojiantou{
+                    font-size: (20/@vw);
+                    flex: 0.4;
+                }
+        
+                .modify_what{
+                    flex:9.6;
+                    text-align: center;
+                }
+            }    
+        }
+    
+        .Modify_interface{
+            margin-top: (20/@vw);
+            padding: 0 (30/@vw);
+            input{
+                display: block;
+                width: 100%;
+                height: (60/@vw);
+                font-size: (25/@vw);
+                border: 0;
+                border-bottom: 1px solid rgb(174, 172, 172);
+            }
+    
+            .confirm{
+                margin: 0 auto;
+                margin-top: (20/@vw);
+                width: (250/@vw);
+                button{
+                    width: (250/@vw);
+                    height: (50/@vw);
+                    background-color:#ffd161;
+                    border: 0;
+                    font-size: (20/@vw);
+                    border-radius: 5%;
+                }
+            }
+        }
+        
+    }
+}

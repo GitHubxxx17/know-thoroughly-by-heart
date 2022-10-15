@@ -47,3 +47,12 @@ function getData(name) {
 function saveData(name,data) {
     localStorage.setItem(name, JSON.stringify(data));
 }
+
+
+//为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
+Array.prototype.remove = function (val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
