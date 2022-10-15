@@ -336,6 +336,7 @@ body {
 }
 .learn_page .container {
   width: 100%;
+  background-color: #b8b2c9;
 }
 .learn_page .container .title {
   margin: 2.53164557vw auto;
@@ -451,6 +452,7 @@ body {
 }
 .edit_page .container {
   width: 100%;
+  background-color: #b8b2c9;
 }
 .edit_page .container .title {
   margin: 2.53164557vw auto;
