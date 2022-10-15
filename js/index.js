@@ -127,11 +127,11 @@ $('.learn_page .header_left').onclick = () => {
 
 //点击出现打卡页面
 $('.memory_base .header_left').onclick = () => {
-    $('.calendar_page').style.top = '0';
+    $('.calendar_page').style.left = '0';
 }
 
 //打卡页面点击返回
 $('.calendar_page .left').onclick = () => {
-    $('.calendar_page').style.top = '-100%';
+    $('.calendar_page').style.left = '-100%';
 }
 

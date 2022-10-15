@@ -76,7 +76,7 @@ body {
   overflow: hidden;
 }
 .scroll_box .scroll_top {
-  top: 100% !important;
+  left: 100% !important;
 }
 .memory_base {
   position: absolute;
@@ -517,8 +517,8 @@ body {
 }
 .calendar_page {
   z-index: 10000;
-  top: -100%;
-  left: 0;
+  top: 0;
+  left: -100%;
 }
 .pk_page {
   z-index: 1000;
