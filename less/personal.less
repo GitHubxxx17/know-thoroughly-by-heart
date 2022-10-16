@@ -12,9 +12,12 @@ body{
     transition: all .2s;
     width: 100vw;
     height: 100vh;
-    overflow: scroll;
+    overflow: hidden;
+    
     .person_main{
         width: 100%;
+        height: 100vh;
+        overflow: scroll;
     
         .system_settings,
         .personal_box{
@@ -23,11 +26,24 @@ body{
             padding: 0 (30/@vw);
             border-radius: 5%;
             .head_portrait{
-                width: 100%;
+                margin: 0 auto;
+                position: relative;
+                width: (120/@vw);
                 height: (120/@vw);
                 display: flex;
                 justify-content: center;
-                padding-top: (20/@vw);
+
+                input{
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    border-radius: 100%;
+                    z-index: 11;
+                }
+
                 img{
                     width: (120/@vw);
                     height: (120/@vw);
@@ -55,6 +71,11 @@ body{
                     }
                 }
             }
+
+            .phone {
+                color: #8d8a8a;
+                margin-right: (5/@vw);
+            }
     
             .common{
                 display: flex;
@@ -73,6 +94,11 @@ body{
                 }  
             }
         } 
+
+        .personal_box {
+            padding-top: (20 / @vw);
+        }
+
         .exit{
             margin: 0 auto;
             margin-top: (20/@vw);
@@ -93,9 +119,18 @@ body{
     }
     
     .modify{
+        z-index: 20000;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        height: 100vh;
+        background-color: #f4f4f4;
+        transition: all .4s ease-in-out;
+
         .modify_box{
             background-color: #fff;
-            padding: 0 (30/@vw);
+            padding: 0 (55 / @vw) 0 (15/@vw);
             border-radius: 10%;
             .modify_title{
                 display: flex;
@@ -103,14 +138,18 @@ body{
                 height: (60/@vw);
                 line-height: (60/@vw);
                 font-size: (20/@vw);
-                
+                .left {
+                    flex: 1.4;
+                    text-align: center;
+                    line-height: (60 / @vw);
+                }
                 .icon-xiangzuojiantou{
                     font-size: (20/@vw);
-                    flex: 0.4;
+                    
                 }
         
                 .modify_what{
-                    flex:9.6;
+                    flex:8.6;
                     text-align: center;
                 }
             }    

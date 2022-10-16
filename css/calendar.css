@@ -168,7 +168,9 @@ body {
   position: relative;
   cursor: pointer;
   animation: to-top 1s forwards;
-  /* border-radius: 50%; */
+  transition: all 0.3s;
+  border-radius: 50%;
+  border: 1px solid transparent;
 }
 .calendar_page .calendar .calendar_body .calendar_days div span {
   position: absolute;
@@ -246,6 +248,9 @@ body {
   text-align: center;
   line-height: 12.65822785vw;
   background-color: #eeedf5;
+}
+.calendar_page .calendar .calendar_footer .clock .situation {
+  transition: all 0.3s;
 }
 .calendar_page .calendar .calendar_footer .clock button {
   font-size: 4.05063291vw;

@@ -1,4 +1,3 @@
-
 //数组用来存放被选中的节点
 let arr1 = [];
 //数组用来存放答案
@@ -25,6 +24,7 @@ btn[1].onclick = () => {
             };
             x.classList.add('input');
         }
+
         function answer(x) {
             for (let k of all('.learn_page .highlight')) {
                 if (k.innerHTML == '')
@@ -49,19 +49,18 @@ btn[1].onclick = () => {
 
 //点击页面其他地方时，如果填入内容为空则将内容修改
 document.onclick = () => {
-    if (flag_learn && document.querySelector('.learn_page .highlight')) {
-        for (let x of all('.learn_page .input')) {
-            if (x.innerHTML == '')
-                x.innerHTML = '请输入答案';
+        if (flag_learn && document.querySelector('.learn_page .highlight')) {
+            for (let x of all('.learn_page .input')) {
+                if (x.innerHTML == '')
+                    x.innerHTML = '请输入答案';
+            }
         }
     }
-
-}
-//点击进入背诵模式
+    //点击进入背诵模式
 btn[2].onclick = () => {
     if (learn_flag_2 && flag_learn && document.querySelector('.learn_page .highlight')) {
         learnReset()
-        //利用循环将选中的节点添加类
+            //利用循环将选中的节点添加类
         let n = 0;
         for (let x of all('.learn_page .highlight')) {
             if (!learn_flag_1)
@@ -83,7 +82,8 @@ btn[2].onclick = () => {
 btn[0].onclick = () => {
     if (!learn_flag_1) {
         learn_flag_1 = true;
-        let n = 0, sum = 0;
+        let n = 0,
+            sum = 0;
         for (let x of all('.learn_page .highlight')) {
             if (x.innerHTML == arr2[n])
                 sum++;

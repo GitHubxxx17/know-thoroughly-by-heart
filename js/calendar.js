@@ -1,5 +1,5 @@
 let calendar = document.querySelector('.calendar')
-
+let Today = null;
 const month_names = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
 
 //获取是否为闰年
@@ -48,7 +48,8 @@ generateCalendar = (month, year) => {
             //                 <span></span>
             //                 <span></span>`
             if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
-                day.classList.add('curr_date');
+                // day.classList.add('curr_date');
+                Today = day;
             }
         }
         calendar_days.appendChild(day);
@@ -101,4 +102,10 @@ document.querySelector('#next_year').onclick = () => {
     generateCalendar(curr_month.value, curr_year.value)
 }
 
+
 //日历月份的点击事件
+$('.calendar_footer .situation')[1].onclick = () => {
+    $('.calendar_footer .situation')[0].innerHTML = '今日已打卡';
+    $('.calendar_footer .situation')[1].innerHTML = '已签到';
+    Today.classList.add('curr_date');
+}

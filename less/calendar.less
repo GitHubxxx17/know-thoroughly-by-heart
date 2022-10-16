@@ -109,7 +109,9 @@ body{
                     position: relative;
                     cursor: pointer;
                     animation: to-top 1s forwards;
-                    /* border-radius: 50%; */
+                    transition: all .3s;
+                    border-radius: 50%; 
+                    border: 1px solid transparent;
                     span{
                         position: absolute;
                         &:nth-child(1),&:nth-child(3){
@@ -203,6 +205,10 @@ body{
                 text-align: center;
                 line-height: (50/@vw);
                 background-color: #eeedf5;
+
+                .situation {
+                    transition: all .3s;
+                }
     
                 button{
                     font-size: (16/@vw);

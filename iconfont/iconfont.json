@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5387850",
+      "name": "菜单_o",
+      "font_class": "caidan_o",
+      "unicode": "eb71",
+      "unicode_decimal": 60273
+    },
+    {
+      "icon_id": "700846",
+      "name": "实心菜单",
+      "font_class": "shixincaidan",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
       "icon_id": "1075",
       "name": "照相机",
       "font_class": "zhaoxiangji",

@@ -34,7 +34,7 @@ body {
         transition: all .2s;
         width: 100vw;
         height: (58 / @vw);
-        background-color: #fff;
+        background-color: #f8f8f8;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -54,7 +54,9 @@ body {
                 width: (220 / @vw);
                 height: (30 / @vw);
                 border-radius: (15 / @vw);
-                border: (1 / @vw) solid #000;
+                background-color: #ecedef;
+                // border: (1 / @vw) solid #000;
+                border: 0;
             }
 
             button {
@@ -91,12 +93,12 @@ body {
                 height: (45 / @vw);
                 border-radius: 50%;
                 background-color: #fff;
-                border: (1 / @vw) solid rgb(49, 221, 255);
+                border: (1 / @vw) solid #a1a4b4;
                 text-align: center;
                 line-height: (45 / @vw);
 
                 .icon {
-                    color: rgb(255, 187, 0);
+                    color: rgba(255, 187, 0, 0.608);
                     font-size: (32 / @vw);
                 }
             }
@@ -219,11 +221,11 @@ body {
                     }
 
                     .del {
-                        background-color: #fd6767;
+                        background-color: #fc5b5bcf;
                     }
 
                     .edit {
-                        background-color: #009eff;
+                        background-color: #a89cd4;
                     }
                 }
             }
@@ -575,7 +577,7 @@ body {
     footer {
         height: (70 / @vw);
         width: 100vw;
-        background-color: aliceblue;
+        background-color:#fff;
 
         ul {
             width: 100%;
@@ -593,7 +595,7 @@ body {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #9fa7ba;
+            color: #a1a4b4;
             transition: all .2s ease-in-out;
 
             .icon {

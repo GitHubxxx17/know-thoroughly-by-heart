@@ -3,7 +3,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
     $('.footer_nav li')[i].onclick = () => {
         for (let x of $('.footer_nav li'))
             x.style.color = '#9fa7ba'
-        $('.footer_nav li')[i].style.color = '#5184ff';
+        $('.footer_nav li')[i].style.color = '#5c4eaf';
         pageReset(i);
         if (i == 0) {
             $('.memory_base header').classList.remove('scroll_top');
@@ -18,7 +18,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
 }
 //初始化
 $('.footer_nav li')[0].onclick();
-//重置
+
 function pageReset(i) {
     $('.memory_base header').classList.add('scroll_top');
     $('.pk_page .pk_footer').classList.add('scroll_top');
@@ -40,7 +40,9 @@ function pageReset(i) {
 var title = null;
 var info = null;
 var flag_learn = false;
+
 //为模板添加事件
+
 function TP() {
     Array.from(all('.tp_inner')).forEach((x, i) => {
         x.ontouchstart = (e) => {
@@ -50,33 +52,33 @@ function TP() {
             tp_inner_left();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-                if (l < -20)
-                    x.style.left = '-40vw';
-                if (l > 10)
-                    x.style.left = '0';
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                    if (l < -20)
+                        x.style.left = '-40vw';
+                    if (l > 10)
+                        x.style.left = '0';
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
-                $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
-                $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                if (l == 0 && x.offsetLeft == '0') {
-                    $('.learn_page').style.left = '0';
-                    flag_learn = true;
+                    $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
+                    $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                    if (l == 0 && x.offsetLeft == '0') {
+                        $('.learn_page').style.left = '0';
+                        flag_learn = true;
+                    }
+
                 }
-    
-            }
-            //点击编辑进入编辑页面
+                //点击编辑进入编辑页面
             all('.template_btn .edit')[i].onclick = (e) => {
-                title = all('.tp_inner .title')[i];
-                info = all('.tp_inner .info')[i];
-                $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
-                $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                $('.edit_page').style.left = '0';
-                e.stopPropagation();
-            }
-            //点击删除模板
+                    title = all('.tp_inner .title')[i];
+                    info = all('.tp_inner .info')[i];
+                    $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
+                    $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                    $('.edit_page').style.left = '0';
+                    e.stopPropagation();
+                }
+                //点击删除模板
             all('.template_btn .del')[i].onclick = (e) => {
                 x.parentNode.classList.add('baseLis_del');
                 e.stopPropagation();
@@ -92,6 +94,7 @@ TP();
 
 //点击页面收起模板按钮
 document.ontouchstart = () => tp_inner_left();
+
 function tp_inner_left() {
     for (let k of all('.tp_inner'))
         k.style.left = '0';
@@ -147,10 +150,11 @@ $('.memory_base .header_left').onclick = () => {
 
 //打卡页面点击返回
 $('.calendar_page .left').onclick = () => {
-    $('.calendar_page').style.left = '-100%';
+    $('.calendar_page').style.left = '-100%'
 }
 
+
 let curr1 = getData('current_user');
-if(curr1.length == 0){
+if (curr1.length == 0) {
     location.href = './login.html';
 }

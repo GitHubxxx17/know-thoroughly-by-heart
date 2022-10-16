@@ -309,12 +309,14 @@ body {
 .pk_page .main .ranking_list .others .others_nav {
   display: flex;
   justify-content: space-between;
+  height: 12.65822785vw;
+  align-items: center;
   padding: 0 5.06329114vw;
-  padding-top: 2.53164557vw;
 }
 .pk_page .main .ranking_list .others .others_nav .left {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 .pk_page .main .ranking_list .others .others_nav .left .rank {
   display: inline-block;
@@ -323,7 +325,6 @@ body {
 .pk_page .main .ranking_list .others .others_nav .left .rank i {
   display: inline-block;
   width: 15.18987342vw;
-  height: 10.12658228vw;
   padding: 0 2.02531646vw;
 }
 .pk_page .main .ranking_list .others .others_nav .left .rank img {
@@ -331,6 +332,10 @@ body {
   width: 6.07594937vw;
   height: 6.58227848vw;
   margin-left: 0.50632911vw;
+}
+.pk_page .main .ranking_list .others .others_nav .left .rank .tong {
+  width: 5.56962025vw;
+  height: 6.07594937vw;
 }
 .pk_page .main .ranking_list .others .others_nav .left .rank .ten {
   padding: 0 0.75949367vw;

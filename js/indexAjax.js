@@ -94,9 +94,7 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${userInfo.
     let newstr = JSON.parse(str).msg;
     if(newstr.data.userModle) {
         let tparr = newstr.data.userModle;
-        console.log(tparr);
         for(let x of tparr) {
-            console.log(x);
             newTP(x.modleTitle,x.content);
         }
     }
