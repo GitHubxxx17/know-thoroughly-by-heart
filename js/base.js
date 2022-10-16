@@ -6,6 +6,11 @@ function $(selectors) {
         return document.querySelector(selectors);
 }
 
+//封装一个返回数组的函数
+function all(selectors) {
+    return document.querySelectorAll(selectors);
+}
+
 //封装一个发送ajax请求和处理数据的的函数
 function ajax(url, method, req, funC,flag) {
     //1.创建Ajax对象

@@ -1,8 +1,7 @@
 
 window.onload = () => {
     $(".container").style.opacity = '1';
-    $('.login').style.top = '142vw';
-    // $('.container_bg').style.transform = 'translateX(-50%)';
+    $('.login').style.top = '142vw'
 }
 
 
@@ -79,19 +78,16 @@ $('.register').onclick = () => {
     $('.login').style.top = '142vw';
     $('.change').style.top = '-8vw';
     $('.change').innerHTML = '已有账号，去登录'
-    // $('.container_bg').style.transform = 'translateX(-50%)';
 }
 
 $('.login').onclick = () => {
     $('.login').style.top = '36vw';
     $('.change').style.top = '-25vw';
     $('.change').innerHTML = '没有账号，去注册'
-    // $('.container_bg').style.transform = 'translateX(-50%) scale(3)';
 }
 
 
 let inputs = $('.form_control input');
-console.log(inputs);
 let labelStrArr = [];
 for (let i = 0; i < inputs.length; i++) {
     labelStrArr.push($('label')[i].innerHTML);
@@ -195,19 +191,24 @@ $('.register button').onclick = (e) => {
             a.push(x.value);
         }
         ajax('http://8.134.104.234:8080/ReciteMemory/user.do/Reg', 'post', `phone=${a[0]}&password=${a[2]}&username=${a[1]}`, (str) => {
+        
             let newstr = JSON.parse(str).msg;
+            console.log(newstr);
             if (newstr.data.isSuccess) {
                 //将当前登录的用户手机号保存到本地
                 let curr = {};
+                curr['auto'] = false;
                 // 获取登录用户的信息
                 ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${newstr.data.userId}`, 'get', '', (str) => {
                     let newstr = JSON.parse(str).msg;
                     let userInfo = newstr.data.user;
                     curr['userInfo'] = userInfo;
+                    curr.userInfo.phone = a[0];
                     saveData('current_user', curr);
+                    location.href = './index.html';
                 }, true)
 
-                // location.href = './index.html';
+                
             } else {
                 alert('注册失败，请重新注册');
             }
@@ -245,6 +246,7 @@ $('.login button').onclick = (e) => {
                     let newstr = JSON.parse(str).msg;
                     let userInfo = newstr.data.user;
                     curr['userInfo'] = userInfo;
+                    curr.userInfo.phone = $('.login_data')[0].value;
                     console.log(curr);
                     saveData('current_user', curr);
                     location.href = './index.html';

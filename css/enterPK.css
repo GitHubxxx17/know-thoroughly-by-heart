@@ -78,8 +78,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(#6b61a8, #c7d2e8);
-  border-radius: 1.26582278vw 1.26582278vw 1.26582278vw 1.26582278vw;
+  border-radius: 5%;
+  background-image: url(../images/1.png);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
 }
 .pk_infer .pk_box .other_pk,
 .pk_infer .pk_box .person_pk {
@@ -98,7 +102,7 @@ body {
 .pk_infer .pk_box .person_pk .person_blood_bar .blood_red {
   width: 12.65822785vw;
   height: 3.79746835vw;
-  background-color: red;
+  background-color: rgba(247, 10, 10, 0.981);
   border-radius: 1.26582278vw 1.26582278vw 1.26582278vw 1.26582278vw;
 }
 .pk_infer .pk_box .other_pk .person_role,
@@ -127,10 +131,38 @@ body {
   width: 25.3164557vw;
   height: 25.3164557vw;
 }
-.editor {
+.text_box {
   margin: 0 auto;
-  margin-top: 3.79746835vw;
   width: 93.67088608vw;
-  height: 151.89873418vw;
+  height: 80vh;
   background-color: #fff;
+  padding: 2.53164557vw;
+  overflow: scroll;
+  font-size: 4.55696203vw;
+  border-radius: 1.26582278vw;
+  box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
+}
+.text_box .highlight {
+  display: inline;
+  background: aquamarine;
+  transition: all 0.3s;
+}
+.text_box .highlight::selection {
+  background: aquamarine !important;
+}
+.text_box .input {
+  width: auto;
+  background-color: transparent !important;
+  color: #67ffe8 !important;
+  border-bottom: 0.50632911vw #2facff solid;
+  height: 7.59493671vw;
+  outline: none;
+  display: inline;
+}
+.text_box .recite {
+  height: 7.59493671vw;
+  background-color: darkgray !important;
+  color: darkgray !important;
+  border-radius: 1.26582278vw;
+  user-select: none;
 }

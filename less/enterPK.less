@@ -16,12 +16,15 @@ body{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: linear-gradient(#6b61a8,#c7d2e8);
+        // background: linear-gradient(#6b61a8,#c7d2e8);
         // background-color:rgba(152, 116, 180, 0.798);
-        border-radius: (5/@vw)  (5/@vw)  (5/@vw)  (5/@vw);
-        // background-image: url(../images/背景1.jpg) ;
-        // background-size: 100%;
-        // background-attachment: fixed;
+        border-radius: 5%;
+        background-image: url(../images/1.png) ;
+        // background: url("bg.png") no-repeat;
+        height:100%;
+        width:100%;
+        overflow: hidden;
+        background-size:cover;
 
         .other_pk,
         .person_pk{
@@ -40,7 +43,7 @@ body{
                 .blood_red{
                     width: (50/@vw);
                     height: (15/@vw);
-                    background-color:red;
+                    background-color:rgba(247, 10, 10, 0.981);
                     border-radius: (5/@vw)  (5/@vw)  (5/@vw)  (5/@vw);
                 }
             }
@@ -75,10 +78,52 @@ body{
     } 
 }
 
-.editor{
+// .editor{
+//     margin: 0 auto;
+//     margin-top: (15/@vw);
+//     width: (370/@vw);
+//     height: (600/@vw);
+//     background-color: #fff;
+
+// }
+
+.text_box {
     margin: 0 auto;
-    margin-top: (15/@vw);
-    width: (370/@vw);
-    height: (600/@vw);
+    width: (370 / @vw);
+    height: 80vh;
     background-color: #fff;
+    padding: (10 / @vw);
+    overflow: scroll;
+    font-size: (18 / @vw);
+    border-radius: (5 / @vw);
+    box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
+
+    .highlight {
+        display: inline;
+        background: aquamarine;
+        transition: all .3s;
+
+        &::selection {
+            background: aquamarine !important;
+        }
+    }
+
+    .input {
+        width: auto;
+        background-color: transparent !important;
+        color: rgb(103, 255, 232) !important;
+        border-bottom: (2 / @vw) rgb(47, 172, 255) solid;
+        height: (30 / @vw);
+        outline: none;
+        display: inline;
+        // -webkit-user-modify: read-write-plaintext-only;
+    }
+
+    .recite {
+        height: (30 / @vw);
+        background-color: darkgray !important;
+        color: darkgray !important;
+        border-radius: (5 / @vw);
+        user-select: none;
+    }
 }

@@ -33,7 +33,6 @@ generateCalendar = (month, year) => {
 
     let curr_month = `${month_names[month]}`
     monthPicker.innerHTML = curr_month;
-    console.log(curr_month);
     calendar_header_year.innerHTML = year;
 
     //获取每个月的第一天

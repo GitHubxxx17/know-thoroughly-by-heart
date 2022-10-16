@@ -210,7 +210,7 @@ body {
   position: fixed;
   top: 70%;
   left: 0;
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 .pk_page .main .pk_footer_bg {
   width: 100%;
@@ -220,7 +220,7 @@ body {
   z-index: 100;
   width: 100vw;
   height: 211.89873418vw;
-  transition: all 0.5s;
+  transition: all 0.2s;
   background-color: #fff;
   border-radius: 6% 6% 0 0;
   background-image: url(../images/pk/排行榜.png);
@@ -234,17 +234,41 @@ body {
 }
 .pk_page .main .ranking_list .title_nav {
   display: flex;
-  justify-content: space-around;
-  padding: 0 6.32911392vw;
+  justify-content: space-between;
+  padding: 0 5.06329114vw;
+  padding-top: 2.53164557vw;
 }
-.pk_page .main .ranking_list .title_nav .rank_title {
-  width: 100%;
-  height: 15.18987342vw;
-  line-height: 10.12658228vw;
-  font-size: 6.32911392vw;
+.pk_page .main .ranking_list .title_nav .left {
+  display: flex;
+  justify-content: flex-start;
 }
-.pk_page .main .ranking_list .title_nav .rank_title .icon-paihangbang_paiming {
-  font-size: 6.32911392vw;
+.pk_page .main .ranking_list .title_nav .left .rank {
+  display: inline-block;
+  width: 15.18987342vw;
+}
+.pk_page .main .ranking_list .title_nav .left .rank i {
+  display: inline-block;
+  width: 15.18987342vw;
+  height: 10.12658228vw;
+  padding: 0 2.02531646vw;
+}
+.pk_page .main .ranking_list .title_nav .left .rank img {
+  display: inline-block;
+  width: 6.07594937vw;
+  height: 6.58227848vw;
+  margin-left: 0.50632911vw;
+}
+.pk_page .main .ranking_list .title_nav .left .rank .tong {
+  width: 5.56962025vw;
+  height: 6.07594937vw;
+}
+.pk_page .main .ranking_list .title_nav .left .rank .ten {
+  padding: 0 0.75949367vw;
+}
+.pk_page .main .ranking_list .title_nav .left .name {
+  display: inline-block;
+  text-align: right;
+  width: 22.78481013vw;
 }
 .pk_page .main .ranking_list .title_nav .rank_pic {
   width: 10.12658228vw;
@@ -308,11 +332,7 @@ body {
   height: 6.58227848vw;
   margin-left: 0.50632911vw;
 }
-.main .ranking_list .others .others_nav .left .rank .tong {
-  width: 5.56962025vw;
-  height: 6.07594937vw;
-}
-.main .ranking_list .others .others_nav .left .rank .ten {
+.pk_page .main .ranking_list .others .others_nav .left .rank .ten {
   padding: 0 0.75949367vw;
 }
 .pk_page .main .ranking_list .others .others_nav .left .name {

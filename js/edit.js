@@ -11,6 +11,7 @@ function reset() {
 let btns = $('.edit_page .header_right li');
 //点击编辑
 btns[0].onclick = () => {
+    console.log(title);
     reset();
     $('.text_page').setAttribute('contenteditable', true);
     btns[0].classList.add('choice');
@@ -30,7 +31,7 @@ btns[1].onclick = () => {
     btns[1].classList.add('choice');
     flag = true;
     //当长按屏幕触屏结束时，选中文本 
-    $('.text_page').ontouchend = (e) => {
+    $('.text_page').onmouseup = (e) => {
         //判断当前是否为挖空模式
         if (btns[1].classList.contains('choice')) {
             flag = true;
@@ -99,12 +100,8 @@ btns[1].onclick = () => {
         }
         // 将原数组清空，重新将选中节点添加进数组中
         arr = [];
-        if ($('.text_page .highlight').length > 0) {
-            for (let y of $('.text_page .highlight')) {
-                arr.push(y);
-            }
-        } else {
-            arr.push($('.text_page .highlight'));
+        for (let y of all('.text_page .highlight')) {
+            arr.push(y);
         }
     }
 }
@@ -117,16 +114,8 @@ btns[2].onclick = () => {
         btns[2].classList.add('choice');
         $('.text_page').classList.add('del');
         flag1 = true;
-        //如果可选择的节点为数组
-        if ($('.text_page .highlight').length > 0) {
-            for (let x of $('.text_page .highlight')) {
-                x.addEventListener('click', (e) => {
-                    if (flag1)
-                        CancelHollowing(e.target, false);
-                });
-            }
-        } else {
-            $('.text_page .highlight').addEventListener('click', (e) => {
+        for (let x of all('.text_page .highlight')) {
+            x.addEventListener('click', (e) => {
                 if (flag1)
                     CancelHollowing(e.target, false);
             });
@@ -139,8 +128,20 @@ btns[2].onclick = () => {
 btns[3].onclick = () => {
     reset();
     btns[3].classList.add('choice');
-    title.innerHTML = $('.edit_page .title_name').value;
-    info.innerHTML = $('.edit_page .text_page').innerHTML;
+    let title1 = $('.edit_page .title_name').value;
+    let info1 = $('.edit_page .text_page').innerHTML;
+    if (newTPFlag) {
+        $('.my_base li')[0].querySelector('.title').innerHTML = title1;
+        $('.my_base li')[0].querySelector('.info').innerHTML = info1;
+    } else {
+        title.innerHTML = title1;
+        info.innerHTML = info1;
+    }
+    let poststr = `context=${info1}&userId=${userInfo.userId}&modleTitle=${title1}&overWrite=1&modleLabel=1`
+    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
+        let newstr = JSON.parse(str).msg;
+        console.log(newstr);
+    }, true);
     $('.edit_page .header_right .name')[3].innerHTML = '已保存';
 }
 
