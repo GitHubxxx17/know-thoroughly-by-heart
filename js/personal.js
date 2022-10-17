@@ -46,7 +46,8 @@ $('.modify .confirm').onclick = () => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr, modifyNum);
             if (newstr.data.isSuccess) {
-                $('.modify_value')[modifyNum].innerHTML = modify_value;
+                for (let x of $('.idname'))
+                    x.innerHTML = modify_value;
                 $('.modify_title .left').onclick();
                 $('.modify_succ').classList.add('modify_succani');
                 curr.userInfo.nickName = modify_value;
