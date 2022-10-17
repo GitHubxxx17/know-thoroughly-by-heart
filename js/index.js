@@ -10,18 +10,19 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
         } else if (i == 1) {
             $('.pk_page .pk_footer').classList.remove('scroll_top');
         }
-        if (i == 3)
-            return;
+        if (i == 3) {
+            $('.community header').classList.remove('scroll_top');
+        }
+
         $('.main_page')[i].classList.remove('scroll_top');
 
     }
 }
-//初始化
-$('.footer_nav li')[0].onclick();
 
 function pageReset(i) {
     $('.memory_base header').classList.add('scroll_top');
     $('.pk_page .pk_footer').classList.add('scroll_top');
+    $('.community header').classList.add('scroll_top');
     for (let x of $('.main_page')) {
         x.classList.add('scroll_top');
     }
@@ -39,6 +40,7 @@ function pageReset(i) {
 //模板向左滑动出现按钮
 var title = null;
 var info = null;
+var modleId = null;
 var flag_learn = false;
 
 //为模板添加事件
@@ -52,33 +54,34 @@ function TP() {
             tp_inner_left();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function(e) {
-                    l = e.changedTouches[0].clientX - disX;
-                    if (l < -20)
-                        x.style.left = '-40vw';
-                    if (l > 10)
-                        x.style.left = '0';
-                })
-                //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function (e) {
+                l = e.changedTouches[0].clientX - disX;
+                if (l < -20)
+                    x.style.left = '-40vw';
+                if (l > 10)
+                    x.style.left = '0';
+            })
+            //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
-                    $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
-                    $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                    if (l == 0 && x.offsetLeft == '0') {
-                        $('.learn_page').style.left = '0';
-                        flag_learn = true;
-                    }
+                $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
+                $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                if (l == 0 && x.offsetLeft == '0') {
+                    $('.learn_page').style.left = '0';
+                    flag_learn = true;
+                }
 
-                }
-                //点击编辑进入编辑页面
+            }
+            //点击编辑进入编辑页面
             all('.template_btn .edit')[i].onclick = (e) => {
-                    title = all('.tp_inner .title')[i];
-                    info = all('.tp_inner .info')[i];
-                    $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
-                    $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                    $('.edit_page').style.left = '0';
-                    e.stopPropagation();
-                }
-                //点击删除模板
+                title = all('.tp_inner .title')[i];
+                info = all('.tp_inner .info')[i];
+                modleId = all('.tp_inner .modleId')[i];
+                $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
+                $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                $('.edit_page').style.left = '0';
+                e.stopPropagation();
+            }
+            //点击删除模板
             all('.template_btn .del')[i].onclick = (e) => {
                 x.parentNode.classList.add('baseLis_del');
                 e.stopPropagation();
@@ -86,6 +89,12 @@ function TP() {
                     $('.base_none_1').style.display = 'block';
                 if (all('.collection_base li').length == all('.collection_base .baseLis_del').length)
                     $('.base_none_2').style.display = 'block';
+                let modleId = all('.modleId')[i].innerHTML;
+                console.log(modleId);
+                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${modleId}`, (str) => {
+                    let newstr = JSON.parse(str).msg;
+                    console.log(newstr);
+                }, true)
             }
         }
     });

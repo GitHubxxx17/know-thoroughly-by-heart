@@ -207,6 +207,7 @@ a {
     color: #000;
   }
 }
+.Making_page .popup2,
 .Making_page .popup {
   display: none;
   z-index: 20000;
@@ -217,6 +218,7 @@ a {
   height: 100vh;
   background-color: #00000078;
 }
+.Making_page .popup2 .popup_box,
 .Making_page .popup .popup_box {
   position: absolute;
   width: 75.94936709vw;
@@ -232,6 +234,7 @@ a {
   justify-content: center;
   align-items: center;
 }
+.Making_page .popup2 .popup_box button,
 .Making_page .popup .popup_box button {
   width: 50.63291139vw;
   height: 20.25316456vw;
@@ -242,8 +245,14 @@ a {
   outline: none;
   font-size: 6.58227848vw;
 }
+.Making_page .popup2 .popup_box button:last-child,
 .Making_page .popup .popup_box button:last-child {
   margin-top: 10.12658228vw;
+}
+.Making_page .popup2 .popup_box {
+  top: 40%;
+  height: 37.97468354vw;
+  font-size: 5.06329114vw;
 }
 .Making_page .container {
   width: 100%;
@@ -292,6 +301,7 @@ a {
   font-size: 4.55696203vw;
   border-radius: 1.26582278vw;
   box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
+  text-indent: 2rem;
 }
 .Making_page footer {
   position: fixed;

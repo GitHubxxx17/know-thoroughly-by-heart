@@ -67,7 +67,7 @@ a {
   font-display: block;
 }
 body {
-  background-color: #f8f8f8;
+  background-color: #f4f4f4;
 }
 .scroll_box {
   position: relative;
@@ -141,7 +141,6 @@ body {
   height: 11.39240506vw;
   border-radius: 50%;
   background-color: #fff;
-  border: 0.25316456vw solid #a1a4b4;
   text-align: center;
   line-height: 11.39240506vw;
 }
@@ -219,6 +218,10 @@ body {
   align-items: center;
   transition: all 0.3s ease-in-out;
 }
+.memory_base .container .collection_base li .tp_inner .modleId,
+.memory_base .container .my_base li .tp_inner .modleId {
+  display: none;
+}
 .memory_base .container .collection_base li .content,
 .memory_base .container .my_base li .content {
   width: 60.75949367vw;
@@ -287,7 +290,7 @@ body {
   transform: scale(0);
   clip-path: circle(6.70886076vw at 90vw -10vw);
   transition: all 0.5s;
-  background-color: #f8f8f8;
+  background-color: #f4f4f4;
 }
 .memory_base .container .collection_base li {
   transition: all 0.3s ease-in-out;
@@ -391,6 +394,7 @@ body {
   font-size: 4.55696203vw;
   border-radius: 1.26582278vw;
   box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
+  text-indent: 2rem;
 }
 .learn_page .container .text_box .highlight {
   display: inline;
@@ -464,6 +468,32 @@ body {
 .edit_page header .header_right .choice {
   color: #84b3ff;
 }
+.edit_page .popup {
+  display: none;
+  z-index: 20000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000078;
+}
+.edit_page .popup .popup_box {
+  position: absolute;
+  width: 75.94936709vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #aba3ca;
+  z-index: 10000;
+  border-radius: 2.53164557vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 40%;
+  height: 37.97468354vw;
+  font-size: 5.06329114vw;
+}
 .edit_page .container {
   width: 100%;
 }
@@ -514,6 +544,7 @@ body {
   border-radius: 1.26582278vw;
   border: none;
   outline: none;
+  text-indent: 2rem;
 }
 .edit_page .container .text_box .text_page::selection {
   background: aquamarine;

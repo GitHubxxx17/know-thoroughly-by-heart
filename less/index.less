@@ -3,7 +3,7 @@
 @vw: 3.95vw;
 
 body {
-    background-color: #f8f8f8;
+    background-color: #f4f4f4;
 }
 
 .scroll_box {
@@ -11,7 +11,6 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-
     .scroll_top {
         left: 100% !important;
     }
@@ -93,7 +92,7 @@ body {
                 height: (45 / @vw);
                 border-radius: 50%;
                 background-color: #fff;
-                border: (1 / @vw) solid #a1a4b4;
+                //border: (1 / @vw) solid #a1a4b4;
                 text-align: center;
                 line-height: (45 / @vw);
 
@@ -180,6 +179,10 @@ body {
                     display: flex;
                     align-items: center;
                     transition: all .3s ease-in-out;
+
+                    .modleId {
+                        display: none;
+                    }
                 }
 
                 .content {
@@ -253,7 +256,7 @@ body {
             transform: scale(0);
             clip-path: circle((26.5 / @vw) at 90vw -10vw);
             transition: all .5s;
-            background-color: #f8f8f8;
+            background-color: #f4f4f4;
 
             li {
                 transition: all .3s ease-in-out;
@@ -382,7 +385,7 @@ body {
             font-size: (18 / @vw);
             border-radius: (5 / @vw);
             box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
-
+            text-indent: 2rem;
             .highlight {
                 display: inline;
                 background: aquamarine;
@@ -474,6 +477,35 @@ body {
         }
     }
 
+    .popup {
+        display: none;
+        z-index: 20000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000078;
+
+        .popup_box {
+            position: absolute;
+            width: (300 / @vw);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #aba3ca;
+            z-index: 10000;
+            border-radius: (10 / @vw);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 40%;
+            height: (150 / @vw);
+            font-size: (20 / @vw);
+        }
+
+    }
+
     .container {
         width: 100%;
 
@@ -530,7 +562,7 @@ body {
                 border-radius: (5 / @vw);
                 border: none;
                 outline: none;
-
+                text-indent: 2rem;
                 &::selection {
                     background: aquamarine;
                     color: black;
@@ -567,6 +599,7 @@ body {
     z-index: 1000;
     transition: all .2s;
 }
+
 
 .footer_nav {
     z-index: 2000;

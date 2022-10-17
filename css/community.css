@@ -70,15 +70,21 @@ body {
   background-color: #f8f8f8;
 }
 .community {
+  background-color: #f4f4f4;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 177.86666667vw;
+  height: 100vh;
+  overflow: scroll;
+  transition: all 0.2s;
 }
 .community header {
   z-index: 1000;
   position: fixed;
   left: 0;
   top: 0;
-  transition: all 0.2s;
   width: 100%;
   height: 12.8vw;
   background-color: #fff;
@@ -86,6 +92,7 @@ body {
   align-items: center;
   justify-content: space-evenly;
   padding: 0 4vw;
+  transition: all 0.2s;
 }
 .community header .header_search {
   position: relative;
@@ -135,6 +142,7 @@ body {
 }
 .community main .community_ul li .color {
   background-color: #ab97c9a2;
+  padding-top: 2.66666667vw;
 }
 .community main .community_ul li .color .upper {
   display: flex;
@@ -149,7 +157,7 @@ body {
 .community main .community_ul li .color .upper .head_portrait img {
   border-radius: 100%;
 }
-.community main .community_ul li .color .upper .idname {
+.community main .community_ul li .color .upper .idname1 {
   font-size: 4vw;
   margin-left: 2.66666667vw;
 }
@@ -234,4 +242,8 @@ body {
 }
 .community main .community_ul .click .inter_box .interactive .yellow {
   color: rgba(254, 211, 20, 0.943);
+}
+.community .community_footer {
+  width: 100%;
+  height: 18.66666667vw;
 }

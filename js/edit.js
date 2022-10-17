@@ -126,24 +126,58 @@ btns[2].onclick = () => {
 
 //点击保存
 btns[3].onclick = () => {
-    reset();
-    btns[3].classList.add('choice');
     let title1 = $('.edit_page .title_name').value;
     let info1 = $('.edit_page .text_page').innerHTML;
-    if (newTPFlag) {
-        $('.my_base li')[0].querySelector('.title').innerHTML = title1;
-        $('.my_base li')[0].querySelector('.info').innerHTML = info1;
-    } else {
-        title.innerHTML = title1;
-        info.innerHTML = info1;
+    let mid = null;
+    //标题和文本内容不能为空
+    if (title1 == '' || info1 == '') {
+        $('.edit_page .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.edit_page .popup').style.display = 'block';
+        return;
     }
-    let poststr = `context=${info1}&userId=${userInfo.userId}&modleTitle=${title1}&overWrite=1&modleLabel=1`
-    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
-        let newstr = JSON.parse(str).msg;
-        console.log(newstr);
-    }, true);
-    $('.edit_page .header_right .name')[3].innerHTML = '已保存';
+
+
+    reset();
+    
+    if (newTPFlag) {
+        mid = $('.my_base li')[0].querySelector('.modleId').innerHTML;
+    } else {
+        mid = modleId.innerHTML;
+    }
+    let fal = true;
+    // 标题一致就取消保存并提醒
+    Array.from(all('.my_base .title')).forEach((x,i) => {
+        if (x.innerHTML == title1 && mid != $('.my_base li')[i].querySelector('.modleId').innerHTML) {
+            $('.edit_page .popup_box').innerHTML = '标题不能与记忆库的模板重复';
+            $('.edit_page .popup').style.display = 'block';
+            fal = false;
+            return;
+        }
+    })
+
+    if(fal){
+        if (newTPFlag) {
+            $('.my_base li')[0].querySelector('.title').innerHTML = title1;
+            $('.my_base li')[0].querySelector('.info').innerHTML = info1;
+        } else {
+            title.innerHTML = title1;
+            info.innerHTML = info1;
+        }
+        let poststr = `context=${info1}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=1&modleId=${mid}`
+        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
+            let newstr = JSON.parse(str).msg;
+            console.log(newstr);
+        }, true);
+        btns[3].classList.add('choice');
+        $('.edit_page .header_right .name')[3].innerHTML = '已保存';
+    }
+    
 }
+
+//点击关闭弹窗
+$('.edit_page .popup').onclick = () => $('.edit_page .popup').style.display = 'none';
+//阻止事件冒泡
+$('.edit_page .popup .popup_box').onclick = (e) => e.stopPropagation();
 
 //选择节点函数点击选中div中所有内容，点击取消挖空,参数e为选中节点，n为判断是否自动点击
 function CancelHollowing(e, n) {

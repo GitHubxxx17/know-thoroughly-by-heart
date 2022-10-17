@@ -219,7 +219,7 @@ body {
 .pk_page .main .ranking_list {
   z-index: 100;
   width: 100vw;
-  height: 211.89873418vw;
+  height: 168.86075949vw;
   transition: all 0.2s;
   background-color: #fff;
   border-radius: 6% 6% 0 0;
@@ -227,7 +227,7 @@ body {
 }
 .pk_page .main .ranking_list .laiqu {
   width: 100%;
-  height: 12.65822785vw;
+  height: 10.12658228vw;
   text-align: center;
   background-color: #fff;
   border-radius: 6% 6% 0 0 ;
@@ -237,38 +237,6 @@ body {
   justify-content: space-between;
   padding: 0 5.06329114vw;
   padding-top: 2.53164557vw;
-}
-.pk_page .main .ranking_list .title_nav .left {
-  display: flex;
-  justify-content: flex-start;
-}
-.pk_page .main .ranking_list .title_nav .left .rank {
-  display: inline-block;
-  width: 15.18987342vw;
-}
-.pk_page .main .ranking_list .title_nav .left .rank i {
-  display: inline-block;
-  width: 15.18987342vw;
-  height: 10.12658228vw;
-  padding: 0 2.02531646vw;
-}
-.pk_page .main .ranking_list .title_nav .left .rank img {
-  display: inline-block;
-  width: 6.07594937vw;
-  height: 6.58227848vw;
-  margin-left: 0.50632911vw;
-}
-.pk_page .main .ranking_list .title_nav .left .rank .tong {
-  width: 5.56962025vw;
-  height: 6.07594937vw;
-}
-.pk_page .main .ranking_list .title_nav .left .rank .ten {
-  padding: 0 0.75949367vw;
-}
-.pk_page .main .ranking_list .title_nav .left .name {
-  display: inline-block;
-  text-align: right;
-  width: 22.78481013vw;
 }
 .pk_page .main .ranking_list .title_nav .rank_pic {
   width: 10.12658228vw;

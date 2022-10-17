@@ -83,6 +83,37 @@ body {
   height: 100vh;
   overflow: scroll;
 }
+.personal .person_main .modify_succ {
+  z-index: 500;
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 37.97468354vw;
+  height: 12.65822785vw;
+  border-radius: 2.53164557vw;
+  background-color: #eae5ff;
+  text-align: center;
+  line-height: 12.65822785vw;
+  font-size: 5.06329114vw;
+}
+.personal .person_main .modify_succani {
+  animation: modify_succani 2s 0.2s;
+}
+@keyframes modify_succani {
+  0% {
+    top: -10%;
+  }
+  50% {
+    top: 4%;
+  }
+  70% {
+    top: 4%;
+  }
+  100% {
+    top: -10%;
+  }
+}
 .personal .person_main .system_settings,
 .personal .person_main .personal_box {
   margin-top: 3.79746835vw;
@@ -226,6 +257,13 @@ body {
   font-size: 6.32911392vw;
   border: 0;
   border-bottom: 1px solid #aeacac;
+}
+.personal .modify .Modify_interface .modify_err {
+  font-size: 4.55696203vw;
+  color: red;
+  opacity: 0;
+  transition: all 0.3s;
+  margin: 5.06329114vw auto;
 }
 .personal .modify .Modify_interface .confirm {
   margin: 0 auto;
