@@ -36,11 +36,11 @@ $('.modify_title .left').onclick = () => {
 let nameReg = /^[0-9a-zA-Z\u4e00-\u9fa5]{1,6}$/;
 let phoneReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
 let passwordReg = /^[a-zA-Z0-9_]{6,16}$/;
-$('.modify .confirm').onclick = () => {
+$('.modify .confirm').onclick = (e) => {
     //保存修改的内容
     let modify_value = $('.Modify_interface input').value;
     //修改昵称
-
+    e.stopPropagation();
     if (modifyNum == 0 && nameReg.test(modify_value)) {
         ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?nickName=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
             let newstr = JSON.parse(str).msg;
@@ -58,12 +58,9 @@ $('.modify .confirm').onclick = () => {
             }
 
         }, true);
-    } else {
-        $('.modify_err').innerHTML = modifyErrArr[modifyNum];
-        $('.modify_err').style.opacity = '1';
     }
     //修改手机号
-    if (modifyNum == 1 && phoneReg.test(modify_value)) {
+    else if (modifyNum == 1 && phoneReg.test(modify_value)) {
         ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?phone=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr, modifyNum);
@@ -79,16 +76,19 @@ $('.modify .confirm').onclick = () => {
             }
             
         }, true);
-    } else {
-        $('.modify_err').innerHTML = modifyErrArr[modifyNum];
-        $('.modify_err').style.opacity = '1';
     }
     //修改密码
-    if (modifyNum == 2 && passwordReg.test(modify_value)) {
+    else if (modifyNum == 2 && passwordReg.test(modify_value)) {
         ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?password=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr, modifyNum);
-
+            if(newstr.data.isSuccess){
+                $('.modify_title .left').onclick();
+                $('.modify_succ').classList.add('modify_succani');
+            }else{
+                $('.modify_err').innerHTML = '修改密码失败';
+                $('.modify_err').style.opacity = '1';
+            }
         }, true);
     } else {
         $('.modify_err').innerHTML = modifyErrArr[modifyNum];

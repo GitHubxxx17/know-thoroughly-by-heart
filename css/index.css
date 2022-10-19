@@ -274,6 +274,7 @@ body {
 .memory_base .container .my_base .base_none_2 {
   display: none;
   width: 100%;
+  margin-top: calc(100vh - (400 / 3.95vw));
   height: 101.26582278vw;
   background-image: url(../images/空/空空如也.png);
   background-size: cover;
@@ -290,7 +291,6 @@ body {
   transform: scale(0);
   clip-path: circle(6.70886076vw at 90vw -10vw);
   transition: all 0.5s;
-  background-color: #f4f4f4;
 }
 .memory_base .container .collection_base li {
   transition: all 0.3s ease-in-out;
@@ -394,7 +394,6 @@ body {
   font-size: 4.55696203vw;
   border-radius: 1.26582278vw;
   box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
-  text-indent: 2rem;
 }
 .learn_page .container .text_box .highlight {
   display: inline;
@@ -544,7 +543,6 @@ body {
   border-radius: 1.26582278vw;
   border: none;
   outline: none;
-  text-indent: 2rem;
 }
 .edit_page .container .text_box .text_page::selection {
   background: aquamarine;

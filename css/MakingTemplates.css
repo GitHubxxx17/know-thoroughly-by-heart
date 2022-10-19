@@ -294,14 +294,13 @@ a {
   background-color: #ffffff;
   margin: 5.06329114vw auto;
   width: 93.67088608vw;
-  height: 144.30379747vw;
+  height: 66vh;
   padding: 2.53164557vw;
   overflow: scroll;
   outline: none;
   font-size: 4.55696203vw;
   border-radius: 1.26582278vw;
   box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
-  text-indent: 2rem;
 }
 .Making_page footer {
   position: fixed;

@@ -219,11 +219,12 @@ body {
 .pk_page .main .ranking_list {
   z-index: 100;
   width: 100vw;
-  height: 168.86075949vw;
+  height: calc(100vh - 17vw);
   transition: all 0.2s;
   background-color: #fff;
-  border-radius: 6% 6% 0 0;
-  background-image: url(../images/pk/排行榜.png);
+  border-radius: 5.06329114vw;
+  overflow: scroll;
+  background: url(../images/pk/排行榜.png) no-repeat;
 }
 .pk_page .main .ranking_list .laiqu {
   width: 100%;
@@ -237,6 +238,12 @@ body {
   justify-content: space-between;
   padding: 0 5.06329114vw;
   padding-top: 2.53164557vw;
+}
+.pk_page .main .ranking_list .title_nav .rank_title {
+  font-size: 5.06329114vw;
+}
+.pk_page .main .ranking_list .title_nav .rank_title .icon-paihangbang_paiming {
+  font-size: 5.06329114vw;
 }
 .pk_page .main .ranking_list .title_nav .rank_pic {
   width: 10.12658228vw;

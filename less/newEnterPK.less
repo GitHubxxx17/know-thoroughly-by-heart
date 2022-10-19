@@ -3,12 +3,20 @@
 @vw: 3.75vw;
 
 body{
-    background-color: rgb(155, 159, 243);
+    // background-color: rgb(155, 159, 243);
 }
 
 .enterPk{
+    width: 100%;
+    height: 100vh;
+    z-index: 10000;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    background-color: rgb(155, 159, 243);
+    transition: all .2s;
     // height: (667/@vw);
-    overflow: hidden;
+    // overflow: hidden;
     .head_nav_pk{
         margin-top: (10/@vw);
         display: flex;
@@ -16,6 +24,7 @@ body{
         align-items: center;
         //background-color: rgb(155, 159, 243);
         span{
+            font-size: (16 /@vw);
             color: #fff;
             margin-left: (15/@vw);
         }
@@ -118,6 +127,7 @@ body{
                     border-radius: 100%;
                     line-height: (35/@vw) ;
                     color: #fff;
+                    font-size: (16 / @vw);
                 }
             }
         }

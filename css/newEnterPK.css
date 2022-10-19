@@ -66,11 +66,15 @@ a {
   font-style: normal;
   font-display: block;
 }
-body {
-  background-color: #9b9ff3;
-}
 .enterPk {
-  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: -100%;
+  background-color: #9b9ff3;
+  transition: all 0.2s;
 }
 .enterPk .head_nav_pk {
   margin-top: 2.66666667vw;
@@ -79,6 +83,7 @@ body {
   align-items: center;
 }
 .enterPk .head_nav_pk span {
+  font-size: 4.26666667vw;
   color: #fff;
   margin-left: 4vw;
 }
@@ -177,6 +182,7 @@ body {
   border-radius: 100%;
   line-height: 9.33333333vw;
   color: #fff;
+  font-size: 4.26666667vw;
 }
 .enterPk .text_box {
   margin: 2.66666667vw auto;

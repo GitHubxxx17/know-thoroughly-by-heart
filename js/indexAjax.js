@@ -4,15 +4,17 @@ let newtitle = null;
 let newcontext = null;
 var newTPFlag = false;
 
-
 //获取用户模板
 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.userId}`, 'get', '', (str) => {
     let newstr = JSON.parse(str).msg;
     if (newstr.data.userModle) {
         let tparr = newstr.data.userModle;
         for (let x of tparr) {
-            newTP(x.modleTitle, x.content, x.modleId);
+            console.log(x);
+            let newcon = x.content.replace(/<缩进>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+            newTP(x.modleTitle, newcon, x.modleId,true);
         }
+        $('.footer_nav li')[0].onclick();
     } else {
         //刷新仓库
         $('.footer_nav li')[0].onclick();
@@ -35,18 +37,18 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
 //上传文件
 $('.Making_page .header_left input').onchange = function (e) {
     let file = e.target.files[0];
-    console.log(e.target.files);
     if (e.target.files.length != 0) {
         $('.Making_page .loading').style.display = 'block';
         let fd = new FormData($('.upload_form'));
         ajax(`http://8.134.104.234:8080/ReciteMemory/upload/parseContent?userId=${curr.userId}`, 'post', fd, (str) => {
             $('.Making_page .loading').style.display = 'none';
             let newstr = JSON.parse(str).msg;
-            console.log(newstr);
             let context = newstr.data.context;
+            let newcon = context.replace(/<\/p>/g,'').replace(/<p>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+            console.log(newcon);
             //将文件内容渲染到页面
             $('.Making_page .title input').value = file.name;
-            $('.Making_page .text_box').innerHTML = context;
+            $('.Making_page .text_box').innerHTML = newcon;
         }, false)
     }
 }
@@ -89,7 +91,9 @@ $('.Making_page .popup_box button')[0].onclick = () => {
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;
             let modle = newstr.data.modle;
-            newTP(newtitle, newcontext, modle.modleId);
+            newTP(newtitle, newcontext, modle.modleId,true);
+            //刷新仓库
+            $('.footer_nav li')[0].onclick();
             //清空编辑内容
             $('.Making_page .title input').value = '';
             $('.Making_page .text_box').innerHTML = '';
@@ -109,7 +113,9 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             console.log(newstr);
             let modle = newstr.data.modle;
             newTPFlag = true;
-            newTP(newtitle, newcontext, modle.modleId);
+            newTP(newtitle, newcontext, modle.modleId,true);
+            //刷新仓库
+            $('.footer_nav li')[0].onclick();
             $('.edit_page .title_name').value = newtitle;
             $('.edit_page .text_page').innerHTML = newcontext;
             $('.edit_page').style.left = '0';
@@ -119,28 +125,7 @@ $('.Making_page .popup_box button')[1].onclick = () => {
     }
     $('.Making_page .popup').style.display = 'none';
 }
-//新建模板到个人仓库
-function newTP(title, context, modleId) {
-    let li = document.createElement('li');
-    li.innerHTML = `<div class="tp_inner">
-                        <div class="modleId">${modleId}</div>
-                        <div class="content">
-                            <h3 class="title ellipsis">${title}</h3>
-                            <div class="info ellipsis">${context}</div>
-                        </div>
-                        <div class="tip">
-                            <div class="date">2022-10-15</div>
-                            <div class="times">学习次数：2</div>
-                        </div>
-                        <div class="template_btn">
-                            <div class="tp_btn edit">编辑</div>
-                            <div class="tp_btn del">删除</div>
-                        </div>
-                    </div>`
-    $('.my_base .base_lis').prepend(li);
-    //刷新仓库
-    $('.footer_nav li')[0].onclick();
-}
+
 
 
 

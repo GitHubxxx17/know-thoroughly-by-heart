@@ -18,7 +18,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
 
     }
 }
-
+$('.footer_nav li')[0].onclick();
 function pageReset(i) {
     $('.memory_base header').classList.add('scroll_top');
     $('.pk_page .pk_footer').classList.add('scroll_top');
@@ -30,8 +30,16 @@ function pageReset(i) {
         if (document.querySelector('.my_base li')) {
             for (let x of all('.my_base li'))
                 x.classList.add('baseLis_fadeIn');
+            $('.base_none_1').style.display = 'none';
         } else {
             $('.base_none_1').style.display = 'block';
+        }
+        if (document.querySelector('.collection_base li')) {
+            for (let x of all('.collection_base li'))
+                x.classList.add('baseLis_fadeIn');
+            $('.base_none_2').style.display = 'none';
+        } else {
+            $('.base_none_2').style.display = 'block';
         }
         TP();
     }
@@ -42,7 +50,7 @@ var title = null;
 var info = null;
 var modleId = null;
 var flag_learn = false;
-
+var mStatus = 0;
 //为模板添加事件
 
 function TP() {
@@ -76,6 +84,8 @@ function TP() {
                 title = all('.tp_inner .title')[i];
                 info = all('.tp_inner .info')[i];
                 modleId = all('.tp_inner .modleId')[i];
+                if(all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
+                    mStatus = 1;
                 $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
                 $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
                 $('.edit_page').style.left = '0';
@@ -83,6 +93,7 @@ function TP() {
             }
             //点击删除模板
             all('.template_btn .del')[i].onclick = (e) => {
+                
                 x.parentNode.classList.add('baseLis_del');
                 e.stopPropagation();
                 if (all('.my_base li').length == all('.my_base .baseLis_del').length)
@@ -90,11 +101,14 @@ function TP() {
                 if (all('.collection_base li').length == all('.collection_base .baseLis_del').length)
                     $('.base_none_2').style.display = 'block';
                 let modleId = all('.modleId')[i].innerHTML;
-                console.log(modleId);
                 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${modleId}`, (str) => {
                     let newstr = JSON.parse(str).msg;
                     console.log(newstr);
+                    x.parentNode.addEventListener('animationend',() => {
+                        $('.my_base ul').removeChild(x.parentNode);
+                    })
                 }, true)
+                
             }
         }
     });
@@ -115,13 +129,22 @@ $('.icon_btn').onclick = () => {
     if (!document.querySelector('.collection_base li'))
         $('.base_none_2').style.display = 'block';
 
-    timer = null;
-    for (let x of all('.collection_base li'))
-        x.classList.remove('baseLis_fadeIn');
-
-    for (let x of all('.my_base li'))
-        x.classList.toggle('baseLis_fadeIn');
-
+    timer = null;    
+    if (document.querySelector('.my_base li')) {
+        for (let x of all('.my_base li'))
+            x.classList.add('baseLis_fadeIn');
+        $('.base_none_1').style.display = 'none';
+    } else {
+        $('.base_none_1').style.display = 'block';
+    }
+    if (document.querySelector('.collection_base li')) {
+        for (let x of all('.collection_base li'))
+            x.classList.add('baseLis_fadeIn');
+        $('.base_none_2').style.display = 'none';
+    } else {
+        $('.base_none_2').style.display = 'block';
+    }
+    TP();
     timer = setTimeout(() => {
         if ($('.icon_btn .icon').classList.contains('icon-shoucang')) {
             $('.icon_btn .icon').classList.add('icon-jiyi');

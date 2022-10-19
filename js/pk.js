@@ -15,3 +15,7 @@ laqu.onclick = function() {
         judge = true;
     }
 }
+
+$('.start_game').onclick = () => {
+    $('.enterPk').style.left = '0';
+}

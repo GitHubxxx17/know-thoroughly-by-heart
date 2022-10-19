@@ -237,6 +237,7 @@ body {
             .base_none_2 {
                 display: none;
                 width: 100%;
+                margin-top: calc((100vh - (400 / @vw)));
                 height: (400 / @vw);
                 background-image: url(../images/空/空空如也.png);
                 background-size: cover;
@@ -256,7 +257,6 @@ body {
             transform: scale(0);
             clip-path: circle((26.5 / @vw) at 90vw -10vw);
             transition: all .5s;
-            background-color: #f4f4f4;
 
             li {
                 transition: all .3s ease-in-out;
@@ -385,7 +385,7 @@ body {
             font-size: (18 / @vw);
             border-radius: (5 / @vw);
             box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
-            text-indent: 2rem;
+            // text-indent: 2rem;
             .highlight {
                 display: inline;
                 background: aquamarine;
@@ -562,7 +562,7 @@ body {
                 border-radius: (5 / @vw);
                 border: none;
                 outline: none;
-                text-indent: 2rem;
+                // text-indent: 2rem;
                 &::selection {
                     background: aquamarine;
                     color: black;
@@ -599,7 +599,6 @@ body {
     z-index: 1000;
     transition: all .2s;
 }
-
 
 .footer_nav {
     z-index: 2000;
