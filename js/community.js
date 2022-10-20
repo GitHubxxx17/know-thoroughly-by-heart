@@ -110,14 +110,16 @@ $('.viewTemplate .back').onclick = () => {
 
 for (let i = 1; i <= 3; i++) {
     //渲染社区模板
-    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=1`, 'get', '', (str) => {
+    setTimeout(() => {
+        ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=1`, 'get', '', (str) => {
         let newstr = JSON.parse(str).msg;
         console.log(newstr);
         let comarr = newstr.data.modleList;
         commonArr[i] = comarr;
         console.log(comarr,commonArr);
-        
     }, true);
+    },100);
+    
 }
 
 

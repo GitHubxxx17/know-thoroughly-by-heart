@@ -35,8 +35,16 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
     for (let x of $('.idname'))
         x.innerHTML = curr.userInfo.nickName;
     $('.personal_box .phone').innerHTML = curr.phone;
-    let img = 'data:image/jpeg;base64,'+curr.userInfo.image;
-    $('.personal .head_portrait img').src = img;
+    if(curr.userInfo.image == ''){
+        return;
+    }else{
+        let img = 'data:image/jpeg;base64,'+curr.userInfo.image;
+        for(let x of $('.head_portrait img')){
+            x.src = img;
+        }
+    }
+    
+    
 })
 
 

@@ -319,8 +319,14 @@ body{
     background-color: #fff;
     
     .mine{
+        height: 60vh;
+        width: 100%;
+        background-color:#f8d63a;
+        position: absolute;
+        top: 0;
         // margin-top: (-410/@vw);
-        background-color:#fff;
+        // background-color:#fff;
+        clip-path: polygon(0 0, 100% 0, 100% 70%,0 100%);
         .back_bock{
             display: flex;
             align-items: center;
@@ -418,31 +424,36 @@ body{
             text-align: center;
         }
 
-        .bgc{
-            .triangle{
-                width: 0; height: 0;
-                border-color: #f8d63a transparent transparent #f8d63a;
-                border-width: (80/@vw) (30vh) (80/@vw) (30vh);
-                border-style: solid;
-            }
-        }
+        // .bgc{
+        //     .triangle{
+        //         width: 0; height: 0;
+        //         border-color: #f8d63a transparent transparent #f8d63a;
+        //         border-width: (80/@vw) (30vh) (80/@vw) (30vh);
+        //         border-style: solid;
+        //     }
+        // }
     }
 
     .other{
+        position: absolute;
+        bottom: 0;
+        height: 60vh;
+        width: 100%;
         // margin-top: (816/@vw);
-        // background-color:#a48ec5cf;
+        background-color:#a48ec5cf;
         // height: calc(100vh - 110vw);
+        clip-path: polygon(0 30%, 100% 0, 100% 100%,0 100%);
         .corrugated_box{
             margin-top: (-1/@vw);
             background-color:#a48ec5;
             // margin-top: (-20/@vw);
-            height: calc(100vh - 57vh);
+            height: 60vh;
             display: flex;
             justify-content: center;
             align-items: center;
 
             .circle {
-                margin-top: (-15vh);
+                // margin-top: (-15vh);
                 width: 25px;
                 height: 25px;
                 background-color:rgba(166, 92, 245, 0.935);
@@ -496,7 +507,7 @@ body{
             }
 
             .head_portrait{
-                margin-top: (-15vh);
+                // margin-top: (-15vh);
                 z-index: 100;
                 width: (105/@vw);
                 height: (105/@vw);
@@ -537,16 +548,16 @@ body{
             text-align: center;
         }
 
-        .bgc{
-            margin-top: (-160/@vw);
-            // background-color: transparent;
-            .triangle{
-                width: 0; height: 0;
-                border-color: transparent #a48ec5 #a48ec5 transparent;
-                border-width: (80/@vw) (30vh) (80/@vw) (30vh);
-                border-style: solid;
-            }
-        }
+        // .bgc{
+        //     margin-top: (-160/@vw);
+        //     // background-color: transparent;
+        //     .triangle{
+        //         width: 0; height: 0;
+        //         border-color: transparent #a48ec5 #a48ec5 transparent;
+        //         border-width: (80/@vw) (30vh) (80/@vw) (30vh);
+        //         border-style: solid;
+        //     }
+        // }
 
         .search{
             // background-color:#a48ec5cf;
@@ -574,7 +585,7 @@ body{
     width: (150/@vw);
     height: (100/@vw);
     margin-left: (-70/@vw);
-    margin-top: (-50/@vw);
+    margin-top: -20%;
     font-size: (90/@vw);
     text-transform: uppercase;
 }
@@ -910,16 +921,21 @@ body{
         transform: scale(1);
     }
 }
+
 .appearup {
     -webkit-animation-name: appearup;
     animation-delay: 1s; 
     animation-name: appearup;
+    animation-timing-function: ease-in-out;
+    // animation: appearup 1s ease-out alternate-reverse infinite;
 }
 
 .appearbottom {
     -webkit-animation-name: appearbottom;
     animation-delay: 1s; 
     animation-name: appearbottom;
+    animation-timing-function: ease-in-out; 
+    // animation: appearbottom 1s ease-out alternate-reverse infinite;
 }
 
 .appear{
@@ -929,6 +945,29 @@ body{
 }
 
 //从上滑出动画
+// @keyframes appearup {
+//     0% {
+//         opacity: 0;
+//         -webkit-transform: translate3d(0, -100%, 0);
+//         transform: translate3d(0, -100%, 0);
+//     }
+//     50% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, 0, 0);
+//         transform: translate3d(0, 0, 0);
+//     }
+//     70% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, 0%, 0);
+//         transform: translate3d(0, 0%, 0);
+//     }
+//     90% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, -15%, 0);
+//         transform: translate3d(0, -15%, 0);
+//     }
+// }
+
 @keyframes appearup {
     0% {
         opacity: 0;
@@ -940,15 +979,26 @@ body{
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
-    70% {
+    52% {
         opacity: 1;
         -webkit-transform: translate3d(0, 0%, 0);
         transform: translate3d(0, 0%, 0);
+        animation-timing-function: ease-in;
+    }
+    65% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -6%, 0);
+        transform: translate3d(0, -6%, 0);
+    }
+    68% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -6%, 0);
+        transform: translate3d(0, -6%, 0);
     }
     90% {
         opacity: 1;
-        -webkit-transform: translate3d(0, -15%, 0);
-        transform: translate3d(0, -15%, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -984,6 +1034,29 @@ body{
 //从下滑出的动画
 
 //从上滑出动画
+// @keyframes appearbottom {
+//     0% {
+//         opacity: 0;
+//         -webkit-transform: translate3d(0, 100%, 0);
+//         transform: translate3d(0, 100%, 0);
+//     }
+//     50% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, 0, 0);
+//         transform: translate3d(0, 0, 0);
+//     }
+//     70% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, 0%, 0);
+//         transform: translate3d(0, 0%, 0);
+//     }
+//     90% {
+//         opacity: 1;
+//         -webkit-transform: translate3d(0, 15%, 0);
+//         transform: translate3d(0, 15%, 0);
+//     }
+// }
+
 @keyframes appearbottom {
     0% {
         opacity: 0;
@@ -995,15 +1068,26 @@ body{
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
-    70% {
+    52% {
         opacity: 1;
         -webkit-transform: translate3d(0, 0%, 0);
         transform: translate3d(0, 0%, 0);
+        animation-timing-function: ease-in;
+    }
+    65% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 6%, 0);
+        transform: translate3d(0, 6%, 0);
+    }
+    68% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 6%, 0);
+        transform: translate3d(0, 6%, 0);
     }
     90% {
         opacity: 1;
-        -webkit-transform: translate3d(0, 15%, 0);
-        transform: translate3d(0, 15%, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 }
 

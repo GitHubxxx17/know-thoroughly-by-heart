@@ -17,5 +17,6 @@ laqu.onclick = function() {
 }
 
 $('.start_game').onclick = () => {
-    $('.enterPk').style.left = '0';
+    $('.newwaitPK').style.display = 'block';
 }
+

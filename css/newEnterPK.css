@@ -337,7 +337,12 @@ a {
   background-color: #fff;
 }
 .newwaitPK .mine {
-  background-color: #fff;
+  height: 60vh;
+  width: 100%;
+  background-color: #f8d63a;
+  position: absolute;
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
 }
 .newwaitPK .mine .back_bock {
   display: flex;
@@ -423,24 +428,24 @@ a {
   font-size: 4.26666667vw;
   text-align: center;
 }
-.newwaitPK .mine .bgc .triangle {
-  width: 0;
-  height: 0;
-  border-color: #f8d63a transparent transparent #f8d63a;
-  border-width: 21.33333333vw 30vh 21.33333333vw 30vh;
-  border-style: solid;
+.newwaitPK .other {
+  position: absolute;
+  bottom: 0;
+  height: 60vh;
+  width: 100%;
+  background-color: #a48ec5cf;
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
 }
 .newwaitPK .other .corrugated_box {
   margin-top: -0.26666667vw;
   background-color: #a48ec5;
-  height: calc(100vh - 57vh);
+  height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
   /* 分别为每个圆形设置不同的宽高、不透明度、动画延迟时间 */
 }
 .newwaitPK .other .corrugated_box .circle {
-  margin-top: -15vh;
   width: 25px;
   height: 25px;
   background-color: rgba(166, 92, 245, 0.935);
@@ -486,7 +491,6 @@ a {
   animation-delay: 0.72s;
 }
 .newwaitPK .other .corrugated_box .head_portrait {
-  margin-top: -15vh;
   z-index: 100;
   width: 28vw;
   height: 28vw;
@@ -521,16 +525,6 @@ a {
   font-size: 4.26666667vw;
   text-align: center;
 }
-.newwaitPK .other .bgc {
-  margin-top: -42.66666667vw;
-}
-.newwaitPK .other .bgc .triangle {
-  width: 0;
-  height: 0;
-  border-color: transparent #a48ec5 #a48ec5 transparent;
-  border-width: 21.33333333vw 30vh 21.33333333vw 30vh;
-  border-style: solid;
-}
 .newwaitPK .other .search {
   margin-top: -2.66666667vw;
   padding: 4.74666667vw 0;
@@ -551,7 +545,7 @@ a {
   width: 40vw;
   height: 26.66666667vw;
   margin-left: -18.66666667vw;
-  margin-top: -13.33333333vw;
+  margin-top: -20%;
   font-size: 24vw;
   text-transform: uppercase;
 }
@@ -842,11 +836,13 @@ a {
   -webkit-animation-name: appearup;
   animation-delay: 1s;
   animation-name: appearup;
+  animation-timing-function: ease-in-out;
 }
 .appearbottom {
   -webkit-animation-name: appearbottom;
   animation-delay: 1s;
   animation-name: appearbottom;
+  animation-timing-function: ease-in-out;
 }
 .appear {
   visibility: visible;
@@ -864,15 +860,26 @@ a {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
-  70% {
+  52% {
     opacity: 1;
     -webkit-transform: translate3d(0, 0%, 0);
     transform: translate3d(0, 0%, 0);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -6%, 0);
+    transform: translate3d(0, -6%, 0);
+  }
+  68% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -6%, 0);
+    transform: translate3d(0, -6%, 0);
   }
   90% {
     opacity: 1;
-    -webkit-transform: translate3d(0, -15%, 0);
-    transform: translate3d(0, -15%, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes appearup2 {
@@ -898,15 +905,26 @@ a {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
-  70% {
+  52% {
     opacity: 1;
     -webkit-transform: translate3d(0, 0%, 0);
     transform: translate3d(0, 0%, 0);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 6%, 0);
+    transform: translate3d(0, 6%, 0);
+  }
+  68% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 6%, 0);
+    transform: translate3d(0, 6%, 0);
   }
   90% {
     opacity: 1;
-    -webkit-transform: translate3d(0, 15%, 0);
-    transform: translate3d(0, 15%, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes appearbottom2 {
