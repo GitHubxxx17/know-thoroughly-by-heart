@@ -93,7 +93,17 @@ function newTP(title, context, modleId, label, flag) {
 }
 
 //社区渲染
-function comTP(title,context,modleId,label,username) {
+function comTP(title, context, modleId, label, username,name_flag) {
+    let interactive = '';
+    if(name_flag){
+        interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
+                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>打赏</i></span>`
+    }else{
+        interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;&nbsp; <i>收藏</i></span>
+                        <span class="jifen iconfont icon-jifenhuiyuan hidden"> &nbsp;<i>打赏</i></span>
+                        <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
+                        `
+    }
     let li = document.createElement('li');
     li.innerHTML = `<div class="modleId">${modleId}</div>
                         <div class="color">
@@ -117,34 +127,40 @@ function comTP(title,context,modleId,label,username) {
                                 </div>
                                 <div class="inter_box" id="interactive">
                                     <div class="interactive">
-                                        <span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
-                                        <span class="jifen iconfont icon-jifenhuiyuan
-                                            "> &nbsp;<i>打赏</i></span>
+                                        ${interactive}
                                     </div>
                                 </div>
                                 <i class=" menu iconfont icon-shixincaidan"></i>
                             </div>
                         </div>`
-                    
+
     $('.community_ul').prepend(li);
 }
 
 //上传页面渲染模板
-function UploadTP(title, context, modleId,label) {
+function UploadTP(title, context, modleId, label) {
     let li = document.createElement('li');
-    li.innerHTML = `<div class="tp_inner1">
-                        <div class="modleId">${modleId}</div>
-                        <div class="content">
-                            <h3 class="title ellipsis">${title}</h3>
+    li.innerHTML = `<div class="modleId">${modleId}</div>
+                    <div class="content">
+                        <div class="title_label">
+                            <h4 class="title ellipsis">${title}</h4>
+                            <div class="label">${label}</div>
+                        </div>
+                        <div class="info_box">
                             <div class="info ellipsis">${context}</div>
                         </div>
-                        <div class="tip">
-                            <div class="date">2022-10-15</div>
-                            <div class="label">${label}</div>
+                    </div>
+                    <div class="select">
+                        <div class="circle">
+                            <i class="iconfont icon-xuanze1"></i>
                         </div>
                     </div>`
     $('.upload_page ul').prepend(li);
 }
+
+
+
+
 
 //转换标签成id
 function labelId1(str) {

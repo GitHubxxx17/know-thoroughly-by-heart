@@ -1,3 +1,5 @@
+let curr = getData('current_user');
+
 //底部导航栏
 for (let i = 0; i < $('.footer_nav li').length; i++) {
     $('.footer_nav li')[i].onclick = () => {
@@ -91,7 +93,7 @@ function TP() {
                 modleId = all('.tp_inner .modleId')[i];
                 label = all('.tp_inner .label')[i];
                 console.log(label);
-                if(all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
+                if (all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
                     mStatus = 1;
                 $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
                 $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
@@ -102,7 +104,7 @@ function TP() {
 
             //点击删除模板
             all('.template_btn .del')[i].onclick = (e) => {
-                
+
                 x.parentNode.classList.add('baseLis_del');
                 e.stopPropagation();
                 if (all('.my_base li').length == all('.my_base .baseLis_del').length)
@@ -110,14 +112,24 @@ function TP() {
                 if (all('.collection_base li').length == all('.collection_base .baseLis_del').length)
                     $('.base_none_2').style.display = 'block';
                 let modleId = all('.modleId')[i].innerHTML;
-                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${modleId}`, (str) => {
-                    let newstr = JSON.parse(str).msg;
-                    console.log(newstr);
-                    x.parentNode.addEventListener('animationend',() => {
-                        $('.my_base ul').removeChild(x.parentNode);
-                    })
-                }, true)
-                
+                if (i < all('.my_base li').length) {
+                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${modleId}`, (str) => {
+                        let newstr = JSON.parse(str).msg;
+                        console.log(newstr);
+                        x.parentNode.addEventListener('animationend', () => {
+                            $('.my_base ul').removeChild(x.parentNode);
+                        })
+                    }, true)
+                } else {
+                    
+                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/CancelCollet?userId=${curr.userId}&modleId=${all('.tp_inner')[i].querySelector('.modleId').innerHTML}&mStatus=0`, 'get','', (str) => {
+                        let newstr = JSON.parse(str).msg;
+                        console.log(newstr);
+                        x.parentNode.addEventListener('animationend', () => {
+                            $('.collection_base ul').removeChild(x.parentNode);
+                        })
+                    }, true)
+                }
             }
         }
     });
@@ -138,7 +150,7 @@ $('.icon_btn').onclick = () => {
     if (!document.querySelector('.collection_base li'))
         $('.base_none_2').style.display = 'block';
 
-    timer = null;    
+    timer = null;
     if (document.querySelector('.my_base li')) {
         for (let x of all('.my_base li'))
             x.classList.add('baseLis_fadeIn');

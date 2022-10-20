@@ -41,16 +41,29 @@ body{
         padding: (15/@vw) 0;
         width: (350/@vw);
         height: (80/@vw);
+
         .other,
         .mine{
             width: (150/@vw);
             height: (55/@vw);
             display: flex;
+            justify-content:flex-start;
             align-items: center;
-            background-color:rgb(95, 95, 249);
+            overflow: hidden;
+            background-color:#90909078;
             border-radius: (10/@vw);
 
+            .blook_change{
+                position: fixed;
+                display: flex;
+                align-items: center;
+                width: (150/@vw);
+                height: (55/@vw);
+                border-radius: (10/@vw);
+                background-color:rgb(95, 95, 249);
+            }
             .head_portrait{
+                z-index: 100;
                 width: (50/@vw);
                 padding: (3/@vw);
                 margin-left: (5/@vw);
@@ -63,6 +76,7 @@ body{
             }
 
             .name_blood{
+                z-index: 100;
                 color: #fff;
                 font-size: (15/@vw);
                 .idname{
@@ -75,7 +89,24 @@ body{
         }
 
         .other{
-            background-color: rgb(253, 99, 99);
+            display: flex;
+            justify-content:flex-end;
+            align-items: center;
+            background-color:#90909078;
+            
+            .blook_change{
+                position: fixed;
+                display: flex;
+                align-items: center;
+                width: (150/@vw);
+                height: (55/@vw);
+                border-radius: (10/@vw);
+                background-color: rgb(253, 99, 99);
+            }
+
+            .head_portrait{
+                margin-right: (5/@vw);
+            }
         }
 
         .time{
@@ -145,11 +176,13 @@ body{
         letter-spacing: 0.15em;
         border-radius: (5 / @vw);
         box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
+        user-select: none;
+        transition: all .3s;
     
         .highlight {
             display: inline;
             background: rgb(248, 207, 4);
-            transition: all .3s;
+            // transition: all .3s;
     
             &::selection {
                 background: rgb(234, 255, 2) !important;
@@ -168,11 +201,22 @@ body{
         }
     
         .recite {
-            height: (30 / @vw);
-            background-color: darkgray !important;
-            color: darkgray !important;
+            height: (35 / @vw);
+            background-color: rgb(248, 207, 4) !important;
+            color: rgb(248, 207, 4) !important;
             border-radius: (5 / @vw);
             user-select: none;
+            padding: 0 (5 / @vw);
+        }
+
+        .right {
+            color: #000 !important;
+            background-color: rgb(58, 255, 81) !important;
+        }
+
+        .wrong {
+            color: #000 !important;
+            background-color: rgb(255, 0, 0) !important;
         }
     }
 
@@ -590,6 +634,25 @@ body{
     text-transform: uppercase;
 }
 
+.img_box{
+    margin-left: -18%;
+    margin-top: -19%;
+    width: (130/@vw);
+    height: (130/@vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+
+    img{
+        transition: all 10s;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .liti{
     color: #ffffff;
     text-shadow: 0px 5px #c0c0c0,
@@ -944,6 +1007,16 @@ body{
     animation-name: appear;
 }
 
+.appear_xz{
+    visibility: visible; 
+    animation-delay: 1s; 
+    animation-name: appear;
+}
+
+.xz{
+    animation: xz 1s linear infinite;
+}
+
 //从上滑出动画
 // @keyframes appearup {
 //     0% {
@@ -1129,6 +1202,16 @@ body{
   
     to {
       opacity: 1;
+    }
+}
+
+
+@keyframes xz {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 

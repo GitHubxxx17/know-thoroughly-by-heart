@@ -203,7 +203,7 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 .community main .community_ul li .color .content {
@@ -221,10 +221,6 @@ a {
 .community main .community_ul li .color .content .info_box .info {
   font-size: 3.73333333vw;
   line-height: 6.66666667vw;
-}
-.community main .community_ul .footer {
-  width: 100%;
-  height: 18.66666667vw;
 }
 .community main .community_ul .click {
   position: relative;
@@ -275,9 +271,12 @@ a {
 }
 .community main .community_ul .click .inter_box .interactive {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
   width: 42.66666667vw;
+}
+.community main .community_ul .click .inter_box .interactive .hidden {
+  display: none !important;
 }
 .community main .community_ul .click .inter_box .interactive span {
   display: flex;
@@ -300,6 +299,10 @@ a {
 }
 .community main .community_ul .click .inter_box .interactive .yellow {
   color: rgba(254, 211, 20, 0.943);
+}
+.community main .footer {
+  width: 100%;
+  height: 18.66666667vw;
 }
 .community .community_footer {
   width: 100%;

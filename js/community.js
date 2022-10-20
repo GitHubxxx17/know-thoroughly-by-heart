@@ -88,9 +88,16 @@ function communityTP() {
     //点击浏览模板
     Array.from(all('.community_ul .content')).forEach((x, i) => {
         x.addEventListener('click', function (event) {
+            if(x.nextElementSibling.querySelector('.dainzan').classList.contains('yellow')){
+                $('.viewTemplate .dainzan .iconfont').classList.add('yellow');
+            }
+            $('.viewTemplate footer').style.display = 'block';
+            if(x.parentNode.querySelector('.idname1').innerHTML == curr.userInfo.nickName){
+                $('.viewTemplate footer').style.display = 'none';
+            }
             $('.viewTemplate').classList.remove('scroll_top');
             $('.viewTemplate footer').classList.remove('scroll_top');
-
+            $('.viewTemplate .idname').innerHTML = $('.community_ul .idname1')[i].innerHTML;
             $('.viewTemplate .title').innerHTML = $('.community_ul .title')[i].innerHTML;
             $('.viewTemplate .text_box').innerHTML = $('.community_ul .info')[i].innerHTML;
             $('.viewTemplate .label').innerHTML = $('.community_ul .label')[i].innerHTML;
@@ -98,29 +105,66 @@ function communityTP() {
         })
     })
 
+    //点击删除上传的模板
+    Array.from(all('.community_ul .shanchu')).forEach((x, i) => {
+        x.addEventListener('click', function (event) {
+            if (x.classList.contains("yellow")) {
+                x.classList.remove("yellow");
+            } else {
+                x.classList.add("yellow");
+            }
+            setTimeout(() => all('.inter_box')[i].style.width = "0", 600);
+            event.stopPropagation(); //阻止冒泡
 
+            let modleId = x.parentNode.parentNode.parentNode.parentNode.previousElementSibling.innerHTML;
+            console.log(modleId);
+            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity`, 'post', `modleId=${modleId}&common=${0}`, (str) => {
+                let newstr = JSON.parse(str).msg;
+                console.log(newstr);
+                if (newstr.code == '200') {
+                    $('.community header .label li')[0].onclick();
+                }
+            }, true);
+
+        })
+    })
 
 }
-
+communityTP()
 //浏览页面点击返回
 $('.viewTemplate .back').onclick = () => {
     $('.viewTemplate').classList.add('scroll_top');
     $('.viewTemplate footer').classList.add('scroll_top');
 }
-
+//渲染社区模板
+commonArr[0] = [];
 for (let i = 1; i <= 3; i++) {
-    //渲染社区模板
     setTimeout(() => {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=1`, 'get', '', (str) => {
-        let newstr = JSON.parse(str).msg;
-        console.log(newstr);
-        let comarr = newstr.data.modleList;
-        commonArr[i] = comarr;
-        console.log(comarr,commonArr);
-    }, true);
-    },100);
-    
+        ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=0`, 'get', '', (str) => {
+            let newstr = JSON.parse(str).msg;
+            console.log(newstr);
+            if(newstr.content != '参数获取失败'){
+                let comarr = newstr.data.modleList;
+                commonArr[i] = comarr;
+                console.log(comarr, commonArr);
+                if(comarr.length != 0){
+                    for(let x of comarr){
+                        let name_flag = true;
+                        commonArr[0].push(x);
+                        let newcont = x.content.replace(/<缩进>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+                        if(x.nickName == curr.userInfo.nickName)
+                        name_flag = false;
+                        comTP(x.modleTitle, newcont, x.modleId, x.modleLabel,x.nickName,name_flag);
+                    }
+                    communityTP();
+
+                }
+            }
+            
+        }, true);
+    }, 100);
 }
+
 
 
 //点击进入上传页面
@@ -137,7 +181,7 @@ $('.community .upload').onclick = () => {
         for (let x of all('.upload_page li')) {
             x.classList.add('uploadLis_fadeIn');
         }
-        for (let x of all('.upload_page .tp_inner1')) {
+        for (let x of all('.upload_page .select .circle')) {
             x.onclick = () => {
                 x.classList.toggle('selected');
             }
@@ -146,31 +190,23 @@ $('.community .upload').onclick = () => {
 
 }
 
-// 上传按钮
-$('.uploadMP').addEventListener('touchstart', () => {
-    $('.uploadMP').style.backgroundColor = '#a89cd4'
-})
-
-$('.uploadMP').addEventListener('touchend', () => {
-    $('.uploadMP').style.backgroundColor = '#eeedf5'
-})
-
 //上传到社区
 $('.uploadMP').onclick = () => {
-    for (let x of all('.upload_page .tp_inner1')) {
-        console.log(x.querySelector('.modleId').innerHTML);
+    Array.from(all('.upload_page .select .circle')).forEach((x, i) => {
         if (x.classList.contains('selected')) {
-            let modleId = x.querySelector('.modleId').innerHTML;
+            let modleId = all('.upload_page li')[i].querySelector('.modleId').innerHTML;
 
             ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity`, 'post', `modleId=${modleId}&common=${1}`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
                 if (newstr.code == '200') {
                     $('.upload_page .back').onclick();
+                    console.log($('.community header .label li')[0]);
+                    $('.community header .label li')[0].onclick();
                 }
             }, true);
         }
-    }
+    })
 }
 //上传页面点击返回
 $('.upload_page .back').onclick = () => {
@@ -180,15 +216,24 @@ $('.upload_page .back').onclick = () => {
 
 //切换标签
 Array.from($('.community header .label li')).forEach((x, i) => {
-    x.addEventListener('click', () => {
+    x.onclick = () => {
+        $('.community_ul').innerHTML = '<li class="footer"></li>';
         for (let k of $('.community header .label li')) {
             k.classList.remove('active');
         }
         x.classList.add('active');
-        // for (let k of commonArr[labelId1(x.innerText)]) {
-        //     comTP(k.modleTitle, k.content, k.modleId, k.modleLabel);
-        // }
-        // communityTP();
-    })
+        if(i == 0 && commonArr[0].length != 0){
+            for (let k of commonArr[0]) {
+                let newcont = k.content.replace(/<缩进>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel,k.nickName);
+            }
+        }
+        if(commonArr[labelId1(x.innerText)] && i != 0){
+            for (let k of commonArr[labelId1(x.innerText)]) {
+                let newcont = k.content.replace(/<缩进>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
+                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel,k.nickName);
+            }
+        }
+        communityTP();
+    }
 })
-

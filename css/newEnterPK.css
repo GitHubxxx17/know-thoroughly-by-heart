@@ -103,12 +103,25 @@ a {
   width: 40vw;
   height: 14.66666667vw;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  background-color: #5f5ff9;
+  overflow: hidden;
+  background-color: #90909078;
   border-radius: 2.66666667vw;
+}
+.enterPk .pk_blood .other .blook_change,
+.enterPk .pk_blood .mine .blook_change {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 40vw;
+  height: 14.66666667vw;
+  border-radius: 2.66666667vw;
+  background-color: #5f5ff9;
 }
 .enterPk .pk_blood .other .head_portrait,
 .enterPk .pk_blood .mine .head_portrait {
+  z-index: 100;
   width: 13.33333333vw;
   padding: 0.8vw;
   margin-left: 1.33333333vw;
@@ -122,6 +135,7 @@ a {
 }
 .enterPk .pk_blood .other .name_blood,
 .enterPk .pk_blood .mine .name_blood {
+  z-index: 100;
   color: #fff;
   font-size: 4vw;
 }
@@ -134,7 +148,22 @@ a {
   text-align: center;
 }
 .enterPk .pk_blood .other {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #90909078;
+}
+.enterPk .pk_blood .other .blook_change {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 40vw;
+  height: 14.66666667vw;
+  border-radius: 2.66666667vw;
   background-color: #fd6363;
+}
+.enterPk .pk_blood .other .head_portrait {
+  margin-right: 1.33333333vw;
 }
 .enterPk .pk_blood .time {
   width: 18.66666667vw;
@@ -195,11 +224,12 @@ a {
   letter-spacing: 0.15em;
   border-radius: 1.33333333vw;
   box-shadow: 0.53333333vw 0.53333333vw 2.66666667vw rgba(0, 0, 0, 0.349);
+  user-select: none;
+  transition: all 0.3s;
 }
 .enterPk .text_box .highlight {
   display: inline;
   background: #f8cf04;
-  transition: all 0.3s;
 }
 .enterPk .text_box .highlight::selection {
   background: #eaff02 !important;
@@ -214,11 +244,20 @@ a {
   display: inline;
 }
 .enterPk .text_box .recite {
-  height: 8vw;
-  background-color: darkgray !important;
-  color: darkgray !important;
+  height: 9.33333333vw;
+  background-color: #f8cf04 !important;
+  color: #f8cf04 !important;
   border-radius: 1.33333333vw;
   user-select: none;
+  padding: 0 1.33333333vw;
+}
+.enterPk .text_box .right {
+  color: #000 !important;
+  background-color: #3aff51 !important;
+}
+.enterPk .text_box .wrong {
+  color: #000 !important;
+  background-color: #ff0000 !important;
 }
 .enterPk .option {
   margin: 2.13333333vw auto;
@@ -549,6 +588,21 @@ a {
   font-size: 24vw;
   text-transform: uppercase;
 }
+.img_box {
+  margin-left: -18%;
+  margin-top: -19%;
+  width: 34.66666667vw;
+  height: 34.66666667vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img_box img {
+  transition: all 10s;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
 .liti {
   color: #ffffff;
   text-shadow: 0px 5px #c0c0c0, 0px 6px #b0b0b0, 0px 7px #a0a0a0, 0px 8px #909090;
@@ -849,6 +903,14 @@ a {
   animation-delay: 1.8s;
   animation-name: appear;
 }
+.appear_xz {
+  visibility: visible;
+  animation-delay: 1s;
+  animation-name: appear;
+}
+.xz {
+  animation: xz 1s linear infinite;
+}
 @keyframes appearup {
   0% {
     opacity: 0;
@@ -945,5 +1007,13 @@ a {
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes xz {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

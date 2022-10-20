@@ -172,7 +172,7 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                         display: -webkit-box;
-                        -webkit-line-clamp: 4;
+                        -webkit-line-clamp: 2;
                         -webkit-box-orient: vertical;
                     }
     
@@ -185,6 +185,7 @@
     
                         h4 {
                             width: (180 / @vw);
+                            // height: ();
                             margin-bottom: (5 / @vw);
                             padding-top: (15/@vw);
                             font-size: (18 / @vw);
@@ -199,10 +200,7 @@
                     }
                 }
             }
-             .footer{
-                width: 100%;
-                height:(70 / @vw);
-             }
+             
             .click{
                 position: relative;
                 height: (50/@vw);
@@ -257,9 +255,14 @@
 
                     .interactive{
                         display: flex;
-                        justify-content: space-evenly;
+                        justify-content: flex-end;
                         align-items: center;
                         width: (160/@vw);
+
+                        .hidden {
+                            display: none !important;
+                        }
+
                         span{
                             display: flex;
                             justify-content: center;
@@ -290,6 +293,10 @@
   
             }
         }
+        .footer{
+            width: 100%;
+            height:(70 / @vw);
+         }
     }
 
     .community_footer {

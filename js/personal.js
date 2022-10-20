@@ -5,15 +5,6 @@ $('.personal .exit').onclick = () => {
     location.href = './login.html';
 }
 
-// 随机排列数组
-let arr12 = ['qwe', '23e', 'q123', '32we', '423we', '3242']
-arr12.sort(function () {
-    return 0.5 - Math.random();
-})
-// 取数组随机排列后的前三个元素放在另一个数组，之后将这三个元素作为li的索引值
-let newArr = arr12.slice(0, 3);
-// console.log(newArr);
-
 let modifyNum = 0;
 let modifyArr = ['修改昵称', '修改手机号', '修改密码'];
 let modifyErrArr = ['昵称格式错误', '手机号格式错误', '密码格式错误']
@@ -41,10 +32,12 @@ $('.modify .confirm').onclick = (e) => {
     let modify_value = $('.Modify_interface input').value;
     //修改昵称
     e.stopPropagation();
+    console.log(modifyNum);
     if (modifyNum == 0 && nameReg.test(modify_value)) {
         ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?nickName=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr, modifyNum);
+            
             if (newstr.data.isSuccess) {
                 for (let x of $('.idname'))
                     x.innerHTML = modify_value;
@@ -118,7 +111,8 @@ $('.personal .head_portrait input').onchange = function (e) {
             let base64Data = e.target.result;
             // var newBase64 = base64Data.replace(/\+/g, "%2B");
             let newBase64 = base64Data.replace(/^data:image\/\w+;base64,/, "");
-            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?userId=${curr.userId}`,'post',`image=${newBase64}`,(str) => {
+            console.log(base64Data);
+            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?userId=${curr.userId}`,'post',`base64=${newBase64}`,(str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
             },true);

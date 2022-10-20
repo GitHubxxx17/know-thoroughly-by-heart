@@ -16,7 +16,16 @@ laqu.onclick = function() {
     }
 }
 
+let img_box = document.querySelector(".img_box");
 $('.start_game').onclick = () => {
+    $('.img_box img').style.opacity = '1';
     $('.newwaitPK').style.display = 'block';
-}
+    setTimeout(function() {
+        if (img_box.classList.contains("appear_xz")) {
+            img_box.classList.remove("appear_xz");
+            img_box.classList.remove("animated");
+        }
+        img_box.classList.add("xz");
+    }, 2200);
 
+}

@@ -160,6 +160,7 @@ btns[3].onclick = () => {
         if (newTPFlag) {
             all('.my_base li')[0].querySelector('.title').innerHTML = title1;
             all('.my_base li')[0].querySelector('.info').innerHTML = info1;
+            console.log(all('.my_base li')[0]);
             all('.my_base li')[0].querySelector('.label span')[1].innerHTML = label1;
         } else {
             title.innerHTML = title1;

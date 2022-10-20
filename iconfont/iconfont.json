@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "577320",
+      "name": "选择",
+      "font_class": "xuanze1",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
+    },
+    {
+      "icon_id": "5727475",
+      "name": "选择",
+      "font_class": "xianshi_xuanze",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
       "icon_id": "902045",
       "name": "分享",
       "font_class": "fenxiang",
