@@ -2,6 +2,7 @@
 let curr = getData('current_user');
 let newtitle = null;
 let newcontext = null;
+let newlabel = null;
 var newTPFlag = false;
 
 //获取用户模板
@@ -12,7 +13,10 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.user
         for (let x of tparr) {
             console.log(x);
             let newcon = x.content.replace(/<缩进>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
-            newTP(x.modleTitle, newcon, x.modleId,true);
+            if(x.MStatus == '0')
+                newTP(x.modleTitle, newcon,x.modleId,labelId2(x.modleLabel),true);
+            else
+                newTP(x.modleTitle, newcon,x.modleId,labelId2(x.modleLabel),false);
         }
         $('.footer_nav li')[0].onclick();
     } else {
@@ -31,6 +35,8 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
     for (let x of $('.idname'))
         x.innerHTML = curr.userInfo.nickName;
     $('.personal_box .phone').innerHTML = curr.phone;
+    let img = 'data:image/jpeg;base64,'+curr.userInfo.image;
+    $('.personal .head_portrait img').src = img;
 })
 
 
@@ -45,18 +51,25 @@ $('.Making_page .header_left input').onchange = function (e) {
             let newstr = JSON.parse(str).msg;
             let context = newstr.data.context;
             let newcon = context.replace(/<\/p>/g,'').replace(/<p>/g,'&nbsp;&nbsp;&nbsp;&nbsp;');
-            console.log(newcon);
             //将文件内容渲染到页面
             $('.Making_page .title input').value = file.name;
             $('.Making_page .text_box').innerHTML = newcon;
         }, false)
     }
 }
+
 //点击出现弹窗
 $('.Making_page .header_right').onclick = () => {
     //标题和文本内容不能为空
     if ($('.Making_page .title input').value == '' || $('.Making_page .text_box').innerHTML == '') {
         $('.Making_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.Making_page .popup2').style.display = 'block';
+        return;
+    }
+
+    //标签不能为空
+    if ($('.Making_page .label_cont').innerText == '标签 ') {
+        $('.Making_page .popup2 .popup_box').innerHTML = '请选择标签';
         $('.Making_page .popup2').style.display = 'block';
         return;
     }
@@ -72,7 +85,7 @@ $('.Making_page .header_right').onclick = () => {
     $('.Making_page .popup').style.display = 'block';
     newtitle = $('.Making_page .title input').value;
     newcontext = $('.Making_page .text_box').innerHTML;
-
+    newlabel = $('.Making_page .label_cont').innerHTML;
 }
 //点击关闭弹窗
 $('.Making_page .popup').onclick = () => $('.Making_page .popup').style.display = 'none';
@@ -86,17 +99,15 @@ $('.Making_page .popup_box button')[0].onclick = () => {
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
         //创建模板
-        console.log(newcontext);
-        let poststr = `context=${newcontext}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=1`
+        let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g,'<缩进>');
+        let poststr = `context=${newcon}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;
             let modle = newstr.data.modle;
-            newTP(newtitle, newcontext, modle.modleId,true);
+            newTP(newtitle, newcontext, modle.modleId,newlabel,true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
-            //清空编辑内容
-            $('.Making_page .title input').value = '';
-            $('.Making_page .text_box').innerHTML = '';
+            MakingTP();
         }, true);
     }
     // 隐藏弹窗
@@ -107,25 +118,33 @@ $('.Making_page .popup_box button')[1].onclick = () => {
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
         //创建模板
-        let poststr = `context=${newcontext}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=1`
+        let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g,'<缩进>').replace(/<div>/g,'').replace(/<\/div>/g,'');
+        let poststr = `context=${newcon}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr);
             let modle = newstr.data.modle;
             newTPFlag = true;
-            newTP(newtitle, newcontext, modle.modleId,true);
+            newTP(newtitle,newcon,modle.modleId,newlabel,true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
             $('.edit_page .title_name').value = newtitle;
             $('.edit_page .text_page').innerHTML = newcontext;
+            $('.edit_page .label_cont').innerHTML = newlabel;
             $('.edit_page').style.left = '0';
-            $('.Making_page .title input').value = '';
-            $('.Making_page .text_box').innerHTML = '';
+            MakingTP();
         }, true);
     }
     $('.Making_page .popup').style.display = 'none';
 }
 
+//编辑页面回复默认
+function MakingTP(){
+    $('.Making_page .title input').value = '';
+    $('.Making_page .text_box').innerHTML = '';
+    $('.Making_page .label_cont').innerHTML = `<span>标签</span>
+    <span class="icon iconfont icon-xiangxiajiantou"></span>`
+}
 
 
 

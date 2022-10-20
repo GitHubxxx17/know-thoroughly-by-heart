@@ -90,15 +90,25 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: 0 4vw;
+  padding: 0 2.66666667vw;
   transition: all 0.2s;
+  font-size: 3.2vw;
+  text-align: center;
+  color: #5c4eaf;
+}
+.community header .search .upload .icon-zhongguohangtiantubiaoheji-weizhuanlunkuo- {
+  font-size: 6.93333333vw;
+}
+.community header .search .upload .sz {
+  font-weight: 700;
+  font-size: 3.2vw;
 }
 .community header .header_search {
   position: relative;
 }
 .community header .header_search input {
   padding: 0 2.66666667vw;
-  width: 80vw;
+  width: 74.66666667vw;
   height: 6.66666667vw;
   border-radius: 4vw;
   background-color: #ecedef;

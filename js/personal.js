@@ -99,3 +99,29 @@ $('.modify .confirm').onclick = (e) => {
 $('.modify').onclick = () => {
     $('.modify_err').style.opacity = '0';
 }
+
+//上传头像 
+
+$('.personal .head_portrait input').onchange = function (e) {
+    const fileList = e.target.files;
+
+    if (fileList.length) {
+        //通过window.URL.createObjectURL(files[0])获得一个http格式的url路径
+        imgUrl = window.URL.createObjectURL(fileList[0]);
+        //设置img中的src进行显示
+        $('.personal .head_portrait img').src = imgUrl;
+
+        var reader = new FileReader();
+        reader.readAsDataURL(fileList[0])   //将读取的文件转换成base64格式
+        
+        reader.onload = function (e) {
+            let base64Data = e.target.result;
+            // var newBase64 = base64Data.replace(/\+/g, "%2B");
+            let newBase64 = base64Data.replace(/^data:image\/\w+;base64,/, "");
+            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?userId=${curr.userId}`,'post',`image=${newBase64}`,(str) => {
+                let newstr = JSON.parse(str).msg;
+                console.log(newstr);
+            },true);
+        }
+    }
+}

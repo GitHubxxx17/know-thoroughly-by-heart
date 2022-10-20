@@ -31,7 +31,7 @@ btns[1].onclick = () => {
     btns[1].classList.add('choice');
     flag = true;
     //当长按屏幕触屏结束时，选中文本 
-    $('.text_page').ontouchend = (e) => {
+    $('.text_page').onmouseup = (e) => {
         //判断当前是否为挖空模式
         if (btns[1].classList.contains('choice')) {
             flag = true;
@@ -128,6 +128,7 @@ btns[2].onclick = () => {
 btns[3].onclick = () => {
     let title1 = $('.edit_page .title_name').value;
     let info1 = $('.edit_page .text_page').innerHTML;
+    let label1 = $('.edit_page .label_cont').innerHTML;
     let mid = null;
     //标题和文本内容不能为空
     if (title1 == '' || info1 == '') {
@@ -159,17 +160,19 @@ btns[3].onclick = () => {
         if (newTPFlag) {
             all('.my_base li')[0].querySelector('.title').innerHTML = title1;
             all('.my_base li')[0].querySelector('.info').innerHTML = info1;
+            all('.my_base li')[0].querySelector('.label span')[1].innerHTML = label1;
         } else {
             title.innerHTML = title1;
             info.innerHTML = info1;
+            label.querySelectorAll('span')[1].innerHTML = label1;
         }
         let poststr = '';
         let newinfo = info1.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g,'<缩进>');
-        console.log(newinfo);
+
         if(mStatus == 1){
-            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=1&modleId=${mid}`
+            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
         }else{
-            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=1&modleId=${mid}`
+            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=${labelId1(label1)}&modleId=${mid}`
         }
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;
@@ -177,7 +180,7 @@ btns[3].onclick = () => {
             if(mStatus == 1){
                 let modle = newstr.data.modle;
                 newTPFlag = true;
-                newTP(title1.innerHTML,info1.innerHTML,modle.modleId,true);
+                newTP(title1,info1,modle.modleId,label1,true);
                 $('.collection_base ul').removeChild(modleId.parentNode.parentNode);
                 mStatus = 0;
                 $('.footer_nav li')[0].onclick();
@@ -216,8 +219,27 @@ function CancelHollowing(e, n) {
     range.insertNode(str);
 }
 
+//点击返回记忆库
 $('.edit_page .header_left').onclick = () => {
     $('.edit_page').style.left = '100%'
     reset();
+}
+
+let label_flag1 = true;
+//点击出现下拉列表
+$('.edit_page .label').onclick = () => {
+    if(label_flag1){
+        $('.edit_page .label_menu').style.transform = 'scale(1)';
+        label_flag1 = false;
+    }else{
+        $('.edit_page .label_menu').style.transform = 'scale(0)';
+        label_flag1 = true;
+    }  
+}
+
+//事件委托，为li绑定事件
+$('.edit_page .label_menu').onclick = (e) => {
+    e.stopPropagation;
+    $('.edit_page .label_cont').innerHTML = e.target.innerHTML;
 }
 

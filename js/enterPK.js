@@ -28,3 +28,5 @@ function answer(x) {
 $('.head_nav_pk .back').onclick = () => {
     $('.enterPk').style.left = '-100%';
 }
+
+//

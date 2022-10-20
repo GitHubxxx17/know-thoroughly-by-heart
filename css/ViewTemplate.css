@@ -71,6 +71,12 @@ body {
 }
 .viewTemplate {
   width: 100%;
+  height: 100vh;
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s;
 }
 .viewTemplate .view_box {
   width: 100%;
@@ -106,6 +112,7 @@ body {
 }
 .viewTemplate .view_box .template_box {
   width: 100%;
+  height: 100vh;
   margin-top: 2.53164557vw;
   padding: 0 2.53164557vw;
   padding-top: 2.53164557vw;
@@ -139,6 +146,7 @@ body {
   left: 0;
   width: 100%;
   height: 10.12658228vw;
+  transition: all 0.2s;
 }
 .viewTemplate .view_box footer .bcg {
   width: 100%;
@@ -175,6 +183,7 @@ body {
   font-size: 4.05063291vw;
   line-height: 8.86075949vw;
   letter-spacing: 0.15em;
+  height: 100%;
 }
 .text_box .highlight {
   display: inline;

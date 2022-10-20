@@ -63,7 +63,7 @@ Array.prototype.remove = function (val) {
 };
 
 //新建模板到仓库
-function newTP(title, context, modleId, flag) {
+function newTP(title, context, modleId, label, flag) {
     let li = document.createElement('li');
     li.innerHTML = `<div class="tp_inner">
                         <div class="modleId">${modleId}</div>
@@ -73,7 +73,10 @@ function newTP(title, context, modleId, flag) {
                         </div>
                         <div class="tip">
                             <div class="date">2022-10-15</div>
-                            <div class="times">学习次数：2</div>
+                            <div class="label">
+                                <span class="iconfont icon-shuqianguanli"></span>
+                                <span>${label}</span>
+                            </div>
                         </div>
                         <div class="template_btn">
                             <div class="tp_btn edit">编辑</div>
@@ -90,16 +93,15 @@ function newTP(title, context, modleId, flag) {
 }
 
 //社区渲染
-function comTP(title, context, modleId) {
+function comTP(title,context,modleId,label,username) {
     let li = document.createElement('li');
-    li.innerHTML = `<li>
-                        <div class="modleId">${modleId}</div>
+    li.innerHTML = `<div class="modleId">${modleId}</div>
                         <div class="color">
                             <div class="upper">
                                 <div class="head_portrait">
                                     <img src="./images/头像/头像-女学生2.png" alt="">
                                 </div>
-                                <div class="idname1">发际线与我作队</div>
+                                <div class="idname1">${username}</div>
                             </div>
 
                             <div class="content">
@@ -108,17 +110,58 @@ function comTP(title, context, modleId) {
                                     <div class="info ellipsis">${context}</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="click">
-                            <div class="inter_box" id="interactive">
-                                <div class="interactive">
-                                    <span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
-                                    <span class="jifen iconfont icon-jifenhuiyuan
-                                "> &nbsp;<i>打赏</i></span>
+                            <div class="click">
+                                <div class="label">
+                                    <span class="iconfont icon-shuqianguanli"></span>
+                                    <span>${labelId2(label)}</span>
                                 </div>
+                                <div class="inter_box" id="interactive">
+                                    <div class="interactive">
+                                        <span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
+                                        <span class="jifen iconfont icon-jifenhuiyuan
+                                            "> &nbsp;<i>打赏</i></span>
+                                    </div>
+                                </div>
+                                <i class=" menu iconfont icon-shixincaidan"></i>
                             </div>
-                            <i class=" menu iconfont icon-shixincaidan"></i>
-                        </div>
-                    </li>`
+                        </div>`
+                    
     $('.community_ul').prepend(li);
+}
+
+//上传页面渲染模板
+function UploadTP(title, context, modleId,label) {
+    let li = document.createElement('li');
+    li.innerHTML = `<div class="tp_inner1">
+                        <div class="modleId">${modleId}</div>
+                        <div class="content">
+                            <h3 class="title ellipsis">${title}</h3>
+                            <div class="info ellipsis">${context}</div>
+                        </div>
+                        <div class="tip">
+                            <div class="date">2022-10-15</div>
+                            <div class="label">${label}</div>
+                        </div>
+                    </div>`
+    $('.upload_page ul').prepend(li);
+}
+
+//转换标签成id
+function labelId1(str) {
+    if (str == '教资')
+        return 1;
+    if (str == '考研')
+        return 2;
+    if (str == '通识课')
+        return 3;
+}
+
+//转换id成标签
+function labelId2(num) {
+    if (num == 1)
+        return '教资';
+    if (num == 2)
+        return '考研';
+    if (num == 3)
+        return '通识课';
 }
