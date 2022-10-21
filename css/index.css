@@ -218,6 +218,8 @@ body {
   align-items: center;
   transition: all 0.3s ease-in-out;
 }
+.memory_base .container .collection_base li .tp_inner .common,
+.memory_base .container .my_base li .tp_inner .common,
 .memory_base .container .collection_base li .tp_inner .modleId,
 .memory_base .container .my_base li .tp_inner .modleId {
   display: none;
@@ -599,7 +601,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 10001;
 }
 .upload_page {
   z-index: 10000;
@@ -707,7 +709,6 @@ body {
 .upload_page .container li .select {
   padding-left: 5.06329114vw;
   padding-right: 2.53164557vw;
-  width: 45.56962025vw;
   height: 10.12658228vw;
   display: flex;
   justify-content: flex-end;

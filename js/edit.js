@@ -181,12 +181,12 @@ btns[3].onclick = () => {
             if(mStatus == 1){
                 let modle = newstr.data.modle;
                 newTPFlag = true;
-                newTP(title1,info1,modle.modleId,label1,true);
+                newTP(title1,info1,modle.modleId,label1,0,true);
                 $('.collection_base ul').removeChild(modleId.parentNode.parentNode);
                 mStatus = 0;
                 $('.footer_nav li')[0].onclick();
             }
-            
+            xrcomTP();
         }, true);
         btns[3].classList.add('choice');
         $('.edit_page .header_right .name')[3].innerHTML = '已保存';
