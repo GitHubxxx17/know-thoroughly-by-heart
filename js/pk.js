@@ -26,7 +26,8 @@ $('.start_game').onclick = () => {
             img_box.classList.remove("animated");
         }
         img_box.classList.add("xz");
-        createWebSocket ();
+        // createWebSocket ();
+        ConnectionClicked();
     }, 2200);
     setTimeout(function() {
         $('.enterPk').style.display = 'block';
@@ -37,7 +38,7 @@ $('.start_game').onclick = () => {
         $('.newwaitPK .mine').classList.add('disappearup')
         $('.newwaitPK .other').classList.add('disappearbottom')
         $('.newwaitPK .mine').addEventListener('animationend', () => {
-            $('.newwaitPK').style.display = 'none'
+            $('.newwaitPK').style.display = 'none';
         })
     }, 3000);
-}   
+}

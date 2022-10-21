@@ -152,19 +152,22 @@ function communityTP() {
             }
             setTimeout(() => all('.inter_box')[i].style.width = "0", 600);
             event.stopPropagation(); //阻止冒泡
-
             let modleId = x.parentNode.parentNode.parentNode.parentNode.previousElementSibling.innerHTML;
             console.log(modleId);
             ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity`, 'post', `modleId=${modleId}&common=${0}`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
                 if (newstr.code == '200') {
+                    for(let k of all('.my_base .tp_inner .modleId')){
+                        if(k.innerHTML == modleId){
+                            k.querySelector('.common').innerHTML = '0';
+                        }  
+                    }
                     xrcomTP();
                     $('.community header .label li')[0].onclick();
-
                 }
             }, true);
-
+            
         })
     })
 
