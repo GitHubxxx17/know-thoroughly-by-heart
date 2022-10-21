@@ -4,9 +4,16 @@ let selectArr = [];
 let UserSelectArr = [];
 let slArr = [];
 let answerIndex = 0;
-window.addEventListener('click', function() {
 
-})
+
+function strSort(str) {
+    let a = str;
+    a = a.split('')
+    sortArr(a);
+    return a.toString().replace(/,/g, '');
+}
+
+
 let timerx = null;
 let timero = null;
 /*窗口滚动缓动动画*/
@@ -18,7 +25,7 @@ function animate(obj, target, stop) {
         if (obj.scrollTop.toFixed() == target.toFixed()) {
             clearInterval(obj.timerx); //如果运动到目标值时清除定时器
         };
-        
+
         obj.scroll(0, obj.scrollTop + step);
 
     }, 10);
@@ -34,14 +41,13 @@ function sortArr(arr) {
     arr.sort(function() {
         return 0.5 - Math.random();
     })
-    return arr.slice(0, 4);
+    return arr;
 }
 
 Array.from(all('.enterPk .highlight')).forEach((x, i) => {
     x.classList.add('recite');
     answerArr.push(x.innerHTML);
     selectArr.push(x.innerHTML);
-    console.log(x.offsetHeight);
 });
 
 
@@ -59,7 +65,8 @@ for (let x of $('.enterPk .option .com')) {
                 console.log(UserSelectArr)
             }
             // UserSelectArr.push(x.querySelector('.answer').innerHTML);
-            answerSelect();
+            if(answerIndex < all('.enterPk .highlight').length - 1)
+                answerSelect();
         } else {
             // for(let x of $('.enterPk .option .answer')){
             //     x.innerHTML = '';
@@ -72,10 +79,20 @@ for (let x of $('.enterPk .option .com')) {
 //选择答案后
 function answerSelect() {
     answerIndex++;
-    slArr = sortArr(selectArr);
-    console.log(selectArr, answerArr);
+    slArr = [];
+    for (let x of selectArr) {
+        if (x == answerArr[answerIndex])
+            continue;
+        slArr.push(x);
+        if(slArr.length == 3)
+            break;
+    }
+    console.log(answerArr[answerIndex]);
+    slArr.push(answerArr[answerIndex]);
+    slArr = sortArr(slArr);
+    console.log(selectArr, slArr);
     let n = 0;
-
+    
     for (let x of $('.enterPk .option .answer')) {
         x.innerHTML = slArr[n++];
     }

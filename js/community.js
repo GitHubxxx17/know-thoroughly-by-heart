@@ -40,7 +40,8 @@ function communityTP() {
                         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${k.innerHTML}&mStatus=0`, 'get', '', (str) => {
                             let newstr = JSON.parse(str).msg;
                             console.log(newstr);
-                            $('.collection_base .base_lis').removeChild(all('.collection_base li')[i]);
+                            
+                            $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
                             //刷新仓库
                             resetbase();
                         }, true);
@@ -102,6 +103,8 @@ function communityTP() {
             $('.viewTemplate .text_box').innerHTML = all('.community_ul .info')[i].innerHTML;
             $('.viewTemplate .label').innerHTML = all('.community_ul .label')[i].innerHTML;
             event.stopPropagation(); //阻止冒泡
+
+
         })
         //浏览模板点击取消收藏
         $('.viewTemplate .dainzan').onclick = () => {
@@ -131,12 +134,14 @@ function communityTP() {
                 }, true);
             }
             $('.viewTemplate .dainzan .iconfont').classList.toggle("yellow");
-            if($('.viewTemplate .dainzan .iconfont').classList.contains('yellow')){
-                x.nextElementSibling.querySelector('.dainzan').classList.add('yellow');
-            }else{
-                x.nextElementSibling.querySelector('.dainzan').classList.remove('yellow');
+            if ($('.viewTemplate .dainzan .iconfont').classList.contains('yellow')) {
+                all('.community_ul .dainzan')[i].classList.add('yellow');
+                // x.nextElementSibling.querySelector('.dainzan').classList.add('yellow');
+            } else {
+                all('.community_ul .dainzan')[i].classList.remove('yellow');
+                // x.nextElementSibling.querySelector('.dainzan').classList.remove('yellow');
             }
-            
+
         }
     })
 
@@ -150,7 +155,6 @@ function communityTP() {
             } else {
                 x.classList.add("yellow");
             }
-            setTimeout(() => all('.inter_box')[i].style.width = "0", 600);
             event.stopPropagation(); //阻止冒泡
             let modleId = x.parentNode.parentNode.parentNode.parentNode.previousElementSibling.innerHTML;
             console.log(modleId);
@@ -158,16 +162,16 @@ function communityTP() {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
                 if (newstr.code == '200') {
-                    for(let k of all('.my_base .tp_inner .modleId')){
-                        if(k.innerHTML == modleId){
+                    for (let k of all('.my_base .tp_inner')) {
+                        if (k.innerHTML == modleId) {
                             k.querySelector('.common').innerHTML = '0';
-                        }  
+                        }
                     }
                     xrcomTP();
                     $('.community header .label li')[0].onclick();
                 }
             }, true);
-            
+
         })
     })
 
@@ -183,36 +187,29 @@ function xrcomTP() {
     $('.community_ul').innerHTML = '<li class="footer"></li>';
     commonArr = [];
     commonArr[0] = [];
+    let timer;
     for (let i = 1; i <= 3; i++) {
-        setTimeout(() => {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=0`, 'get', '', (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.content != '参数获取失败') {
-                    let comarr = [];
-                    for (let x of newstr.data.modleList) {
-                        if (x.common != 0) {
-                            comarr.push(x);
-                        }
-                    }
-                    commonArr[i] = comarr;
-                    console.log(comarr, commonArr);
-                    if (comarr.length != 0) {
-                        for (let x of comarr) {
-                            let name_flag = true;
-                            commonArr[0].push(x);
-                            let newcont = x.content.replace(/<缩进>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-                            if (x.nickName == curr.userInfo.nickName)
-                                name_flag = false;
-                            comTP(x.modleTitle, newcont, x.modleId, x.modleLabel, x.nickName, name_flag);
-                        }
-                        communityTP();
-
+        ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?modleLabel=${i}&pageIndex=0`, 'get', '', (str) => {
+            let newstr = JSON.parse(str).msg;
+            console.log(newstr);
+            if (newstr.content != '参数获取失败') {
+                let comarr = [];
+                for (let x of newstr.data.modleList) {
+                    if (x.common != 0) {
+                        comarr.push(x);
                     }
                 }
-
-            }, true);
-        }, 100);
+                commonArr[i] = comarr;
+                console.log(comarr, commonArr);
+                if (comarr.length != 0) {
+                    for (let x of comarr) {
+                        commonArr[0].push(x);
+                    }
+                }
+            }
+            communityTP();
+            $('.community header .label li')[0].onclick();
+        }, true);
     }
 }
 xrcomTP();
@@ -228,7 +225,7 @@ $('.community .upload').onclick = () => {
         let context = x.querySelector('.info').innerHTML;
         let label = x.querySelector('.label').innerHTML;
         let common = x.querySelector('.common').innerHTML;
-        UploadTP(title, context, modleId, label,common);
+        UploadTP(title, context, modleId, label, common);
     }
     setTimeout(() => {
         for (let x of all('.upload_page li')) {
@@ -253,29 +250,35 @@ $('.uploadMP').onclick = () => {
                 console.log(newstr);
                 if (newstr.code == '200') {
                     $('.upload_page .back').onclick();
-                    xrcomTP();
-                    $('.community header .label li')[0].onclick();
+                    
+                    
                 }
             }, true);
-        }else{
+        } else {
             ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity`, 'post', `modleId=${modleId}&common=0`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
                 if (newstr.code == '200') {
                     $('.upload_page .back').onclick();
-                    xrcomTP();
-                    $('.community header .label li')[0].onclick();
+                   
+                    
                 }
             }, true);
         }
 
-        for(let k of all('.my_base .tp_inner')){
-            if(x.classList.contains('selected')){
+        for (let k of all('.my_base .tp_inner')) {
+            if (x.classList.contains('selected')) {
                 k.querySelector('.common').innerHTML = '1';
-            }else{
+            } else {
                 k.querySelector('.common').innerHTML = '0';
-            }   
+            }
         }
+
+        if (i == all('.upload_page .select .circle').length - 1){
+            $('.community_ul').innerHTML = '<li class="footer"></li>';
+            xrcomTP();
+        }
+            
     })
 }
 //上传页面点击返回

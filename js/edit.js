@@ -2,7 +2,8 @@ function reset() {
     for (let x of btns) {
         x.classList.remove('choice');
     }
-    $('.text_page').setAttribute('contenteditable', false);
+    $('.text_page').classList.remove('canwrite')
+    // $('.text_page').setAttribute('contenteditable', false);
     $('.text_page').classList.remove('del');
     flag = false;
     flag1 = false;
@@ -13,9 +14,9 @@ let btns = $('.edit_page .header_right li');
 btns[0].onclick = () => {
     console.log(title);
     reset();
-    $('.text_page').setAttribute('contenteditable', true);
+    // $('.text_page').setAttribute('contenteditable', true);
+    $('.text_page').classList.add('canwrite')
     btns[0].classList.add('choice');
-
 }
 
 //防止对已选中的文本进行多次挖空
@@ -157,15 +158,17 @@ btns[3].onclick = () => {
     })
 
     if(fal){
-        if (newTPFlag) {
-            all('.my_base li')[0].querySelector('.title').innerHTML = title1;
-            all('.my_base li')[0].querySelector('.info').innerHTML = info1;
-            console.log(all('.my_base li')[0]);
-            all('.my_base li')[0].querySelector('.label span')[1].innerHTML = label1;
-        } else {
-            title.innerHTML = title1;
-            info.innerHTML = info1;
-            label.querySelectorAll('span')[1].innerHTML = label1;
+        if(mStatus == '0'){
+            if (newTPFlag) {
+                all('.my_base li')[0].querySelector('.title').innerHTML = title1;
+                all('.my_base li')[0].querySelector('.info').innerHTML = info1;
+                console.log(all('.my_base li')[0]);
+                all('.my_base li')[0].querySelector('.label span')[1].innerHTML = label1;
+            } else {
+                title.innerHTML = title1;
+                info.innerHTML = info1;
+                label.querySelectorAll('span')[1].innerHTML = label1;
+            }
         }
         let poststr = '';
         let newinfo = info1.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g,'<缩进>');
@@ -182,7 +185,6 @@ btns[3].onclick = () => {
                 let modle = newstr.data.modle;
                 newTPFlag = true;
                 newTP(title1,info1,modle.modleId,label1,0,true);
-                $('.collection_base ul').removeChild(modleId.parentNode.parentNode);
                 mStatus = 0;
                 $('.footer_nav li')[0].onclick();
             }

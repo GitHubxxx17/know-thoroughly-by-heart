@@ -24,14 +24,14 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: scroll;
-    transition: all .2s;
+    transition: left .2s;
 
     header {
         z-index: 1000;
         position: fixed;
         left: 0;
         top: 0;
-        transition: all .2s;
+        transition: left .2s;
         width: 100vw;
         height: (58 / @vw);
         background-color: #f8f8f8;
@@ -98,7 +98,8 @@ body {
                 line-height: (45 / @vw);
 
                 .icon {
-                    color: rgba(255, 187, 0, 0.608);
+                    // color: rgba(255, 187, 0, 0.608);
+                    color: #ffd161;
                     font-size: (32 / @vw);
                 }
             }
@@ -301,7 +302,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #b8b2c9;
-    transition: all .4s ease-in-out;
+    transition: left .4s ease-in-out;
 
     header {
         margin-top: (10 / @vw);
@@ -429,13 +430,13 @@ body {
 
 .edit_page {
     z-index: 10000;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 100%;
     width: 100vw;
     height: 100vh;
     background-color: #b8b2c9;
-    transition: all .4s ease-in-out;
+    transition: left .4s ease-in-out;
 
     header {
         margin-top: (10 / @vw);
@@ -636,12 +637,12 @@ body {
     z-index: 10000;
     top: 0;
     left: -100%;
-    transition: all .2s;
+    transition: left .2s;
 }
 
 .pk_page {
     z-index: 1000;
-    transition: all .2s;
+    transition: left .2s;
 }
 
 .newwaitPK {
@@ -669,7 +670,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    transition: all .2s;
+    transition: left .2s;
     background-color: #ededed;
 
     header {
@@ -740,10 +741,12 @@ body {
             }
 
             .content{
+                width: (100%);
                 padding: (15/@vw) 0;
                 border-bottom: 1px solid #e4e4e4;
 
                 .title_label{
+                    width: (100%);
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
@@ -818,7 +821,9 @@ body {
     }
 }
 
-
+.canwrite {
+    -webkit-user-modify: read-write-plaintext-only;
+}
 
 .footer_nav {
     z-index: 2000;

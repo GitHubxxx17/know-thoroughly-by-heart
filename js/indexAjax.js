@@ -39,7 +39,7 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
     } else {
         let img = 'data:image/jpeg;base64,' + curr.userInfo.base64;
         for (let x of $('.head_portrait img')) {
-            x.src = img;
+            x.src = curr.userInfo.base64;
         }
     }
 
@@ -57,10 +57,10 @@ $('.Making_page .header_left input').onchange = function(e) {
             $('.Making_page .loading').style.display = 'none';
             let newstr = JSON.parse(str).msg;
             let context = newstr.data.context;
-            let newcon = context.replace(/<\/p>/g, '').replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+            // let newcon = context.replace(/<\/p>/g, '').replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
             //将文件内容渲染到页面
             $('.Making_page .title input').value = file.name;
-            $('.Making_page .text_box').innerHTML = newcon;
+            $('.Making_page .text_box').innerHTML = context;
         }, false)
     }
 }

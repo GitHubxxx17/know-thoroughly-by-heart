@@ -33,17 +33,3 @@ function createWebSocket() {
         console.log('websocket 断开: ' + event.code + ' ' + event.reason + ' ' + event.wasClean)
     }
 }
-
-let data = {
-    "enemyInf": {
-        "birthday": "2000-01-01 00:00:00",
-        "cityId": 1,
-        "image": "",
-        "nickName": "psm",
-        "points": 0,
-        "sex": "其他",
-        "stars": 0,
-        "userId": 49
-    }
-}
-$('.other .other_name').innerHTML = data.enemyInf.nickName;
