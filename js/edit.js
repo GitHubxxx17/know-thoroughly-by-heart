@@ -48,7 +48,7 @@ btns[1].onclick = () => {
             let n = 0;
             // 获取当前selection对象下的range对象
             let range = txt.getRangeAt(0);
-            //创造id为merge的新节点并将选中文本放进去
+            // 创造id为merge的新节点并将选中文本放进去
             let newNode = document.createElement("div");
             newNode.setAttribute('class', 'highlight');
             newNode.setAttribute('id', 'merge');

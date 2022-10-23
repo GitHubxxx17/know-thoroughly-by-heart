@@ -347,6 +347,35 @@ body {
         }
     }
 
+    .popup {
+        display: none;
+        z-index: 20000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000078;
+
+        .popup_box {
+            position: absolute;
+            width: (300 / @vw);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #aba3ca;
+            z-index: 10000;
+            border-radius: (10 / @vw);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 40%;
+            height: (150 / @vw);
+            font-size: (20 / @vw);
+        }
+
+    }
+
     .container {
         width: 100%;
 
@@ -398,19 +427,19 @@ body {
             // text-indent: 2rem;
             .highlight {
                 display: inline;
-                background: aquamarine;
+                background: #fdbe3b;
                 transition: all .3s;
 
                 &::selection {
-                    background: aquamarine !important;
+                    background: #fdbe3b !important;
                 }
             }
 
             .input {
                 width: auto;
                 background-color: transparent !important;
-                color: rgb(103, 255, 232) !important;
-                border-bottom: (2 / @vw) rgb(47, 172, 255) solid;
+                color: #fdbe3b !important;
+                border-bottom: (2 / @vw) rgb(63, 63, 63) solid;
                 height: (30 / @vw);
                 outline: none;
                 display: inline;
@@ -609,17 +638,17 @@ body {
 
                 // text-indent: 2rem;
                 &::selection {
-                    background: aquamarine;
+                    background: #fdbe3b;
                     color: black;
                 }
 
                 .highlight {
                     display: inline;
-                    background: aquamarine;
+                    background: #fdbe3b;
                     transition: all .3s;
 
                     &::selection {
-                        background: aquamarine !important;
+                        background: #fdbe3b !important;
                     }
                 }
             }

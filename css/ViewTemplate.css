@@ -148,17 +148,17 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 10.12658228vw;
+  height: 11.39240506vw;
   transition: all 0.2s;
 }
 .viewTemplate .view_box footer .bcg {
   width: 100%;
-  height: 1.26582278vw;
+  height: 0.50632911vw;
   background-color: #f4f4f4;
 }
 .viewTemplate .view_box footer .interactive {
   width: 100%;
-  height: 8.86075949vw;
+  height: 10.12658228vw;
   display: flex;
   align-items: center;
   justify-content: space-between;

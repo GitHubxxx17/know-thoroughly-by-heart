@@ -49,18 +49,18 @@ btn[1].onclick = () => {
 
 //点击页面其他地方时，如果填入内容为空则将内容修改
 document.onclick = () => {
-        if (flag_learn && document.querySelector('.learn_page .highlight')) {
-            for (let x of all('.learn_page .input')) {
-                if (x.innerHTML == '')
-                    x.innerHTML = '请输入答案';
-            }
+    if (flag_learn && document.querySelector('.learn_page .highlight')) {
+        for (let x of all('.learn_page .input')) {
+            if (x.innerHTML == '')
+                x.innerHTML = '请输入答案';
         }
     }
-    //点击进入背诵模式
+}
+//点击进入背诵模式
 btn[2].onclick = () => {
     if (learn_flag_2 && flag_learn && document.querySelector('.learn_page .highlight')) {
         learnReset()
-            //利用循环将选中的节点添加类
+        //利用循环将选中的节点添加类
         let n = 0;
         for (let x of all('.learn_page .highlight')) {
             if (!learn_flag_1)
@@ -92,11 +92,20 @@ btn[0].onclick = () => {
         let a = 0;
         for (let x of all('.learn_page .highlight'))
             x.innerHTML = arr2[a++];
-        alert('正确率：' + (sum / n) * 100 + '%');
+
+
+        $('.learn_page .popup_box').innerHTML = '正确率：' + (sum / n) * 100 + '%';
+        $('.learn_page .popup').style.display = 'block';
         learnReset();
+
     }
 
 }
+
+//点击关闭弹窗
+$('.learn_page .popup').onclick = () => $('.learn_page .popup').style.display = 'none';
+//阻止事件冒泡
+$('.learn_page .popup .popup_box').onclick = (e) => e.stopPropagation();
 
 
 //将节点重置回原本状态
