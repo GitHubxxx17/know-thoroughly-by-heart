@@ -9,7 +9,8 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
         pageReset(i);
         if (i == 0) {
             $('.memory_base header').classList.remove('scroll_top');
-        } else if (i == 1) {
+        }
+        if (i == 1) {
             $('.pk_page .pk_footer').classList.remove('scroll_top');
         }
         if (i == 3) {
@@ -122,7 +123,6 @@ function TP() {
                         })
                     }, true)
                 } else {
-                    
                     ajax(`http://8.134.104.234:8080/ReciteMemory/modle/CancelCollet?userId=${curr.userId}&modleId=${all('.tp_inner')[i].querySelector('.modleId').innerHTML}&mStatus=0`, 'get','', (str) => {
                         let newstr = JSON.parse(str).msg;
                         console.log(newstr);

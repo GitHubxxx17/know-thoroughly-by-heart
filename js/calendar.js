@@ -124,8 +124,6 @@ function dateFromat(dtstr) {
     const y = dt.getFullYear();
     const m = padZero(dt.getMonth() + 1);
     const d = padZero(dt.getDate());
-
-
     return `${y}-${m}-${d}`
 }
 
@@ -134,3 +132,11 @@ function padZero(n) {
     return n > 9 ? n : '0' + n;
 }
 console.log(dateFromat(currDate));
+
+//获取所有的日期
+// ajax(`http://127.0.0.1:8080/ReciteMemory/user.do/getClockInRecord?userId=${curr.userId}&year=${curr_year.value}&month=${curr_month.value}`, 'get', '', (str) => {
+
+//     let newstr = JSON.parse(str).msg;
+//     console.log(newstr);
+    
+// }, true);
