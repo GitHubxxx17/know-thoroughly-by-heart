@@ -208,9 +208,3 @@ $('.memory_base .header_left').onclick = () => {
 $('.calendar_page .left').onclick = () => {
     $('.calendar_page').style.left = '-100%'
 }
-
-
-let curr1 = getData('current_user');
-if (curr1.length == 0) {
-    location.href = './login.html';
-}
