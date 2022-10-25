@@ -23,6 +23,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
     }
 }
 $('.footer_nav li')[0].onclick();
+
 function pageReset(i) {
     $('.memory_base header').classList.add('scroll_top');
     $('.pk_page .pk_footer').classList.add('scroll_top');
@@ -71,24 +72,24 @@ function TP() {
             tp_inner_left();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-                if (l < -20)
-                    x.style.left = '-40vw';
-                if (l > 10)
-                    x.style.left = '0';
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                    if (l < -20)
+                        x.style.left = '-40vw';
+                    if (l > 10)
+                        x.style.left = '0';
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
-                $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
-                $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
-                if (l == 0 && x.offsetLeft == '0') {
-                    $('.learn_page').style.left = '0';
-                    flag_learn = true;
+                    $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
+                    $('.learn_page .text_box').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                    $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
+                    if (l == 0 && x.offsetLeft == '0') {
+                        $('.learn_page').style.left = '0';
+                        flag_learn = true;
+                    }
                 }
-            }
-            //点击编辑进入编辑页面
+                //点击编辑进入编辑页面
             all('.template_btn .edit')[i].onclick = (e) => {
                 title = all('.tp_inner .title')[i];
                 info = all('.tp_inner .info')[i];
@@ -123,7 +124,8 @@ function TP() {
                         })
                     }, true)
                 } else {
-                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/CancelCollet?userId=${curr.userId}&modleId=${all('.tp_inner')[i].querySelector('.modleId').innerHTML}&mStatus=0`, 'get','', (str) => {
+
+                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/CancelCollet?userId=${curr.userId}&modleId=${all('.tp_inner')[i].querySelector('.modleId').innerHTML}&mStatus=0`, 'get', '', (str) => {
                         let newstr = JSON.parse(str).msg;
                         console.log(newstr);
                         x.parentNode.addEventListener('animationend', () => {
@@ -207,4 +209,21 @@ $('.memory_base .header_left').onclick = () => {
 //打卡页面点击返回
 $('.calendar_page .left').onclick = () => {
     $('.calendar_page').style.left = '-100%'
+}
+
+
+let curr1 = getData('current_user');
+if (curr1.length == 0) {
+    location.href = './login.html';
+}
+
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw.js')
+        .then(registration => {
+            console.log(registration);
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }

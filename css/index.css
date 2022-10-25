@@ -105,19 +105,23 @@ body {
   font-size: 8.86075949vw;
 }
 .memory_base header .header_search {
-  position: relative;
-}
-.memory_base header .header_search input {
+  display: flex;
+  align-items: center;
   padding: 0 2.53164557vw;
   width: 55.69620253vw;
+  height: 7.59493671vw;
+  border-radius: 3.79746835vw;
+  background-color: #ecedef;
+}
+.memory_base header .header_search input {
+  padding: 0 1.26582278vw;
+  width: 50.63291139vw;
   height: 7.59493671vw;
   border-radius: 3.79746835vw;
   background-color: #ecedef;
   border: 0;
 }
 .memory_base header .header_search button {
-  position: absolute;
-  right: 0;
   width: 7.59493671vw;
   height: 7.59493671vw;
   border-radius: 50%;

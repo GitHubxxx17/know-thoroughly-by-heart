@@ -47,11 +47,17 @@ body {
         }
 
         .header_search {
-            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 (10 / @vw);
+            width: (220 / @vw);
+            height: (30 / @vw);
+            border-radius: (15 / @vw);
+            background-color: #ecedef;
 
             input {
-                padding: 0 (10 / @vw);
-                width: (220 / @vw);
+                padding: 0 (5 / @vw);
+                width: (200 / @vw);
                 height: (30 / @vw);
                 border-radius: (15 / @vw);
                 background-color: #ecedef;
@@ -60,8 +66,6 @@ body {
             }
 
             button {
-                position: absolute;
-                right: 0;
                 width: (30 / @vw);
                 height: (30 / @vw);
                 border-radius: 50%;

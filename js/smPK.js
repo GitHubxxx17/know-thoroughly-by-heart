@@ -431,6 +431,7 @@ function RefreshWin_Lose(winnerId) {
             $('.pk_end .win_lose .bgc').src = "./images/pk/defeat_bgc .png";
             $('.pk_end .win_lose .win').src = "./images/pk/defeat.png";
             $('.pk_end .win_lose .win').style.width = "29.33vw";
+            $('.pk_end .win_lose .win').style.left = "2vh";
         }
     }
 }

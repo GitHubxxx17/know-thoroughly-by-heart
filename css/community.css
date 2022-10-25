@@ -104,19 +104,23 @@ a {
   font-size: 3.2vw;
 }
 .community header .header_search {
-  position: relative;
-}
-.community header .header_search input {
+  display: flex;
+  align-items: center;
   padding: 0 2.66666667vw;
   width: 74.66666667vw;
-  height: 6.66666667vw;
+  height: 8vw;
+  border-radius: 4vw;
+  background-color: #ecedef;
+}
+.community header .header_search input {
+  padding: 0 1.33333333vw;
+  width: 66.66666667vw;
+  height: 8vw;
   border-radius: 4vw;
   background-color: #ecedef;
   border: 0;
 }
 .community header .header_search button {
-  position: absolute;
-  right: 0;
   width: 8vw;
   height: 8vw;
   border-radius: 50%;
@@ -126,7 +130,6 @@ a {
 .community header .header_search button .icon {
   font-size: 5.33333333vw;
   color: #979797;
-  line-height: 8vw;
 }
 .community header .header_btn {
   width: 10.66666667vw;
