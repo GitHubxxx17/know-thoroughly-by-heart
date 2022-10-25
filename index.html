@@ -920,7 +920,20 @@
 
 
 </body>
-<script src="./js/swregister.js"></script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+                console.log(registration);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+</script>
+
+<!-- <script src="./js/swregister.js"></script> -->
 <script src="./js/base.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/indexAjax.js"></script>
