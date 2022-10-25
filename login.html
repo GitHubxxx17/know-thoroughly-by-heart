@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录注册</title>
-    <link rel="manifest" href="./json/manifest.json">
     <link rel="stylesheet" href="./css/login.css">
 </head>
 
@@ -115,19 +114,6 @@
         </div>
     </div>
 </body>
-
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log(registration);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-</script>
-
 <!-- <script src="./js/swregister.js"></script> -->
 <script src="./js/base.js"></script>
 <script src="./js/login.js"></script>
