@@ -107,7 +107,8 @@ body {
 .memory_base header .header_search {
   display: flex;
   align-items: center;
-  padding: 0 2.53164557vw;
+  justify-content: space-between;
+  padding: 0 1.26582278vw;
   width: 55.69620253vw;
   height: 7.59493671vw;
   border-radius: 3.79746835vw;
@@ -115,7 +116,7 @@ body {
 }
 .memory_base header .header_search input {
   padding: 0 1.26582278vw;
-  width: 50.63291139vw;
+  width: 44.30379747vw;
   height: 7.59493671vw;
   border-radius: 3.79746835vw;
   background-color: #ecedef;
