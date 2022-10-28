@@ -24,19 +24,6 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.user
         //刷新仓库
         $('.footer_nav li')[0].onclick();
     }
-
-    //搜索功能的实现
-    let header_search_memory = document.getElementById("header_search_memory");
-
-    function createTemp() {
-        //获取搜索框的值
-        var search_value = header_search_memory.value;
-        console.log(search_value);
-    }
-
-    header_search_memory.onchange = () => {
-        createTemp();
-    }
 }, true);
 //获取用户信息
 ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userId}`, 'get', '', (str) => {
@@ -82,34 +69,34 @@ $('.Making_page .header_left input').onchange = function(e) {
 
 //点击出现弹窗
 $('.Making_page .header_right').onclick = () => {
-        //标题和文本内容不能为空
-        if ($('.Making_page .title input').value == '' || $('.Making_page .text_box').innerHTML == '') {
-            $('.Making_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
-            $('.Making_page .popup2').style.display = 'block';
-            return;
-        }
-
-        //标签不能为空
-        if ($('.Making_page .label_cont').innerText == '标签 ') {
-            $('.Making_page .popup2 .popup_box').innerHTML = '请选择标签';
-            $('.Making_page .popup2').style.display = 'block';
-            return;
-        }
-
-        // 标题一致就取消保存并提醒
-        for (let x of all('.my_base .title')) {
-            if (x.innerHTML == $('.Making_page .title input').value) {
-                $('.Making_page .popup2 .popup_box').innerHTML = '标题不能与记忆库的模板重复';
-                $('.Making_page .popup2').style.display = 'block';
-                return;
-            }
-        }
-        $('.Making_page .popup').style.display = 'block';
-        newtitle = $('.Making_page .title input').value;
-        newcontext = $('.Making_page .text_box').innerHTML;
-        newlabel = $('.Making_page .label_cont').innerHTML;
+    //标题和文本内容不能为空
+    if ($('.Making_page .title input').value == '' || $('.Making_page .text_box').innerHTML == '') {
+        $('.Making_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.Making_page .popup2').style.display = 'block';
+        return;
     }
-    //点击关闭弹窗
+
+    //标签不能为空
+    if ($('.Making_page .label_cont').innerText == '标签 ') {
+        $('.Making_page .popup2 .popup_box').innerHTML = '请选择标签';
+        $('.Making_page .popup2').style.display = 'block';
+        return;
+    }
+
+    // 标题一致就取消保存并提醒
+    for (let x of all('.my_base .title')) {
+        if (x.innerHTML == $('.Making_page .title input').value) {
+            $('.Making_page .popup2 .popup_box').innerHTML = '标题不能与记忆库的模板重复';
+            $('.Making_page .popup2').style.display = 'block';
+            return;
+        }
+    }
+    $('.Making_page .popup').style.display = 'block';
+    newtitle = $('.Making_page .title input').value;
+    newcontext = $('.Making_page .text_box').innerHTML;
+    newlabel = $('.Making_page .label_cont').innerHTML;
+};
+//点击关闭弹窗
 $('.Making_page .popup').onclick = () => $('.Making_page .popup').style.display = 'none';
 $('.Making_page .popup2').onclick = () => $('.Making_page .popup2').style.display = 'none';
 //阻止事件冒泡

@@ -23,35 +23,289 @@
         <!-- 记忆库 -->
         <div class="memory_base main_page">
             <header>
-                <div class="header_left">
-                    <span class="icon iconfont icon-a-riqirili"></span>
+                <div class="header_top">
+                    <div class="header_left">
+                        <span class="icon iconfont icon-a-riqirili"></span>
+                    </div>
+                    <div class="header_search">
+                        <input type="text" id="header_search_memory">
+                        <button>
+                            <span class="icon iconfont icon-sousuo3"></span>
+                        </button>
+                    </div>
+
                 </div>
-                <div class="header_search">
-                    <input type="text" id="header_search_memory">
-                    <button>
-                        <span class="icon iconfont icon-sousuo3"></span>
-                    </button>
-                </div>
-                <div class="header_right">
-                    <div class="icon_btn">
-                        <span class="icon iconfont icon-shoucang"></span>
+
+                <div class="header_bottom">
+                    <div class="today_plan_btn hb_btn btn_line">
+                        今日计划
+                    </div>
+                    <div class="base_btn hb_btn">
+                        记忆库
+                        
                     </div>
                 </div>
             </header>
-            <div class="container">
-                <div class="my_base">
-                    <ul class="base_lis">
-                    </ul>
-                    <div class="base_none_1"></div>
-                    <div class="base_bottom"></div>
-                </div>
-                <div class="collection_base">
-                    <ul class="base_lis">
 
-                    </ul>
-                    <div class="base_none_2"></div>
-                    <div class="base_bottom"></div>
+            <div class="container">
+                <div class="container_scroll">
+                    <div class="today_plan">
+                        
+                        <div class="review_list">
+                            <span>复习列表</span>
+                            <span>4篇</span>
+                        </div>
+                        <div class="review_container">
+                            <div class="today_review">
+                                <div class="tr_top">
+                                    <h2>
+                                        今日复习任务
+                                        <span>0/1</span>
+                                    </h2>
+                                    <div class="rule">查看生成规则</div>
+                                </div>
+                                <div class="tr_bottom">
+                                    <div class="review_line"></div>
+                                    <span class="icon iconfont icon-xianshi_xuanze"></span>
+                                </div>
+                            </div>
+                            <div class="review_cycle">
+                                <div class="cycle_1">
+                                    <div class="cycle_title">
+                                        <span>复习周期一</span>
+                                    </div>
+                                    <ul>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="record_box">
+                            <div class="box">
+                                <div class="com time">
+                                    <div class="com_title"> <i class="iconfont icon-shijian"></i> 学习时长</div>
+                                    <div class="data">28min</div>
+                                </div>
+                                <div class="com  page">
+                                    <div class="com_title"> <i class="iconfont icon-tongji1"></i> 学习篇数</div>
+                                    <div class="data">2篇</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="me_base">
+                        <div class="my_base">
+                            <ul class="base_lis">
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tp_inner">
+                                        <div class="modleId">${modleId}</div>
+                                        <div class="content">
+                                            <h3 class="title ellipsis">哈哈哈</h3>
+                                            <div class="info ellipsis">哈哈嘿嘿哈哈</div>
+                                        </div>
+                                        <div class="tip">
+                                            <div class="label">
+                                                <span class="iconfont icon-shuqianguanli"></span>
+                                                <span>通识课</span>
+                                            </div>
+                                        </div>
+                                        <div class="common">${common}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="base_none_1"></div>
+                            <div class="base_bottom"></div>
+                        </div>
+                        <div class="collection_base">
+                            <ul class="base_lis">
+
+                            </ul>
+                            <div class="base_none_2"></div>
+                            <div class="base_bottom"></div>
+                        </div>
+                        <div class="icon_btn">
+                            <span class="icon iconfont icon-shoucang"></span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -142,7 +396,9 @@
                     <input type="text" class="title_name">
                 </div>
                 <div class="text_box">
-                    <div class="text_page" id="text_page"></div>
+                    <div class="text_page" id="text_page">
+                        阿三大苏打实打实的京哈十九点和教案设计的撒娇的贺卡收到哈师大卡手机卡的贺卡收到尽快哈是客户对接哈师大计划经济舒服就好开好房间后即可黑暗圣经贷记卡活动教案或开始就电话卡是进口的哈抠脚大汉啊手机客户端看教案设计肯定会骄傲开始的空间哈萨克和打开哈萨克结婚登记喀什觉得和健康撒谎看到哈萨克就和大家哈数据库的哈萨克和大家暗黑世界大会金卡时间后端今安徽觉得哈和大家撒谎就和
+                    </div>
                 </div>
             </div>
         </div>
@@ -389,7 +645,7 @@
         <div class="enterPk" style="display: none;">
             <div class="head_nav_pk">
                 <span class="back iconfont icon-xiangzuojiantou">
-                    </span>
+                </span>
                 <span>对战</span>
             </div>
             <div class="pk_blood">
@@ -490,18 +746,18 @@
                     <span class="mine ">
                         <div class="my_box">
                             <div class="head_portrait">
-                                <img src="./images/头像/头像-女学生2.png" alt=""> 
+                                <img src="./images/头像/头像-女学生2.png" alt="">
                             </div>
                         </div>
                         <div class="idname">发际线与我作队</div>
                         <div class="xingxing">
-                            <i class="add_reduce mine_add_reduce">+1</i>  <i class="active iconfont icon-shoucang
+                            <i class="add_reduce mine_add_reduce">+1</i> <i class="active iconfont icon-shoucang
                             "></i>
                         </div>
                     </span>
                     <span class="win_lose ">
                         <img class="bgc animated" style="display:none ;" src="./images/pk/win_bgc.png" alt="">
-                        <img class="win animated" style="display:none ;" src="./images/pk/win.png"alt="">
+                        <img class="win animated" style="display:none ;" src="./images/pk/win.png" alt="">
                     </span>
                     <span class="other">
                         <div class="other_box">
@@ -511,7 +767,7 @@
                         </div>
                         <div class="other_name">hahahah</div>
                         <div class="xingxing">
-                            <i class="add_reduce other_add_reduce">-1</i>  <i class="active iconfont icon-shoucang
+                            <i class="add_reduce other_add_reduce">-1</i> <i class="active iconfont icon-shoucang
                             "></i>
                         </div>
                     </span>
@@ -798,7 +1054,8 @@
                             <div class="highlight">世界观</div>是人们对世界关系的根本观点。
                             <div class="highlight">方法论</div> 是人们认识和改造世界所遵循的根本方法。 只有系统化·理论化的世界观才是哲学·哲学既是世界观又是方法论。
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;2、哲学的重大基本问题，是思维和存在矣系的问题。 思维和存在谁是第一性的问题·这是划分唯物主义和唯心主义哲学的基本依据·
-                            <br>&nbsp;&nbsp;&nbsp;&nbsp;3·哲学又可以划分为可知论和不可知论 ①可知论：主世界是可以认识的，包括唯物主义可知论和唯心主义可知论。 ②不可知论：主世界是不可以认识的，只有少数唯心论是不可知论·
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;3·哲学又可以划分为可知论和不可知论 ①可知论：主世界是可以认识的，包括唯物主义可知论和唯心主义可知论。
+                            ②不可知论：主世界是不可以认识的，只有少数唯心论是不可知论·
                             <div class="highlight"></div>
                         </div>
                     </div>
@@ -889,7 +1146,7 @@
                 <ul>
                     <li>
                         <span class="icon iconfont icon-tiku1"></span>
-                        <div class="name">记忆库</div>
+                        <div class="name">学习</div>
                     </li>
                     <li>
                         <span class="icon iconfont icon-PK1"></span>
@@ -920,20 +1177,7 @@
 
 
 </body>
-
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log(registration);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-</script>
-
-<!-- <script src="./js/swregister.js"></script> -->
+<script src="./js/swregister.js"></script>
 <script src="./js/base.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/indexAjax.js"></script>

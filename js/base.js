@@ -55,7 +55,7 @@ function saveData(name, data) {
 
 
 //为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
-Array.prototype.remove = function (val) {
+Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
@@ -63,7 +63,7 @@ Array.prototype.remove = function (val) {
 };
 
 //新建模板到仓库
-function newTP(title, context, modleId, label,common, flag) {
+function newTP(title, context, modleId, label, common, flag) {
     let li = document.createElement('li');
     li.innerHTML = `<div class="tp_inner">
                         <div class="modleId">${modleId}</div>
@@ -89,17 +89,15 @@ function newTP(title, context, modleId, label,common, flag) {
     } else {
         $('.collection_base .base_lis').prepend(li);
     }
-
-
 }
 
 //社区渲染
-function comTP(title, context, modleId, label, base64, username,name_flag) {
+function comTP(title, context, modleId, label, base64, username, name_flag) {
     let interactive = '';
-    if(name_flag){
+    if (name_flag) {
         interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
                         <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>打赏</i></span>`
-    }else{
+    } else {
         interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;&nbsp; <i>收藏</i></span>
                         <span class="jifen iconfont icon-jifenhuiyuan hidden"> &nbsp;<i>打赏</i></span>
                         <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
@@ -107,7 +105,7 @@ function comTP(title, context, modleId, label, base64, username,name_flag) {
     }
 
     let img = `./images/头像/头像-女学生2.png`;
-    if(base64 != ''){
+    if (base64 != '') {
         img = base64;
     }
 
@@ -145,13 +143,13 @@ function comTP(title, context, modleId, label, base64, username,name_flag) {
 }
 
 //上传页面渲染模板
-function UploadTP(title, context, modleId, label,common) {
+function UploadTP(title, context, modleId, label, common) {
     let select = '';
-    if(common == 1){
+    if (common == 1) {
         select = `<div class="circle selected">
                     <i class="iconfont icon-xuanze1"></i>
                 </div>`
-    }else{
+    } else {
         select = `<div class="circle">
                     <i class="iconfont icon-xuanze1"></i>
                 </div>`

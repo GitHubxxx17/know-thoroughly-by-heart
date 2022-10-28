@@ -54,7 +54,6 @@ btns[1].onclick = () => {
             newNode.setAttribute('id', 'merge');
             newNode.innerHTML = range.toString();
             //如果选中范围在div里面直接终止点击事件
-            console.log(txt.anchorNode.parentNode, txt.focusNode.parentNode);
             if (txt.anchorNode.parentNode === txt.focusNode.parentNode && txt.anchorNode.parentNode.className != 'text_page' && txt.focusNode.parentNode.className != 'text_page') {
                 return;
             }

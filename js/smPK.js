@@ -15,13 +15,13 @@ for (let i = 0; i < pk[1]; i++) {
 function ConnectionClicked() {
     try {
         ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/${curr.userId}/202/easy`) //连接服务器
-        ws.onopen = function(event) {
+        ws.onopen = function (event) {
             console.log("已经与服务器建立了连接当前连接状态：" + this.readyState);
         };
 
         let msgCount = 0; //接收信息的次数
 
-        ws.onmessage = function(event) {
+        ws.onmessage = function (event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
             if (event.data) {
@@ -125,13 +125,44 @@ function ConnectionClicked() {
                 }
             }
         };
-        ws.onclose = function(event) {
-            animate_pkend();
+
+        //正在匹配关闭页面
+        $('.newwaitPK .back_bock').onclick = () => {
+            $('.img_box img').style.opacity = '0';
+            $('.pk_end').style.display = 'none';
+            $('.enterPk').classList.add('appear');
+            $('.img_box').classList.remove("xz");
+            $('.img_box').classList.add("disappear_xz");
+            $('.img_box').classList.add("animated");
+            $('.newwaitPK .mine').classList.add('disappearup');
+            $('.newwaitPK .other').classList.add('disappearbottom');
+            setTimeout(() => { 
+                $('.newwaitPK').style.display = 'none'; 
+                $('.newwaitPK .mine').classList.remove('disappearup')
+                $('.newwaitPK .other').classList.remove('disappearbottom')
+                $('.img_box').classList.remove("disappear_xz");
+                
+            }, 2000);
+            ws.onclose = wsonclose(false,ws);
+        }
+
+        ws.onclose = wsonclose(true,ws);
+
+
+        function wsonclose(judge,ws) {
+            if (judge) {
+                animate_pkend();
+            };
             console.log("已经与服务器断开连接当前连接状态：" + this.readyState);
         };
-        ws.onerror = function(event) {
+
+        ws.onerror = function (event) {
             console.log("WebSocket异常！");
         };
+
+
+
+
     } catch (ex) {
         alert(ex.message);
     }
@@ -197,7 +228,7 @@ function Refresh_answer() {
     function animate(obj, target, stop) {
         obj.scrollTop = stop;
         clearInterval(obj.timerx);
-        obj.timerx = setInterval(function() {
+        obj.timerx = setInterval(function () {
             var step = (target - obj.scrollTop) / 15; //缓动动画位移
             if (obj.scrollTop.toFixed() == target.toFixed()) {
                 clearInterval(obj.timerx); //如果运动到目标值时清除定时器
@@ -215,7 +246,7 @@ function Refresh_answer() {
 
     // 随机排列数组
     function sortArr(arr) {
-        arr.sort(function() {
+        arr.sort(function () {
             return 0.5 - Math.random();
         })
         return arr.slice(0, 4);
@@ -286,7 +317,7 @@ function Refresh_answer() {
             let picsTop = all('.enterPk .highlight')[answerIndex].offsetTop - $('.enterPk .text_box').offsetTop;
 
             if (picsTop >= $('.enterPk .text_box').offsetTop / 2) {
-                setTimeout(function() {
+                setTimeout(function () {
                     animate($('.enterPk .text_box'), picsTop - $('.enterPk .text_box').clientHeight / 2, $('.enterPk .text_box').scrollTop)
                 }, 1000);
 
@@ -299,12 +330,61 @@ function Refresh_answer() {
     function gameInit() {
         answerIndex = 0;
     }
-    $('.head_nav_pk .back').onclick = () => {
-        $('.enterPk').style.display = 'none';
-    }
-
     //pkend的界面渲染
 }
+
+
+//匹配成功之后的动画
+function animate_success() {
+    setTimeout(function () {
+        $('.img_box img').style.opacity = '0';
+        $('.enterPk').style.display = 'block';
+        $('.enterPk').classList.add('appear');
+        $('.img_box').classList.remove("xz");
+        $('.img_box').classList.add("disappear_xz");
+        $('.img_box').classList.add("animated");
+        $('.newwaitPK .mine').classList.add('disappearup')
+        $('.newwaitPK .other').classList.add('disappearbottom')
+        setTimeout(() => $('.newwaitPK').style.display = 'none', 2000);
+    }, 3000);
+}
+
+
+
+//匹配结束之后的动画
+function animate_pkend() {
+    setTimeout(function () {
+
+        $('.enterPk .head_nav_pk').classList.add('disappear');
+        $('.enterPk .head_nav_pk').classList.add('animated');
+        $('.enterPk .pk_blood .mine').classList.add('disLeft');
+        $('.enterPk .pk_blood .mine').classList.add('animated');
+        $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
+        $('.enterPk .pk_blood .enter_vs').classList.add('animated');
+        // $('.enterPk .pk_blood .time').classList.add('disappear');
+        // $('.enterPk .pk_blood .time').classList.add('animated');
+        $('.enterPk .pk_blood .other').classList.add('disRight');
+        $('.enterPk .pk_blood .other').classList.add('animated');
+        $('.enterPk .text_box').classList.add('animated');
+        $('.enterPk .text_box').classList.add('disappear');
+        $('.enterPk .option').classList.add('animated');
+        $('.enterPk .option').classList.add('disappear');
+    }, 3000);
+
+    setTimeout(function () {
+        $('.pk_end').style.display = 'block';
+        setTimeout(() => {
+            $('.win_lose .win').style.display = "block";
+            $('.win_lose .win').classList.add('zoom2');
+
+        }, 1800)
+        setTimeout(() => {
+            $('.win_lose .bgc').style.display = "block";
+            $('.win_lose .bgc').classList.add('zoom');
+        }, 2400)
+    }, 1000);
+}
+
 
 //刷线血条和血量
 function Refresh_blook(data) {
@@ -324,58 +404,6 @@ function Refresh_blook(data) {
         $('.enterPk .name_blood .other_blook').innerHTML = Math.round(data[1].hp) + '%';
     }
 
-
-}
-
-//匹配成功之后的动画
-function animate_success() {
-    setTimeout(function() {
-        $('.img_box img').style.opacity = '0';
-        $('.enterPk').style.display = 'block';
-        $('.enterPk').classList.add('appear');
-        $('.img_box').classList.remove("xz");
-        $('.img_box').classList.add("disappear_xz");
-        $('.img_box').classList.add("animated");
-        $('.newwaitPK .mine').classList.add('disappearup')
-        $('.newwaitPK .other').classList.add('disappearbottom')
-        setTimeout(() => $('.newwaitPK').style.display = 'none', 2000);
-    }, 3000);
-}
-
-
-
-//匹配结束之后的动画
-function animate_pkend() {
-    setTimeout(function() {
-
-        $('.enterPk .head_nav_pk').classList.add('disappear');
-        $('.enterPk .head_nav_pk').classList.add('animated');
-        $('.enterPk .pk_blood .mine').classList.add('disLeft');
-        $('.enterPk .pk_blood .mine').classList.add('animated');
-        $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
-        $('.enterPk .pk_blood .enter_vs').classList.add('animated');
-        // $('.enterPk .pk_blood .time').classList.add('disappear');
-        // $('.enterPk .pk_blood .time').classList.add('animated');
-        $('.enterPk .pk_blood .other').classList.add('disRight');
-        $('.enterPk .pk_blood .other').classList.add('animated');
-        $('.enterPk .text_box').classList.add('animated');
-        $('.enterPk .text_box').classList.add('disappear');
-        $('.enterPk .option').classList.add('animated');
-        $('.enterPk .option').classList.add('disappear');
-    }, 3000);
-
-    setTimeout(function() {
-        $('.pk_end').style.display = 'block';
-        setTimeout(() => {
-            $('.win_lose .win').style.display = "block";
-            $('.win_lose .win').classList.add('zoom2');
-
-        }, 1800)
-        setTimeout(() => {
-            $('.win_lose .bgc').style.display = "block";
-            $('.win_lose .bgc').classList.add('zoom');
-        }, 2400)
-    }, 1000);
 }
 
 //结束之后刷新星星和积分

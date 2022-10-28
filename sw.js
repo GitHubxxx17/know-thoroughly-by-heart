@@ -57,11 +57,11 @@ self.addEventListener('activate', async (e) => {
     await self.clients.claim();
 })
 
-self.addEventListener('fetch', function (e) {
-    console.log('fetch');
-    //给浏览器响应
-    e.respondWith(networkFirst(e.request));
-})
+// self.addEventListener('fetch', function (e) {
+//     console.log('fetch');
+//     //给浏览器响应
+//     e.respondWith(networkFirst(e.request));
+// })
 
 
 //网络优先

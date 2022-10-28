@@ -1,5 +1,21 @@
 let curr = getData('current_user');
 
+//今日计划和记忆库切换
+for(let i = 0;i < $('.hb_btn').length;i++){
+    $('.hb_btn')[i].onclick = () => {
+        let x = -100*i;
+        $('.container_scroll').style.left = `${x}vw`;
+        for(let k of $('.hb_btn')) {
+            k.classList.remove('btn_line')
+        }
+        $('.hb_btn')[i].classList.add('btn_line')
+        if(i == 0)
+            $('.icon_btn').style.display = 'none';
+        else
+            $('.icon_btn').style.display = 'block';
+    }
+}
+
 //底部导航栏
 for (let i = 0; i < $('.footer_nav li').length; i++) {
     $('.footer_nav li')[i].onclick = () => {
@@ -72,13 +88,13 @@ function TP() {
             tp_inner_left();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function(e) {
-                    l = e.changedTouches[0].clientX - disX;
-                    if (l < -20)
-                        x.style.left = '-40vw';
-                    if (l > 10)
-                        x.style.left = '0';
-                })
+            // x.addEventListener('touchmove', function(e) {
+            //         l = e.changedTouches[0].clientX - disX;
+            //         if (l < -20)
+            //             x.style.left = '-40vw';
+            //         if (l > 10)
+            //             x.style.left = '0';
+            //     })
                 //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
                     $('.learn_page .title_name').innerHTML = all('.tp_inner .title')[i].innerHTML;
@@ -173,17 +189,18 @@ $('.icon_btn').onclick = () => {
         if ($('.icon_btn .icon').classList.contains('icon-shoucang')) {
             $('.icon_btn .icon').classList.add('icon-jiyi');
             $('.icon_btn .icon').classList.remove('icon-shoucang');
-            $('.my_base').style.transform = 'scale(0)';
-            $('.collection_base').style.transform = 'scale(1)';
+            // $('.my_base').style.transform = 'scale(0)';
+            // $('.collection_base').style.transform = 'scale(1)';
         } else {
             $('.icon_btn .icon').classList.remove('icon-jiyi');
             $('.icon_btn .icon').classList.add('icon-shoucang');
-            $('.my_base').style.transform = 'scale(1)';
-            $('.collection_base').style.transform = 'scale(0)';
+            // $('.my_base').style.transform = 'scale(1)';
+            // $('.collection_base').style.transform = 'scale(0)';
         }
 
     }, 500);
-    $('.collection_base').classList.toggle('clip_path_change');
+    $('.collection_base').classList.toggle('clip_path_change1');
+    $('.my_base').classList.toggle('clip_path_change2');
     $('.icon_btn').classList.add('change_ani');
     $('.icon_btn').addEventListener('animationend', () => {
         $('.icon_btn').classList.remove('change_ani');
@@ -211,3 +228,8 @@ $('.calendar_page .left').onclick = () => {
     $('.calendar_page').style.left = '-100%'
 }
 
+
+let curr1 = getData('current_user');
+if (curr1.length == 0) {
+    location.href = './login.html';
+}
