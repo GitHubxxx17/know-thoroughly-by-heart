@@ -80,6 +80,8 @@ body{
             padding: (10/@vw);
             box-shadow:  (1 / @vw)  (2 / @vw) (5/ @vw) (2/ @vw) rgba(159, 157, 157, 0.381);
             border-radius: 1%;
+            transition: all .3s;
+            min-height: (300/@vw);
             .calendar_week_day{
                 font-size: (16/@vw);
                 height: (50/@vw);
@@ -99,6 +101,7 @@ body{
                 grid-template-columns: repeat(7, 1fr);
                 gap: (2/@vw);
                 color:#151426;
+                transition: all .6s;
                 div{
                     width: (40/@vw);
                     height: (40/@vw);
@@ -225,56 +228,33 @@ body{
                     border: 0;
                 }
             }
+
+            .dailySignature{
+                margin-top: (5/@vw);
+                // background-color: red;
+                background: url(../images/bg4.png);
+                padding: (20/@vw) (10/@vw);
+                border-radius: (10/@vw);
+            }
         
             .title{
-                font-size: (22/@vw);
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
+                color: #fff;
+                font-size: (20/@vw);
+                width: (110/@vw);
+                padding: (5/@vw);
+                text-align: center;
+                // background-color: #9a7aec89;
+                border-radius: (10/@vw);
             }
+
             .record_box{
-                margin-top: (10/@vw);
-                padding: (15/@vw);
-                width: 100%;
-                border-radius: 5%;
-    
-                .box{
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    .com{
-                        width: 45%;
-                        height: (80/@vw);
-                        text-align: center;
-                        background-color: #fff;
-                        border-radius: 5%;
-    
-                        .com_title{
-                            line-height: (40/@vw) ;
-                            font-size: (16/@vw);
-                        }
-                        .data{
-                            font-size: (20/@vw);
-                        }
-                    }
-    
-                    .time{
-                        .icon-shijian{
-                            font-size: (20/@vw);
-                            color: rgb(233, 198, 20);
-                            font-weight: 700;
-                        }
-                    }
-    
-                    .page{
-                        .icon-tongji1{
-                            font-size: (20/@vw);
-                            color: rgb(233, 198, 20);
-                        }
-                    }
-    
+                margin-top: (20/@vw);
+                padding: (5/@vw) (15/@vw);
+                border-left: 2px solid rgba(0, 0, 0, 0.319);
+                div{
+                    
                 }
+                
             }
         
         }

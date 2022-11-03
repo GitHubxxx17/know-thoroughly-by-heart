@@ -75,6 +75,17 @@ a {
   background-color: #bba5dd;
   transition: all 0.2s;
 }
+.enterPk .exit_pop_up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -13.33333333vw;
+  margin-left: -26.66666667vw;
+  width: 53.33333333vw;
+  height: 26.66666667vw;
+  background-color: red;
+  z-index: 1000;
+}
 .enterPk .head_nav_pk {
   margin-top: 5.33333333vw;
   display: flex;
@@ -955,6 +966,11 @@ a {
 .appear {
   visibility: visible;
   animation-delay: 1.8s;
+  animation-name: appear;
+}
+.appear_img {
+  visibility: visible;
+  animation-delay: 1s;
   animation-name: appear;
 }
 .disappear {

@@ -1,6 +1,7 @@
 let ws;
 let answerArr = [];
 let UserSelectArr = [];
+let selectArr = [];
 let pk = getData('pk');
 if (pk.length == 0) {
     pk[0] = 0;
@@ -14,7 +15,7 @@ for (let i = 0; i < pk[1]; i++) {
 
 function ConnectionClicked() {
     try {
-        ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/${curr.userId}/202/easy`) //连接服务器
+        ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/${curr.userId}/${modle_id}/${difficult}`) //连接服务器
         ws.onopen = function (event) {
             console.log("已经与服务器建立了连接当前连接状态：" + this.readyState);
         };
@@ -32,23 +33,38 @@ function ConnectionClicked() {
                     this.send("START");
                     console.log("已经向服务器发送START信号！");
                 }
+
                 //当匹配成功后获取双方信息渲染，并且发送Ready开始答题
                 if (res.MATCH_SUCCESS) {
                     Refresh_id(res.enemyInf.nickName);
                     Refresh_img(res.enemyInf);
                     Refresh_Template(res.context);
-                    ws.send("Ready");
+                    ws.send("READY");
                     console.log("已经向服务器发送Ready信号！");
                 }
+
                 //判断匹配是否成功，成功后渲染挖空内容和答题的答案,当isReady为true即可进入pk界面
                 if (res.isReady) {
                     animate_success();
                     console.log("我已经准备好啦！");
                 }
+
+                //刷新血条
                 if (res.hpInf) {
                     Refresh_blook(res.hpInf);
                 }
 
+                //再次刷新题目
+                if (UserSelectArr.length == selectArr.length) {
+                    ws.send("AGAIN");
+                }
+
+                //发送AGAIN之后再刷新模
+                if (res.OPERATE) {
+                    Refresh_Template(res.digedContent);
+                }
+
+                //比赛结束之后
                 if (res.MATCH_END) {
                     $(".show_answer .answer").innerHTML = ``;
                     for (let x of answerArr) {
@@ -101,6 +117,7 @@ function ConnectionClicked() {
                             }
                         }
                     }
+
                     if (res.records[1].userId != curr.userId) {
                         other_answer = res.records[1].answersRecord;
                         console.log(other_answer);
@@ -133,23 +150,28 @@ function ConnectionClicked() {
             $('.enterPk').classList.add('appear');
             $('.img_box').classList.remove("xz");
             $('.img_box').classList.add("disappear_xz");
+            $('.img_box').classList.remove("appear");
             $('.img_box').classList.add("animated");
             $('.newwaitPK .mine').classList.add('disappearup');
             $('.newwaitPK .other').classList.add('disappearbottom');
-            setTimeout(() => { 
-                $('.newwaitPK').style.display = 'none'; 
+            setTimeout(() => {
+                $('.newwaitPK').style.display = 'none';
                 $('.newwaitPK .mine').classList.remove('disappearup')
                 $('.newwaitPK .other').classList.remove('disappearbottom')
                 $('.img_box').classList.remove("disappear_xz");
-                
+
             }, 2000);
-            ws.onclose = wsonclose(false,ws);
+            ws.onclose = wsonclose(false, ws);
         }
 
-        ws.onclose = wsonclose(true,ws);
+        //pk中关闭页面
+        $('.enterPk .head_nav_pk .back').onclick = () => {
+            $('.enterPk').style.display = 'none';
+            ws.onclose = wsonclose(false, ws);
+        }
 
-
-        function wsonclose(judge,ws) {
+        // ws.onclose = wsonclose(true, ws);
+        function wsonclose(judge, ws) {
             if (judge) {
                 animate_pkend();
             };
@@ -159,10 +181,6 @@ function ConnectionClicked() {
         ws.onerror = function (event) {
             console.log("WebSocket异常！");
         };
-
-
-
-
     } catch (ex) {
         alert(ex.message);
     }
@@ -186,7 +204,6 @@ function resetPK() {
     $('.enterPk .name_blood .other_blook').innerHTML = '100%';
 }
 
-
 //刷新id
 function Refresh_id(data) {
     $('.enterPk .other .other_name').innerHTML = data;
@@ -200,7 +217,6 @@ function Refresh_img(data) {
     $('.pk_end .ohter_portrait').innerHTML = `<img src="${data.base64}">`
     $('.enterPk .other .head_portrait').innerHTML = `<img src="${data.base64}">`
 }
-
 
 //刷新模板
 function Refresh_Template(data) {
@@ -217,7 +233,7 @@ function Refresh_Template(data) {
 function Refresh_answer() {
     //数组用来存放答案
     answerArr = [];
-    let selectArr = [];
+    selectArr = [];
     UserSelectArr = [];
     let slArr = [];
     let answerIndex = 0;
@@ -282,8 +298,10 @@ function Refresh_answer() {
                     }))
                 }
                 // UserSelectArr.push(x.querySelector('.answer').innerHTML);
-                if (answerIndex < all('.enterPk .highlight').length - 1)
+                if (answerIndex < all('.enterPk .highlight').length - 1) {
                     answerSelect();
+                }
+
             } else {
                 // for(let x of $('.enterPk .option .answer')){
                 //     x.innerHTML = '';
@@ -333,7 +351,6 @@ function Refresh_answer() {
     //pkend的界面渲染
 }
 
-
 //匹配成功之后的动画
 function animate_success() {
     setTimeout(function () {
@@ -348,8 +365,6 @@ function animate_success() {
         setTimeout(() => $('.newwaitPK').style.display = 'none', 2000);
     }, 3000);
 }
-
-
 
 //匹配结束之后的动画
 function animate_pkend() {
@@ -384,7 +399,6 @@ function animate_pkend() {
         }, 2400)
     }, 1000);
 }
-
 
 //刷线血条和血量
 function Refresh_blook(data) {

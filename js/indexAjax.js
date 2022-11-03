@@ -6,19 +6,24 @@ var newTPFlag = false;
 
 //获取用户模板
 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.userId}`, 'get', '', (str) => {
-    // console.log(str)
     let newstr = JSON.parse(str).msg;
-    console.log(newstr)
     if (newstr.data.userModle) {
         let tparr = newstr.data.userModle;
+        let fxnum = 0;
         for (let x of tparr) {
-            console.log(x);
             let newcon = x.content.replace(/<缩进>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<\/p>/g, '').replace(/<p>/g, '');
             if (x.MStatus == '0')
-                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, true);
+                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, true);
             else
-                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, false);
+                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, false);
+            
+            if (x.studyStatus == '复习中'){
+                fxnum++;
+                console.log(x,x.studyStatus);
+            }
+                
         }
+        $('.numOfArticles').innerHTML = `${fxnum} 篇`;
         $('.footer_nav li')[0].onclick();
     } else {
         //刷新仓库
@@ -50,7 +55,7 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
 
 
 //上传文件
-$('.Making_page .header_left input').onchange = function(e) {
+$('.Making_page .header_left input').onchange = function (e) {
     let file = e.target.files[0];
     if (e.target.files.length != 0) {
         $('.Making_page .loading').style.display = 'block';
@@ -105,25 +110,26 @@ $('.Making_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
 
 //点击保存文件
 $('.Making_page .popup_box button')[0].onclick = () => {
-        // 如果标题和内容不为空
-        if (newtitle != '' && newcontext != '') {
-            //创建模板
-            let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, '<缩进>');
-            let contect = encodeURI(newcon);
-            let poststr = `context=${contect}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
-                let newstr = JSON.parse(str).msg;
-                let modle = newstr.data.modle;
-                newTP(newtitle, newcontext, modle.modleId, newlabel, 0, true);
-                //刷新仓库
-                $('.footer_nav li')[0].onclick();
-                MakingTP();
-            }, true);
-        }
-        // 隐藏弹窗
-        $('.Making_page .popup').style.display = 'none';
+    // 如果标题和内容不为空
+    if (newtitle != '' && newcontext != '') {
+        //创建模板
+        let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, '<缩进>');
+        let contect = encodeURI(newcon);
+        let poststr = `context=${contect}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
+        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
+            let newstr = JSON.parse(str).msg;
+            let modle = newstr.data.modle;
+            console.log(newstr)
+            newTP(newtitle, newcontext, modle.modleId, newlabel, 0, x.studyStatus, true);
+            //刷新仓库
+            $('.footer_nav li')[0].onclick();
+            MakingTP();
+        }, true);
     }
-    //点击进入编辑页面
+    // 隐藏弹窗
+    $('.Making_page .popup').style.display = 'none';
+}
+//点击进入编辑页面
 $('.Making_page .popup_box button')[1].onclick = () => {
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
@@ -138,12 +144,14 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             newTP(newtitle, newcon, modle.modleId, newlabel, 0, true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
-            $('.edit_page .title_name').value = newtitle;
-            $('.edit_page .text_page').innerHTML = newcontext;
-            $('.edit_page .label_cont').innerHTML = newlabel;
-            $('.edit_page').style.left = '0';
+            $('.learn_page .title').innerHTML = newtitle;
+            $('.learn_page .text_box').innerHTML = newcontext;
+            $('.learn_page .label').innerHTML = newlabel;
+            $('.learn_page').style.left = '0';
+            $('.learn_page header').style.left = '0';
+            $('.learn_page header').style.opacity = '1';
             MakingTP();
-        }, true);
+        }, true)
     }
     $('.Making_page .popup').style.display = 'none';
 }
