@@ -147,16 +147,18 @@ document.querySelector('#next_year').onclick = () => {
 
 //日历月份的点击事件
 $('.calendar_footer .situation')[1].onclick = () => {
+    let poststr = `userId=${curr.userId}&date=${dateFromat(currDate)}`
+    if($('.calendar_footer .situation')[1].innerHTML == '签到'){
+        ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/clockIn`, 'post', poststr, (str) => {
+            let newstr = JSON.parse(str).msg;
+            console.log(newstr);
+            if (newstr.data.isSuccess) {
+                Today.classList.add('clock_in');
+            }
+        }, true);
+    }
     $('.calendar_footer .situation')[0].innerHTML = '今日已打卡';
     $('.calendar_footer .situation')[1].innerHTML = '已签到';
-    let poststr = `userId=${curr.userId}&date=${dateFromat(currDate)}`
-    ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/clockIn`, 'post', poststr, (str) => {
-        let newstr = JSON.parse(str).msg;
-        console.log(newstr);
-        if (newstr.data.isSuccess) {
-            Today.classList.add('clock_in');
-        }
-    }, true);
 }
 
 // 1.定义格式化时间的方法

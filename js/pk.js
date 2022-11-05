@@ -3,8 +3,8 @@
 //拉取排行榜
 let laqu = document.getElementById("laiqu");
 let rankingList = document.getElementById("ranking_list");
-let judge = true;
-laqu.onclick = function() {
+
+laqu.onclick = function () {
     if (judge) {
         $('.pk_footer').style.overflow = "scroll";
         $('.pk_footer').style.top = "0";
@@ -15,25 +15,65 @@ laqu.onclick = function() {
         judge = true;
     }
 }
-
+let pkstars = 0;
 //获取旋转圈圈对象
 let img_box = document.querySelector(".img_box");
-
-ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList`, 'get', ``, (str) => {
-    let newstr = JSON.parse(str).msg;
-    console.log(newstr);
-    let ranking = newstr.data.ranking;
-    Array.from(ranking).forEach((x, i) => {
-        if (i < 10) {
+//排行榜渲染
+function rlRendering() {
+    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList`, 'get', ``, (str) => {
+        let newstr = JSON.parse(str).msg;
+        console.log(newstr);
+        let ranking = newstr.data.ranking;
+        Array.from(ranking).forEach((x, i) => {
             $('.others_nav')[i].querySelectorAll('.left span')[1].innerHTML = x.nickName;
             $('.others_nav')[i].querySelector('.right').innerHTML = `${x.stars}颗星`;
+        })
+    }, true);
+    ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/userRanking`, 'post', `userId=${curr.userId}`, (str) => {
+        let newstr = JSON.parse(str).msg;
+        console.log(newstr);
+        let userdata = newstr.data.userData;
+        $('.ranking_list .mine .rank').innerHTML = `第${userdata.userRanking}名`;
+        $('.ranking_list .mine .score').innerHTML = `${userdata.user.stars}颗星`;
+        $('.pk_page .integral .cur').innerHTML = userdata.user.points;
+        pkstars = userdata.user.stars;
+        switch (Math.floor(pkstars / 5)) {
+            case 0:
+                $('.competition_season .season_name').innerHTML = '初级学士';
+                $('.competition_season .role img').src = './images/段位/1.png';
+                break;
+            case 1:
+                $('.competition_season .season_name').innerHTML = '中级学士';
+                $('.competition_season .role img').src = './images/段位/2.png';
+                break;
+            case 2:
+                $('.competition_season .season_name').innerHTML = '高级学士';
+                $('.competition_season .role img').src = './images/段位/4.png';
+                break;
+            case 3:
+                $('.competition_season .season_name').innerHTML = '初级硕士';
+                $('.competition_season .role img').src = './images/段位/3.png';
+                break;
+            case 4:
+                $('.competition_season .season_name').innerHTML = '高级硕士';
+                $('.competition_season .role img').src = './images/段位/5.png';
+                break;
+            case 5:
+                $('.competition_season .season_name').innerHTML = '博士';
+                $('.competition_season .role img').src = './images/段位/6.png';
+                break;
+            default:
+                $('.competition_season .season_name').innerHTML = '博士';
+                $('.competition_season .role img').src = './images/段位/6.png';
+                break;
         }
-        if (x.nickName == curr.userInfo.nickName) {
-            $('.ranking_list .mine .rank').innerHTML = `第${i+1}名`
-            $('.ranking_list .mine .score').innerHTML = `${x.stars}颗星`
+        let star = pkstars >= 30? 5 : pkstars % 5;
+        for (let i = 0; i < star; i++) {
+            $('.pk_page .start i')[i].classList.add('active')
         }
-    })
-}, true);
+    }, true);
+}
+
 
 let close_select = document.getElementById("close_select");
 let select_dif_temp = document.querySelector(".select_dif_temp");
@@ -62,7 +102,6 @@ for (let x of button_active) {
         }
     })
 }
-
 
 
 
@@ -191,6 +230,8 @@ $('.determine .queding').onclick = () => {
         $('.img_box').classList.add("appear_img");
         img_box.classList.add("animated");
         $('.newwaitPK').style.display = 'block';
+        $('.pk_end .mine').classList.add('appearLeft');
+        $('.pk_end .other').classList.add('appearRight');
 
         //取消选择困难的active
         for (let index = 0; index < button_active.length; index++) {
@@ -209,7 +250,7 @@ $('.determine .queding').onclick = () => {
             }
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             if (img_box.classList.contains("appear_xz")) {
                 img_box.classList.remove("appear_xz");
                 img_box.classList.remove("animated");

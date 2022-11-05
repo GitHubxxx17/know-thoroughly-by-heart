@@ -653,6 +653,7 @@ a {
   color: #ffffff39;
   font-size: 53.33333333vw;
   font-weight: 700;
+  z-index: -1;
 }
 .pk_end .back_bock {
   margin-top: 1.33333333vw;
@@ -892,9 +893,15 @@ a {
   line-height: 8vw;
   font-size: 4.8vw;
 }
+.pk_end .show_answer .mine_an div {
+  text-align: center;
+}
 .pk_end .show_answer .answer {
-  flex: 5;
+  flex: 1;
   line-height: 8vw;
+}
+.pk_end .show_answer .an {
+  text-align: center;
 }
 .pk_end .show_answer .other_an {
   text-align: right;

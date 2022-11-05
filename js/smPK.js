@@ -1,16 +1,13 @@
 let ws;
-let answerArr = [];
-let UserSelectArr = [];
-let selectArr = [];
-let pk = getData('pk');
-if (pk.length == 0) {
-    pk[0] = 0;
-    pk[1] = 0;
-}
-$('.pk_page .integral .cur').innerHTML = `${pk[0]}`;
-for (let i = 0; i < pk[1]; i++) {
-    $('.pk_page .start i')[i].classList.add('active')
-}
+let answerArr = []; //存放当前答案
+let UserSelectArr = []; //存放当前用户选择的答案是否正确
+let selectArr = []; //下面选项的答案
+let again_count = 0;
+
+let endAnswerArr = [];//存放所有答案
+
+
+
 
 
 function ConnectionClicked() {
@@ -21,13 +18,15 @@ function ConnectionClicked() {
         };
 
         let msgCount = 0; //接收信息的次数
-
+        let timeLimits_record;
+        let timeCount = 0;
         ws.onmessage = function (event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
             if (event.data) {
                 let res = JSON.parse(event.data).socketMsg.datas;
                 console.log(res);
+
                 //当连接成功后发送START开始游戏
                 if (res.CONNECTION && msgCount == 1) {
                     this.send("START");
@@ -36,6 +35,12 @@ function ConnectionClicked() {
 
                 //当匹配成功后获取双方信息渲染，并且发送Ready开始答题
                 if (res.MATCH_SUCCESS) {
+                    timeCount = res.timeLimits - 2;
+                    $(".innercir").innerHTML = timeCount;
+                    //每轮pk开始前置空答案
+                    $(".show_answer .answer").innerHTML = ``;
+                    $(".show_answer .mine_an").innerHTML = ``;
+                    //刷新信息
                     Refresh_id(res.enemyInf.nickName);
                     Refresh_img(res.enemyInf);
                     Refresh_Template(res.context);
@@ -47,6 +52,13 @@ function ConnectionClicked() {
                 if (res.isReady) {
                     animate_success();
                     console.log("我已经准备好啦！");
+                    setTimeout(() => {
+                        timeLimits_record = setInterval(() => {
+                            console.log(timeCount);
+                            $(".innercir").innerHTML = timeCount--;
+                        }, 1000);
+                    }, 1000);
+                    
                 }
 
                 //刷新血条
@@ -54,91 +66,82 @@ function ConnectionClicked() {
                     Refresh_blook(res.hpInf);
                 }
 
-                //再次刷新题目
-                if (UserSelectArr.length == selectArr.length) {
-                    ws.send("AGAIN");
-                }
 
-                //发送AGAIN之后再刷新模
+                //发送AGAIN之后再刷新模板
                 if (res.OPERATE) {
+                    //刷新模板
+                    animate($('.enterPk .text_box'), 0, $('.enterPk .text_box').scrollTop)
                     Refresh_Template(res.digedContent);
+
                 }
 
                 //比赛结束之后
                 if (res.MATCH_END) {
-                    $(".show_answer .answer").innerHTML = ``;
-                    for (let x of answerArr) {
-                        $(".show_answer .answer").innerHTML += `
-                            <div class="an">${x}</div>
-                            `;
+                    clearInterval(timeLimits_record);
+                    //渲染答案
+                    for (let x of endAnswerArr) {
+                        $(".show_answer .answer").innerHTML += `<div class="an">${x}</div>`;
                     }
-                    $(".show_answer .mine_an").innerHTML = ``;
+                    //渲染当前用户的答案对错
+
                     for (let i = 0; i < UserSelectArr.length; i++) {
                         if (UserSelectArr[i] == "right") {
-                            $(".show_answer .mine_an").innerHTML += `
-                            <div class="dui">√</div>
-                            `;
+                            $(".show_answer .mine_an").innerHTML += `<div class="dui">√</div>`;
                         } else {
-                            $(".show_answer .mine_an").innerHTML += `
-                                <div class="cuo">×</div>`;
-                        }
-                        if (i == UserSelectArr.length - 1 && i < 10) {
-                            for (let j = 1; j < 10 - i; j++) {
-                                $(".show_answer .mine_an").innerHTML += `
-                                <div class="cuo">×</div>`;
-                            }
+                            $(".show_answer .mine_an").innerHTML += `<div class="cuo">×</div>`;
                         }
                     }
+                    if (UserSelectArr.length < endAnswerArr.length) {
+                        for (let j = 0; j < endAnswerArr.length - UserSelectArr.length; j++) {
+                            $(".show_answer .mine_an").innerHTML += `<div class="cuo">?</div>`;
+                        }
+                    }
+                    endAnswerArr = [];
+                    ws.onclose = wsonclose(true, ws);
                 }
 
+                if (res.ENEMY_EXIT) {
+
+                    ws.onclose = wsonclose(true, ws);
+                }
+
+                if (msgCount == 1) {
+                    ws.onclose = wsonclose(false, ws);
+                }
+
+                //渲染对方答案对错
                 if (res.records) {
-                    console.log("2222");
                     RefreshXing(res.winnerId);
                     RefreshWin_Lose(res.winnerId);
-                    console.log(res.winnerId)
-                    if (res.records[0].userId != curr.userId) {
-                        let other_answer = res.records[0].answersRecord;
-                        console.log(other_answer);
-                        $(".show_answer .other_an").innerHTML = ``;
-                        for (let i = 0; i < other_answer.length; i++) {
-                            if (other_answer[i].right) {
-                                $(".show_answer .other_an").innerHTML += `
-                                <div class="dui">√</div>
-                                `;
-                            } else {
-                                $(".show_answer .other_an").innerHTML += `
-                                    <div class="cuo">×</div>`;
-                            }
-                            if (i == other_answer.length - 1 && i < 10) {
-                                for (let j = 1; j < 10 - i; j++) {
+
+                    for (let x of res.records) {
+                        if (x.userId != curr.userId) {
+                            let other_answer = x.answersRecord;
+                            console.log(other_answer);
+                            $(".show_answer .other_an").innerHTML = ``;
+
+                            for (let i = 0; i < other_answer.length; i++) {
+                                if (other_answer[i].right) {
                                     $(".show_answer .other_an").innerHTML += `
-                                    <div class="cuo">×</div>`;
+                                    <div class="dui">√</div>
+                                    `;
+                                } else {
+                                    $(".show_answer .other_an").innerHTML += `
+                                        <div class="cuo">×</div>`;
+                                }
+                                if (i == endAnswerArr.length - 1) {
+                                    break;
+                                }
+                            }
+                            if (other_answer.length < endAnswerArr.length) {
+                                for (let j = 0; j < endAnswerArr.length - other_answer.length; j++) {
+                                    $(".show_answer .other_an").innerHTML += `
+                                    <div class="cuo">?</div>`;
                                 }
                             }
                         }
                     }
 
-                    if (res.records[1].userId != curr.userId) {
-                        other_answer = res.records[1].answersRecord;
-                        console.log(other_answer);
-                        $(".show_answer .other_an").innerHTML = ``;
-                        for (let i = 0; i < other_answer.length; i++) {
-                            if (other_answer[i].right) {
-                                $(".show_answer .other_an").innerHTML += `
-                                <div class="dui">√</div>
-                                `;
-                            } else {
-                                $(".show_answer .other_an").innerHTML += `
-                                    <div class="cuo">×</div>`;
-                            }
-                            if (i == other_answer.length - 1 && i < 10) {
-                                for (let j = 1; j < 10 - i; j++) {
-                                    $(".show_answer .other_an").innerHTML += `
-                                    <div class="cuo">×</div>`;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         };
@@ -166,16 +169,33 @@ function ConnectionClicked() {
 
         //pk中关闭页面
         $('.enterPk .head_nav_pk .back').onclick = () => {
-            $('.enterPk').style.display = 'none';
+            $('.enterPk .head_nav_pk').classList.add('disappear');
+            $('.enterPk .head_nav_pk').classList.add('animated');
+            $('.enterPk .pk_blood .mine').classList.add('disLeft');
+            $('.enterPk .pk_blood .mine').classList.add('animated');
+            // $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
+            // $('.enterPk .pk_blood .enter_vs').classList.add('animated');
+            $('.enterPk .pk_blood .time').classList.add('disappear');
+            $('.enterPk .pk_blood .time').classList.add('animated');
+            $('.enterPk .pk_blood .other').classList.add('disRight');
+            $('.enterPk .pk_blood .other').classList.add('animated');
+            $('.enterPk .text_box').classList.add('animated');
+            $('.enterPk .text_box').classList.add('disappear');
+            $('.enterPk .option').classList.add('animated');
+            $('.enterPk .option').classList.add('disappear');
+            setTimeout(function () {
+                $('.enterPk').style.display = 'none';
+            }, 2000);
             ws.onclose = wsonclose(false, ws);
         }
 
-        // ws.onclose = wsonclose(true, ws);
+
+
         function wsonclose(judge, ws) {
             if (judge) {
                 animate_pkend();
             };
-            console.log("已经与服务器断开连接当前连接状态：" + this.readyState);
+            console.log("已经与服务器断开连接当前连接状态：" + ws.readyState);
         };
 
         ws.onerror = function (event) {
@@ -186,6 +206,7 @@ function ConnectionClicked() {
     }
 };
 
+//重置pk匹配页面
 function resetPK() {
     $('.enterPk .other .other_name').innerHTML = '??????';
     $('.pk_interface .other .other_name').innerHTML = '??????';
@@ -202,6 +223,12 @@ function resetPK() {
     $('.enterPk .name_blood .mine_blook').innerHTML = '100%';
     $('.enterPk .other .other_blood_change').style.width = '38.13vw';
     $('.enterPk .name_blood .other_blook').innerHTML = '100%';
+
+
+    $('.pk_end').classList.remove('disappear');
+    $('.pk_end .mine').classList.remove('disLeft');
+    $('.pk_end .other').classList.remove('disRight');
+    UserSelectArr = [];
 }
 
 //刷新id
@@ -213,9 +240,16 @@ function Refresh_id(data) {
 
 //刷新头像
 function Refresh_img(data) {
-    $('.newwaitPK .other .head_portrait').innerHTML = `<img src="${data.base64}">`
-    $('.pk_end .ohter_portrait').innerHTML = `<img src="${data.base64}">`
-    $('.enterPk .other .head_portrait').innerHTML = `<img src="${data.base64}">`
+    if (data.base64 == '') {
+        $('.newwaitPK .other .head_portrait').innerHTML = `<img src="./images/头像/头像-女学生2.png">`
+        $('.pk_end .ohter_portrait').innerHTML = `<img src="./images/头像/头像-女学生2.png">`
+        $('.enterPk .other .head_portrait').innerHTML = `<img src="./images/头像/头像-女学生2.png">`
+    } else {
+        $('.newwaitPK .other .head_portrait').innerHTML = `<img src="${data.base64}">`
+        $('.pk_end .ohter_portrait').innerHTML = `<img src="${data.base64}">`
+        $('.enterPk .other .head_portrait').innerHTML = `<img src="${data.base64}">`
+    }
+
 }
 
 //刷新模板
@@ -229,31 +263,32 @@ function Refresh_Template(data) {
     Refresh_answer();
 }
 
+/*窗口滚动缓动动画*/
+function animate(obj, target, stop) {
+    obj.scrollTop = stop;
+    clearInterval(obj.timerx);
+    obj.timerx = setInterval(function () {
+        var step = (target - obj.scrollTop) / 15; //缓动动画位移
+        if (obj.scrollTop.toFixed() == target.toFixed()) {
+            clearInterval(obj.timerx); //如果运动到目标值时清除定时器
+        };
+
+        obj.scroll(0, obj.scrollTop + step);
+
+    }, 10);
+}
+
 //刷新答案
 function Refresh_answer() {
     //数组用来存放答案
     answerArr = [];
     selectArr = [];
-    UserSelectArr = [];
     let slArr = [];
     let answerIndex = 0;
 
     let timerx = null;
     let timero = null;
-    /*窗口滚动缓动动画*/
-    function animate(obj, target, stop) {
-        obj.scrollTop = stop;
-        clearInterval(obj.timerx);
-        obj.timerx = setInterval(function () {
-            var step = (target - obj.scrollTop) / 15; //缓动动画位移
-            if (obj.scrollTop.toFixed() == target.toFixed()) {
-                clearInterval(obj.timerx); //如果运动到目标值时清除定时器
-            };
 
-            obj.scroll(0, obj.scrollTop + step);
-
-        }, 10);
-    }
     //当鼠标滚动时清除定时器
     $('.enterPk .text_box').addEventListener('touchstart', () => {
         clearInterval($('.enterPk .text_box').timerx);
@@ -271,8 +306,8 @@ function Refresh_answer() {
     Array.from(all('.enterPk .highlight')).forEach((x, i) => {
         x.classList.add('recite');
         answerArr.push(x.innerHTML);
+        endAnswerArr.push(x.innerHTML);
         selectArr.push(x.innerHTML);
-        console.log(x.offsetHeight);
     });
 
 
@@ -300,12 +335,12 @@ function Refresh_answer() {
                 // UserSelectArr.push(x.querySelector('.answer').innerHTML);
                 if (answerIndex < all('.enterPk .highlight').length - 1) {
                     answerSelect();
+                } else {
+                    //再次刷新题目
+                    ws.send("AGAIN");
+                    console.log("发送再次刷新模板请求！");
                 }
 
-            } else {
-                // for(let x of $('.enterPk .option .answer')){
-                //     x.innerHTML = '';
-                // }
             }
         }
 
@@ -366,25 +401,22 @@ function animate_success() {
     }, 3000);
 }
 
-//匹配结束之后的动画
+//pk结束之后的动画
 function animate_pkend() {
-    setTimeout(function () {
-
-        $('.enterPk .head_nav_pk').classList.add('disappear');
-        $('.enterPk .head_nav_pk').classList.add('animated');
-        $('.enterPk .pk_blood .mine').classList.add('disLeft');
-        $('.enterPk .pk_blood .mine').classList.add('animated');
-        $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
-        $('.enterPk .pk_blood .enter_vs').classList.add('animated');
-        // $('.enterPk .pk_blood .time').classList.add('disappear');
-        // $('.enterPk .pk_blood .time').classList.add('animated');
-        $('.enterPk .pk_blood .other').classList.add('disRight');
-        $('.enterPk .pk_blood .other').classList.add('animated');
-        $('.enterPk .text_box').classList.add('animated');
-        $('.enterPk .text_box').classList.add('disappear');
-        $('.enterPk .option').classList.add('animated');
-        $('.enterPk .option').classList.add('disappear');
-    }, 3000);
+    $('.enterPk .head_nav_pk').classList.add('disappear');
+    $('.enterPk .head_nav_pk').classList.add('animated');
+    $('.enterPk .pk_blood .mine').classList.add('disLeft');
+    $('.enterPk .pk_blood .mine').classList.add('animated');
+    // $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
+    // $('.enterPk .pk_blood .enter_vs').classList.add('animated');
+    $('.enterPk .pk_blood .time').classList.add('disappear');
+    $('.enterPk .pk_blood .time').classList.add('animated');
+    $('.enterPk .pk_blood .other').classList.add('disRight');
+    $('.enterPk .pk_blood .other').classList.add('animated');
+    $('.enterPk .text_box').classList.add('animated');
+    $('.enterPk .text_box').classList.add('disappear');
+    $('.enterPk .option').classList.add('animated');
+    $('.enterPk .option').classList.add('disappear');
 
     setTimeout(function () {
         $('.pk_end').style.display = 'block';
@@ -397,7 +429,7 @@ function animate_pkend() {
             $('.win_lose .bgc').style.display = "block";
             $('.win_lose .bgc').classList.add('zoom');
         }, 2400)
-    }, 1000);
+    }, 2000);
 }
 
 //刷线血条和血量
@@ -423,41 +455,20 @@ function Refresh_blook(data) {
 //结束之后刷新星星和积分
 function RefreshXing(winnerId) {
     if (winnerId == -1) {
-        pk[0] += 5;
         $('.pk_end .mine_add_reduce').innerHTML = `+0`;
-        $('.pk_page .integral .cur').innerHTML = `${pk[0]}`;
         $('.pk_end .other_add_reduce').innerHTML = `+0`;
-        saveData('pk', pk);
-        for (let i = 0; i < pk[1]; i++) {
-            $('.pk_page .start i')[i].classList.add('active')
-        }
     } else {
         if (curr.userId == winnerId) {
-            pk[0] += 10;
-            if (pk[1] != 4)
-                pk[1] += 1;
             $('.pk_end .mine_add_reduce').innerHTML = `+1`;
-            $('.pk_page .integral .cur').innerHTML = `${pk[0]}`;
             $('.pk_end .other_add_reduce').innerHTML = `-1`;
-            saveData('pk', pk);
-            for (let i = 0; i < pk[1]; i++) {
-                $('.pk_page .start i')[i].classList.add('active')
-            }
         } else {
-            if (pk[0] != 0)
-                pk[0] -= 5;
-            if (pk[1] != 0)
-                pk[1] -= 1;
             $('.pk_end .mine_add_reduce').innerHTML = `-1`;
-            $('.pk_page .integral .cur').innerHTML = `${pk[0]}`;
             $('.pk_end .other_add_reduce').innerHTML = `+1`;
-            saveData('pk', pk);
-            for (let i = 0; i < pk[1]; i++) {
-                $('.pk_page .start i')[i].classList.add('active')
-            }
+
         }
     }
-
+    //渲染排位
+    rlRendering()
 }
 
 //刷新输赢动画
@@ -478,27 +489,32 @@ function RefreshWin_Lose(winnerId) {
     }
 }
 
-$(".click_back").addEventListener('click', () => {
-
+//结算界面点击退出
+$(".pk_end .click_back ").addEventListener('click', () => {
+    resetPK();
     $('.enterPk').classList.remove('appear');
     img_box.classList.remove("disappear_xz");
-    // img_box.classList.remove("animated");
     $('.newwaitPK .mine').classList.remove('disappearup')
     $('.newwaitPK .other').classList.remove('disappearbottom')
 
+    $('.enterPk .pk_blood .time').classList.remove('disappear');
+    $('.enterPk .pk_blood .time').classList.remove('animated');
     $('.enterPk .head_nav_pk').classList.remove('disappear');
-    // $('.enterPk .head_nav_pk').classList.remove('animated');
     $('.enterPk .pk_blood .mine').classList.remove('disLeft');
-    // $('.enterPk .pk_blood .mine').classList.remove('animated');
-    $('.enterPk .pk_blood .enter_vs').classList.remove('disappear');
-    // $('.enterPk .pk_blood .enter_vs').classList.remove('animated');
     $('.enterPk .pk_blood .other').classList.remove('disRight');
-    // $('.enterPk .pk_blood .other').classList.remove('animated');
     $('.enterPk .text_box').classList.remove('disappear');
-    // $('.enterPk .text_box').classList.remove('animated');
     $('.enterPk .option').classList.remove('disappear');
-    // $('.enterPk .option').classList.remove('animated');
 
     $('.enterPk').style.display = 'none';
-    $('.pk_end').style.display = 'none';
-});
+    $('.pk_end').classList.add('disappear');
+    $('.pk_end .mine').classList.add('disLeft');
+    $('.pk_end .other').classList.add('disRight');
+    $('.pk_end .mine').classList.remove('appearLeft');
+    $('.pk_end .other').classList.remove('appearRight');
+    setTimeout(() => {
+        $('.pk_end').style.display = 'none';
+        $('.pk_end .win_lose .bgc').style.display = 'none';
+        $('.pk_end .win_lose .win').style.display = 'none';
+
+    }, 1300);
+})

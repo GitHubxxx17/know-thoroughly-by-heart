@@ -71,7 +71,7 @@ body {
 }
 .calendar_page {
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   background-color: #f4f4f4;
   transition: all 0.3s ease-in-out;
@@ -270,13 +270,14 @@ body {
   border: 0;
 }
 .calendar_page .calendar .calendar_footer .dailySignature {
-  margin-top: 1.26582278vw;
-  background: url(../images/bg4.png);
+  margin-top: 5vh;
   padding: 5.06329114vw 2.53164557vw;
   border-radius: 2.53164557vw;
+  background-color: #fff;
+  box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.163);
 }
 .calendar_page .calendar .calendar_footer .title {
-  color: #fff;
+  color: #000;
   font-size: 5.06329114vw;
   width: 27.84810127vw;
   padding: 1.26582278vw;

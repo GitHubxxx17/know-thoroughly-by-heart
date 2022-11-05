@@ -17,7 +17,10 @@ npt.onchange = function() {
         // console.log(e.target.result);// 图片的base64数据
         original.style.display = "block"
         haha.style.display = "none"
-        loadCapture();
+        setTimeout(() => {
+            loadCapture();
+        },50);
+        
     };
 };
 
@@ -40,9 +43,10 @@ function loadCapture() {
     //开始缩放比例
     var start_sqrt = 0;
     var sqrt = 1;
-
-    can_obj.width = 250;
-    can_obj.height = 250;
+    
+    can_obj.width = Math.round(63.3*(document.body.clientWidth/100));
+    can_obj.height = Math.round(63.3*(document.body.clientWidth/100));
+    console.log(img_obj.clientWidth,can_obj.width);
     let ctx_X = (img_obj.clientWidth - can_obj.width) / 2;
     let ctx_Y = (img_obj.clientHeight - can_obj.height) / 2;
     capture_img.drawImage(img_obj, -ctx_X, ctx_Y, img_obj.width, img_obj.height); //初始化 canvas 加入图片
@@ -65,31 +69,30 @@ function loadCapture() {
                 let endX = e.changedTouches[0].clientX;
                 let movX = endX - Pos_x1;
                 let movY = endY - Pos_y1;
-                img_obj.style.top = (movY / 3.95) + "vw";
-                img_obj.style.left = (movX / 3.95) + "vw";
+                img_obj.style.top = (movY / (document.body.clientWidth/100)) + "vw";
+                img_obj.style.left = (movX / (document.body.clientWidth/100)) + "vw";
                 capture_img.clearRect(0, 0, can_obj.width, can_obj.height); //清除画布
                 capture_img.drawImage(img_obj, -ctx_X + img_obj.offsetLeft - capture_X, ctx_Y + img_obj.offsetTop - capture_Y, img_obj.width * sqrt, img_obj.height * sqrt); //画布内图片移动
-
 
                 $("#canvas_div").ontouchend = (e) => {
 
                     img_obj.classList.add('canvas_img_ani');
                     //最左边
                     if (movX - img_obj.offsetWidth / 2 > capture_X - capture_W / 2) {
-                        img_obj.style.left = ((capture_X + img_obj.offsetWidth / 2 - capture_W / 2) / 3.95) + "vw";
+                        img_obj.style.left = ((capture_X + img_obj.offsetWidth / 2 - capture_W / 2) / (document.body.clientWidth/100)) + "vw";
                     }
                     //最右边
                     if (movX + img_obj.offsetWidth / 2 < capture_X + capture_W / 2) {
-                        img_obj.style.left = ((capture_X + capture_W / 2 - img_obj.offsetWidth / 2) / 3.95) + "vw";
+                        img_obj.style.left = ((capture_X + capture_W / 2 - img_obj.offsetWidth / 2) / (document.body.clientWidth/100)) + "vw";
                     }
 
                     //最上边
                     if (movY - img_obj.offsetHeight / 2 > capture_Y - capture_H / 2) {
-                        img_obj.style.top = ((capture_Y + img_obj.offsetHeight / 2 - capture_H / 2) / 3.95) + "vw";
+                        img_obj.style.top = ((capture_Y + img_obj.offsetHeight / 2 - capture_H / 2) / (document.body.clientWidth/100)) + "vw";
                     }
                     //最下边
                     if (movY + img_obj.offsetHeight / 2 < capture_Y + capture_H / 2) {
-                        img_obj.style.top = ((capture_Y + capture_H / 2 - img_obj.offsetHeight / 2) / 3.95) + "vw";
+                        img_obj.style.top = ((capture_Y + capture_H / 2 - img_obj.offsetHeight / 2) / (document.body.clientWidth/100)) + "vw";
                     }
 
                     setTimeout(function() {
@@ -111,7 +114,7 @@ function loadCapture() {
             start_Y1 = event.touches[0].clientY;
             start_X2 = event.touches[1].clientX;
             start_Y2 = event.touches[1].clientY;
-            start_sqrt = Math.sqrt((start_X2 - start_X1) * (start_X2 - start_X1) + (start_Y2 - start_Y1) * (start_Y2 - start_Y1)) / 250;
+            start_sqrt = Math.sqrt((start_X2 - start_X1) * (start_X2 - start_X1) + (start_Y2 - start_Y1) * (start_Y2 - start_Y1)) / can_obj.width;
             console.log(start_sqrt);
 
             $("#canvas_div").ontouchmove = (e) => {
@@ -119,12 +122,12 @@ function loadCapture() {
                 let mv_x1 = e.changedTouches[0].clientX;
                 var mv_x2 = event.touches[1].clientX,
                     mv_y2 = event.touches[1].clientY;
-                var move_sqrt = Math.sqrt((mv_x2 - mv_x1) * (mv_x2 - mv_x1) + (mv_y2 - mv_y1) * (mv_y2 - mv_y1)) / 250; //动态获取上一次缩放值(随时变更)，在下次缩放时减去上一次的值，作用：防止累加之前的缩放
+                var move_sqrt = Math.sqrt((mv_x2 - mv_x1) * (mv_x2 - mv_x1) + (mv_y2 - mv_y1) * (mv_y2 - mv_y1)) / can_obj.width; //动态获取上一次缩放值(随时变更)，在下次缩放时减去上一次的值，作用：防止累加之前的缩放
 
                 let movX = endX - Pos_x1;
                 let movY = endY - Pos_y1;
-                img_obj.style.top = (movY / 3.95) + "vw";
-                img_obj.style.left = (movX / 3.95) + "vw";
+                img_obj.style.top = (movY / (document.body.clientWidth/100)) + "vw";
+                img_obj.style.left = (movX / (document.body.clientWidth/100)) + "vw";
                 sqrt = move_sqrt - start_sqrt + scale; //求出缩放值
                 //设置放大缩小
                 img_obj.style.webkitTransform = "scale(" + sqrt + ")";
@@ -137,20 +140,20 @@ function loadCapture() {
                     img_obj.classList.add('canvas_img_ani');
                     //最左边
                     if (movX - img_obj.offsetWidth / 2 > capture_X - capture_W / 2) {
-                        img_obj.style.left = ((capture_X + img_obj.offsetWidth / 2 - capture_W / 2) / 3.95) + "vw";
+                        img_obj.style.left = ((capture_X + img_obj.offsetWidth / 2 - capture_W / 2) / (document.body.clientWidth/100)) + "vw";
                     }
                     //最右边
                     if (movX + img_obj.offsetWidth / 2 < capture_X + capture_W / 2) {
-                        img_obj.style.left = ((capture_X + capture_W / 2 - img_obj.offsetWidth / 2) / 3.95) + "vw";
+                        img_obj.style.left = ((capture_X + capture_W / 2 - img_obj.offsetWidth / 2) / (document.body.clientWidth/100)) + "vw";
                     }
 
                     //最上边
                     if (movY - img_obj.offsetHeight / 2 > capture_Y - capture_H / 2) {
-                        img_obj.style.top = ((capture_Y + img_obj.offsetHeight / 2 - capture_H / 2) / 3.95) + "vw";
+                        img_obj.style.top = ((capture_Y + img_obj.offsetHeight / 2 - capture_H / 2) / (document.body.clientWidth/100)) + "vw";
                     }
                     //最下边
                     if (movY + img_obj.offsetHeight / 2 < capture_Y + capture_H / 2) {
-                        img_obj.style.top = ((capture_Y + capture_H / 2 - img_obj.offsetHeight / 2) / 3.95) + "vw";
+                        img_obj.style.top = ((capture_Y + capture_H / 2 - img_obj.offsetHeight / 2) / (document.body.clientWidth/100)) + "vw";
                     }
 
                     setTimeout(function() {

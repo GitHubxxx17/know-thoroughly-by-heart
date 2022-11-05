@@ -8,7 +8,7 @@ body{
 
 .calendar_page {
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     position: absolute;
     background-color: #f4f4f4;
     transition: all .3s ease-in-out;
@@ -230,15 +230,18 @@ body{
             }
 
             .dailySignature{
-                margin-top: (5/@vw);
+                margin-top: 5vh;
                 // background-color: red;
-                background: url(../images/bg4.png);
+                // background: url(../images/日签/dailyCard.jpg) no-repeat;
                 padding: (20/@vw) (10/@vw);
                 border-radius: (10/@vw);
+                // background-size: cover;
+                background-color: #fff;
+                box-shadow: (1/@vw) (1/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.163);
             }
-        
+          
             .title{
-                color: #fff;
+                color: #000;
                 font-size: (20/@vw);
                 width: (110/@vw);
                 padding: (5/@vw);
@@ -251,9 +254,6 @@ body{
                 margin-top: (20/@vw);
                 padding: (5/@vw) (15/@vw);
                 border-left: 2px solid rgba(0, 0, 0, 0.319);
-                div{
-                    
-                }
                 
             }
         

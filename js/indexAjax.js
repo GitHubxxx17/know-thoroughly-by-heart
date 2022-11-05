@@ -3,7 +3,7 @@ let newtitle = null;
 let newcontext = null;
 let newlabel = null;
 var newTPFlag = false;
-
+let pk = [];
 //获取用户模板
 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.userId}`, 'get', '', (str) => {
     let newstr = JSON.parse(str).msg;
@@ -16,12 +16,12 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.user
                 newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, true);
             else
                 newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, false);
-            
-            if (x.studyStatus == '复习中'){
+
+            if (x.studyStatus == '复习中') {
                 fxnum++;
-                console.log(x,x.studyStatus);
+                console.log(x, x.studyStatus);
             }
-                
+
         }
         $('.numOfArticles').innerHTML = `${fxnum} 篇`;
         $('.footer_nav li')[0].onclick();
@@ -41,6 +41,8 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
     for (let x of $('.idname'))
         x.innerHTML = curr.userInfo.nickName;
     $('.personal_box .phone').innerHTML = curr.phone;
+
+    rlRendering()
     if (curr.userInfo.base64 == '') {
         return;
     } else {
@@ -49,13 +51,25 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
             x.src = curr.userInfo.base64;
         }
     }
+}, true)
 
+//获取用户学习信息
 
-})
+// ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/studyData?userId=${curr.userId}`, 'get', '', (str) => {
+//     let newstr = JSON.parse(str).msg;
+//     console.log(newstr);
+    
+// }, true)
 
+// ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyNums=${0}&studyTime=${0}`, (str) => {
+//     let newstr = JSON.parse(str).msg;
+//     console.log(newstr);
+    
+// }, true)
 
 //上传文件
 $('.Making_page .header_left input').onchange = function (e) {
+    console.log(e.target.files);
     let file = e.target.files[0];
     if (e.target.files.length != 0) {
         $('.Making_page .loading').style.display = 'block';
@@ -68,6 +82,7 @@ $('.Making_page .header_left input').onchange = function (e) {
             //将文件内容渲染到页面
             $('.Making_page .title input').value = file.name;
             $('.Making_page .text_box').innerHTML = newcon;
+            e.target.value = '';
         }, false)
     }
 }
@@ -76,7 +91,7 @@ $('.Making_page .header_left input').onchange = function (e) {
 $('.Making_page .header_right').onclick = () => {
     //标题和文本内容不能为空
     if ($('.Making_page .title input').value == '' || $('.Making_page .text_box').innerHTML == '') {
-        $('.Making_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.Making_page .popup2 .popup_box').innerHTML = '内容不能为空';
         $('.Making_page .popup2').style.display = 'block';
         return;
     }
@@ -91,7 +106,7 @@ $('.Making_page .header_right').onclick = () => {
     // 标题一致就取消保存并提醒
     for (let x of all('.my_base .title')) {
         if (x.innerHTML == $('.Making_page .title input').value) {
-            $('.Making_page .popup2 .popup_box').innerHTML = '标题不能与记忆库的模板重复';
+            $('.Making_page .popup2 .popup_box').innerHTML = '标题不能重复';
             $('.Making_page .popup2').style.display = 'block';
             return;
         }
@@ -120,7 +135,7 @@ $('.Making_page .popup_box button')[0].onclick = () => {
             let newstr = JSON.parse(str).msg;
             let modle = newstr.data.modle;
             console.log(newstr)
-            newTP(newtitle, newcontext, modle.modleId, newlabel, 0, x.studyStatus, true);
+            newTP(newtitle, newcontext, modle.modleId, newlabel, 0, '未学习', true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
             MakingTP();
@@ -141,7 +156,7 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             console.log(newstr);
             let modle = newstr.data.modle;
             newTPFlag = true;
-            newTP(newtitle, newcon, modle.modleId, newlabel, 0, true);
+            newTP(newtitle, newcon, modle.modleId, newlabel, 0, '未学习', true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
             $('.learn_page .title').innerHTML = newtitle;

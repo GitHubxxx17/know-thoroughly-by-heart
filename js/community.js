@@ -53,7 +53,7 @@ function communityTP() {
                 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&mStatus=1`, 'get', '', (str) => {
                     let newstr = JSON.parse(str).msg;
                     console.log(newstr);
-                    newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, false);
+                    newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, 1,'未学习',false);
                     //刷新仓库
                     resetbase();
                 }, true);
@@ -203,7 +203,8 @@ function xrcomTP() {
                 console.log(comarr, commonArr);
                 if (comarr.length != 0) {
                     for (let x of comarr) {
-                        commonArr[0].push(x);
+                        if(x.userId == 50)
+                            commonArr[0].push(x);
                     }
                 }
             }

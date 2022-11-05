@@ -93,6 +93,7 @@ $('.learn_page').onclick = () => {
 $('.beisong').onclick = () => {
     if (learn_flag_2 && document.querySelector('.learn_page .highlight')) {
         learnReset()
+        answerReset()
         $('.beisong').classList.add('choice');
         //利用循环将选中的节点添加类
         let n = 0;
@@ -110,7 +111,6 @@ $('.beisong').onclick = () => {
         learn_flag_2 = true;
     }
 }
-
 //点击提交答案
 $('.tijiao').onclick = () => {
     if (!learn_flag_1) {
@@ -122,7 +122,19 @@ $('.tijiao').onclick = () => {
                 sum++;
             n++;
         }
-        $('.learn_page .popup_box').innerHTML = '正确率：' + (sum / n) * 100 + '%';
+        let score = Math.round((sum / n) * 100);
+        $('.learn_page .popup_box .score').innerHTML =  score;
+        $('.learn_page .popup_box .score_title').innerHTML =  `本次正确率：${score}%`;
+        if(score < 60){
+            $('.learn_page .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
+            $('.learn_page .popup_box .circle').innerHTML = '陌生'
+        }else if(score < 80){
+            $('.learn_page .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
+            $('.learn_page .popup_box .circle').innerHTML = '一般'
+        }else{
+            $('.learn_page .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
+            $('.learn_page .popup_box .circle').innerHTML = '熟练'
+        }
         $('.learn_page .popup').style.display = 'block';
 
         //如果正在复习

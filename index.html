@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./css/newEnterPK.css">
     <link rel="stylesheet" href="./css/ViewTemplate.css">
     <link rel="stylesheet" href="./css/removeRecite.css">
+    <link rel="stylesheet" href="./css/search.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
                             <span class="icon iconfont icon-a-riqirili"></span>
                         </div>
                         <div class="header_search">
-                            <input type="text" id="header_search_memory">
+                            <input type="text">
                             <button>
                                 <span class="icon iconfont icon-sousuo3"></span>
                             </button>
@@ -173,6 +174,13 @@
             </header>
             <div class="popup">
                 <div class="popup_box">
+                    <div class="left">
+                        <div class="circle">陌生</div>
+                    </div>
+                    <div class="right">
+                        <div class="score">57</div>
+                        <div class="score_title">本次正确率：57%</div>
+                    </div>
                 </div>
             </div>
             <div class="container">
@@ -233,58 +241,26 @@
                 </div>
             </footer>
         </div>
-        <!-- 再编辑页面 -->
-        <div class="edit_page">
+        <!-- 搜索页面 -->
+        <div class="search_page">
             <header>
                 <div class="header_left">
-                    <span class="icon iconfont icon-fanhui"></span>
+                    <span class="icon iconfont icon-xiangzuojiantou"></span>
                 </div>
-                <div class="header_right">
-                    <ul>
-                        <li>
-                            <span class="icon iconfont icon-tiku"></span>
-                            <div class="name">编辑</div>
-                        </li>
-                        <li>
-                            <span class="icon iconfont icon-huabi"></span>
-                            <div class="name">挖空</div>
-                        </li>
-                        <li>
-                            <span class="icon iconfont icon-xuanze"></span>
-                            <div class="name">选择</div>
-                        </li>
-                        <li>
-                            <span class="icon iconfont icon-gongxiangtubiaozhuangtaileicaozuolei37"></span>
-                            <div class="name">保存</div>
-                        </li>
-                    </ul>
+                <div class="header_search">
+                    <input type="text" id="header_search_memory">
+                    <button onclick="search()">
+                        <span class="icon iconfont icon-sousuo3"></span>
+                    </button>
                 </div>
+
             </header>
-            <div class="popup">
-                <div class="popup_box">
-                </div>
-            </div>
             <div class="container">
-                <div class="title">
-                    <div class="label">
-                        <div class="label_cont">
-                            <span>标签</span>
-                        </div>
-                        <div class="label_menu">
-                            <ul>
-                                <li>考研</li>
-                                <li>教资</li>
-                                <li>通识课</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <input type="text" class="title_name">
+                <div id="paragraph">
                 </div>
-                <div class="text_box">
-                    <div class="text_page" id="text_page">
-                        阿三大苏打实打实的京哈十九点和教案设计的撒娇的贺卡收到哈师大卡手机卡的贺卡收到尽快哈是客户对接哈师大计划经济舒服就好开好房间后即可黑暗圣经贷记卡活动教案或开始就电话卡是进口的哈抠脚大汉啊手机客户端看教案设计肯定会骄傲开始的空间哈萨克和打开哈萨克结婚登记喀什觉得和健康撒谎看到哈萨克就和大家哈数据库的哈萨克和大家暗黑世界大会金卡时间后端今安徽觉得哈和大家撒谎就和
-                    </div>
-                </div>
+                <ul class="search_lis">
+
+                </ul>
             </div>
         </div>
         <!-- 打卡页面 -->
@@ -342,7 +318,8 @@
             <div class="bgc" id="select_bcg" style="display: none;"></div>
             <div class="select_dif_temp" style="display: none;">
                 <div class=" select_dif ">
-                    <div class="tips"><span>请选择pk难度：<span class="iconfont icon-cuowu" style="display: none;"></span></span>
+                    <div class="tips"><span>请选择pk难度：<span class="iconfont icon-cuowu"
+                                style="display: none;"></span></span>
                         <span class="iconfont icon-guanbi" id="close_select"></span>
                     </div>
                     <div class="select_card">
@@ -396,7 +373,7 @@
                         <div class="rank ">
                             <div class="season_name ">初级学士</div>
                             <div class="start ">
-                                <i class="active iconfont icon-shoucang "></i>
+                                <i class="iconfont icon-shoucang "></i>
                                 <i class="iconfont icon-shoucang "></i>
                                 <i class="iconfont icon-shoucang "></i>
                                 <i class="iconfont icon-shoucang "></i>
@@ -573,16 +550,15 @@
                         <div class="blook mine_blook ">100%</div>
                     </div>
                 </div>
-                <div class="enter_vs ">vs</div>
-                <!-- <div class="time ">
-                    <div class="outercir1 ">
-                        <div class="outercir2 ">
-                            <div class="outercir3 ">
-                                <div class="innercir ">10</div>
+                <div class="time">
+                    <div class="outercir1">
+                        <div class="outercir2">
+                            <div class="outercir3">
+                                <div class="innercir">10</div>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="other ">
                     <div class="blook_change other_blood_change ">
                     </div>
@@ -625,8 +601,8 @@
             </div>
         </div>
         <!-- 结束PK页面 -->
-        <div class="pk_end" style="display: none; ">
-            <div class="ani appear animated ">
+        <div class="pk_end animated" style="display: none; ">
+            <div class="ani">
                 <div class="vs_title end_pk ">vs</div>
                 <div class="back_bock " style="opacity: 0; ">
                     <i class="iconfont icon-xiangzuojiantou "></i>
@@ -656,7 +632,7 @@
                     </span>
                 </div> -->
                 <div class="pk_interface ">
-                    <span class="mine ">
+                    <span class="mine animated appearLeft">
                         <div class="my_box ">
                             <div class="head_portrait ">
                                 <img src="./images/头像/头像-女学生2.png " alt=" ">
@@ -671,7 +647,7 @@
                         <img class="bgc animated " style="display:none ; " src="./images/pk/win_bgc.png " alt=" ">
                         <img class="win animated " style="display:none ; " src="./images/pk/win.png " alt=" ">
                     </span>
-                    <span class="other ">
+                    <span class="other animated appearRight">
                         <div class="other_box ">
                             <div class="ohter_portrait ">
                                 <img src="./images/头像/头像-女学生2.png " alt=" ">
@@ -685,7 +661,7 @@
                     </span>
                 </div>
 
-                <div class="show_answer ">
+                <div class="show_answer appear animated ">
                     <div class="mine_an ">
                         <!-- <div class="dui ">√</div>
                         <div class="cuo ">×</div>
@@ -701,7 +677,7 @@
                         <div class="cuo ">×</div> -->
                     </div>
                     <div class="answer ">
-                        <!-- <div class="an ">世界观</div>
+                        <div class="an ">世界观</div>
                         <div class="an ">睡觉</div>
                         <div class="an ">睡觉</div>
                         <div class="an ">世界观</div>
@@ -715,9 +691,9 @@
                         <div class="an ">价值观</div>
                         <div class="an ">睡觉</div>
                         <div class="an ">世界观</div>
-                        <div class="an ">价值观</div> -->
+                        <div class="an ">价值观</div>
                     </div>
-                    <div class="other_an ">
+                    <!-- <div class="other_an ">
                         <div class="dui ">√</div>
                         <div class="cuo ">×</div>
                         <div class="dui ">√</div>
@@ -728,10 +704,10 @@
                         <div class="cuo ">×</div>
                         <div class="dui ">√</div>
                         <div class="cuo ">×</div>
-                    </div>
+                    </div> -->
                 </div>
 
-                <button class="click_back ">
+                <button class="click_back appear animated ">
                     点击返回
                 </button>
             </div>
@@ -764,8 +740,8 @@
                     <button>进入编辑</button>
                 </div>
             </div>
-            <div class="popup2 ">
-                <div class="popup_box ">标题不能与记忆库的模板重复</div>
+            <div class="popup2 modify_succani2">
+                <div class="popup_box ">标题不能重复</div>
             </div>
             <div class="container ">
                 <div class="title ">
@@ -775,6 +751,7 @@
                             <span class="icon iconfont icon-xiangxiajiantou "></span>
                         </div>
                         <div class="label_menu ">
+                            <div class="triangle"></div>
                             <ul>
                                 <li>考研</li>
                                 <li>教资</li>
@@ -1097,7 +1074,7 @@
 <!-- <script src="./js/enterPK.js "></script> -->
 <!-- <script src="./js/pking.js "></script> -->
 <script src="./js/smPK.js "></script>
-
+<script src="./js/search.js"></script>
 
 </html>
 

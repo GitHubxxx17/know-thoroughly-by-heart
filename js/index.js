@@ -34,7 +34,8 @@ for (let i = 0; i < $('.hb_btn').length; i++) {
         }
     }
 }
-
+//排行榜判断
+let judge = true;
 //底部导航栏
 for (let i = 0; i < $('.footer_nav li').length; i++) {
     $('.footer_nav li')[i].onclick = () => {
@@ -51,6 +52,12 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
         if (i == 3) {
             $('.community header').classList.remove('scroll_top');
             $('.community header .label li')[0].onclick();
+        }
+        if (i != 1 && !judge) {
+            laqu.onclick()
+        }
+        if (i != 2) {
+            $('.Making_page .loading').style.display = 'none';
         }
 
         $('.main_page')[i].classList.remove('scroll_top');
@@ -112,59 +119,59 @@ function TP() {
             e.stopPropagation();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
-                let time2 = new Date().getSeconds();
-                if (l == 0) {
-                    if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
-                        title = all('.tp_inner .title')[i];
-                        info = all('.tp_inner .info')[i];
-                        modleId = all('.tp_inner .modleId')[i];
-                        label = all('.tp_inner .label')[i];
-                        $('.learn_page .title').innerHTML = title.innerHTML;
-                        $('.learn_page .text_box').innerHTML = info.innerHTML;
-                        $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
-                        $('.learn_page').style.left = '0';
-                        $('.learn_page header').style.left = '0';
-                        $('.learn_page header').style.opacity = '1';
-                        flag_learn = true;
-                    } else {
-                        let delnum = 0;
-                        $('.ht_1').style.display = 'none';
-                        $('.ht_2').style.display = 'flex';
-                        $('.header_bottom').style.display = 'none';
-                        $('.memory_base .container').style.marginTop = '14vw';
-                        x.parentNode.querySelector('.select').classList.toggle('selected');
-                        for (let k of x.parentNode.parentNode.querySelectorAll('li')) {
-                            k.classList.add('baseLis_del');
-                            if (k.querySelector('.select').classList.contains('selected')) {
-                                delnum++;
+                    let time2 = new Date().getSeconds();
+                    if (l == 0) {
+                        if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
+                            title = all('.tp_inner .title')[i];
+                            info = all('.tp_inner .info')[i];
+                            modleId = all('.tp_inner .modleId')[i];
+                            label = all('.tp_inner .label')[i];
+                            $('.learn_page .title').innerHTML = title.innerHTML;
+                            $('.learn_page .text_box').innerHTML = info.innerHTML;
+                            $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
+                            $('.learn_page').style.left = '0';
+                            $('.learn_page header').style.left = '0';
+                            $('.learn_page header').style.opacity = '1';
+                            flag_learn = true;
+                        } else {
+                            let delnum = 0;
+                            $('.ht_1').style.display = 'none';
+                            $('.ht_2').style.display = 'flex';
+                            $('.header_bottom').style.display = 'none';
+                            $('.memory_base .container').style.marginTop = '14vw';
+                            x.parentNode.querySelector('.select').classList.toggle('selected');
+                            for (let k of x.parentNode.parentNode.querySelectorAll('li')) {
+                                k.classList.add('baseLis_del');
+                                if (k.querySelector('.select').classList.contains('selected')) {
+                                    delnum++;
+                                }
                             }
+                            $('.delnum').innerHTML = `共${delnum}项`
                         }
-                        $('.delnum').innerHTML = `共${delnum}项`
                     }
+
+
                 }
-
-
-            }
-            //点击编辑进入编辑页面
-            // all('.template_btn .edit')[i].onclick = (e) => {
-            //     title = all('.tp_inner .title')[i];
-            //     info = all('.tp_inner .info')[i];
-            //     modleId = all('.tp_inner .modleId')[i];
-            //     label = all('.tp_inner .label')[i];
-            //     console.log(label);
-            //     if (all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
-            //         mStatus = 1;
-            //     $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
-            //     $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
-            //     $('.edit_page .label_cont').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
-            //     $('.edit_page').style.left = '0';
-            //     e.stopPropagation();
-            // }
+                //点击编辑进入编辑页面
+                // all('.template_btn .edit')[i].onclick = (e) => {
+                //     title = all('.tp_inner .title')[i];
+                //     info = all('.tp_inner .info')[i];
+                //     modleId = all('.tp_inner .modleId')[i];
+                //     label = all('.tp_inner .label')[i];
+                //     console.log(label);
+                //     if (all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
+                //         mStatus = 1;
+                //     $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
+                //     $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
+                //     $('.edit_page .label_cont').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
+                //     $('.edit_page').style.left = '0';
+                //     e.stopPropagation();
+                // }
 
             // //点击删除模板
             // all('.template_btn .del')[i].onclick = (e) => {
@@ -260,13 +267,11 @@ $('.ht_2 .header_right').onclick = () => {
     //删除模板
     for (let x of all('.my_base li')) {
         if (x.querySelector('.select').classList.contains('selected')) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${x.querySelector('.modleId').innerHTML}`, (str) => {
+            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `userId=${curr.userId}&modleId=${x.querySelector('.modleId').innerHTML}`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
-                x.parentNode.addEventListener('animationend', () => {
-                    $('.my_base ul').removeChild(x.parentNode);
-                })
-                if (x.content == '删除成功') {
+                if (newstr.content == '删除成功') {
+                    x.querySelector('.select').classList.remove('selected');
                     x.classList.add('baseLis_del2');
                     x.addEventListener('animationend', () => {
                         $('.my_base ul').removeChild(x);
@@ -284,7 +289,7 @@ $('.ht_2 .header_right').onclick = () => {
             ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection`, 'post', `userId=${curr.userId}&modleId=${x.querySelector('.modleId').innerHTML}&mStatus=0`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
-                if (x.content == '取消收藏成功') {
+                if (newstr.content == '取消收藏成功') {
                     x.classList.add('baseLis_del2');
                     x.addEventListener('animationend', () => {
                         $('.collection_base ul').removeChild(x);
@@ -297,6 +302,8 @@ $('.ht_2 .header_right').onclick = () => {
 
         }
     }
+    $('.delnum').innerHTML = `共0项`
+
 }
 
 //点击出现打卡页面
@@ -393,7 +400,7 @@ function modle_Period() {
             for (let j = 0; j < ModlesOfPeriod[i].length; j++) {
                 all('.review_cycle .cycle_1 ul')[ulIndex].innerHTML += `<li>
                                                                             <div class="modleId">${ModlesOfPeriod[i][j].modleId}</div>
-                                                                            <span class="title">${ModlesOfPeriod[i][j].modleTitle}</span> 
+                                                                            <span class="title ellipsis">${ModlesOfPeriod[i][j].modleTitle}</span> 
                                                                             <span class="goReview">去复习</span>
                                                                         </li>`
                 num++;
@@ -401,11 +408,15 @@ function modle_Period() {
             ulIndex++;
         }
     }
-    $('.today_review .cur').innerHTML = 1;
+    $('.today_review .cur').innerHTML = 0;
     $('.today_review .sum').innerHTML = num;
-    $('.now_line').style.width = $('.today_review .cur').innerHTML/$('.today_review .sum').innerHTML*$('.review_line').offsetWidth + 'px';
-    if($('.today_review .cur').innerHTML == $('.today_review .sum').innerHTML){
-        $('.today_review .icon-xianshi_xuanze').style.backgroundColor = '#4e932ead';
+    if (num > 0) {
+        $('.now_line').style.width = $('.today_review .cur').innerHTML / $('.today_review .sum').innerHTML * $('.review_line').offsetWidth + 'px';
+    } else {
+        $('.now_line').style.width = 0 + 'px';
+    }
+    if ($('.today_review .cur').innerHTML == $('.today_review .sum').innerHTML) {
+        $('.today_review .icon-xianshi_xuanze').style.backgroundColor = '#5f4fb8';
     }
     //点击去复习进入学习页面
     for (let x of all('.review_cycle li')) {
@@ -431,7 +442,7 @@ function modle_Period() {
 
 }
 
-console.log(1/2*$('.review_line').offsetWidth);
+console.log(1 / 2 * $('.review_line').offsetWidth);
 //数字转换成文字
 function digitChange(i) {
     let arr = ['一', '二', '三', '四', '五', '六', '七', '八'];

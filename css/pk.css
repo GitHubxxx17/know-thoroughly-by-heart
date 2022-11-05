@@ -183,6 +183,9 @@ body {
   width: 50.63291139vw;
   padding-right: 2.53164557vw;
 }
+.select_dif_temp .select_temp li .content .title_label .title {
+  width: 30.37974684vw;
+}
 .select_dif_temp .select_temp li .content .title_label .label {
   height: 5.56962025vw;
   line-height: 5.56962025vw;

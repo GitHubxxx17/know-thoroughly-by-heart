@@ -20,6 +20,6 @@ server.on('request', (req, res) => {
     })
 })
 
-server.listen(8089, () => {
+server.listen(80, () => {
     console.log('server run at http://192.168.253.2');
 })

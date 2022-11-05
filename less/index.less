@@ -268,8 +268,8 @@ body {
                     align-items: center;
                     border: 1.5px solid #e2e2e2;
                     border-radius: (10/@vw);
-                    
-                    .splitLine{
+
+                    .splitLine {
                         width: (1/@vw);
                         height: (60/@vw);
                         background-color: #e2e2e2;
@@ -313,6 +313,7 @@ body {
 
                     .page {
                         background: url(../images/复习/云1.png) no-repeat;
+
                         .icon-tongji1 {
                             font-size: (19/@vw);
                             color: rgba(233, 155, 20, 0.797);
@@ -436,6 +437,7 @@ body {
 
                     .cycle_1 {
                         margin-bottom: (20/@vw);
+
                         .cycle_title {
                             z-index: 10;
                             position: relative;
@@ -466,16 +468,20 @@ body {
                         ul {
                             li {
 
-                                .modleId {
-                                    display: none;
-                                }
-
                                 margin-top: (10/@vw);
                                 padding: 0 (10/@vw);
                                 display: flex;
                                 justify-content: space-between;
                                 align-items: center;
                                 font-size: (15/@vw);
+
+                                .modleId {
+                                    display: none;
+                                }
+
+                                .title {
+                                    width: (200 / @vw);
+                                }
 
                                 .goReview {
                                     background-color: #6c60aeb1;
@@ -556,7 +562,7 @@ body {
                     animation: baseLis_del 1s forwards;
                 }
 
-                
+
 
                 .select {
                     display: none;
@@ -786,21 +792,26 @@ body {
     z-index: 10000;
     transition: all 0.3s;
 
-    .headBox{
+    .headBox {
         transition: all 0.3s;
     }
 }
 
-.removeRecite {
+.search_page {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f6f7fb;
+    // background:linear-gradient(
+    //     to right,
+    //     #d9d0e6 50%,
+    //     #f6f6f6 50%
+    // );
     z-index: 10000;
     transition: all 0.3s;
-
-    .headBox{
-        transition: all 0.3s;
-    }
 }
 
 .learn_page {
@@ -830,7 +841,6 @@ body {
         transition: all .4s ease-in-out;
 
         .header_left {
-
             .icon {
                 font-weight: 700;
                 font-size: (20 / @vw);
@@ -890,23 +900,66 @@ body {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #00000078;
+        background-color: #0000001d;
 
         .popup_box {
             position: absolute;
             width: (300 / @vw);
             left: 50%;
+            bottom: 5%;
             transform: translate(-50%, -50%);
-            background-color: #aba3ca;
+            background-color: #fff;
             z-index: 10000;
             border-radius: (10 / @vw);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: (10/@vw) (20/@vw);
+            justify-content: space-between;
             align-items: center;
-            top: 40%;
             height: (150 / @vw);
             font-size: (20 / @vw);
+
+            .left {
+                width: 40%;
+                height: (100/@vw);
+                background: conic-gradient(#fda71c 50%, #fef6ea 0%); //陌生
+                // background: conic-gradient(#5133febc 100%, #bcb0ffbc 0%);//熟练
+                // background: conic-gradient(#02c287 100%, #e1fbf2 0%);//一般
+                border-radius: 100%;
+                padding: (8/@vw);
+
+                .circle {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #fff;
+                    border-radius: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            .right {
+                width: 50%;
+                height: (100/@vw);
+                // background-color: red;
+                padding: (20/@vw) 0;
+                font-size: (16/@vw);
+
+                .score {
+                    color: #fea31f; //陌生
+                    // color: #5133febc;//熟练
+                    // color: #02c287;//一般
+                    font-size: (26/@vw);
+                    margin-bottom: (5/@vw);
+                }
+
+                .score_title {
+                    padding-top: (5/@vw);
+                    border-top: 1px solid #57575718;
+                    color: #57575799;
+                    font-size: (14/@vw);
+                }
+            }
         }
 
     }
@@ -1057,211 +1110,6 @@ body {
     }
 }
 
-.edit_page {
-    z-index: 10000;
-    position: fixed;
-    top: 0;
-    left: 100%;
-    width: 100vw;
-    height: 100vh;
-    background-color: #b8b2c9;
-    transition: left .4s ease-in-out;
-
-    header {
-        margin-top: (10 / @vw);
-        width: 100%;
-        height: (65 / @vw);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 (15 / @vw);
-
-        .header_left {
-
-            .icon {
-                font-weight: 700;
-                font-size: (30 / @vw);
-            }
-        }
-
-        .header_right {
-            ul {
-                display: flex;
-                align-items: center;
-            }
-
-            li {
-                position: relative;
-                padding: 0 (5 / @vw);
-                height: (40 / @vw);
-                background-color: #eeedf5;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: (10 / @vw);
-                margin-left: (10 / @vw);
-                box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.418);
-                font-size: (16 / @vw);
-                transition: all .3s;
-
-                .icon {
-                    font-size: (18 / @vw);
-                    margin-right: (3 / @vw);
-                }
-            }
-
-            .choice {
-                color: rgb(132, 179, 255);
-            }
-        }
-    }
-
-    .popup {
-        display: none;
-        z-index: 20000;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #00000078;
-
-        .popup_box {
-            position: absolute;
-            width: (300 / @vw);
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #aba3ca;
-            z-index: 10000;
-            border-radius: (10 / @vw);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            top: 40%;
-            height: (150 / @vw);
-            font-size: (20 / @vw);
-        }
-
-    }
-
-    .container {
-        width: 100%;
-
-        .title {
-            margin: (10 / @vw) auto;
-            width: (370 / @vw);
-            height: (40 / @vw);
-            box-shadow: (2 / @vw) (2 / @vw) (5 / @vw) rgba(0, 0, 0, 0.418);
-            display: flex;
-            border-radius: (5 / @vw);
-            background-color: #eeedf5;
-
-            // .label {
-            //     width: (100 / @vw);
-            //     height: 100%;
-            //     text-align: center;
-            //     line-height: (40 / @vw);
-            //     font-size: (18 / @vw);
-            //     border-right: (1 / @vw) solid rgb(150, 150, 150);
-            //     border-radius: (5 / @vw) 0 0 (5 / @vw);
-            //     // background-color: ;
-
-            //     .icon {
-            //         font-size: (18 / @vw);
-            //         font-weight: 700;
-            //     }
-            // }
-
-            .label {
-                position: relative;
-                width: (100 / @vw);
-                height: 100%;
-                text-align: center;
-                line-height: (40 / @vw);
-                font-size: (14 / @vw);
-                border-right: (1 / @vw) solid rgb(150, 150, 150);
-                border-radius: (5 / @vw) 0 0 (5 / @vw);
-
-                // background-color: ;
-                .label_menu {
-                    position: absolute;
-                    top: (40 / @vw);
-                    left: 0;
-                    width: (76.5 / @vw);
-                    height: (90 / @vw);
-                    transition: all .3s;
-                    transform: scale(0);
-                    transform-origin: top center;
-
-                    ul {
-                        li {
-                            width: 100%;
-                            height: (30 / @vw);
-                            background-color: #cec2ff;
-                            text-align: center;
-                            line-height: (30 / @vw);
-                        }
-                    }
-                }
-
-            }
-
-            .title_name {
-                border-radius: (5 / @vw);
-                width: 100%;
-                height: 100%;
-                padding: (5 / @vw);
-                font-size: (18 / @vw);
-                border: none;
-                background-color: #eeedf5;
-            }
-        }
-
-        .text_box {
-            margin: 0 auto;
-            width: (370 / @vw);
-            height: 80vh;
-            background-color: #fff;
-            overflow: scroll;
-            padding: 0;
-            font-size: (18 / @vw);
-            box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
-
-
-            .text_page {
-                width: (370 / @vw);
-                height: 80vh;
-                border-radius: (5 / @vw);
-                border: none;
-                outline: none;
-                padding: (15 / @vw);
-
-                // text-indent: 2rem;
-                &::selection {
-                    background: #fdbe3b;
-                    color: black;
-                }
-
-                .highlight {
-                    display: inline;
-                    background: #fdbe3b;
-                    transition: all .3s;
-
-                    &::selection {
-                        background: #fdbe3b !important;
-                    }
-                }
-            }
-
-            .del {
-                &::selection {
-                    background: transparent !important;
-                }
-            }
-        }
-    }
-}
 
 .calendar_page {
     z-index: 10000;
