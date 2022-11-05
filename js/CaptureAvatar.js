@@ -6,25 +6,27 @@ let scaleValue = 1;
 
 
 
-var haha = document.querySelector("#haha");
-var original = document.querySelector("#CaptureBox");
-var npt = document.getElementById("npt");
-npt.onchange = function() {
-    var reader = new FileReader();
-    reader.readAsDataURL(npt.files[0]);
-    reader.onloadend = function(e) {
-        img_obj.src = e.target.result;
-        // console.log(e.target.result);// 图片的base64数据
-        original.style.display = "block"
-        haha.style.display = "none"
-        setTimeout(() => {
-            loadCapture();
-        },50);
+// var haha = document.querySelector("#haha");
+// var original = document.querySelector("#CaptureBox");
+// var npt = document.getElementById("npt");
+// npt.onchange = function() {
+//     var reader = new FileReader();
+//     reader.readAsDataURL(npt.files[0]);
+//     reader.onloadend = function(e) {
+//         img_obj.src = e.target.result;
+//         // console.log(e.target.result);// 图片的base64数据
+//         original.style.display = "block"
+//         haha.style.display = "none"
+//         setTimeout(() => {
+//             loadCapture();
+//         },50);
         
-    };
-};
+//     };
+// };
 
-loadCapture();
+
+
+// loadCapture();
 
 function loadCapture() {
     //设置图片自适应大小及图片的居中显示
@@ -49,7 +51,7 @@ function loadCapture() {
     console.log(img_obj.clientWidth,can_obj.width);
     let ctx_X = (img_obj.clientWidth - can_obj.width) / 2;
     let ctx_Y = (img_obj.clientHeight - can_obj.height) / 2;
-    capture_img.drawImage(img_obj, -ctx_X, ctx_Y, img_obj.width, img_obj.height); //初始化 canvas 加入图片
+    capture_img.drawImage(img_obj, -ctx_X, -ctx_Y, img_obj.width, img_obj.height); //初始化 canvas 加入图片
 
 
     $("#canvas_div").ontouchstart = (e) => {
@@ -72,7 +74,7 @@ function loadCapture() {
                 img_obj.style.top = (movY / (document.body.clientWidth/100)) + "vw";
                 img_obj.style.left = (movX / (document.body.clientWidth/100)) + "vw";
                 capture_img.clearRect(0, 0, can_obj.width, can_obj.height); //清除画布
-                capture_img.drawImage(img_obj, -ctx_X + img_obj.offsetLeft - capture_X, ctx_Y + img_obj.offsetTop - capture_Y, img_obj.width * sqrt, img_obj.height * sqrt); //画布内图片移动
+                capture_img.drawImage(img_obj, -ctx_X + img_obj.offsetLeft - capture_X, -ctx_Y + img_obj.offsetTop - capture_Y, img_obj.width * sqrt, img_obj.height * sqrt); //画布内图片移动
 
                 $("#canvas_div").ontouchend = (e) => {
 
@@ -99,7 +101,7 @@ function loadCapture() {
                         clearInterval(timers);
                     }, 300)
                     let timers = setInterval(() => {
-                        capture_img.drawImage(img_obj, -ctx_X + img_obj.offsetLeft - capture_X, ctx_Y + img_obj.offsetTop - capture_Y, img_obj.width * sqrt, img_obj.height * sqrt); //画布内图片移动
+                        capture_img.drawImage(img_obj, -ctx_X + img_obj.offsetLeft - capture_X, -ctx_Y + img_obj.offsetTop - capture_Y, img_obj.width * sqrt, img_obj.height * sqrt); //画布内图片移动
                     }, 0.1)
 
                 }
@@ -209,4 +211,9 @@ function autoResizeImage(img_obj) {
         img_obj.style.width = '63.3vw'
         img_obj.style.height = 'auto'
     }
+}
+
+//点击退出头像裁剪
+$('.canvas_cancel').onclick = () => {
+    $('.CaptureAvatar_page').style.display = 'none';
 }

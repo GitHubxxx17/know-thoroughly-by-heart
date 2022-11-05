@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="./css/ViewTemplate.css">
     <link rel="stylesheet" href="./css/removeRecite.css">
     <link rel="stylesheet" href="./css/search.css">
+    <link rel="stylesheet" href="./css/CaptureAvatar.css">
 </head>
 
 <body>
@@ -249,7 +250,7 @@
                 </div>
                 <div class="header_search">
                     <input type="text" id="header_search_memory">
-                    <button onclick="search()">
+                    <button onclick="">
                         <span class="icon iconfont icon-sousuo3"></span>
                     </button>
                 </div>
@@ -257,6 +258,11 @@
             </header>
             <div class="container">
                 <div id="paragraph">
+                </div>
+                <div class="empty" style="display: none;">
+                    <img src="./images/搜索不到信息.png" alt="">
+                    <p class="personal_empty" style="display: none;">没有此资源,请去模板社区找找看</p>
+                    <p class="community_empty" style="display: block;">暂无此资源</p>
                 </div>
                 <ul class="search_lis">
 
@@ -1023,6 +1029,21 @@
                 </div>
             </div>
         </div>
+        <!-- 剪切页面 -->
+        <div class="CaptureAvatar_page">
+            <div class="CaptureBox" id="CaptureBox" style="display: block;">
+                <!-- 底层-存放需要截取而显示的照片 -->
+                <img id="canvas_img" src="" class="canvas_img">
+                <!-- 截取的蒙版和截取区域 -->
+                <div class="canvas_bg"></div>
+                <canvas id="canvas" class="canvas"></canvas>
+                <div id="canvas_div" class="canvas_div"></div>
+                <div class="canvas_btn">
+                    <a href="javascript:void(0);" class="canvas_cancel" onclick="">取消</a>
+                    <a href=" javascript:void(0); " class="canvas_ok ">确定</a>
+                </div>
+            </div>
+        </div>
         <!-- 底栏 -->
         <div class="footer_nav">
             <footer>
@@ -1075,7 +1096,7 @@
 <!-- <script src="./js/pking.js "></script> -->
 <script src="./js/smPK.js "></script>
 <script src="./js/search.js"></script>
-
+<script src="./js/CaptureAvatar.js"></script>
 </html>
 
 </html>

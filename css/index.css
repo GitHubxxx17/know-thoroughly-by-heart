@@ -306,6 +306,7 @@ body {
 .memory_base .container .today_plan .record_box .box .com .data .cur_data {
   font-weight: 700;
   font-size: 5.06329114vw;
+  margin-right: 1.26582278vw;
 }
 .memory_base .container .today_plan .record_box .box .time .icon-shijian {
   font-size: 5.06329114vw;
@@ -319,11 +320,17 @@ body {
   font-size: 4.81012658vw;
   color: rgba(233, 155, 20, 0.797);
 }
+.memory_base .container .today_plan .plan_footer {
+  width: 100%;
+  height: 7.59493671vw;
+}
 .memory_base .container .today_plan .plan_box {
   overflow: hidden;
   padding-top: 3.79746835vw;
   background-color: #fff;
   height: 100%;
+  width: 100%;
+  overflow: scroll;
 }
 .memory_base .container .today_plan .plan_box::-webkit-scrollbar {
   display: none;
@@ -405,7 +412,6 @@ body {
 .memory_base .container .today_plan .review_container .review_cycle {
   margin-top: 5.06329114vw;
   width: 100%;
-  height: 25.3164557vw;
 }
 .memory_base .container .today_plan .review_container .review_cycle .cycle_1 {
   margin-bottom: 5.06329114vw;
@@ -435,7 +441,7 @@ body {
   border: 1px dashed rgba(166, 164, 164, 0.57);
 }
 .memory_base .container .today_plan .review_container .review_cycle .cycle_1 ul li {
-  margin-top: 2.53164557vw;
+  margin-top: 5.06329114vw;
   padding: 0 2.53164557vw;
   display: flex;
   justify-content: space-between;
@@ -1130,6 +1136,16 @@ body {
   outline: 0;
   border: none;
   -webkit-user-modify: read-write-plaintext-only;
+}
+.CaptureAvatar_page {
+  display: none;
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
 }
 .footer_nav {
   z-index: 2000;

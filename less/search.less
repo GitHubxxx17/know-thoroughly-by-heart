@@ -87,10 +87,10 @@
     
     
     .container {
-        // overflow: hidden;
-        // width: 100%;
-        // height: (598 / @vw);
-        // margin-bottom: (70 / @vw);
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+        margin-bottom: (70 / @vw);
         position: relative;
         width: 100vw;
         margin-top: (58 / @vw);
@@ -147,11 +147,11 @@
                     position: absolute;
                     left: 0;
                     background-color: #fff;
-                    width: (525 / @vw);
+                    width: (350 / @vw);
                     height: 100%;
                     padding-left: (15 / @vw);
-                    display: flex;
-                    align-items: center;
+                    // display: flex;
+                    // align-items: center;
                     transition: all .3s ease-in-out;
     
                     .common,
@@ -161,31 +161,41 @@
                 }
     
                 .content {
-                    width: (240 / @vw);
-    
+                    margin-top: (15/@vw);
                     h3 {
-                        width: (180 / @vw);
-                        margin-bottom: (20 / @vw);
+                        width: (310 / @vw);
                         font-size: (20 / @vw);
+                        span{
+                            border-radius: (5/@vw);
+                            background-color: #ffc561;
+                        }
                     }
-    
+                }
+
+                .bottom_box{
+                    width: (320/@vw);
+                    margin-top: (15/@vw);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
                     .info {
                         font-size: (14 / @vw);
                         width: (220 / @vw);
                         height: (18 / @vw);
                     }
-
+    
+    
                     .highlight {
                         display: inline;
                     }
                 }
+                
     
                 .tip {
-                    width: (100 / @vw);
-                    padding-right: (15 / @vw);
+
                     .date {
                         display: none;
-                        // margin-bottom: (25 / @vw);
                     }
     
                     .label {
@@ -216,6 +226,23 @@
             width: 100%;
         }
 
-    
+        .empty{
+            position: absolute;
+            top: 40%;
+            left: (50%);
+            transform: translate(-50%,-50%);
+            text-align: center;
+            img{
+                width: (200/@vw);
+            }
+            
+            p{
+                margin-top: (-10/@vw);
+                width: (250/@vw);
+                text-align: center;
+                color: #3232324c;
+            }
+            
+        }
     }
 }

@@ -118,6 +118,10 @@ a {
   font-size: 5.33333333vw;
 }
 .search_page .container {
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: 18.66666667vw;
   position: relative;
   width: 100vw;
   margin-top: 15.46666667vw;
@@ -169,11 +173,9 @@ a {
   position: absolute;
   left: 0;
   background-color: #fff;
-  width: 140vw;
+  width: 93.33333333vw;
   height: 100%;
   padding-left: 4vw;
-  display: flex;
-  align-items: center;
   transition: all 0.3s ease-in-out;
 }
 .search_page .container .search_lis li .tp_inner .common,
@@ -181,24 +183,30 @@ a {
   display: none;
 }
 .search_page .container .search_lis li .content {
-  width: 64vw;
+  margin-top: 4vw;
 }
 .search_page .container .search_lis li .content h3 {
-  width: 48vw;
-  margin-bottom: 5.33333333vw;
+  width: 82.66666667vw;
   font-size: 5.33333333vw;
 }
-.search_page .container .search_lis li .content .info {
+.search_page .container .search_lis li .content h3 span {
+  border-radius: 1.33333333vw;
+  background-color: #ffc561;
+}
+.search_page .container .search_lis li .bottom_box {
+  width: 85.33333333vw;
+  margin-top: 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.search_page .container .search_lis li .bottom_box .info {
   font-size: 3.73333333vw;
   width: 58.66666667vw;
   height: 4.8vw;
 }
-.search_page .container .search_lis li .content .highlight {
+.search_page .container .search_lis li .bottom_box .highlight {
   display: inline;
-}
-.search_page .container .search_lis li .tip {
-  width: 26.66666667vw;
-  padding-right: 4vw;
 }
 .search_page .container .search_lis li .tip .date {
   display: none;
@@ -222,4 +230,20 @@ a {
 .search_page .container .base_bottom {
   height: 21.33333333vw;
   width: 100%;
+}
+.search_page .container .empty {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.search_page .container .empty img {
+  width: 53.33333333vw;
+}
+.search_page .container .empty p {
+  margin-top: -2.66666667vw;
+  width: 66.66666667vw;
+  text-align: center;
+  color: #3232324c;
 }

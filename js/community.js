@@ -297,7 +297,7 @@ Array.from($('.community header .label li')).forEach((x, i) => {
                 let name_flag = true;
                 if (k.nickName == curr.userInfo.nickName)
                     name_flag = false;
-                let newcont = k.content.replace(/<缩进>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                let newcont = k.content.replace(/<空格>/g, '&nbsp;');
 
                 comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, name_flag);
             }
@@ -307,7 +307,7 @@ Array.from($('.community header .label li')).forEach((x, i) => {
                 let name_flag = true;
                 if (k.nickName == curr.userInfo.nickName)
                     name_flag = false;
-                let newcont = k.content.replace(/<缩进>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                let newcont = k.content.replace(/<空格>/g, '&nbsp;');
                 comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, name_flag);
             }
         }

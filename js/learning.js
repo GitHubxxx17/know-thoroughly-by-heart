@@ -38,13 +38,19 @@ function learnReset() {
 let arr1 = [];
 //数组用来存放答案
 let arr2 = [];
-
+let Ltimestart = 0;
+let Ltimeend = 0;
 let btn = $('.learn_page .header_right li');
 let learn_flag_1 = true;
 let learn_flag_2 = true;
 //点击进入默写模式
 $('.moxie').onclick = () => {
     if (learn_flag_1 && document.querySelector('.learn_page .highlight')) {
+        Ltimeend = new Date().getTime();
+        if (Ltimestart != 0)
+            Alltime += (Ltimeend - Ltimestart) / 1000;
+        console.log(Alltime);
+        Ltimestart = new Date().getTime();
         learnReset();
         $('.moxie').classList.add('choice');
         arr2 = [];
@@ -76,6 +82,8 @@ $('.moxie').onclick = () => {
         // 再次点击退出答题模式
         learnReset()
         answerReset()
+        Ltimeend = new Date().getTime();
+        Alltime += (Ltimeend - Ltimestart) / 1000;
         learn_flag_1 = true;
     }
 }
@@ -92,8 +100,15 @@ $('.learn_page').onclick = () => {
 //点击进入背诵模式
 $('.beisong').onclick = () => {
     if (learn_flag_2 && document.querySelector('.learn_page .highlight')) {
+        Ltimeend = new Date().getTime();
+        if (Ltimestart != 0)
+            Alltime += (Ltimeend - Ltimestart) / 1000;
+        console.log(Alltime);
+        Ltimestart = new Date().getTime();
+        if (!learn_flag_1) {
+            answerReset()
+        }
         learnReset()
-        answerReset()
         $('.beisong').classList.add('choice');
         //利用循环将选中的节点添加类
         let n = 0;
@@ -108,6 +123,8 @@ $('.beisong').onclick = () => {
         learn_flag_1 = true;
     } else {
         learnReset();
+        Ltimeend = new Date().getTime();
+        Alltime += (Ltimeend - Ltimestart) / 1000;
         learn_flag_2 = true;
     }
 }
@@ -123,15 +140,15 @@ $('.tijiao').onclick = () => {
             n++;
         }
         let score = Math.round((sum / n) * 100);
-        $('.learn_page .popup_box .score').innerHTML =  score;
-        $('.learn_page .popup_box .score_title').innerHTML =  `本次正确率：${score}%`;
-        if(score < 60){
+        $('.learn_page .popup_box .score').innerHTML = score;
+        $('.learn_page .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
+        if (score < 60) {
             $('.learn_page .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
             $('.learn_page .popup_box .circle').innerHTML = '陌生'
-        }else if(score < 80){
+        } else if (score < 80) {
             $('.learn_page .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
             $('.learn_page .popup_box .circle').innerHTML = '一般'
-        }else{
+        } else {
             $('.learn_page .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
             $('.learn_page .popup_box .circle').innerHTML = '熟练'
         }
@@ -158,7 +175,15 @@ $('.tijiao').onclick = () => {
                 }, true);
             }
         }
-
+        studyNums++;
+        if (Alltime >= 60) {
+            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyTime=${Math(round(Alltime / 60))}`, (str) => {
+                let newstr = JSON.parse(str).msg;
+                console.log(newstr);
+            }, true)
+        }
+        Ltimeend = new Date().getTime();
+        Alltime += (Ltimeend - Ltimestart) / 1000;
         learnReset();
         answerReset();
     }

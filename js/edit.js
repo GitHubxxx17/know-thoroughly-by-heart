@@ -215,8 +215,8 @@ $('.learn_page .finish').onclick = () => {
             }
         }
         let poststr = '';
-        let newinfo = info1.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g,'<缩进>');
-
+        let newinfo = info1.replace(/&nbsp;/g,'<空格>');
+        console.log(newinfo);
         if(mStatus == 1){
             poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
         }else{

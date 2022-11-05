@@ -95,6 +95,7 @@ body {
   background-color: #aea0d5;
 }
 .calendar_page .calendar {
+  z-index: 100;
   margin-top: 7.59493671vw;
   height: max-content;
   width: 100vw;
@@ -270,6 +271,7 @@ body {
   border: 0;
 }
 .calendar_page .calendar .calendar_footer .dailySignature {
+  position: relative;
   margin-top: 5vh;
   padding: 5.06329114vw 2.53164557vw;
   border-radius: 2.53164557vw;

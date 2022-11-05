@@ -11,7 +11,7 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.user
         let tparr = newstr.data.userModle;
         let fxnum = 0;
         for (let x of tparr) {
-            let newcon = x.content.replace(/<缩进>/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/<\/p>/g, '').replace(/<p>/g, '');
+            let newcon = x.content.replace(/<空格>/g, '&nbsp;').replace(/<\/p>/g, '').replace(/<p>/g, '');
             if (x.MStatus == '0')
                 newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, true);
             else
@@ -54,18 +54,30 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
 }, true)
 
 //获取用户学习信息
+var Alltime = 0;
+var studyNums = 0;
+getStoreDSSD()
+function getStoreDSSD() {
+    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/studyData?userId=${curr.userId}`, 'get', '', (str) => {
+        let newstr = JSON.parse(str).msg;
+        console.log(newstr);
+        if(newstr.content == "获取失败"){
+            $('.plan_box .record_box .cur_data')[0].innerHTML = 0;
+            $('.plan_box .record_box .cur_data')[1].innerHTML = 0;
+            $('.today_review .cur').innerHTML = 0;
+        }else{
+            let studyData = newstr.data.studyData;
+            $('.plan_box .record_box .cur_data')[0].innerHTML = studyData.studyTime;
+            $('.plan_box .record_box .cur_data')[1].innerHTML = studyData.studyNums;
+            $('.today_review .cur').innerHTML = studyData.reviewNums;
+            Alltime = studyData.studyTime;
+            studyNums = studyData.studyNums;
+        }
+        
 
-// ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/studyData?userId=${curr.userId}`, 'get', '', (str) => {
-//     let newstr = JSON.parse(str).msg;
-//     console.log(newstr);
-    
-// }, true)
+    }, true)
+}
 
-// ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyNums=${0}&studyTime=${0}`, (str) => {
-//     let newstr = JSON.parse(str).msg;
-//     console.log(newstr);
-    
-// }, true)
 
 //上传文件
 $('.Making_page .header_left input').onchange = function (e) {
@@ -128,7 +140,7 @@ $('.Making_page .popup_box button')[0].onclick = () => {
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
         //创建模板
-        let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, '<缩进>');
+        let newcon = newcontext.replace(/&nbsp;/g, '<空格>');
         let contect = encodeURI(newcon);
         let poststr = `context=${contect}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
@@ -149,7 +161,7 @@ $('.Making_page .popup_box button')[1].onclick = () => {
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
         //创建模板
-        let newcon = newcontext.replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, '<缩进>').replace(/<div>/g, '').replace(/<\/div>/g, '');
+        let newcon = newcontext.replace(/&nbsp;/g, '<空格>').replace(/<div>/g, '').replace(/<\/div>/g, '');
         let poststr = `context=${newcon}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;

@@ -408,14 +408,14 @@ function modle_Period() {
             ulIndex++;
         }
     }
-    $('.today_review .cur').innerHTML = 0;
-    $('.today_review .sum').innerHTML = num;
+    ;
+    $('.today_review .sum').innerHTML = parseInt($('.today_review .cur').innerHTML) + num;
     if (num > 0) {
         $('.now_line').style.width = $('.today_review .cur').innerHTML / $('.today_review .sum').innerHTML * $('.review_line').offsetWidth + 'px';
     } else {
         $('.now_line').style.width = 0 + 'px';
     }
-    if ($('.today_review .cur').innerHTML == $('.today_review .sum').innerHTML) {
+    if ($('.today_review .cur').innerHTML == $('.today_review .sum').innerHTML && $('.today_review .sum').innerHTML != 0) {
         $('.today_review .icon-xianshi_xuanze').style.backgroundColor = '#5f4fb8';
     }
     //点击去复习进入学习页面

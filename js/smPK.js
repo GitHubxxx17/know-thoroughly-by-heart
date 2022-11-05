@@ -164,7 +164,8 @@ function ConnectionClicked() {
                 $('.img_box').classList.remove("disappear_xz");
 
             }, 2000);
-            ws.onclose = wsonclose(false, ws);
+            ws.close();
+            clearInterval(timeLimits_record);
         }
 
         //pk中关闭页面
@@ -186,7 +187,8 @@ function ConnectionClicked() {
             setTimeout(function () {
                 $('.enterPk').style.display = 'none';
             }, 2000);
-            ws.onclose = wsonclose(false, ws);
+            ws.close();
+            clearInterval(timeLimits_record);
         }
 
 
