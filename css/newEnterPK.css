@@ -108,6 +108,7 @@ a {
   padding: 4vw 0;
   width: 93.33333333vw;
   height: 21.33333333vw;
+  position: relative;
 }
 .enterPk .pk_blood .other,
 .enterPk .pk_blood .mine {
@@ -227,6 +228,18 @@ a {
   line-height: 9.33333333vw;
   color: #fff;
   font-size: 4.26666667vw;
+}
+.enterPk .pk_blood .runle {
+  z-index: 1000;
+  width: 26.66666667vw;
+  height: 6.66666667vw;
+  position: absolute;
+  top: -3.2vw;
+  right: 0;
+  text-align: end;
+  line-height: 6.66666667vw;
+  font-size: 3.73333333vw;
+  display: none;
 }
 .enterPk .text_box {
   margin: 2.66666667vw auto;

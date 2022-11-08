@@ -67,7 +67,7 @@ function rlRendering() {
                 $('.competition_season .role img').src = './images/段位/6.png';
                 break;
         }
-        let star = pkstars >= 30? 5 : pkstars % 5;
+        let star = pkstars >= 30 ? 5 : pkstars % 5;
         for (let i = 0; i < star; i++) {
             $('.pk_page .start i')[i].classList.add('active')
         }
@@ -232,7 +232,8 @@ $('.determine .queding').onclick = () => {
         $('.newwaitPK').style.display = 'block';
         $('.pk_end .mine').classList.add('appearLeft');
         $('.pk_end .other').classList.add('appearRight');
-
+        $('.runle').style.display = 'none';
+        $('.newwaitPK .back_bock').style.display = 'block';
         //取消选择困难的active
         for (let index = 0; index < button_active.length; index++) {
             if (button_active[index].classList.contains("active")) {
@@ -253,7 +254,6 @@ $('.determine .queding').onclick = () => {
         setTimeout(function () {
             if (img_box.classList.contains("appear_xz")) {
                 img_box.classList.remove("appear_xz");
-                img_box.classList.remove("animated");
             }
             img_box.classList.add("xz");
             // createWebSocket ();

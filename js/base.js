@@ -105,15 +105,17 @@ function newTP(title, context, modleId, label, common, studyStatus, flag) {
 }
 
 //社区渲染
-function comTP(title, context, modleId, label, base64, username, name_flag) {
+function comTP(title, context, modleId, label, base64, username, scNum,dzNum,name_flag) {
+    scNum = 1000;
+    dzNum = 1000;
     let interactive = '';
     if (name_flag) {
-        interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;&nbsp; <i>收藏</i></span>
-                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>打赏</i></span>`
+        interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;<i>收藏</i></span>
+                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>`
     } else {
-        interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;&nbsp; <i>收藏</i></span>
-                        <span class="jifen iconfont icon-jifenhuiyuan hidden"> &nbsp;<i>打赏</i></span>
+        interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;<i>收藏</i></span>
                         <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
+                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>
                         `
     }
 

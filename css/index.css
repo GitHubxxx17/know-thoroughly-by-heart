@@ -521,7 +521,7 @@ body {
 }
 .memory_base .container .me_base .collection_base .baseLis_del2,
 .memory_base .container .me_base .my_base .baseLis_del2 {
-  animation: baseLis_del 1s forwards;
+  animation: baseLis_del2 1s forwards;
 }
 .memory_base .container .me_base .collection_base .select,
 .memory_base .container .me_base .my_base .select {
@@ -1193,7 +1193,7 @@ body {
     transform: scale(1) rotate(0);
   }
 }
-@keyframes baseLis_del {
+@keyframes baseLis_del2 {
   0% {
     opacity: 1;
   }

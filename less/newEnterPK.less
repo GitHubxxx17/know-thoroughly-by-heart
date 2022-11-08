@@ -50,6 +50,7 @@
         padding: (15/@vw) 0;
         width: (350/@vw);
         height: (80/@vw);
+        position: relative;
 
         .other,
         .mine{
@@ -107,7 +108,7 @@
             justify-content:flex-end;
             align-items: center;
             background-color:#90909078;
-            
+                        
             .blook_change{
                 position: fixed;
                 display: flex;
@@ -121,6 +122,8 @@
             .head_portrait{
                 margin-right: (5/@vw);
             }
+
+            
         }
 
         .time{
@@ -176,6 +179,19 @@
                     font-size: (16 / @vw);
                 }
             }
+        }
+
+        .runle {
+            z-index: 1000;
+            width: (100 / @vw);
+            height: (25 /@vw);
+            position: absolute;
+            top: -(12 / @vw);
+            right: 0;
+            text-align: end;
+            line-height: (25/@vw);
+            font-size: (14 / @vw);
+            display: none;
         }
     }
     .text_box {

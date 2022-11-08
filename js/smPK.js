@@ -50,6 +50,7 @@ function ConnectionClicked() {
 
                 //判断匹配是否成功，成功后渲染挖空内容和答题的答案,当isReady为true即可进入pk界面
                 if (res.isReady) {
+                    $('.newwaitPK .back_bock').style.display = 'none';
                     animate_success();
                     console.log("我已经准备好啦！");
                     setTimeout(() => {
@@ -58,7 +59,7 @@ function ConnectionClicked() {
                             $(".innercir").innerHTML = timeCount--;
                         }, 1000);
                     }, 1000);
-                    
+
                 }
 
                 //刷新血条
@@ -72,6 +73,11 @@ function ConnectionClicked() {
                     //刷新模板
                     animate($('.enterPk .text_box'), 0, $('.enterPk .text_box').scrollTop)
                     Refresh_Template(res.digedContent);
+
+                }
+
+                if (res.ENEMY_EXIT && !res.MATCH_END) {
+                    $('.runle').style.display = 'block';
 
                 }
 
@@ -97,13 +103,11 @@ function ConnectionClicked() {
                         }
                     }
                     endAnswerArr = [];
+                    $('.runle').style.display = 'none';
                     ws.onclose = wsonclose(true, ws);
                 }
 
-                if (res.ENEMY_EXIT) {
 
-                    ws.onclose = wsonclose(true, ws);
-                }
 
                 if (msgCount == 1) {
                     ws.onclose = wsonclose(false, ws);
@@ -154,7 +158,6 @@ function ConnectionClicked() {
             $('.img_box').classList.remove("xz");
             $('.img_box').classList.add("disappear_xz");
             $('.img_box').classList.remove("appear");
-            $('.img_box').classList.add("animated");
             $('.newwaitPK .mine').classList.add('disappearup');
             $('.newwaitPK .other').classList.add('disappearbottom');
             setTimeout(() => {
@@ -164,7 +167,7 @@ function ConnectionClicked() {
                 $('.img_box').classList.remove("disappear_xz");
 
             }, 2000);
-            ws.close();
+            console.log(ws.close());
             clearInterval(timeLimits_record);
         }
 
@@ -184,8 +187,16 @@ function ConnectionClicked() {
             $('.enterPk .text_box').classList.add('disappear');
             $('.enterPk .option').classList.add('animated');
             $('.enterPk .option').classList.add('disappear');
+            $('.runle').style.display = 'none';
             setTimeout(function () {
                 $('.enterPk').style.display = 'none';
+                $('.pk_end').style.display = 'none';
+                $('.enterPk .head_nav_pk').classList.remove('disappear');
+                $('.enterPk .pk_blood .mine').classList.remove('disLeft');
+                $('.enterPk .pk_blood .time').classList.remove('disappear');
+                $('.enterPk .pk_blood .other').classList.remove('disRight');
+                $('.enterPk .text_box').classList.remove('disappear');
+                $('.enterPk .option').classList.remove('disappear');
             }, 2000);
             ws.close();
             clearInterval(timeLimits_record);
@@ -231,6 +242,7 @@ function resetPK() {
     $('.pk_end .mine').classList.remove('disLeft');
     $('.pk_end .other').classList.remove('disRight');
     UserSelectArr = [];
+    endAnswerArr = [];
 }
 
 //刷新id
@@ -305,6 +317,8 @@ function Refresh_answer() {
         return arr.slice(0, 4);
     }
 
+
+    //将带特殊标签的隐藏答案
     Array.from(all('.enterPk .highlight')).forEach((x, i) => {
         x.classList.add('recite');
         answerArr.push(x.innerHTML);
@@ -348,6 +362,20 @@ function Refresh_answer() {
 
     }
 
+    function strDisturbance() {
+        let str = answerArr[Math.floor(Math.random() * answerArr.length)];
+        while(str == answerArr[answerIndex]){
+            str = answerArr[Math.floor(Math.random() * answerArr.length)];
+        }
+        
+        let newStrAll = [];
+        str.split('').forEach((item, index, array) => {
+            let newIndex = Math.round(Math.random() * newStrAll.length);
+            newStrAll.splice(newIndex, 0, item);
+        });
+        return newStrAll.join('');
+    }
+
     //选择答案后
     function answerSelect() {
         answerIndex++;
@@ -358,6 +386,19 @@ function Refresh_answer() {
             slArr.push(x);
             if (slArr.length == 3)
                 break;
+        }
+        if (answerArr.length < 4) {
+            for (let i = 0; i < 4 - answerArr.length; i++) {
+                let str = strDisturbance()
+                let a = 0;
+                for(let j = 0;j < slArr.length;j++){
+                    if (slArr[j] == str)
+                        a++;
+                    if(j == slArr.length-1&&a != 0)
+                        str = strDisturbance();
+                }
+                slArr.push(str);
+            }
         }
         slArr.push(answerArr[answerIndex]);
         slArr = sortArr(slArr);
@@ -396,11 +437,15 @@ function animate_success() {
         $('.enterPk').classList.add('appear');
         $('.img_box').classList.remove("xz");
         $('.img_box').classList.add("disappear_xz");
-        $('.img_box').classList.add("animated");
         $('.newwaitPK .mine').classList.add('disappearup')
         $('.newwaitPK .other').classList.add('disappearbottom')
-        setTimeout(() => $('.newwaitPK').style.display = 'none', 2000);
-    }, 3000);
+        setTimeout(() => {
+            $('.newwaitPK').style.display = 'none';
+            $('.newwaitPK .mine').classList.remove('disappearup')
+            $('.newwaitPK .other').classList.remove('disappearbottom')
+            $('.img_box').classList.remove("disappear_xz");
+        }, 2000);
+    }, 2000);
 }
 
 //pk结束之后的动画
@@ -419,7 +464,7 @@ function animate_pkend() {
     $('.enterPk .text_box').classList.add('disappear');
     $('.enterPk .option').classList.add('animated');
     $('.enterPk .option').classList.add('disappear');
-
+    $('.runle').style.display = 'none';
     setTimeout(function () {
         $('.pk_end').style.display = 'block';
         setTimeout(() => {

@@ -94,7 +94,14 @@ function communityTP() {
             }
             $('.viewTemplate footer').style.display = 'block';
             if (x.parentNode.querySelector('.idname1').innerHTML == curr.userInfo.nickName) {
-                $('.viewTemplate footer').style.display = 'none';
+                // $('.viewTemplate footer').style.display = 'none';
+                $('.viewTemplate footer .dainzan .iconfont').classList.add('icon-a-shanchulajitong');
+                $('.viewTemplate footer .dainzan .iconfont').classList.remove('icon-shoucang');
+                $('.vt_text').innerHTML = '删除';
+            }else{
+                $('.viewTemplate footer .dainzan .iconfont').classList.remove('icon-a-shanchulajitong');
+                $('.viewTemplate footer .dainzan .iconfont').classList.add('icon-shoucang');
+                $('.vt_text').innerHTML = '收藏';
             }
             $('.viewTemplate').classList.remove('scroll_top');
             $('.viewTemplate footer').classList.remove('scroll_top');
@@ -210,6 +217,7 @@ function xrcomTP() {
             }
             communityTP();
             $('.community header .label li')[0].onclick();
+            $('.com_loading').style.display = 'none';
         }, true);
     }
 }
@@ -299,7 +307,7 @@ Array.from($('.community header .label li')).forEach((x, i) => {
                     name_flag = false;
                 let newcont = k.content.replace(/<空格>/g, '&nbsp;');
 
-                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, name_flag);
+                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, 0,0,name_flag);
             }
         }
         if (commonArr[labelId1(x.innerText)] && i != 0) {
@@ -308,7 +316,7 @@ Array.from($('.community header .label li')).forEach((x, i) => {
                 if (k.nickName == curr.userInfo.nickName)
                     name_flag = false;
                 let newcont = k.content.replace(/<空格>/g, '&nbsp;');
-                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, name_flag);
+                comTP(k.modleTitle, newcont, k.modleId, k.modleLabel, k.base64,k.nickName, 0,0,name_flag);
             }
         }
         communityTP();
