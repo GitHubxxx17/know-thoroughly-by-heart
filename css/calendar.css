@@ -76,6 +76,7 @@ body {
   background-color: #f4f4f4;
   transition: all 0.3s ease-in-out;
   overflow: scroll;
+  background-size: cover;
 }
 .calendar_page .left {
   z-index: 10000;
@@ -91,8 +92,10 @@ body {
 .calendar_page .bcg {
   position: absolute;
   width: 100%;
-  height: 60.75949367vw;
-  background-color: #aea0d5;
+  top: 0;
+  left: 0;
+  height: 45vh;
+  background-image: linear-gradient(to bottom, #aea0d5 70%, transparent);
 }
 .calendar_page .calendar {
   z-index: 100;
@@ -257,7 +260,9 @@ body {
   height: 12.65822785vw;
   text-align: center;
   line-height: 12.65822785vw;
-  background-color: #eeedf5;
+  background-color: #ffffff;
+  border-radius: 1.26582278vw;
+  box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.163);
 }
 .calendar_page .calendar .calendar_footer .clock .situation {
   transition: all 0.3s;
@@ -273,21 +278,30 @@ body {
 .calendar_page .calendar .calendar_footer .dailySignature {
   position: relative;
   margin-top: 5vh;
-  padding: 5.06329114vw 2.53164557vw;
+  background: url(../images/复习/暂无书籍\ 2.png) no-repeat;
+  background-position: 15.18987342vw -7.59493671vw;
+  background-size: 25.3164557vw 12.65822785vw;
+  background-size: cover;
   border-radius: 2.53164557vw;
   background-color: #fff;
   box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.163);
 }
+.calendar_page .calendar .calendar_footer .dailySignature .box {
+  padding: 5.06329114vw 2.53164557vw;
+  border-radius: 2.53164557vw;
+  background-color: rgba(255, 255, 255, 0.518);
+}
 .calendar_page .calendar .calendar_footer .title {
   color: #000;
   font-size: 5.06329114vw;
-  width: 27.84810127vw;
-  padding: 1.26582278vw;
+  width: 35.44303797vw;
+  padding: 0vw;
+  margin-left: -2.53164557vw;
   text-align: center;
   border-radius: 2.53164557vw;
 }
 .calendar_page .calendar .calendar_footer .record_box {
-  margin-top: 5.06329114vw;
+  margin-top: 2.53164557vw;
   padding: 1.26582278vw 3.79746835vw;
   border-left: 2px solid rgba(0, 0, 0, 0.319);
 }

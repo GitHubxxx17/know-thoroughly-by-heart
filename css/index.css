@@ -274,7 +274,7 @@ body {
   border-radius: 5%;
 }
 .memory_base .container .today_plan .record_box .box {
-  padding: 1.26582278vw 0;
+  padding-top: 1.26582278vw;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -307,6 +307,12 @@ body {
   font-weight: 700;
   font-size: 5.06329114vw;
   margin-right: 1.26582278vw;
+}
+.memory_base .container .today_plan .record_box .box .time {
+  background: url(../images/复习/云1.png) no-repeat;
+  background-position: bottom left;
+  background-position: 12.65822785vw 10.37974684vw;
+  background-size: 25.3164557vw 10.12658228vw;
 }
 .memory_base .container .today_plan .record_box .box .time .icon-shijian {
   font-size: 5.06329114vw;
@@ -580,6 +586,7 @@ body {
   -webkit-line-clamp: 2;
   padding: 3.03797468vw 0 0 0;
   color: #949393;
+  word-break: break-all;
 }
 .memory_base .container .me_base .collection_base li .content .info::after,
 .memory_base .container .me_base .my_base li .content .info::after {
@@ -594,8 +601,6 @@ body {
 .memory_base .container .me_base .collection_base li .content .info .highlight,
 .memory_base .container .me_base .my_base li .content .info .highlight {
   display: inline;
-  background: #fdbe3b;
-  color: #000;
 }
 .memory_base .container .me_base .collection_base li .tip,
 .memory_base .container .me_base .my_base li .tip {
@@ -761,7 +766,7 @@ body {
   justify-content: space-between;
   padding: 0 3.79746835vw;
   background-color: #fff;
-  box-shadow: 0 0.25316456vw 2.02531646vw rgba(0, 0, 0, 0.374);
+  box-shadow: 0 0.25316456vw 1.51898734vw rgba(0, 0, 0, 0.133);
   opacity: 0;
   transition: all 0.4s ease-in-out;
 }
@@ -864,11 +869,37 @@ body {
   color: #57575799;
   font-size: 3.5443038vw;
 }
+.learn_page .popup2 {
+  display: none;
+  z-index: 20000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.learn_page .popup2 .popup_box {
+  position: absolute;
+  width: 35.44303797vw;
+  height: 15.18987342vw;
+  top: 8%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  z-index: 10000;
+  border-radius: 2.53164557vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 4.55696203vw;
+  box-shadow: 0.50632911vw 0.50632911vw 1.51898734vw 0.50632911vw rgba(121, 121, 121, 0.38);
+}
 .learn_page .container {
   margin-top: 16.4556962vw;
   z-index: 0;
   width: 100%;
-  background-color: #f2f7fc;
+  background-color: #f2f7fcc5;
 }
 .learn_page .container .text_box {
   margin: 0 auto;
@@ -879,6 +910,8 @@ body {
   font-size: 4.55696203vw;
   outline: 0;
   border: none;
+  letter-spacing: 0.43rem;
+  word-break: break-all;
 }
 .learn_page .container .text_box::-webkit-scrollbar {
   display: none;
@@ -951,9 +984,10 @@ body {
   transition: all 0.2s ease-in-out;
 }
 .learn_page footer li .icon {
-  font-size: 7.59493671vw;
+  font-size: 6.58227848vw;
 }
 .learn_page footer li .name {
+  margin-top: 2.02531646vw;
   position: relative;
 }
 .learn_page footer .footer_1 {
@@ -1097,6 +1131,9 @@ body {
   line-height: 6.32911392vw;
   margin-top: 2.53164557vw;
   font-size: 3.29113924vw;
+}
+.upload_page .container li .content .info_box .info {
+  word-break: break-all;
 }
 .upload_page .container li .content .ellipsis {
   overflow: hidden;

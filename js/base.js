@@ -105,20 +105,57 @@ function newTP(title, context, modleId, label, common, studyStatus, flag) {
 }
 
 //社区渲染
-function comTP(title, context, modleId, label, base64, username, scNum,dzNum,name_flag) {
-    scNum = 1000;
-    dzNum = 1000;
-    let interactive = '';
-    if (name_flag) {
-        interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;<i>收藏</i></span>
-                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>`
-    } else {
-        interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;<i>收藏</i></span>
-                        <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
-                        <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>
-                        `
+function comTP(title, context, modleId, label, base64, username, likeNum, likeStatus, name_flag) {
+    // let interactive = '';
+    // if (name_flag) {
+    //     interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;<i>收藏</i></span>
+    //                     <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>`
+    // } else {
+    //     interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;<i>收藏</i></span>
+    //                     <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
+    //                     <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>
+    //                     `
+    // }
+    //点赞状态
+    let dz = ''
+    if(likeStatus){
+        dz = `<span class="dainzan orange">
+                <i class="iconfont icon-dianzan1"></i>
+                <i class="wenzi">${likeNum}</i>
+                <span class="circle blink_circle"></span>
+            </span>`
+    }else{
+        dz = `<span class="dainzan">
+                <i class="iconfont icon-dianzan"></i>
+                <i class="wenzi">点赞</i>
+                <span class="circle"></span>
+            </span>`
     }
 
+
+    //自己和别人的
+    let toolbar_right = '';
+    let right = '';
+    if (name_flag) {
+        toolbar_right = `<div class="toolbar_right">
+                            <span class="shoucang ">
+                                <i class="iconfont icon-shoucang1"></i> 
+                                <i class="wenzi">收藏</i>
+                            </span>
+                            ${dz}
+                        </div>`;
+    } else {
+        toolbar_right = `<div class="toolbar_right">
+                            <span></span>
+                            ${dz}
+                        </div>`;
+        right = `
+            <div class="right">
+                <div class="iconfont icon-shixincaidan"></div>
+                <div class="del" style="display: none;">删除</div>
+            </div>
+        `
+    }
     let img = `./images/头像/头像-女学生2.png`;
     if (base64 != '') {
         img = base64;
@@ -128,10 +165,13 @@ function comTP(title, context, modleId, label, base64, username, scNum,dzNum,nam
     li.innerHTML = `<div class="modleId">${modleId}</div>
                         <div class="color">
                             <div class="upper">
-                                <div class="head_portrait">
-                                    <img src="${img}" alt="">
+                                <div class="left">
+                                    <div class="head_portrait">
+                                        <img src="${img}" alt="">
+                                    </div>
+                                    <div class="idname1">${username}</div>
                                 </div>
-                                <div class="idname1">${username}</div>
+                                ${right}
                             </div>
 
                             <div class="content">
@@ -145,16 +185,18 @@ function comTP(title, context, modleId, label, base64, username, scNum,dzNum,nam
                                     <span class="iconfont icon-shuqianguanli"></span>
                                     <span class="label_title">${labelId2(label)}</span>
                                 </div>
-                                <div class="inter_box" id="interactive">
-                                    <div class="interactive">
-                                        ${interactive}
-                                    </div>
-                                </div>
-                                <i class=" menu iconfont icon-shixincaidan"></i>
+                                ${toolbar_right}
+                                
                             </div>
                         </div>`
 
     $('.community_ul').prepend(li);
+    // <div class="inter_box" id="interactive">
+    //     <div class="interactive">
+    //         ${interactive}
+    //     </div>
+    // </div><i class=" menu iconfont icon-shixincaidan"></i>
+
 }
 
 //上传页面渲染模板

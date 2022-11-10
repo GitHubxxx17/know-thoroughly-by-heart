@@ -2,7 +2,7 @@
 function learnReset() {
     if (document.querySelector('.learn_page .highlight')) {
         for (let x of all('.learn_page .highlight')) {
-            x.setAttribute('contenteditable', false)
+            x.removeAttribute('contenteditable');
             x.className = 'highlight';
             x.onclick = null;
             x.style.userSelect = '';
@@ -140,17 +140,17 @@ $('.tijiao').onclick = () => {
             n++;
         }
         let score = Math.round((sum / n) * 100);
-        $('.learn_page .popup_box .score').innerHTML = score;
-        $('.learn_page .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
+        $('.learn_page .popup .popup_box .score').innerHTML = score;
+        $('.learn_page .popup .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
         if (score < 60) {
-            $('.learn_page .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
-            $('.learn_page .popup_box .circle').innerHTML = '陌生'
+            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
+            $('.learn_page .popup .popup_box .circle').innerHTML = '陌生'
         } else if (score < 80) {
-            $('.learn_page .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
-            $('.learn_page .popup_box .circle').innerHTML = '一般'
+            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
+            $('.learn_page .popup .popup_box .circle').innerHTML = '一般'
         } else {
-            $('.learn_page .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
-            $('.learn_page .popup_box .circle').innerHTML = '熟练'
+            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
+            $('.learn_page .popup .popup_box .circle').innerHTML = '熟练'
         }
         $('.learn_page .popup').style.display = 'block';
 
@@ -176,16 +176,18 @@ $('.tijiao').onclick = () => {
             }
         }
         studyNums++;
+        Ltimeend = new Date().getTime();
+        Alltime += (Ltimeend - Ltimestart) / 1000;
         if (Alltime >= 60) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyTime=${Math(round(Alltime / 60))}`, (str) => {
+            console.log(Alltime);
+            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyTime=${Math.round(Alltime / 60)}`, (str) => {
                 let newstr = JSON.parse(str).msg;
                 console.log(newstr);
             }, true)
         }
-        Ltimeend = new Date().getTime();
-        Alltime += (Ltimeend - Ltimestart) / 1000;
-        learnReset();
+        getStoreDSSD()
         answerReset();
+        learnReset();
     }
 
 }

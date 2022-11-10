@@ -13,6 +13,8 @@ body {
     background-color: #f4f4f4;
     transition: all .3s ease-in-out;
     overflow: scroll;
+    // background: url(../images/日签/dailyCard7.png) no-repeat;
+    background-size: cover;
 
     .left {
         z-index: 10000;
@@ -30,10 +32,29 @@ body {
     .bcg {
         position: absolute;
         width: 100%;
-        height: (240/@vw);
-        background-color: #aea0d5;
+        top: 0;
+        left: 0;
+        // height: (240/@vw);
+        height: 45vh;
+        // background-color: #aea0d5;
+        background-image: linear-gradient(to bottom, #aea0d5 70%, transparent);
     }
 
+    // &::after {
+    //     z-index: 0;
+    //     content: '';
+    //     width: 100%;
+    //     // height: (200 / @vw);
+    //     height: 60%;
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 50%;
+    //     transform: translate(-50%);
+    //     background: url(../images/日签/dailyCard7.png) no-repeat;
+    //     background-size: cover;
+    // }
+
+    
     .calendar {
         z-index: 100;
         margin-top: (30 / @vw);
@@ -226,7 +247,11 @@ body {
                 height: (50/@vw);
                 text-align: center;
                 line-height: (50/@vw);
-                background-color: #eeedf5;
+                // background-color: #eeedf5;
+                background-color: #ffffff;
+                border-radius: (5/@vw);
+
+                box-shadow: (1/@vw) (1/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.163);
 
                 .situation {
                     transition: all .3s;
@@ -246,29 +271,40 @@ body {
                 position: relative;
                 margin-top: 5vh;
                 // background-color: red;
-                // background: url(../images/日签/dailyCard3.jpg) no-repeat;
-                // background-size: cover;
-                padding: (20/@vw) (10/@vw);
+                background: url(../images/复习/暂无书籍\ 2.png) no-repeat;
+                background-position: (60/@vw) (-30/@vw);
+                background-size:(100/@vw) (50/@vw);
+                background-size: cover;
                 border-radius: (10/@vw);
+                
                 // background-size: cover;
                 background-color: #fff;
                 box-shadow: (1/@vw) (1/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.163);
 
-
+                .box{
+                    padding: (20/@vw) (10/@vw);
+                    border-radius: (10/@vw);
+                    background-color: rgba(255, 255, 255, 0.518);
+                }
             }
+
+            
 
             .title {
                 color: #000;
                 font-size: (20/@vw);
-                width: (110/@vw);
-                padding: (5/@vw);
+                // font-family: cursive;
+                width: (140/@vw);
+                padding: (0/@vw);
+                margin-left: (-10/@vw);
                 text-align: center;
                 // background-color: #9a7aec89;
                 border-radius: (10/@vw);
             }
 
             .record_box {
-                margin-top: (20/@vw);
+                margin-top: (10/@vw);
+                // font-family: cursive;
                 padding: (5/@vw) (15/@vw);
                 border-left: 2px solid rgba(0, 0, 0, 0.319);
 
@@ -276,19 +312,6 @@ body {
 
         }
     }
-
-    // &::after {
-    //     z-index: 0;
-    //     content: '';
-    //     width: 100%;
-    //     height: (200 / @vw);
-    //     position: absolute;
-    //     bottom: 0;
-    //     left: 50%;
-    //     transform: translate(-50%);
-    //     background: url(../images/日签/dailyCard3.jpg) no-repeat;
-    //     background-size: cover;
-    // }
 
     .month_list {
         font-size: (16/@vw);
@@ -332,6 +355,8 @@ body {
             background-color: red;
         }
     }
+
+    
 
     @keyframes to-top {
         0% {

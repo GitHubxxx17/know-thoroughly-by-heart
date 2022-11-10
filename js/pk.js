@@ -20,7 +20,7 @@ let pkstars = 0;
 let img_box = document.querySelector(".img_box");
 //排行榜渲染
 function rlRendering() {
-    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList`, 'get', ``, (str) => {
+    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList?userId=${curr.userId}`, 'get', ``, (str) => {
         let newstr = JSON.parse(str).msg;
         console.log(newstr);
         let ranking = newstr.data.ranking;

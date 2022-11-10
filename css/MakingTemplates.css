@@ -308,10 +308,11 @@ a {
   transform: scale(0);
   transform-origin: top center;
   border-radius: 2.53164557vw;
+  box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.38);
 }
 .Making_page .container .title .label .label_menu .triangle {
   position: absolute;
-  top: -5.06329114vw;
+  top: -4.55696203vw;
   left: 5.06329114vw;
   width: 0px;
   height: 0px;
@@ -327,7 +328,6 @@ a {
   height: 40.50632911vw;
   padding: 1.26582278vw 2.53164557vw;
   background-color: #ffffff;
-  box-shadow: 0.50632911vw 0.50632911vw 1.51898734vw 0.50632911vw rgba(121, 121, 121, 0.38);
   border-radius: 2.53164557vw;
 }
 .Making_page .container .title .label .label_menu ul li {
@@ -363,7 +363,8 @@ a {
   border-radius: 1.26582278vw;
   box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.349);
   line-height: 8.86075949vw;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.43rem;
+  word-break: break-all;
 }
 .Making_page footer {
   position: fixed;

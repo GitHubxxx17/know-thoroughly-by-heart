@@ -234,7 +234,7 @@ $('.login button').onclick = (e) => {
                 } else {
                     curr['auto'] = false;
                 }
-                curr['userId'] = newstr.data.userId;
+                curr['userId'] = newstr.data.token;
                 curr['phone'] = $('.login_data')[0].value;
                 saveData('current_user', curr);
                 location.href = './index.html';

@@ -126,7 +126,7 @@ function TP() {
             x.parentNode.ontouchend = () => {
                     let time2 = new Date().getSeconds();
                     if (l == 0) {
-                        if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
+                        if (Math.abs(time1 - time2) < 1.5 && !x.parentNode.classList.contains('baseLis_del')) {
                             title = all('.tp_inner .title')[i];
                             info = all('.tp_inner .info')[i];
                             modleId = all('.tp_inner .modleId')[i];

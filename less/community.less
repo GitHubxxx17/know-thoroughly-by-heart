@@ -147,6 +147,7 @@
             &::-webkit-scrollbar{
                 display: none;
             }
+
             li{
                 display: block;
                 padding: 0 (10/@vw);
@@ -167,10 +168,17 @@
                     .upper{
                         display: flex;
                         align-items: center;
+                        justify-content: space-between;
                         width: 100%;
-                        height: (42 / @vw);
-                        // background-color:#fff;
                         padding: 0 (20/@vw);
+                        height: (42 / @vw);
+
+                        .left{
+                            display: flex;
+                            align-items: center;
+                            height: (42 / @vw);
+                            // background-color:#fff;
+                        }
                         
                         .head_portrait{
                             width: (42/@vw);
@@ -184,6 +192,35 @@
                         .idname1{
                             font-size: (14/@vw);
                             margin-left: (10/@vw);
+                        }
+
+                        .right{
+                            width: (50/@vw);
+                            height: (30/@vw);
+                            position: relative;
+                            text-align: center;
+
+                            .icon-shixincaidan{
+                                top: 0;
+                                position: absolute;
+                                margin-left: (10/@vw);
+                                width: (30/@vw);
+                                height: (30/@vw);
+                                line-height: (30/@vw);
+                                text-align: center;
+                            }
+
+                            .del{
+                                top: (30/@vw);
+                                position: absolute;
+                                width: (50/@vw);
+                                height: (30/@vw);
+                                text-align: center;
+                                margin-top: (-5/@vw);
+                                line-height: (30/@vw);
+                                background-color: rgba(216, 214, 214, 0.68);
+                                border-radius: (5/@vw);
+                            }
                         }
                     }
     
@@ -215,6 +252,7 @@
                                 font-size: (14 / @vw);
                                 line-height: (25/@vw);
                                 height: (52 / @vw);
+                                word-break:break-all;
                             }
 
                             .highlight {
@@ -236,7 +274,6 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                text-align: right;
 
                 .label{
                     display: inline-block;
@@ -259,14 +296,14 @@
                     }
                 }
 
-                i{
-                    text-align: center;
-                    display: inline-block;
-                    width: (30/@vw);
-                    height: (20/@vw);
-                    background-color: #dedcdc;
-                    border-radius: 15%;
-                }
+                // i{
+                //     text-align: center;
+                //     display: inline-block;
+                //     width: (30/@vw);
+                //     height: (20/@vw);
+                //     background-color: #dedcdc;
+                //     border-radius: 15%;
+                // }
                 .icon-shixincaidan{
                 
                     line-height: (20/@vw);
@@ -318,6 +355,95 @@
                     }
                 }
   
+                .toolbar_right {
+                    height: 100%;
+                    width: (150 / @vw);
+                    display: flex;
+                    align-items: center;
+                    span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding-top: (5 / @vw);
+                        font-size: (14 / @vw);
+                        flex: 1;
+                        text-align: center;
+
+                        .wenzi{
+                            margin-left: (5/@vw);
+                        }
+                    }
+
+                    .dainzan{
+                        position: relative;
+
+                        .circle{
+                            display: none;
+                            width: (5/@vw);
+                            height: (5/@vw);
+                            background-color: transparent;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 60%;
+                            left: 26%;
+                            transition: all 0.5s;
+                            transform: translate(-50%,-50%) scale(0);
+                            box-shadow: 0 -26px 0 rgba(210, 105, 30, 0.509),
+                            0 26px 0 rgba(210, 105, 30, 0.509), 
+                            -26px 0 0 rgba(210, 105, 30, 0.509),
+                            26px 0 0 rgba(210, 105, 30, 0.509),
+                            -18px -18px 0 rgba(210, 105, 30, 0.509),
+                            18px -18px 0 rgba(210, 105, 30, 0.509),
+                            18px 18px 0 rgba(210, 105, 30, 0.509),
+                            -18px 18px 0 rgba(210, 105, 30, 0.509), ;
+                        }
+
+                        .blink_circle{
+                            animation: blink 0.5s ease-in-out forwards;
+                            animation-delay: 0.30s;
+                        }
+
+                        @keyframes blink {
+                            0%{
+                                transform:translate(-50%,-50%) scale(0.5) ;
+                                opacity: 0.8;
+                            }
+                            50%{
+                                transform:translate(-50%,-50%) scale(1) ;
+                                opacity: 1;
+                            }
+                            100%{
+                                transform:translate(-50%,-50%) scale(1.1) ;
+                                opacity: 0;
+                            }
+                        }
+                    }
+
+                    i {
+                        font-style: normal;
+                    }
+
+                    .icon-shoucang1,
+                    .icon-dianzan{
+                        font-size: (20/@vw);
+                    }
+                
+                    .icon-shoucang{
+                        font-size: (18/@vw);
+                        // background-color: yellow;
+                        color: rgb(255, 174, 0);
+                    }
+
+                    .orange{
+                        color: rgb(255, 174, 0);
+                    }
+
+                    .icon-dianzan1{
+                        font-size: (20/@vw);
+                        // background-color: yellow;
+                        color: rgb(255, 174, 0);
+                    }
+                }
             }
         }
         .footer{
@@ -329,6 +455,33 @@
     .community_footer {
         width: 100%;
         height: (70 / @vw);
+    }
+}
+
+.scale{
+    animation-duration: 0.5s;
+    animation: scale 0.5s linear;
+}
+
+
+@keyframes scale {
+    0%{
+        scale: 1;
+    }
+    25%{
+        scale: 1.2;
+    }
+    50%{
+        scale: 1.2;
+    }
+    75%{
+        scale: 0.8;
+    }
+    85%{
+        scale: 0.8;
+    }
+    100%{
+        scale: 1;
     }
 }
 

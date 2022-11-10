@@ -154,29 +154,35 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
                     `
                 }
             }
-        }
+        }       
     }
     ul_context.innerHTML = content;
-    if (all(".search_page .title .searched").length > 1) {
-        for (let i = 0; i < all(".search_page .title .searched").length; i++) {
-            for (let x of all(".search_page .title .searched")) {
-                console.log(x.nextSibling);
-                if (x.nextSibling == null) {
-                    continue;
-                };
-                if (x.nextSibling.className == 'searched') {
-                    x.innerHTML += x.nextSibling.innerHTML;
-                    x.nextSibling.innerHTML = '';
-                }
+    if(judge_personal){
+        memsearchTP();
+    }else{
+        memsearchTP();
+    }
+    
+    //标签合并
+    if (all(".search_page .title").length >= 1) {
+        for (let x of all(".search_page .title")) {
+            for(let n of x.children){
+                n.innerHTML = n.innerText;
             }
-        }
-        for (let i = 0; i < all(".search_page .title .searched").length; i++) {
-            for (let x of all(".search_page .title .searched")) {
-                if (x.nextSibling == null) {
-                    continue;
-                };
-                if (x.nextSibling.innerHTML == '') {
-                    $('.search_page .title').removeChild(all(".search_page .title .searched")[i + 1]);
+            let k = x.children;
+            console.log(k);
+            let searchNum = k.length;
+            for(let i = 0; i < searchNum - 1; i++){
+                hbbq(k,i,x);
+            }
+            function hbbq(k,i,x){
+                if(k[i].nextSibling == k[i+1] && k[i].nextSibling != null){
+                    k[i].innerHTML += k[i+1].innerHTML;
+                    x.removeChild(k[i+1]);
+                    searchNum--;
+                    if(k[i].nextSibling == k[i+1]){
+                        hbbq(k,i,x);
+                    }
                 }
             }
         }
@@ -233,3 +239,41 @@ $('.search_page .header_left').onclick = () => {
     $('.memory_base .header_search input').value = '';
     $('.community  .header_search input').value = '';
 }
+
+//为模板添加事件
+function memsearchTP() {
+    Array.from(all('.search_page .tp_inner')).forEach((x, i) => {
+        x.ontouchstart = (e) => {
+            let l = 0;
+            e.stopPropagation();
+            let disX = e.changedTouches[0].clientX;
+            // 滑动模板出现按钮
+            x.addEventListener('touchmove', function (e) {
+                l = e.changedTouches[0].clientX - disX;
+            })
+            //如果没有滑动则进入学习页面
+            x.parentNode.ontouchend = () => {
+                if (l == 0) {
+                    console.log(3);
+                    title = all('.search_page .tp_inner .title')[i];
+                    info = all('.search_page .tp_inner .info')[i];
+                    modleId = all('.search_page .tp_inner .modleId')[i];
+                    label = all('.search_page .tp_inner .label')[i];
+                    $('.learn_page .title').innerHTML = title.innerHTML;
+                    $('.learn_page .text_box').innerHTML = info.innerHTML;
+                    $('.learn_page .label').innerHTML = all('.search_page .tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
+                    $('.learn_page').style.left = '0';
+                    $('.learn_page header').style.left = '0';
+                    $('.learn_page header').style.opacity = '1';
+                    $('.search_page .header_left').onclick();
+
+                    flag_learn = true;
+                }
+
+
+            }
+        }
+    });
+}
+
+

@@ -1,6 +1,6 @@
 function editReset() {
     for (let x of all('.learn_page .highlight')) {
-        x.setAttribute('contenteditable', false)
+        x.removeAttribute('contenteditable');
         x.className = 'highlight';
         x.onclick = null;
         x.style.userSelect = '';
@@ -8,7 +8,7 @@ function editReset() {
     for (let x of $('.learn_page footer li')) {
         x.classList.remove('choice');
     }
-    $('.learn_page .text_box').setAttribute('contenteditable', false);
+    $('.learn_page .text_box').removeAttribute('contenteditable');
     $('.learn_page .text_box').classList.remove('del');
     $('.learn_page .title').classList.remove('canwrite');
     flag = false;
@@ -19,10 +19,13 @@ function editReset() {
 
 //点击自定义
 $('.zidingyi').onclick = () => {
+    if (!learn_flag_1) {
+        answerReset()
+    }
     learnReset();
     $('.learn_page .footer_1').style.display = 'none';
     $('.learn_page .footer_2').style.display = 'block';
-    
+
 }
 
 //点击编辑
@@ -31,6 +34,61 @@ $('.bianji').onclick = () => {
     $('.learn_page .text_box').setAttribute('contenteditable', true);
     $('.bianji').classList.add('choice');
     $('.learn_page .title').classList.add('canwrite');
+
+    let keycode = 0;
+    //当用户按下回车时
+    $(".learn_page .text_box").onkeyup = (e) => {
+
+        //将嵌套在高亮标签中的br拿到外面，并删除该标签
+        for(let x of all(".learn_page .highlight")){
+            if(x.innerHTML == '<br>'){
+                $('.learn_page .text_box').insertBefore(x.childNodes[0], x);
+                $(".learn_page .text_box").removeChild(x);
+            }
+            
+        }
+        
+        if (e.keyCode == 13) {
+
+            let txt = window.getSelection();
+            let range = txt.getRangeAt(0);
+
+            for (let x of all(".learn_page .text_box div")) {
+                if (!x.classList.contains('highlight')) {
+                    let br = document.createElement("br");
+                    range.setStartBefore(x)
+                    range.insertNode(br);
+                    range.setStartAfter(br);
+                    range.setEndAfter(br);
+                    //将节点放入数组并逐个插入
+                    let arrr = [];
+                    for (let k of x.childNodes){
+                        if(k.nodeType == '3'&&(k.textContent == '\n' || k.textContent == ''))
+                            continue;
+                        arrr.push(k);
+                    }
+                        
+                    for(let i = 0;i < arrr.length;i++){
+                        if(i == arrr.length-1 && arrr[i].nodeName == 'BR')
+                            continue;
+                        console.log(arrr[i]);
+                        $('.learn_page .text_box').insertBefore(arrr[i], x);
+                    }
+                    if(keycode == 13){
+                        $(".learn_page .text_box").removeChild(br);
+                    }
+                    $(".learn_page .text_box").removeChild(x);
+                }
+            }
+        }
+        
+        keycode = e.keyCode;
+    }
+
+
+    $(".learn_page .text_box").onclick = () => {
+        keycode = 0;
+    }
 }
 
 //防止对已选中的文本进行多次挖空
@@ -124,9 +182,9 @@ $('.wakong').onclick = () => {
             // 将原数组清空，重新将选中节点添加进数组中
             arr = [];
             //清除空标签
-            for(let x of all('.learn_page .highlight')){
-                if(x.innerHTML == '')
-                $('.learn_page .text_box').removeChild(x);
+            for (let x of all('.learn_page .highlight')) {
+                if (x.innerHTML == '')
+                    $('.learn_page .text_box').removeChild(x);
             }
             let len = all('.learn_page .highlight').length;
             for (let i = 0; i < len; i++) {
@@ -144,15 +202,15 @@ $('.wakong').onclick = () => {
                     len--;
                     $('.learn_page .text_box').removeChild(all('.learn_page .highlight')[i + 1]);
                     clean();
-                    console.log(all('.learn_page .highlight')[i + 1],x.nextSibling);
+                    console.log(all('.learn_page .highlight')[i + 1], x.nextSibling);
                     //如果合并后下一个标签还是相邻，就把标签合并
-                    if(x.nextSibling.className == 'highlight'){
-                        
+                    if (x.nextSibling.className == 'highlight') {
+
                         x.innerHTML += all('.learn_page .highlight')[i + 1].innerHTML;
                         len--;
                         $('.learn_page .text_box').removeChild(all('.learn_page .highlight')[i + 1]);
                     }
-                        
+
                     arr.push(x);
                 } else {
                     arr.push(x);
@@ -172,13 +230,14 @@ $('.learn_page .finish').onclick = () => {
     let title1 = $('.learn_page .title').innerHTML;
     let info1 = $('.learn_page .text_box').innerHTML;
     let label1 = $('.learn_page .label').innerHTML;
-    
+    let fal = true;
     //标题和文本内容不能为空
-    // if (title1 == '' || info1 == '') {
-    //     $('.learn_page .popup_box').innerHTML = '标题和文本内容不能为空';
-    //     $('.learn_page .popup').style.display = 'block';
-    //     return;
-    // }
+    if (title1 == '' || info1 == '') {
+        $('.learn_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.learn_page .popup2').style.display = 'block';
+        fal = false;
+        return;
+    }
 
 
     editReset();
@@ -190,20 +249,20 @@ $('.learn_page .finish').onclick = () => {
     } else {
         mid = modleId.innerHTML;
     }
-    let fal = true;
+    
 
     // 标题一致就取消保存并提醒
-    // Array.from(all('.my_base .title')).forEach((x,i) => {
-    //     if (x.innerHTML == title1 && mid != all('.my_base li')[i].querySelector('.modleId').innerHTML) {
-    //         $('.edit_page .popup_box').innerHTML = '标题不能与记忆库的模板重复';
-    //         $('.edit_page .popup').style.display = 'block';
-    //         fal = false;
-    //         return;
-    //     }
-    // })
+    Array.from(all('.my_base .title')).forEach((x,i) => {
+        if (x.innerHTML == title1 && mid != all('.my_base li')[i].querySelector('.modleId').innerHTML) {
+            $('.edit_page .popup2 .popup_box').innerHTML = '标题不能与记忆库的模板重复';
+            $('.edit_page .popup2').style.display = 'block';
+            fal = false;
+            return;
+        }
+    })
 
-    if(fal){
-        if(mStatus == '0'){
+    if (fal) {
+        if (mStatus == '0') {
             if (newTPFlag) {
                 all('.my_base li')[0].querySelector('.title').innerHTML = title1;
                 all('.my_base li')[0].querySelector('.info').innerHTML = info1;
@@ -215,20 +274,20 @@ $('.learn_page .finish').onclick = () => {
             }
         }
         let poststr = '';
-        let newinfo = info1.replace(/&nbsp;/g,'<空格>');
+        let newinfo = info1.replace(/&nbsp;/g, '<空格>');
         console.log(newinfo);
-        if(mStatus == 1){
+        if (mStatus == 1) {
             poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
-        }else{
+        } else {
             poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=${labelId1(label1)}&modleId=${mid}`
         }
         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
             let newstr = JSON.parse(str).msg;
             console.log(newstr);
-            if(mStatus == 1){
+            if (mStatus == 1) {
                 let modle = newstr.data.modle;
                 newTPFlag = true;
-                newTP(title1,info1,modle.modleId,label1,0,'未学习',true);
+                newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
                 mStatus = 0;
                 $('.footer_nav li')[0].onclick();
             }
@@ -250,7 +309,7 @@ function CancelHollowing(e, n) {
     //获取当前选中的文本对象
     let txt = window.getSelection();
     let range = txt.getRangeAt(0);
-    
+
     //将选中区域改成节点的文本内容
     // range.selectNodeContents(e);
     // //将选中节点从数组中删除
@@ -265,29 +324,29 @@ function CancelHollowing(e, n) {
     // //在原来的位置重新将文本插入
     range.insertNode(nonestr);
     let textArr = e.childNodes;
-    
+
     //在原标签前面插入新节点
     function newNode(i) {
         let newNode = document.createElement("div");
         newNode.setAttribute('class', 'highlight');
         newNode.innerHTML = textArr[i].textContent;
-        $('.learn_page .text_box').insertBefore(newNode,e);
+        $('.learn_page .text_box').insertBefore(newNode, e);
     }
 
-    if(textArr[0].textContent == ''){
-        $('.learn_page .text_box').insertBefore(text,e);
+    if (textArr[0].textContent == '') {
+        $('.learn_page .text_box').insertBefore(text, e);
         newNode(2);
         $('.learn_page .text_box').removeChild(e);
-    }else{
+    } else {
         newNode(0);
-        $('.learn_page .text_box').insertBefore(text,e);
-        if(textArr[1].textContent == '' && textArr[2].textContent != ''){
+        $('.learn_page .text_box').insertBefore(text, e);
+        if (textArr[1].textContent == '' && textArr[2].textContent != '') {
             newNode(2);
         }
         $('.learn_page .text_box').removeChild(e);
     }
-    
-    
+
+
     //取消文本选择
     $('.learn_page .text_box').style.userSelect = 'none';
 }
@@ -315,4 +374,7 @@ $('.edit_page .label_menu').onclick = (e) => {
     e.stopPropagation;
     $('.edit_page .label_cont').innerHTML = e.target.innerHTML;
 }
+
+
+
 

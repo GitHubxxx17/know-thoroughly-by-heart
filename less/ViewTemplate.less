@@ -106,21 +106,40 @@ body{
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0 (20/@vw);
+                padding: 0 (50/@vw);
                 background-color: #fff;
                 color: #cdcccc;
                 span{
-                    padding: (40/@vw);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: (80/@vw);
+                    // padding: (20/@vw);
+                    text-align: center;
                     text-align: center;
                     color: #323232;
                     i{
                         font-style: normal;
                     }
+
+                    .icon-shoucang1,
+                    .icon-dianzan{
+                        font-size: (20/@vw);
+                    }
+                
                     .icon-shoucang{
-                        color: #9c9c9c;
+                        font-size: (18/@vw);
+                        // background-color: yellow;
+                        color: rgb(255, 174, 0);
                     }
 
-                    .yellow{
+                    .orange{
+                        color: rgb(255, 174, 0);
+                    }
+
+                    .icon-dianzan1{
+                        font-size: (20/@vw);
+                        // background-color: yellow;
                         color: rgb(255, 174, 0);
                     }
                 }
@@ -137,6 +156,7 @@ body{
     line-height: (35/@vw);
     letter-spacing: 0.15em;
     height: 80%;
+    word-break:break-all;
 
     .highlight {
         display: inline;

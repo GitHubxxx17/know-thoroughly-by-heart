@@ -161,22 +161,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5.06329114vw;
+  padding: 0 12.65822785vw;
   background-color: #fff;
   color: #cdcccc;
 }
 .viewTemplate .view_box footer .interactive span {
-  padding: 10.12658228vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20.25316456vw;
   text-align: center;
   color: #323232;
 }
 .viewTemplate .view_box footer .interactive span i {
   font-style: normal;
 }
-.viewTemplate .view_box footer .interactive span .icon-shoucang {
-  color: #9c9c9c;
+.viewTemplate .view_box footer .interactive span .icon-shoucang1,
+.viewTemplate .view_box footer .interactive span .icon-dianzan {
+  font-size: 5.06329114vw;
 }
-.viewTemplate .view_box footer .interactive span .yellow {
+.viewTemplate .view_box footer .interactive span .icon-shoucang {
+  font-size: 4.55696203vw;
+  color: #ffae00;
+}
+.viewTemplate .view_box footer .interactive span .orange {
+  color: #ffae00;
+}
+.viewTemplate .view_box footer .interactive span .icon-dianzan1 {
+  font-size: 5.06329114vw;
   color: #ffae00;
 }
 .text_box {
@@ -186,6 +198,7 @@ body {
   line-height: 8.86075949vw;
   letter-spacing: 0.15em;
   height: 80%;
+  word-break: break-all;
 }
 .text_box .highlight {
   display: inline;

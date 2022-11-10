@@ -121,15 +121,25 @@ a {
   background-color: #90909078;
   border-radius: 2.66666667vw;
 }
-.enterPk .pk_blood .other .blook_change,
-.enterPk .pk_blood .mine .blook_change {
+.enterPk .pk_blood .other .blook_change_out,
+.enterPk .pk_blood .mine .blook_change_out {
   position: fixed;
   display: flex;
   align-items: center;
-  width: 38.13333333vw;
+  justify-content: flex-start;
+  width: 13.33333333vw;
   height: 14.66666667vw;
   border-radius: 2.66666667vw;
+  background-color: rgba(95, 95, 249, 0.346);
+  transition: all 1.4s ease-in-out;
+}
+.enterPk .pk_blood .other .blook_change_out .blook_change_in,
+.enterPk .pk_blood .mine .blook_change_out .blook_change_in {
   background-color: #5f5ff9;
+  width: 10.66666667vw;
+  height: 14.66666667vw;
+  border-radius: 2.66666667vw;
+  transition: all 0.7s ease-in-out;
 }
 .enterPk .pk_blood .other .head_portrait,
 .enterPk .pk_blood .mine .head_portrait {
@@ -144,10 +154,7 @@ a {
 .enterPk .pk_blood .other .head_portrait img,
 .enterPk .pk_blood .mine .head_portrait img {
   width: 100%;
-  height: 100%
-                    
-                    
-                    ;
+  height: 100%;
   border-radius: 100%;
 }
 .enterPk .pk_blood .other .name_blood,
@@ -178,6 +185,24 @@ a {
   height: 14.66666667vw;
   border-radius: 2.66666667vw;
   background-color: #fd6363;
+}
+.enterPk .pk_blood .other .blook_change_out {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 38.13333333vw;
+  height: 14.66666667vw;
+  border-radius: 2.66666667vw;
+  background-color: rgba(253, 99, 99, 0.334);
+  transition: all 1.4s ease-in-out;
+}
+.enterPk .pk_blood .other .blook_change_out .blook_change_in {
+  background-color: #fd6363;
+  width: 38.13333333vw;
+  height: 14.66666667vw;
+  border-radius: 2.66666667vw;
+  transition: all 0.7s ease-in-out;
 }
 .enterPk .pk_blood .other .head_portrait {
   margin-right: 1.33333333vw;
