@@ -28,7 +28,8 @@ $('.Making_page').onclick = () => {
 function clearHtml(str) {
     str = str.replace(/<br>/g, '#br#').replace(/<div class="highlight">/g, '#div class="highlight"#').replace(/<\/div>/g, '#</div>#')
     let regex = /(<([^>]+)>)/ig
-    return str.replace(regex, "").replace('#br#', '<br>').replace('#div class="highlight"#', '<div class="highlight">').replace('#</div>#', '</div>');
+    console.log(str);
+    return str.replace(regex, "").replace('#br#', '').replace('#div class="highlight"#', '<div class="highlight">').replace('#</div>#', '</div>');
 }
 
 $(".Making_page .text_box").onpaste = () => {

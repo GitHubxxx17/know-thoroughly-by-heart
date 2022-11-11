@@ -21,13 +21,22 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
         tp_inner = all(".community .community_ul li");
         console.log(tp_inner)
         console.log("社区搜索");
-        for (let x of tp_inner) {
-            if (!x.classList.contains('footer')) {
-                let model_id = x.childNodes[0];
-                let model_title = x.querySelector('.title');
-                let model_label = x.querySelector('.label_title');
-                let model_info = x.querySelector('.info_box .info');
-                arr.push({ model_id: model_id.innerHTML, model_title: model_title.innerHTML, model_label: model_label.innerHTML, model_info: model_info.innerHTML })
+        // for (let x of tp_inner) {
+        //     if (!x.classList.contains('footer')) {
+        //         let model_id = x.childNodes[0];
+        //         let model_title = x.querySelector('.title');
+        //         let model_label = x.querySelector('.label_title');
+        //         let model_info = x.querySelector('.info_box .info');
+        //         arr.push({ model_id: model_id.innerHTML, model_title: model_title.innerHTML, model_label: model_label.innerHTML, model_info: model_info.innerHTML })
+        //     }
+        // }
+        for (let x of commonArr) {
+            for (let k of x) {
+                let model_id = k.modleId;
+                let model_title = k.modleTitle;
+                let model_label = labelId2(k.modleLabel);
+                let model_info = k.content;
+                arr.push({ model_id: model_id, model_title: model_title, model_label: model_label, model_info: model_info });
             }
         }
     }
@@ -154,34 +163,35 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
                     `
                 }
             }
-        }       
+        }
     }
     ul_context.innerHTML = content;
-    if(judge_personal){
+    if (judge_personal) {
         memsearchTP();
-    }else{
-        memsearchTP();
+    } else {
+        comsearchTP();
     }
-    
+
     //标签合并
     if (all(".search_page .title").length >= 1) {
         for (let x of all(".search_page .title")) {
-            for(let n of x.children){
+            for (let n of x.children) {
                 n.innerHTML = n.innerText;
             }
             let k = x.children;
             console.log(k);
             let searchNum = k.length;
-            for(let i = 0; i < searchNum - 1; i++){
-                hbbq(k,i,x);
+            for (let i = 0; i < searchNum - 1; i++) {
+                hbbq(k, i, x);
             }
-            function hbbq(k,i,x){
-                if(k[i].nextSibling == k[i+1] && k[i].nextSibling != null){
-                    k[i].innerHTML += k[i+1].innerHTML;
-                    x.removeChild(k[i+1]);
+
+            function hbbq(k, i, x) {
+                if (k[i].nextSibling == k[i + 1] && k[i].nextSibling != null) {
+                    k[i].innerHTML += k[i + 1].innerHTML;
+                    x.removeChild(k[i + 1]);
                     searchNum--;
-                    if(k[i].nextSibling == k[i+1]){
-                        hbbq(k,i,x);
+                    if (k[i].nextSibling == k[i + 1]) {
+                        hbbq(k, i, x);
                     }
                 }
             }
@@ -259,13 +269,12 @@ function memsearchTP() {
                     info = all('.search_page .tp_inner .info')[i];
                     modleId = all('.search_page .tp_inner .modleId')[i];
                     label = all('.search_page .tp_inner .label')[i];
-                    $('.learn_page .title').innerHTML = title.innerHTML;
+                    $('.learn_page .title').value = title.innerText;
                     $('.learn_page .text_box').innerHTML = info.innerHTML;
                     $('.learn_page .label').innerHTML = all('.search_page .tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
                     $('.learn_page').style.left = '0';
                     $('.learn_page header').style.left = '0';
                     $('.learn_page header').style.opacity = '1';
-                    $('.search_page .header_left').onclick();
 
                     flag_learn = true;
                 }
@@ -276,4 +285,74 @@ function memsearchTP() {
     });
 }
 
+function comsearchTP() {
+    Array.from(all('.search_page .tp_inner')).forEach((x, i) => {
+        x.ontouchstart = (e) => {
+            let l = 0;
+            e.stopPropagation();
+            let disX = e.changedTouches[0].clientX;
+            // 滑动模板出现按钮
+            x.addEventListener('touchmove', function (e) {
+                l = e.changedTouches[0].clientX - disX;
+            })
+            //如果没有滑动则进入学习页面
+            x.parentNode.ontouchend = () => {
+                if (l == 0) {
+                    modleId = all('.search_page .tp_inner .modleId')[i].innerHTML;
+                    $('.viewTemplate').classList.remove('scroll_top');
+                    $('.viewTemplate footer').classList.remove('scroll_top');
+                    for (let x of commonArr) {
+                        for (let k of x) {
+                            if (modleId == k.modleId) {
+                                $('.viewTemplate .idname').innerHTML = k.nickName;
+                                $('.viewTemplate .title').innerHTML = k.modleTitle;
+                                $('.viewTemplate .text_box').innerHTML = k.content;
+                                $('.viewTemplate .label').innerHTML = labelId2(k.modleLabel);
+                                $('.viewTemplate .modleId').innerHTML = k.modleId;
+                                if (k.base64 == '') {
+                                    $('.viewTemplate .head_portrait img').src = './images/头像/头像-女学生2.png';
+                                } else {
+                                    $('.viewTemplate .head_portrait img').src = k.base64;
+                                }
 
+                                if (k.nickName == curr.userInfo.nickName) {
+                                    $('.viewTemplate footer .shoucang .iconfont').classList.add('icon-a-shanchulajitong');
+                                    $('.viewTemplate footer .shoucang .iconfont').classList.remove('icon-shoucang1');
+                                    $('.viewTemplate footer .shoucang .vt_text').innerHTML = '删除';
+                                    
+                                } else {
+                                    $('.viewTemplate footer .shoucang .iconfont').classList.remove('icon-a-shanchulajitong');
+                                    $('.viewTemplate footer .shoucang .iconfont').classList.add('icon-shoucang1');
+                                    $('.viewTemplate footer .shoucang .vt_text').innerHTML = '收藏';
+
+                                    for(let n of all('.collection_base .modleId')){
+
+                                        if(n.innerHTML == k.modleId){
+                                            $('.viewTemplate .shoucang .iconfont').classList.add('icon-shoucang');
+                                            $('.viewTemplate .shoucang .iconfont').classList.remove('icon-shoucang1');
+                                            $('.viewTemplate .shoucang .vt_text').classList.add('orange');
+                                        }
+                                    }
+                                    
+                                }
+                                searchcom = true;
+                                //渲染浏览页面的点赞
+                                if (k.likeStatus) {
+                                    $('.viewTemplate .dainzan .iconfont').classList.remove('icon-dianzan');
+                                    $('.viewTemplate .dainzan .iconfont').classList.add('icon-dianzan1');
+                                    $('.viewTemplate .dainzan .vt_text').classList.add('orange');
+                                    $('.viewTemplate .dainzan .vt_text').innerHTML = k.likeNum;
+
+                                }
+
+                                communityTP();
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
+    });
+}

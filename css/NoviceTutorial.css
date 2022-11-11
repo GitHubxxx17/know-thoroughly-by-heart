@@ -107,7 +107,16 @@ body {
   margin-top: 7.59493671vw;
   padding: 0 7.59493671vw;
 }
+.Tutorial main .common .function_title {
+  margin: 0 auto;
+  margin-top: 12.65822785vw;
+  height: 7.59493671vw;
+  line-height: 7.59493671vw;
+  font-size: 5.06329114vw;
+  text-align: center;
+}
 .Tutorial main .common .com_step {
+  margin-top: 5.06329114vw;
   font-size: 6.58227848vw;
   color: #00000091;
 }

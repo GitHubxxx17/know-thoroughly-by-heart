@@ -83,11 +83,12 @@ a {
   overflow: hidden;
 }
 .nav .logo {
-  width: 50.63291139vw;
+  width: 37.97468354vw;
   height: 20.25316456vw;
 }
 .nav .logo img {
   width: 50.63291139vw;
+  margin-left: -7.59493671vw;
   z-index: 2;
 }
 .nav .btn {

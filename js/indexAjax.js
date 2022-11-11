@@ -4,32 +4,36 @@ let newcontext = null;
 let newlabel = null;
 var newTPFlag = false;
 let pk = [];
+let scModleId = []; //收藏的模板id
 //获取用户模板
-ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.userId}`, 'get', '', (str) => {
-    let newstr = JSON.parse(str).msg;
-    if (newstr.data.userModle) {
-        let tparr = newstr.data.userModle;
-        let fxnum = 0;
-        for (let x of tparr) {
-            let newcon = x.content.replace(/<空格>/g, '&nbsp;').replace(/<\/p>/g, '').replace(/<p>/g, '');
-            if (x.MStatus == '0')
-                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, true);
-            else
-                newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, false);
-
-            if (x.studyStatus == '复习中') {
-                fxnum++;
-                console.log(x, x.studyStatus);
+function UserMemory() {
+    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/UserMemory?userId=${curr.userId}`, 'get', '', (str) => {
+        let newstr = JSON.parse(str).msg;
+        if (newstr.data.userModle) {
+            let tparr = newstr.data.userModle;
+            let fxnum = 0;
+            for (let x of tparr) {
+                let newcon = x.content.replace(/<空格>/g, '&nbsp;').replace(/<\/p>/g, '').replace(/<p>/g, '');
+                if (x.MStatus == '0')
+                    newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, true);
+                else
+                    newTP(x.modleTitle, newcon, x.modleId, labelId2(x.modleLabel), x.common, x.studyStatus, false);
+    
+                if (x.studyStatus == '复习中') {
+                    fxnum++;
+                    console.log(x, x.studyStatus);
+                }
+    
             }
-
+            $('.numOfArticles').innerHTML = `${fxnum} 篇`;
+            $('.footer_nav li')[0].onclick();
+        } else {
+            //刷新仓库
+            $('.footer_nav li')[0].onclick();
         }
-        $('.numOfArticles').innerHTML = `${fxnum} 篇`;
-        $('.footer_nav li')[0].onclick();
-    } else {
-        //刷新仓库
-        $('.footer_nav li')[0].onclick();
-    }
-}, true);
+    }, true);
+}
+UserMemory();
 //获取用户信息
 ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userId}`, 'get', '', (str) => {
     let newstr = JSON.parse(str).msg;
@@ -56,8 +60,8 @@ ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg?userId=${curr.userI
 //获取用户学习信息
 var Alltime = 0;
 var studyNums = 0;
-getStoreDSSD()
-function getStoreDSSD() {
+getStoreDSSD(true)
+function getStoreDSSD(flag) {
     ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/studyData?userId=${curr.userId}`, 'get', '', (str) => {
         let newstr = JSON.parse(str).msg;
         console.log(newstr);
@@ -73,8 +77,8 @@ function getStoreDSSD() {
             Alltime = studyData.studyTime;
             studyNums = studyData.studyNums;
         }
-        
-
+        if(flag)
+            fxPeriod();
     }, true)
 }
 
@@ -149,7 +153,8 @@ $('.Making_page .popup_box button')[0].onclick = () => {
             console.log(newstr)
             newTP(newtitle, newcontext, modle.modleId, newlabel, 0, '未学习', true);
             //刷新仓库
-            $('.footer_nav li')[0].onclick();
+            // $('.footer_nav li')[0].onclick();
+            resetbase()
             MakingTP();
         }, true);
     }
@@ -171,7 +176,7 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             newTP(newtitle, newcon, modle.modleId, newlabel, 0, '未学习', true);
             //刷新仓库
             $('.footer_nav li')[0].onclick();
-            $('.learn_page .title').innerHTML = newtitle;
+            $('.learn_page .title').value = newtitle;
             $('.learn_page .text_box').innerHTML = newcontext;
             $('.learn_page .label').innerHTML = newlabel;
             $('.learn_page').style.left = '0';

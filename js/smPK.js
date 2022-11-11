@@ -4,7 +4,7 @@ let UserSelectArr = []; //存放当前用户选择的答案是否正确
 let selectArr = []; //下面选项的答案
 let again_count = 0;
 
-let endAnswerArr = [];//存放所有答案
+let endAnswerArr = []; //存放所有答案
 
 
 
@@ -13,14 +13,14 @@ let endAnswerArr = [];//存放所有答案
 function ConnectionClicked() {
     try {
         ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/${curr.userId}/${modle_id}/${difficult}`) //连接服务器
-        ws.onopen = function (event) {
+        ws.onopen = function(event) {
             console.log("已经与服务器建立了连接当前连接状态：" + this.readyState);
         };
 
         let msgCount = 0; //接收信息的次数
         let timeLimits_record;
         let timeCount = 0;
-        ws.onmessage = function (event) {
+        ws.onmessage = function(event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
             if (event.data) {
@@ -44,6 +44,10 @@ function ConnectionClicked() {
                     Refresh_id(res.enemyInf.nickName);
                     Refresh_img(res.enemyInf);
                     Refresh_Template(res.context);
+                    $('.enterPk  .other_blood_change').style.width = '53.33vw';
+                    $('.enterPk  .other').style.backgroundColor = '#90909078';
+                    $('.enterPk  .other_name').style.opacity = '1';
+                    $('.enterPk  .other_blook').style.opacity = '1';
                     ws.send("READY");
                     console.log("已经向服务器发送Ready信号！");
                 }
@@ -75,9 +79,15 @@ function ConnectionClicked() {
                     Refresh_Template(res.digedContent);
 
                 }
-
+                //对方已经逃跑
                 if (res.ENEMY_EXIT && !res.MATCH_END) {
                     $('.runle').style.display = 'block';
+                    $('.enterPk  .other_blood_change').style.width = '0';
+                    $('.enterPk  .other').style.backgroundColor = 'transparent';
+                    setTimeout(() => {
+                        $('.enterPk  .other_name').style.opacity = '0';
+                        $('.enterPk  .other_blook').style.opacity = '0';
+                    }, 700)
 
                 }
 
@@ -188,7 +198,7 @@ function ConnectionClicked() {
             $('.enterPk .option').classList.add('animated');
             $('.enterPk .option').classList.add('disappear');
             $('.runle').style.display = 'none';
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.enterPk').style.display = 'none';
                 $('.pk_end').style.display = 'none';
                 $('.enterPk .head_nav_pk').classList.remove('disappear');
@@ -211,7 +221,7 @@ function ConnectionClicked() {
             console.log("已经与服务器断开连接当前连接状态：" + ws.readyState);
         };
 
-        ws.onerror = function (event) {
+        ws.onerror = function(event) {
             console.log("WebSocket异常！");
         };
     } catch (ex) {
@@ -232,9 +242,11 @@ function resetPK() {
     $('.enterPk .text_box').innerHTML = '';
     $('.enterPk .text_box').scrollTop = '0';
 
-    $('.enterPk .mine .mine_blood_change').style.width = '38.13vw';
+    $('.enterPk .mine .mine_blood_change')[0].style.width = '38.13vw';
+    $('.enterPk .mine .mine_blood_change')[1].style.width = '38.13vw';
     $('.enterPk .name_blood .mine_blook').innerHTML = '100%';
-    $('.enterPk .other .other_blood_change').style.width = '38.13vw';
+    $('.enterPk .other .other_blood_change')[0].style.width = '38.13vw';
+    $('.enterPk .other .other_blood_change')[1].style.width = '38.13vw';
     $('.enterPk .name_blood .other_blook').innerHTML = '100%';
 
 
@@ -281,7 +293,7 @@ function Refresh_Template(data) {
 function animate(obj, target, stop) {
     obj.scrollTop = stop;
     clearInterval(obj.timerx);
-    obj.timerx = setInterval(function () {
+    obj.timerx = setInterval(function() {
         var step = (target - obj.scrollTop) / 15; //缓动动画位移
         if (obj.scrollTop.toFixed() == target.toFixed()) {
             clearInterval(obj.timerx); //如果运动到目标值时清除定时器
@@ -311,7 +323,7 @@ function Refresh_answer() {
 
     // 随机排列数组
     function sortArr(arr) {
-        arr.sort(function () {
+        arr.sort(function() {
             return 0.5 - Math.random();
         })
         return arr.slice(0, 4);
@@ -364,10 +376,10 @@ function Refresh_answer() {
 
     function strDisturbance() {
         let str = answerArr[Math.floor(Math.random() * answerArr.length)];
-        while(str == answerArr[answerIndex]){
+        while (str == answerArr[answerIndex]) {
             str = answerArr[Math.floor(Math.random() * answerArr.length)];
         }
-        
+
         let newStrAll = [];
         str.split('').forEach((item, index, array) => {
             let newIndex = Math.round(Math.random() * newStrAll.length);
@@ -391,10 +403,10 @@ function Refresh_answer() {
             for (let i = 0; i < 4 - answerArr.length; i++) {
                 let str = strDisturbance()
                 let a = 0;
-                for(let j = 0;j < slArr.length;j++){
+                for (let j = 0; j < slArr.length; j++) {
                     if (slArr[j] == str)
                         a++;
-                    if(j == slArr.length-1&&a != 0)
+                    if (j == slArr.length - 1 && a != 0)
                         str = strDisturbance();
                 }
                 slArr.push(str);
@@ -413,7 +425,7 @@ function Refresh_answer() {
             let picsTop = all('.enterPk .highlight')[answerIndex].offsetTop - $('.enterPk .text_box').offsetTop;
 
             if (picsTop >= $('.enterPk .text_box').offsetTop / 2) {
-                setTimeout(function () {
+                setTimeout(function() {
                     animate($('.enterPk .text_box'), picsTop - $('.enterPk .text_box').clientHeight / 2, $('.enterPk .text_box').scrollTop)
                 }, 1000);
 
@@ -431,7 +443,7 @@ function Refresh_answer() {
 
 //匹配成功之后的动画
 function animate_success() {
-    setTimeout(function () {
+    setTimeout(function() {
         $('.img_box img').style.opacity = '0';
         $('.enterPk').style.display = 'block';
         $('.enterPk').classList.add('appear');
@@ -465,7 +477,7 @@ function animate_pkend() {
     $('.enterPk .option').classList.add('animated');
     $('.enterPk .option').classList.add('disappear');
     $('.runle').style.display = 'none';
-    setTimeout(function () {
+    setTimeout(function() {
         $('.pk_end').style.display = 'block';
         setTimeout(() => {
             $('.win_lose .win').style.display = "block";

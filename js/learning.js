@@ -1,4 +1,4 @@
-//将节点重置回原本状态
+//将页面重置回原本状态
 function learnReset() {
     if (document.querySelector('.learn_page .highlight')) {
         for (let x of all('.learn_page .highlight')) {
@@ -17,6 +17,7 @@ function learnReset() {
     $('.learn_page .text_box').setAttribute('contenteditable', false);
     // $('.learn_page .text_box').classList.remove('canwrite');
     $('.learn_page .text_box').classList.remove('del');
+    $('.learn_page .title').disabled = true;
     flag = false;
     flag1 = false;
     learn_flag_1 = true;
@@ -96,6 +97,8 @@ $('.learn_page').onclick = () => {
                 x.innerHTML = '请输入答案';
         }
     }
+    $('.learn_page .label_menu').style.transform = 'scale(0)';
+    label_flag1 = true;
 }
 //点击进入背诵模式
 $('.beisong').onclick = () => {
@@ -162,6 +165,7 @@ $('.tijiao').onclick = () => {
                 console.log(newstr);
                 if (newstr == '恭喜你完成这个周期的复习啦，下个周期见吧') {
                     flag_review = false;
+                    fxPeriod();
                 }
             }, true);
         } else {
@@ -185,7 +189,7 @@ $('.tijiao').onclick = () => {
                 console.log(newstr);
             }, true)
         }
-        getStoreDSSD()
+        getStoreDSSD(false)
         answerReset();
         learnReset();
     }
@@ -203,7 +207,10 @@ function answerReset() {
 $('.learn_page .popup').onclick = () => $('.learn_page .popup').style.display = 'none';
 //阻止事件冒泡
 $('.learn_page .popup .popup_box').onclick = (e) => e.stopPropagation();
-
+//点击关闭弹窗
+$('.learn_page .popup2').onclick = () => $('.learn_page .popup2').style.display = 'none';
+//阻止事件冒泡
+$('.learn_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
 
 //点击返回隐藏学习页面
 $('.learn_page .header_left').onclick = () => {

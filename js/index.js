@@ -126,12 +126,12 @@ function TP() {
             x.parentNode.ontouchend = () => {
                     let time2 = new Date().getSeconds();
                     if (l == 0) {
-                        if (Math.abs(time1 - time2) < 1.5 && !x.parentNode.classList.contains('baseLis_del')) {
+                        if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
                             title = all('.tp_inner .title')[i];
                             info = all('.tp_inner .info')[i];
                             modleId = all('.tp_inner .modleId')[i];
                             label = all('.tp_inner .label')[i];
-                            $('.learn_page .title').innerHTML = title.innerHTML;
+                            $('.learn_page .title').value = title.innerHTML;
                             $('.learn_page .text_box').innerHTML = info.innerHTML;
                             $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
                             $('.learn_page').style.left = '0';
@@ -145,6 +145,7 @@ function TP() {
                             $('.header_bottom').style.display = 'none';
                             $('.memory_base .container').style.marginTop = '14vw';
                             x.parentNode.querySelector('.select').classList.toggle('selected');
+                            console.log(x.parentNode.parentNode.querySelectorAll('li'));
                             for (let k of x.parentNode.parentNode.querySelectorAll('li')) {
                                 k.classList.add('baseLis_del');
                                 if (k.querySelector('.select').classList.contains('selected')) {
@@ -259,7 +260,9 @@ $('.ht_2 .header_left').onclick = () => {
         k.querySelector('.select').classList.remove('selected');
         k.classList.remove('baseLis_del');
     }
-    resetbase()
+    $('.my_base ul').innerHTML = '';
+    $('.collection_base ul').innerHTML = '';
+    UserMemory();
 }
 
 //点击删除模板
@@ -274,7 +277,7 @@ $('.ht_2 .header_right').onclick = () => {
                     x.querySelector('.select').classList.remove('selected');
                     x.classList.add('baseLis_del2');
                     x.addEventListener('animationend', () => {
-                        $('.my_base ul').removeChild(x);
+                        x.classList.add('hidden');
                     })
                 } else {
                     alert('删除模板失败');
@@ -376,13 +379,17 @@ $(".removeRecite .back").addEventListener('click', () => {
 
 let ModlesOfPeriod = null;
 //获取复习周期模板
-ajax(`http://8.134.104.234:8080/ReciteMemory/review/GetPeriodModle?userId=${curr.userId}`, 'get', '', (str) => {
+
+function fxPeriod() {
+    ajax(`http://8.134.104.234:8080/ReciteMemory/review/GetPeriodModle?userId=${curr.userId}`, 'get', '', (str) => {
     let newstr = JSON.parse(str).msg;
     console.log(newstr);
     ModlesOfPeriod = newstr.data.ModlesOfPeriod;
     console.log(ModlesOfPeriod);
     modle_Period();
 }, true)
+}
+
 
 //渲染复习周期
 function modle_Period() {
@@ -408,9 +415,9 @@ function modle_Period() {
             ulIndex++;
         }
     }
-    ;
     $('.today_review .sum').innerHTML = parseInt($('.today_review .cur').innerHTML) + num;
-    if (num > 0) {
+    console.log($('.today_review .sum').innerHTML,$('.today_review .cur').innerHTML);
+    if (parseInt($('.today_review .cur').innerHTML) > 0) {
         $('.now_line').style.width = $('.today_review .cur').innerHTML / $('.today_review .sum').innerHTML * $('.review_line').offsetWidth + 'px';
     } else {
         $('.now_line').style.width = 0 + 'px';
@@ -427,7 +434,7 @@ function modle_Period() {
                     info = k.querySelector('.info');
                     modleId = k.querySelector('.modleId');
                     label = k.querySelector('.label');
-                    $('.learn_page .title').innerHTML = title.innerHTML;
+                    $('.learn_page .title').value = title.innerHTML;
                     $('.learn_page .text_box').innerHTML = info.innerHTML;
                     $('.learn_page .label').innerHTML = k.querySelectorAll('.label span')[1].innerHTML;
                     $('.learn_page').style.left = '0';

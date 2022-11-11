@@ -723,6 +723,9 @@ body {
 .memory_base .container .me_base .clip_path_change2 {
   clip-path: circle(6.70886076vw at 87vw -5vw);
 }
+.memory_base .container .hidden {
+  display: none !important;
+}
 .removeRecite {
   position: absolute;
   top: 0;
@@ -741,7 +744,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: #f6f7fb;
-  z-index: 10000;
+  z-index: 9000;
   transition: all 0.3s;
 }
 .learn_page {
@@ -779,26 +782,12 @@ body {
   text-align: center;
   font-weight: 700;
   font-size: 5.06329114vw;
+  outline: 0;
+  border: none;
+  background-color: transparent;
 }
-.learn_page header .header_right ul {
-  display: flex;
-  align-items: center;
-}
-.learn_page header .header_right li {
+.learn_page header .header_right {
   position: relative;
-  width: 20.25316456vw;
-  height: 10.12658228vw;
-  background-color: #eeedf5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2.53164557vw;
-  margin-left: 2.53164557vw;
-  box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(0, 0, 0, 0.418);
-}
-.learn_page header .header_right li .icon {
-  font-size: 5.06329114vw;
-  margin-right: 1.26582278vw;
 }
 .learn_page header .header_right .label {
   display: block;
@@ -809,6 +798,53 @@ body {
   line-height: 7.59493671vw;
   border-radius: 2.53164557vw;
   color: #fff;
+}
+.learn_page header .header_right .label_menu {
+  position: absolute;
+  top: 12.65822785vw;
+  right: 0vw;
+  width: 22.78481013vw;
+  transition: all 0.3s;
+  transform: scale(0);
+  transform-origin: top center;
+  border-radius: 2.53164557vw;
+  box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.38);
+}
+.learn_page header .header_right .label_menu .triangle {
+  position: absolute;
+  top: -2.02531646vw;
+  right: 5.06329114vw;
+  width: 3.79746835vw;
+  height: 3.79746835vw;
+  transform: rotate(45deg);
+  background-color: #ffffff;
+  z-index: 5;
+  border: 1px solid rgba(0, 0, 0, 0.132);
+}
+.learn_page header .header_right .label_menu ul {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 40.50632911vw;
+  padding: 1.26582278vw 2.53164557vw;
+  background-color: #ffffff;
+  text-align: center;
+  border-radius: 2.53164557vw;
+  z-index: 10;
+}
+.learn_page header .header_right .label_menu ul li {
+  display: block;
+  width: 100%;
+  height: 12.65822785vw;
+  padding: 2.53164557vw 0vw;
+  background-color: #ffffff;
+  border-bottom: 0.25316456vw solid #c9c9ca;
+  text-align: center;
+  line-height: 7.59493671vw;
+  box-shadow: 0.50632911vw 0.50632911vw 2.53164557vw rgba(255, 255, 255, 0);
+}
+.learn_page header .header_right .label_menu ul li:last-child {
+  border-bottom: 0vw;
 }
 .learn_page .popup {
   display: none;

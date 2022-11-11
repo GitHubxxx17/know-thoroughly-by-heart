@@ -10,12 +10,15 @@ function editReset() {
     }
     $('.learn_page .text_box').removeAttribute('contenteditable');
     $('.learn_page .text_box').classList.remove('del');
-    $('.learn_page .title').classList.remove('canwrite');
+    // $('.learn_page .title').classList.remove('canwrite');
     flag = false;
     flag1 = false;
     learn_flag_1 = true;
     learn_flag_2 = true;
+    $('.learn_page .title').disabled = true;
 }
+
+let bianji = false;
 
 //点击自定义
 $('.zidingyi').onclick = () => {
@@ -25,16 +28,17 @@ $('.zidingyi').onclick = () => {
     learnReset();
     $('.learn_page .footer_1').style.display = 'none';
     $('.learn_page .footer_2').style.display = 'block';
-
+    
 }
 
 //点击编辑
 $('.bianji').onclick = () => {
     editReset();
+    $('.learn_page .title').disabled = false;
     $('.learn_page .text_box').setAttribute('contenteditable', true);
     $('.bianji').classList.add('choice');
-    $('.learn_page .title').classList.add('canwrite');
-
+    // $('.learn_page .title').classList.add('canwrite');
+    bianji = true;
     let keycode = 0;
     //当用户按下回车时
     $(".learn_page .text_box").onkeyup = (e) => {
@@ -227,18 +231,18 @@ let mid = null;
 //点击保存
 $('.learn_page .finish').onclick = () => {
 
-    let title1 = $('.learn_page .title').innerHTML;
+    let title1 = $('.learn_page .title').value;
     let info1 = $('.learn_page .text_box').innerHTML;
     let label1 = $('.learn_page .label').innerHTML;
     let fal = true;
+
     //标题和文本内容不能为空
     if (title1 == '' || info1 == '') {
-        $('.learn_page .popup2 .popup_box').innerHTML = '标题和文本内容不能为空';
+        $('.learn_page .popup2 .popup_box').innerHTML = '内容不能为空';
         $('.learn_page .popup2').style.display = 'block';
         fal = false;
         return;
     }
-
 
     editReset();
     $('.learn_page .footer_1').style.display = 'block';
@@ -254,8 +258,8 @@ $('.learn_page .finish').onclick = () => {
     // 标题一致就取消保存并提醒
     Array.from(all('.my_base .title')).forEach((x,i) => {
         if (x.innerHTML == title1 && mid != all('.my_base li')[i].querySelector('.modleId').innerHTML) {
-            $('.edit_page .popup2 .popup_box').innerHTML = '标题不能与记忆库的模板重复';
-            $('.edit_page .popup2').style.display = 'block';
+            $('.learn_page .popup2 .popup_box').innerHTML = '标题不能重复';
+            $('.learn_page .popup2').style.display = 'block';
             fal = false;
             return;
         }
@@ -290,6 +294,7 @@ $('.learn_page .finish').onclick = () => {
                 newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
                 mStatus = 0;
                 $('.footer_nav li')[0].onclick();
+                bianji = false;
             }
             xrcomTP();
         }, true);
@@ -357,22 +362,29 @@ $('.edit_page .header_left').onclick = () => {
     learnReset()
 }
 
+
+
 let label_flag1 = true;
 //点击出现下拉列表
-$('.edit_page .label').onclick = () => {
-    if (label_flag1) {
-        $('.edit_page .label_menu').style.transform = 'scale(1)';
-        label_flag1 = false;
-    } else {
-        $('.edit_page .label_menu').style.transform = 'scale(0)';
-        label_flag1 = true;
+$('.learn_page .label').onclick = (e) => {
+    e.stopPropagation();
+    if(bianji){
+        if (label_flag1) {
+            $('.learn_page .label_menu').style.transform = 'scale(1)';
+            label_flag1 = false;
+        } else {
+            $('.learn_page .label_menu').style.transform = 'scale(0)';
+            label_flag1 = true;
+        }
     }
+    
 }
 
 //事件委托，为li绑定事件
-$('.edit_page .label_menu').onclick = (e) => {
-    e.stopPropagation;
-    $('.edit_page .label_cont').innerHTML = e.target.innerHTML;
+$('.learn_page .label_menu ul').onclick = (e) => {
+    if (e.target.tagName == 'LI') {
+        $('.learn_page .label span').innerHTML = e.target.innerHTML;
+    }
 }
 
 

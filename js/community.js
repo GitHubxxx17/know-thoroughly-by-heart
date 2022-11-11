@@ -5,7 +5,8 @@ let jifen = document.querySelectorAll(".jifen");
 
 var menu = document.querySelectorAll(".menu");
 let commonArr = [];
-
+let searchcom = false;
+let browse = null;
 
 //封装社区模板所有事件函数
 function communityTP() {
@@ -27,7 +28,7 @@ function communityTP() {
     //点击收藏
     Array.from(all('.community_ul .shoucang')).forEach((x, i) => {
         for (let k of all('.collection_base .modleId')) {
-            if (k.innerHTML == all('.community_ul .modleId')[i].innerHTML) {
+            if (k.innerHTML == x.parentNode.parentNode.parentNode.previousElementSibling.innerHTML) {
                 x.querySelector('.iconfont').classList.add("icon-shoucang");
                 x.querySelector('.iconfont').classList.remove("icon-shoucang1");
                 x.classList.add("orange");
@@ -92,14 +93,12 @@ function communityTP() {
                 ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&likeStatus=true`, 'get', '', (str) => {
                     let newstr = JSON.parse(str).msg;
                     console.log(newstr);
-                    setTimeout(() => {
-                        if (newstr.data.likeNum < 1000) {
-                            x.querySelector('.wenzi').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
-                        } else {
-                            x.querySelector('.wenzi').innerHTML = `${newstr.data.likeNum}`;
-                        }
-                    }, 450)
 
+                    if (newstr.data.likeNum < 1000) {
+                        x.querySelector('.wenzi').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
+                    } else {
+                        x.querySelector('.wenzi').innerHTML = `${newstr.data.likeNum}`;
+                    }
 
                     for (let x of commonArr) {
                         for (let k of x) {
@@ -143,6 +142,8 @@ function communityTP() {
     //点击浏览模板
     Array.from(all('.community_ul .content')).forEach((x, i) => {
         x.addEventListener('click', function(event) {
+            searchcom = false;
+            $('.viewTemplate .modleId').innerHTML = all('.community_ul .modleId')[i].innerHTML;
             $('.community').onclick();
             if (x.parentNode.querySelector('.idname1').innerHTML == curr.userInfo.nickName) {
                 $('.viewTemplate footer .shoucang .iconfont').classList.add('icon-a-shanchulajitong');
@@ -179,120 +180,138 @@ function communityTP() {
             $('.viewTemplate .head_portrait').innerHTML = all('.community_ul .head_portrait')[i].innerHTML;
             event.stopPropagation(); //阻止冒泡
 
-            //浏览模板点击收藏或删除
-            $('.viewTemplate .shoucang').onclick = () => {
+            browse = x.nextElementSibling;
+        });
+    })
 
-                if ($('.viewTemplate footer .shoucang .vt_text').innerHTML == '删除') {
 
-                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${all('.community_ul .modleId')[i].innerHTML}&common=${0}`, (str) => {
-                        let newstr = JSON.parse(str).msg;
-                        console.log(newstr);
-                        if (newstr.code == '200') {
-                            for (let k of all('.my_base .tp_inner')) {
-                                if (k.innerHTML == modleId) {
-                                    k.querySelector('.common').innerHTML = '0';
-                                }
-                            }
-                            xrcomTP();
-                            $('.viewTemplate .back').onclick();
-                            $('.community header .label li')[0].onclick();
+    //浏览模板点击收藏或删除
+    $('.viewTemplate .shoucang').onclick = () => {
+
+        if ($('.viewTemplate footer .shoucang .vt_text').innerHTML == '删除') {
+
+            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${$('.viewTemplate .modleId').innerHTML}&common=${0}`, (str) => {
+                let newstr = JSON.parse(str).msg;
+                console.log(newstr);
+                if (newstr.code == '200') {
+                    for (let k of all('.my_base .tp_inner')) {
+                        if (k.innerHTML == modleId) {
+                            k.querySelector('.common').innerHTML = '0';
                         }
-                    }, true);
-
-                } else {
-                    //如果模板被收藏
-                    if ($('.viewTemplate .shoucang .iconfont').classList.contains('icon-shoucang')) {
-                        //对比循环收藏库中的模板找出对应模板
-                        for (let k of all('.collection_base .modleId')) {
-                            if (k.innerHTML == all('.community_ul .modleId')[i].innerHTML) {
-                                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${k.innerHTML}&mStatus=0`, 'get', '', (str) => {
-                                    let newstr = JSON.parse(str).msg;
-                                    console.log(newstr);
-                                    $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
-                                    //刷新仓库
-                                    resetbase();
-                                }, true);
-
+                    }
+                    xrcomTP();
+                    $('.viewTemplate .back').onclick();
+                    $('.community header .label li')[0].onclick();
+                    if(searchcom){
+                        for(let x of all('.search_page li')){
+                            if(x.querySelector('.modleId').innerHTML == $('.viewTemplate .modleId').innerHTML){
+                                $('.search_page ul').removeChild(x);
                             }
                         }
-                        // 模板未收藏
-                    } else {
-                        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&mStatus=1`, 'get', '', (str) => {
+                    }
+                }
+            }, true);
+
+        } else {
+            //如果模板被收藏
+            if ($('.viewTemplate .shoucang .iconfont').classList.contains('icon-shoucang')) {
+                //对比循环收藏库中的模板找出对应模板
+                for (let k of all('.collection_base .modleId')) {
+                    if (k.innerHTML == $('.viewTemplate .modleId').innerHTML) {
+                        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${k.innerHTML}&mStatus=0`, 'get', '', (str) => {
                             let newstr = JSON.parse(str).msg;
                             console.log(newstr);
-                            newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, false);
+                            $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
                             //刷新仓库
                             resetbase();
                         }, true);
-                    }
-                    $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang');
-                    $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang1');
-                    $('.viewTemplate .shoucang .vt_text').classList.toggle('orange');
-                    if ($('.viewTemplate .shoucang .vt_text').classList.contains('orange')) {
-                        x.nextElementSibling.querySelector('.shoucang').classList.add("orange");
-                        x.nextElementSibling.querySelector('.shoucang .iconfont').classList.add("icon-shoucang");
-                        x.nextElementSibling.querySelector('.shoucang .iconfont').classList.remove("icon-shoucang1");
-                    } else {
-                        x.nextElementSibling.querySelector('.shoucang').classList.remove("orange");
-                        x.nextElementSibling.querySelector('.shoucang .iconfont').classList.remove("icon-shoucang");
-                        x.nextElementSibling.querySelector('.shoucang .iconfont').classList.add("icon-shoucang1");
+
                     }
                 }
+                // 模板未收藏
+            } else {
+                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&mStatus=1`, 'get', '', (str) => {
+                    let newstr = JSON.parse(str).msg;
+                    console.log(newstr);
+                    newTP($('.viewTemplate .title').innerHTML,$('.viewTemplate .text_box').innerHTML, $('.viewTemplate .modleId').innerHTML, $('.viewTemplate .label').innerHTML, 1,'未学习',false);
+                    //刷新仓库
+                    resetbase();
+                }, true);
             }
+            $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang');
+            $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang1');
+            $('.viewTemplate .shoucang .vt_text').classList.toggle('orange');
 
-            //浏览模板点赞
-            $('.viewTemplate .dainzan').onclick = () => {
-                if ($('.viewTemplate .dainzan .iconfont').classList.contains('icon-dianzan1')) {
-                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&likeStatus=false`, 'get', '', (str) => {
-                        let newstr = JSON.parse(str);
-                        console.log(newstr);
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
-                        x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML = '点赞';
-                        for (let x of commonArr) {
-                            for (let k of x) {
-                                if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                    k.likeStatus = false;
-                                }
-                            }
-                        }
-                    }, true);
+            if(!searchcom){
+                if ($('.viewTemplate .shoucang .vt_text').classList.contains('orange')) {
+                    browse.querySelector('.shoucang').classList.add("orange");
+                    browse.querySelector('.shoucang .iconfont').classList.add("icon-shoucang");
+                    browse.querySelector('.shoucang .iconfont').classList.remove("icon-shoucang1");
                 } else {
-                    ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&likeStatus=true`, 'get', '', (str) => {
-                        let newstr = JSON.parse(str).msg;
-                        console.log(newstr);
-                        if (newstr.data.likeNum < 1000) {
-                            $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
-                        } else {
-                            $('.viewTemplate .dainzan .vt_text').innerHTML = `${newstr.data.likeNum}`;
-                        }
-                        x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML = newstr.data.likeNum;
-                        for (let x of commonArr) {
-                            for (let k of x) {
-                                if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                    k.likeStatus = true;
-                                    k.likeNum = newstr.data.likeNum;
-                                }
-                            }
-                        }
-                    }, true);
-
-                }
-                $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan');
-                $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan1');
-                $('.viewTemplate .dainzan .vt_text').classList.toggle('orange');
-                if ($('.viewTemplate .dainzan .vt_text').classList.contains('orange')) {
-                    x.nextElementSibling.querySelector('.dainzan').classList.add("orange");
-                    x.nextElementSibling.querySelector('.dainzan .iconfont').classList.add("icon-dianzan1");
-                    x.nextElementSibling.querySelector('.dainzan .iconfont').classList.remove("icon-dianzan");
-                } else {
-                    x.nextElementSibling.querySelector('.dainzan').classList.remove("orange");
-                    x.nextElementSibling.querySelector('.dainzan .iconfont').classList.remove("icon-dianzan1");
-                    x.nextElementSibling.querySelector('.dainzan .iconfont').classList.add("icon-dianzan");
-
+                    browse.querySelector('.shoucang').classList.remove("orange");
+                    browse.querySelector('.shoucang .iconfont').classList.remove("icon-shoucang");
+                    browse.querySelector('.shoucang .iconfont').classList.add("icon-shoucang1");
                 }
             }
-        });
-    })
+            
+        }
+    }
+
+    //浏览模板点赞
+    $('.viewTemplate .dainzan').onclick = () => {
+        if ($('.viewTemplate .dainzan .iconfont').classList.contains('icon-dianzan1')) {
+            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&likeStatus=false`, 'get', '', (str) => {
+                let newstr = JSON.parse(str);
+                console.log(newstr);
+                $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
+                if(!searchcom)
+                    browse.querySelector('.dainzan .wenzi').innerHTML = '点赞';
+                for (let x of commonArr) {
+                    for (let k of x) {
+                        if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
+                            k.likeStatus = false;
+                        }
+                    }
+                }
+            }, true);
+        } else {
+            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&likeStatus=true`, 'get', '', (str) => {
+                let newstr = JSON.parse(str).msg;
+                console.log(newstr);
+                if (newstr.data.likeNum < 1000) {
+                    $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
+                } else {
+                    $('.viewTemplate .dainzan .vt_text').innerHTML = `${newstr.data.likeNum}`;
+                }
+                if(!searchcom)
+                    browse.querySelector('.dainzan .wenzi').innerHTML = newstr.data.likeNum;
+                for (let x of commonArr) {
+                    for (let k of x) {
+                        if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
+                            k.likeStatus = true;
+                            k.likeNum = newstr.data.likeNum;
+                        }
+                    }
+                }
+            }, true);
+
+        }
+        $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan');
+        $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan1');
+        $('.viewTemplate .dainzan .vt_text').classList.toggle('orange');
+
+        if(!searchcom){
+            if ($('.viewTemplate .dainzan .vt_text').classList.contains('orange')) {
+                browse.querySelector('.dainzan').classList.add("orange");
+                browse.querySelector('.dainzan .iconfont').classList.add("icon-dianzan1");
+                browse.querySelector('.dainzan .iconfont').classList.remove("icon-dianzan");
+            } else {
+                browse.querySelector('.dainzan').classList.remove("orange");
+                browse.querySelector('.dainzan .iconfont').classList.remove("icon-dianzan1");
+                browse.querySelector('.dainzan .iconfont').classList.add("icon-dianzan");
+            }
+        }
+    }
 
     //点击出现删除
     Array.from(all('.community_ul .right')).forEach((x, i) => {
@@ -341,6 +360,15 @@ $('.viewTemplate .back').onclick = () => {
     $('.viewTemplate .dainzan .iconfont').classList.add('icon-dianzan');
     $('.viewTemplate .dainzan .vt_text').classList.remove('orange');
     $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
+
+    if(searchcom){
+        $('.community header .label li')[0].onclick();
+        for(let x of all('.search_page li')){
+            if(x.querySelector('.modleId').innerHTML == $('.viewTemplate .modleId').innerHTML){
+                $('.search_page ul').removeChild(x);
+            }
+        }
+    }
 };
 //渲染社区模板
 function xrcomTP() {
