@@ -66,9 +66,6 @@ a {
   font-style: normal;
   font-display: block;
 }
-body {
-  background-color: #f6f7fb;
-}
 .Tutorial {
   width: 100vw;
   height: 100vh;
@@ -97,26 +94,31 @@ body {
   background-color: rgba(0, 0, 0, 0.31);
 }
 .Tutorial main .novice_title {
-  margin: 0 auto;
+  margin: 5.06329114vw auto;
+  margin-bottom: 12.65822785vw;
   height: 7.59493671vw;
   line-height: 7.59493671vw;
   font-size: 7.59493671vw;
   text-align: center;
 }
 .Tutorial main .common {
-  margin-top: 7.59493671vw;
+  margin-top: 2.53164557vw;
   padding: 0 7.59493671vw;
 }
 .Tutorial main .common .function_title {
   margin: 0 auto;
-  margin-top: 12.65822785vw;
-  height: 7.59493671vw;
-  line-height: 7.59493671vw;
+  margin-top: 5.06329114vw;
+  margin-bottom: 7.59493671vw;
+  width: 25.3164557vw;
+  height: 10.12658228vw;
+  line-height: 10.12658228vw;
+  border-radius: 2.53164557vw;
+  color: #ffffff;
+  background-color: #51399f;
   font-size: 5.06329114vw;
   text-align: center;
 }
 .Tutorial main .common .com_step {
-  margin-top: 5.06329114vw;
   font-size: 6.58227848vw;
   color: #00000091;
 }
@@ -127,6 +129,10 @@ body {
 .Tutorial main .common .com_image {
   margin-top: 5.06329114vw;
   padding: 0 3.03797468vw;
+}
+.Tutorial main .common .com_image img {
+  margin-bottom: 12.65822785vw;
+  box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.38);
 }
 .Tutorial footer {
   margin-top: -75.94936709vw;

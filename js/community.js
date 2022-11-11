@@ -35,33 +35,61 @@ function communityTP() {
             }
         }
 
-        x.addEventListener('click', function(event) {
+        x.addEventListener('click', function (event) {
             //如果模板被收藏
             if (x.classList.contains('orange')) {
                 //对比循环收藏库中的模板找出对应模板
                 for (let k of all('.collection_base .modleId')) {
                     if (k.innerHTML == all('.community_ul .modleId')[i].innerHTML) {
-                        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${k.innerHTML}&mStatus=0`, 'get', '', (str) => {
-                            let newstr = JSON.parse(str).msg;
-                            console.log(newstr);
-
-                            $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
-                            //刷新仓库
-                            resetbase();
-                        }, true);
+                        ajax({
+                            url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                            type: "get",
+                            data: {
+                                userId: curr.userId,
+                                modleId: k.innerHTML,
+                                mStatus: 0
+                            },
+                            dataType: "json",
+                            flag: true,
+                            success: function (res, xml) {
+                                let msg = JSON.parse(res).msg;
+                                console.log(msg);
+                                $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
+                                //刷新仓库
+                                resetbase();
+                            },
+                            fail: function (status) {
+                                // 此处放失败后执行的代码
+                                console.log(status);
+                            }
+                        });
 
                     }
                 }
                 // 模板未收藏
             } else {
-                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&mStatus=1`, 'get', '', (str) => {
-                    let newstr = JSON.parse(str).msg;
-                    console.log(newstr);
-                    newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, 1, '未学习', false);
-                    //刷新仓库
-                    resetbase();
-                }, true);
-
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                    type: "get",
+                    data: {
+                        userId: curr.userId,
+                        modleId: all('.community_ul .modleId')[i].innerHTML,
+                        mStatus: 1
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let msg = JSON.parse(res).msg;
+                        console.log(msg);
+                        newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, 1, '未学习', false);
+                        //刷新仓库
+                        resetbase();
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
+                    }
+                });
             }
 
             x.classList.toggle("orange");
@@ -75,40 +103,70 @@ function communityTP() {
 
     //点赞
     Array.from(all('.community_ul .dainzan')).forEach((x, i) => {
-        x.addEventListener('click', function(e) {
+        x.addEventListener('click', function (e) {
             if (x.classList.contains('orange')) {
-                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&likeStatus=false`, 'get', '', (str) => {
-                    let newstr = JSON.parse(str);
-                    console.log(newstr);
-                    x.querySelector('.wenzi').innerHTML = '点赞';
-                    for (let x of commonArr) {
-                        for (let k of x) {
-                            if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                k.likeStatus = false;
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
+                    type: "get",
+                    data: {
+                        userId: curr.userId,
+                        modleId: all('.community_ul .modleId')[i].innerHTML,
+                        likeStatus: false
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let newres = JSON.parse(res);
+                        console.log(newres);
+                        x.querySelector('.wenzi').innerHTML = '点赞';
+                        for (let x of commonArr) {
+                            for (let k of x) {
+                                if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
+                                    k.likeStatus = false;
+                                }
                             }
                         }
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
                     }
-                }, true);
+                });
             } else {
-                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${all('.community_ul .modleId')[i].innerHTML}&likeStatus=true`, 'get', '', (str) => {
-                    let newstr = JSON.parse(str).msg;
-                    console.log(newstr);
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
+                    type: "get",
+                    data: {
+                        userId: curr.userId,
+                        modleId: all('.community_ul .modleId')[i].innerHTML,
+                        likeStatus: true
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let msg = JSON.parse(res).msg;
+                        console.log(msg);
 
-                    if (newstr.data.likeNum < 1000) {
-                        x.querySelector('.wenzi').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
-                    } else {
-                        x.querySelector('.wenzi').innerHTML = `${newstr.data.likeNum}`;
-                    }
+                        if (msg.data.likeNum < 1000) {
+                            x.querySelector('.wenzi').innerHTML = `&nbsp;${msg.data.likeNum}&nbsp;&nbsp;`;
+                        } else {
+                            x.querySelector('.wenzi').innerHTML = `${msg.data.likeNum}`;
+                        }
 
-                    for (let x of commonArr) {
-                        for (let k of x) {
-                            if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                k.likeStatus = true;
-                                k.likeNum = newstr.data.likeNum;
+                        for (let x of commonArr) {
+                            for (let k of x) {
+                                if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
+                                    k.likeStatus = true;
+                                    k.likeNum = msg.data.likeNum;
+                                }
                             }
                         }
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
                     }
-                }, true);
+                });
             }
 
             x.classList.toggle("scale");
@@ -131,7 +189,7 @@ function communityTP() {
     });
 
     //点击页面隐藏菜单
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         for (let k of all('.inter_box')) {
             k.style.width = "0";
         }
@@ -141,7 +199,7 @@ function communityTP() {
 
     //点击浏览模板
     Array.from(all('.community_ul .content')).forEach((x, i) => {
-        x.addEventListener('click', function(event) {
+        x.addEventListener('click', function (event) {
             searchcom = false;
             $('.viewTemplate .modleId').innerHTML = all('.community_ul .modleId')[i].innerHTML;
             $('.community').onclick();
@@ -189,28 +247,42 @@ function communityTP() {
     $('.viewTemplate .shoucang').onclick = () => {
 
         if ($('.viewTemplate footer .shoucang .vt_text').innerHTML == '删除') {
-
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${$('.viewTemplate .modleId').innerHTML}&common=${0}`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.code == '200') {
-                    for (let k of all('.my_base .tp_inner')) {
-                        if (k.innerHTML == modleId) {
-                            k.querySelector('.common').innerHTML = '0';
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/toCommunity",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    modleId: $('.viewTemplate .modleId').innerHTML,
+                    common: 0
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.code == '200') {
+                        for (let k of all('.my_base .tp_inner')) {
+                            if (k.innerHTML == modleId) {
+                                k.querySelector('.common').innerHTML = '0';
+                            }
                         }
-                    }
-                    xrcomTP();
-                    $('.viewTemplate .back').onclick();
-                    $('.community header .label li')[0].onclick();
-                    if(searchcom){
-                        for(let x of all('.search_page li')){
-                            if(x.querySelector('.modleId').innerHTML == $('.viewTemplate .modleId').innerHTML){
-                                $('.search_page ul').removeChild(x);
+                        xrcomTP();
+                        $('.viewTemplate .back').onclick();
+                        $('.community header .label li')[0].onclick();
+                        if (searchcom) {
+                            for (let x of all('.search_page li')) {
+                                if (x.querySelector('.modleId').innerHTML == $('.viewTemplate .modleId').innerHTML) {
+                                    $('.search_page ul').removeChild(x);
+                                }
                             }
                         }
                     }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true);
+            });
 
         } else {
             //如果模板被收藏
@@ -218,31 +290,60 @@ function communityTP() {
                 //对比循环收藏库中的模板找出对应模板
                 for (let k of all('.collection_base .modleId')) {
                     if (k.innerHTML == $('.viewTemplate .modleId').innerHTML) {
-                        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${k.innerHTML}&mStatus=0`, 'get', '', (str) => {
-                            let newstr = JSON.parse(str).msg;
-                            console.log(newstr);
-                            $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
-                            //刷新仓库
-                            resetbase();
-                        }, true);
-
+                        ajax({
+                            url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                            type: "get",
+                            data: {
+                                userId: curr.userId,
+                                modleId: k.innerHTML,
+                                mStatus: 0
+                            },
+                            dataType: "json",
+                            flag: true,
+                            success: function (res, xml) {
+                                let msg = JSON.parse(res).msg;
+                                console.log(msg);
+                                $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
+                                //刷新仓库
+                                resetbase();
+                            },
+                            fail: function (status) {
+                                // 此处放失败后执行的代码
+                                console.log(status);
+                            }
+                        });
                     }
                 }
                 // 模板未收藏
             } else {
-                ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&mStatus=1`, 'get', '', (str) => {
-                    let newstr = JSON.parse(str).msg;
-                    console.log(newstr);
-                    newTP($('.viewTemplate .title').innerHTML,$('.viewTemplate .text_box').innerHTML, $('.viewTemplate .modleId').innerHTML, $('.viewTemplate .label').innerHTML, 1,'未学习',false);
-                    //刷新仓库
-                    resetbase();
-                }, true);
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                    type: "get",
+                    data: {
+                        userId: curr.userId,
+                        modleId: $('.viewTemplate .modleId').innerHTML,
+                        mStatus: 1
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let msg = JSON.parse(res).msg;
+                        console.log(msg);
+                        newTP($('.viewTemplate .title').innerHTML, $('.viewTemplate .text_box').innerHTML, $('.viewTemplate .modleId').innerHTML, $('.viewTemplate .label').innerHTML, 1, '未学习', false);
+                        //刷新仓库
+                        resetbase();
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
+                    }
+                });
             }
             $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang');
             $('.viewTemplate .shoucang .iconfont').classList.toggle('icon-shoucang1');
             $('.viewTemplate .shoucang .vt_text').classList.toggle('orange');
 
-            if(!searchcom){
+            if (!searchcom) {
                 if ($('.viewTemplate .shoucang .vt_text').classList.contains('orange')) {
                     browse.querySelector('.shoucang').classList.add("orange");
                     browse.querySelector('.shoucang .iconfont').classList.add("icon-shoucang");
@@ -253,54 +354,83 @@ function communityTP() {
                     browse.querySelector('.shoucang .iconfont').classList.add("icon-shoucang1");
                 }
             }
-            
+
         }
     }
 
     //浏览模板点赞
     $('.viewTemplate .dainzan').onclick = () => {
         if ($('.viewTemplate .dainzan .iconfont').classList.contains('icon-dianzan1')) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&likeStatus=false`, 'get', '', (str) => {
-                let newstr = JSON.parse(str);
-                console.log(newstr);
-                $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
-                if(!searchcom)
-                    browse.querySelector('.dainzan .wenzi').innerHTML = '点赞';
-                for (let x of commonArr) {
-                    for (let k of x) {
-                        if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
-                            k.likeStatus = false;
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
+                type: "get",
+                data: {
+                    userId: curr.userId,
+                    modleId: $('.viewTemplate .modleId').innerHTML,
+                    likeStatus: false
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let newres = JSON.parse(res);
+                    console.log(newres);
+                    $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
+                    if (!searchcom)
+                        browse.querySelector('.dainzan .wenzi').innerHTML = '点赞';
+                    for (let x of commonArr) {
+                        for (let k of x) {
+                            if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
+                                k.likeStatus = false;
+                            }
                         }
                     }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true);
+            });
         } else {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike?userId=${curr.userId}&modleId=${$('.viewTemplate .modleId').innerHTML}&likeStatus=true`, 'get', '', (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.data.likeNum < 1000) {
-                    $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${newstr.data.likeNum}&nbsp;&nbsp;`;
-                } else {
-                    $('.viewTemplate .dainzan .vt_text').innerHTML = `${newstr.data.likeNum}`;
-                }
-                if(!searchcom)
-                    browse.querySelector('.dainzan .wenzi').innerHTML = newstr.data.likeNum;
-                for (let x of commonArr) {
-                    for (let k of x) {
-                        if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
-                            k.likeStatus = true;
-                            k.likeNum = newstr.data.likeNum;
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
+                type: "get",
+                data: {
+                    userId: curr.userId,
+                    modleId: $('.viewTemplate .modleId').innerHTML,
+                    likeStatus: true
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.data.likeNum < 1000) {
+                        $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${msg.data.likeNum}&nbsp;&nbsp;`;
+                    } else {
+                        $('.viewTemplate .dainzan .vt_text').innerHTML = `${msg.data.likeNum}`;
+                    }
+                    if (!searchcom)
+                        browse.querySelector('.dainzan .wenzi').innerHTML = msg.data.likeNum;
+                    for (let x of commonArr) {
+                        for (let k of x) {
+                            if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
+                                k.likeStatus = true;
+                                k.likeNum = msg.data.likeNum;
+                            }
                         }
                     }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true);
-
+            });
         }
         $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan');
         $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan1');
         $('.viewTemplate .dainzan .vt_text').classList.toggle('orange');
 
-        if(!searchcom){
+        if (!searchcom) {
             if ($('.viewTemplate .dainzan .vt_text').classList.contains('orange')) {
                 browse.querySelector('.dainzan').classList.add("orange");
                 browse.querySelector('.dainzan .iconfont').classList.add("icon-dianzan1");
@@ -330,21 +460,34 @@ function communityTP() {
         x.addEventListener('click', (e) => {
             e.stopPropagation(); //阻止冒泡
             let modleId = x.parentNode.parentNode.parentNode.previousElementSibling.innerHTML;
-            console.log(modleId);
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${modleId}&common=${0}`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.code == '200') {
-                    for (let k of all('.my_base .tp_inner')) {
-                        if (k.innerHTML == modleId) {
-                            k.querySelector('.common').innerHTML = '0';
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/toCommunity",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    modleId: modleId,
+                    common: 0
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.code == '200') {
+                        for (let k of all('.my_base .tp_inner')) {
+                            if (k.innerHTML == modleId) {
+                                k.querySelector('.common').innerHTML = '0';
+                            }
                         }
+                        xrcomTP();
+                        $('.community header .label li')[0].onclick();
                     }
-                    xrcomTP();
-                    $('.community header .label li')[0].onclick();
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true);
-
+            });
         })
     })
 
@@ -361,13 +504,8 @@ $('.viewTemplate .back').onclick = () => {
     $('.viewTemplate .dainzan .vt_text').classList.remove('orange');
     $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
 
-    if(searchcom){
+    if (searchcom) {
         $('.community header .label li')[0].onclick();
-        for(let x of all('.search_page li')){
-            if(x.querySelector('.modleId').innerHTML == $('.viewTemplate .modleId').innerHTML){
-                $('.search_page ul').removeChild(x);
-            }
-        }
     }
 };
 //渲染社区模板
@@ -375,31 +513,49 @@ function xrcomTP() {
     $('.community_ul').innerHTML = '<li class="footer"></li>';
     commonArr = [];
     commonArr[0] = [];
-    let timer;
+
     for (let i = 1; i <= 3; i++) {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag?userId=${curr.userId}&modleLabel=${i}&pageIndex=0`, 'get', '', (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr);
-            if (newstr.content != '参数获取失败') {
-                let comarr = [];
-                for (let x of newstr.data.modleList) {
-                    if (x.common != 0) {
-                        comarr.push(x);
+        setTimeout(() => {
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/inf.get/getModlesByTag",
+                type: "get",
+                data: {
+                    userId: curr.userId,
+                    modleLabel: i,
+                    pageIndex: 0
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.content != '参数获取失败') {
+                        let comarr = [];
+                        for (let x of msg.data.modleList) {
+                            if (x.common != 0) {
+                                comarr.push(x);
+                            }
+                        }
+                        commonArr[i] = comarr;
+                        console.log(comarr, commonArr);
+                        if (comarr.length != 0) {
+                            for (let x of comarr) {
+                                if (x.userId == 50)
+                                    commonArr[0].push(x);
+                            }
+                        }
                     }
+                    communityTP();
+                    $('.community header .label li')[0].onclick();
+                    $('.com_loading').style.display = 'none';
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-                commonArr[i] = comarr;
-                console.log(comarr, commonArr);
-                if (comarr.length != 0) {
-                    for (let x of comarr) {
-                        if (x.userId == 50)
-                            commonArr[0].push(x);
-                    }
-                }
-            }
-            communityTP();
-            $('.community header .label li')[0].onclick();
-            $('.com_loading').style.display = 'none';
-        }, true);
+            });
+        },10);
+        
     }
 }
 xrcomTP();
@@ -438,23 +594,42 @@ $('.community .upload').onclick = () => {
 $('.uploadMP').onclick = () => {
     Array.from(all('.upload_page .select .circle')).forEach((x, i) => {
         let modleId = all('.upload_page li')[i].querySelector('.modleId').innerHTML;
+        let common = 0;
         if (x.classList.contains('selected')) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${modleId}&common=1`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.code == '200') {
-                    $('.upload_page .back').onclick();
-                }
-            }, true);
-        } else {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/toCommunity?userId=${curr.userId}`, 'post', `modleId=${modleId}&common=0`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.code == '200') {
-                    $('.upload_page .back').onclick();
-                }
-            }, true);
+            common = 1;
         }
+
+
+
+        setTimeout(() => {
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/toCommunity",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    modleId: modleId,
+                    common: common
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.code == '200') {
+                        $('.upload_page .back').onclick();
+                    }
+                    for (let k of all('.my_base li')) {
+                        if (k.querySelector('.modleId').innerHTML == modleId) {
+                            k.querySelector('.common').innerHTML = common
+                        }
+                    }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
+                }
+            });
+        }, 10);
 
         for (let k of all('.my_base .tp_inner')) {
             if (x.classList.contains('selected')) {
@@ -465,8 +640,11 @@ $('.uploadMP').onclick = () => {
         }
 
         if (i == all('.upload_page .select .circle').length - 1) {
-            $('.community_ul').innerHTML = '<li class="footer"></li>';
-            xrcomTP();
+            setTimeout(() => {
+                $('.community_ul').innerHTML = '<li class="footer"></li>';
+                xrcomTP();
+            },50);
+
         }
 
     })

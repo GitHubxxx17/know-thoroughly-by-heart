@@ -119,90 +119,45 @@ function TP() {
             e.stopPropagation();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function(e) {
-                    l = e.changedTouches[0].clientX - disX;
-                })
-                //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function (e) {
+                l = e.changedTouches[0].clientX - disX;
+            })
+            //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
-                    let time2 = new Date().getSeconds();
-                    if (l == 0) {
-                        if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
-                            title = all('.tp_inner .title')[i];
-                            info = all('.tp_inner .info')[i];
-                            modleId = all('.tp_inner .modleId')[i];
-                            label = all('.tp_inner .label')[i];
-                            $('.learn_page .title').value = title.innerHTML;
-                            $('.learn_page .text_box').innerHTML = info.innerHTML;
-                            $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
-                            $('.learn_page').style.left = '0';
-                            $('.learn_page header').style.left = '0';
-                            $('.learn_page header').style.opacity = '1';
-                            flag_learn = true;
-                        } else {
-                            let delnum = 0;
-                            $('.ht_1').style.display = 'none';
-                            $('.ht_2').style.display = 'flex';
-                            $('.header_bottom').style.display = 'none';
-                            $('.memory_base .container').style.marginTop = '14vw';
-                            x.parentNode.querySelector('.select').classList.toggle('selected');
-                            console.log(x.parentNode.parentNode.querySelectorAll('li'));
-                            for (let k of x.parentNode.parentNode.querySelectorAll('li')) {
-                                k.classList.add('baseLis_del');
-                                if (k.querySelector('.select').classList.contains('selected')) {
-                                    delnum++;
-                                }
+                let time2 = new Date().getSeconds();
+                if (l == 0) {
+                    if (Math.abs(time1 - time2) < 1 && !x.parentNode.classList.contains('baseLis_del')) {
+                        title = all('.tp_inner .title')[i];
+                        info = all('.tp_inner .info')[i];
+                        modleId = all('.tp_inner .modleId')[i];
+                        label = all('.tp_inner .label')[i];
+                        $('.learn_page .title').value = title.innerHTML;
+                        $('.learn_page .text_box').innerHTML = info.innerHTML;
+                        $('.learn_page .label').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
+                        $('.learn_page').style.left = '0';
+                        $('.learn_page header').style.left = '0';
+                        $('.learn_page header').style.opacity = '1';
+                        flag_learn = true;
+                    } else {
+                        let delnum = 0;
+                        $('.ht_1').style.display = 'none';
+                        $('.ht_2').style.display = 'flex';
+                        $('.header_bottom').style.display = 'none';
+                        $('.memory_base .container').style.marginTop = '14vw';
+                        x.parentNode.querySelector('.select').classList.toggle('selected');
+                        console.log(x.parentNode.parentNode.querySelectorAll('li'));
+                        for (let k of x.parentNode.parentNode.querySelectorAll('li')) {
+                            k.classList.add('baseLis_del');
+                            if (k.querySelector('.select').classList.contains('selected')) {
+                                delnum++;
                             }
-                            $('.delnum').innerHTML = `共${delnum}项`
                         }
+                        $('.delnum').innerHTML = `共${delnum}项`
                     }
-
-
                 }
-                //点击编辑进入编辑页面
-                // all('.template_btn .edit')[i].onclick = (e) => {
-                //     title = all('.tp_inner .title')[i];
-                //     info = all('.tp_inner .info')[i];
-                //     modleId = all('.tp_inner .modleId')[i];
-                //     label = all('.tp_inner .label')[i];
-                //     console.log(label);
-                //     if (all('.memory_base li')[i].parentNode.parentNode.classList.contains('collection_base'))
-                //         mStatus = 1;
-                //     $('.edit_page .title_name').value = all('.tp_inner .title')[i].innerHTML;
-                //     $('.edit_page .text_page').innerHTML = all('.tp_inner .info')[i].innerHTML;
-                //     $('.edit_page .label_cont').innerHTML = all('.tp_inner .label')[i].querySelectorAll('span')[1].innerHTML;
-                //     $('.edit_page').style.left = '0';
-                //     e.stopPropagation();
-                // }
 
-            // //点击删除模板
-            // all('.template_btn .del')[i].onclick = (e) => {
 
-            //     x.parentNode.classList.add('baseLis_del');
-            //     e.stopPropagation();
-            //     if (all('.my_base li').length == all('.my_base .baseLis_del').length)
-            //         $('.base_none_1').style.display = 'block';
-            //     if (all('.collection_base li').length == all('.collection_base .baseLis_del').length)
-            //         $('.base_none_2').style.display = 'block';
-            //     let modleId = all('.modleId')[i].innerHTML;
-            //     if (i < all('.my_base li').length) {
-            //         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `modleId=${modleId}`, (str) => {
-            //             let newstr = JSON.parse(str).msg;
-            //             console.log(newstr);
-            //             x.parentNode.addEventListener('animationend', () => {
-            //                 $('.my_base ul').removeChild(x.parentNode);
-            //             })
-            //         }, true)
-            //     } else {
-
-            //         ajax(`http://8.134.104.234:8080/ReciteMemory/modle/CancelCollet?userId=${curr.userId}&modleId=${all('.tp_inner')[i].querySelector('.modleId').innerHTML}&mStatus=0`, 'get', '', (str) => {
-            //             let newstr = JSON.parse(str).msg;
-            //             console.log(newstr);
-            //             x.parentNode.addEventListener('animationend', () => {
-            //                 $('.collection_base ul').removeChild(x.parentNode);
-            //             })
-            //         }, true)
-            //     }
-            // }
+            }
         }
     });
 }
@@ -270,39 +225,66 @@ $('.ht_2 .header_right').onclick = () => {
     //删除模板
     for (let x of all('.my_base li')) {
         if (x.querySelector('.select').classList.contains('selected')) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/deleteModle`, 'post', `userId=${curr.userId}&modleId=${x.querySelector('.modleId').innerHTML}`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.content == '删除成功') {
-                    x.querySelector('.select').classList.remove('selected');
-                    x.classList.add('baseLis_del2');
-                    x.addEventListener('animationend', () => {
-                        x.classList.add('hidden');
-                    })
-                } else {
-                    alert('删除模板失败');
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/deleteModle",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    modleId: x.querySelector('.modleId').innerHTML
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.content == '删除成功') {
+                        x.querySelector('.select').classList.remove('selected');
+                        x.classList.add('baseLis_del2');
+                        x.addEventListener('animationend', () => {
+                            x.classList.add('hidden');
+                        })
+                    } else {
+                        alert('删除模板失败');
+                    }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true)
-
+            });
         }
     }
     //取消收藏
     for (let x of all('.collection_base li')) {
         if (x.querySelector('.select').classList.contains('selected')) {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/modle/Collection`, 'post', `userId=${curr.userId}&modleId=${x.querySelector('.modleId').innerHTML}&mStatus=0`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                if (newstr.content == '取消收藏成功') {
-                    x.classList.add('baseLis_del2');
-                    x.addEventListener('animationend', () => {
-                        $('.collection_base ul').removeChild(x);
-                    })
-                } else {
-                    alert('取消收藏失败');
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    modleId: x.querySelector('.modleId').innerHTML,
+                    mStatus: 0
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.content == '取消收藏成功') {
+                        x.querySelector('.select').classList.remove('selected');
+                        x.classList.add('baseLis_del2');
+                        x.addEventListener('animationend', () => {
+                            x.classList.add('hidden');
+                        })
+                    } else {
+                        alert('取消收藏失败');
+                    }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-
-            }, true)
-
+            });
         }
     }
     $('.delnum').innerHTML = `共0项`
@@ -335,30 +317,45 @@ $(".review_list").addEventListener('click', () => {
     for (let k of all('.reciteCon li')) {
         let goReview = k.querySelector('.goReview');
         goReview.onclick = () => {
-            ajax(`http://8.134.104.234:8080/ReciteMemory/review/RemoveFromPlan?userId=${curr.userId}&modleId=${k.querySelector('.modleId').innerHTML}&studyStatus=已学习`, 'get', '', (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                //将记忆库对应的模板改成已学习
-                for (let x of all('.my_base li')) {
-                    if (k.querySelector('.modleId').innerHTML == x.querySelector('.modleId').innerHTML) {
-                        x.querySelector('.learning span').innerHTML = '已学习';
-                        x.querySelector('.learning').className = 'learning learned';
-                        break;
-                    }
-                }
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < ModlesOfPeriod[i].length; j++) {
-                        if (ModlesOfPeriod[i][j].modleId == k.querySelector('.modleId').innerHTML) {
-                            let removearr = ModlesOfPeriod[i];
-                            Array.remove(removearr[j]);
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/review/RemoveFromPlan",
+                type: "get",
+                data: {
+                    userId: curr.userId,
+                    modleId: k.querySelector('.modleId').innerHTML,
+                    studyStatus: '已学习'
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    //将记忆库对应的模板改成已学习
+                    for (let x of all('.my_base li')) {
+                        if (k.querySelector('.modleId').innerHTML == x.querySelector('.modleId').innerHTML) {
+                            x.querySelector('.learning span').innerHTML = '已学习';
+                            x.querySelector('.learning').className = 'learning learned';
                             break;
                         }
                     }
+                    for (let i = 0; i < 8; i++) {
+                        for (let j = 0; j < ModlesOfPeriod[i].length; j++) {
+                            if (ModlesOfPeriod[i][j].modleId == k.querySelector('.modleId').innerHTML) {
+                                let removearr = ModlesOfPeriod[i];
+                                Array.remove(removearr[j]);
+                                break;
+                            }
+                        }
+                    }
+                    modle_Period();
+                    //删除复习周期中的li
+                    k.classList.add('review_del');
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-                modle_Period();
-                //删除复习周期中的li
-                k.classList.add('review_del');
-            }, true)
+            });
         }
     }
 })
@@ -381,13 +378,24 @@ let ModlesOfPeriod = null;
 //获取复习周期模板
 
 function fxPeriod() {
-    ajax(`http://8.134.104.234:8080/ReciteMemory/review/GetPeriodModle?userId=${curr.userId}`, 'get', '', (str) => {
-    let newstr = JSON.parse(str).msg;
-    console.log(newstr);
-    ModlesOfPeriod = newstr.data.ModlesOfPeriod;
-    console.log(ModlesOfPeriod);
-    modle_Period();
-}, true)
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/review/GetPeriodModle",
+        type: "get",
+        data: { userId: curr.userId },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            let msg = JSON.parse(res).msg;
+            console.log(msg);
+            ModlesOfPeriod = msg.data.ModlesOfPeriod;
+            console.log(ModlesOfPeriod);
+            modle_Period();
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
+        }
+    });
 }
 
 
@@ -416,7 +424,7 @@ function modle_Period() {
         }
     }
     $('.today_review .sum').innerHTML = parseInt($('.today_review .cur').innerHTML) + num;
-    console.log($('.today_review .sum').innerHTML,$('.today_review .cur').innerHTML);
+    console.log($('.today_review .sum').innerHTML, $('.today_review .cur').innerHTML);
     if (parseInt($('.today_review .cur').innerHTML) > 0) {
         $('.now_line').style.width = $('.today_review .cur').innerHTML / $('.today_review .sum').innerHTML * $('.review_line').offsetWidth + 'px';
     } else {

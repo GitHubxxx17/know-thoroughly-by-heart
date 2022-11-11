@@ -28,7 +28,7 @@ $('.zidingyi').onclick = () => {
     learnReset();
     $('.learn_page .footer_1').style.display = 'none';
     $('.learn_page .footer_2').style.display = 'block';
-    
+
 }
 
 //点击编辑
@@ -44,14 +44,14 @@ $('.bianji').onclick = () => {
     $(".learn_page .text_box").onkeyup = (e) => {
 
         //将嵌套在高亮标签中的br拿到外面，并删除该标签
-        for(let x of all(".learn_page .highlight")){
-            if(x.innerHTML == '<br>'){
+        for (let x of all(".learn_page .highlight")) {
+            if (x.innerHTML == '<br>') {
                 $('.learn_page .text_box').insertBefore(x.childNodes[0], x);
                 $(".learn_page .text_box").removeChild(x);
             }
-            
+
         }
-        
+
         if (e.keyCode == 13) {
 
             let txt = window.getSelection();
@@ -66,26 +66,26 @@ $('.bianji').onclick = () => {
                     range.setEndAfter(br);
                     //将节点放入数组并逐个插入
                     let arrr = [];
-                    for (let k of x.childNodes){
-                        if(k.nodeType == '3'&&(k.textContent == '\n' || k.textContent == ''))
+                    for (let k of x.childNodes) {
+                        if (k.nodeType == '3' && (k.textContent == '\n' || k.textContent == ''))
                             continue;
                         arrr.push(k);
                     }
-                        
-                    for(let i = 0;i < arrr.length;i++){
-                        if(i == arrr.length-1 && arrr[i].nodeName == 'BR')
+
+                    for (let i = 0; i < arrr.length; i++) {
+                        if (i == arrr.length - 1 && arrr[i].nodeName == 'BR')
                             continue;
                         console.log(arrr[i]);
                         $('.learn_page .text_box').insertBefore(arrr[i], x);
                     }
-                    if(keycode == 13){
+                    if (keycode == 13) {
                         $(".learn_page .text_box").removeChild(br);
                     }
                     $(".learn_page .text_box").removeChild(x);
                 }
             }
         }
-        
+
         keycode = e.keyCode;
     }
 
@@ -253,10 +253,10 @@ $('.learn_page .finish').onclick = () => {
     } else {
         mid = modleId.innerHTML;
     }
-    
+
 
     // 标题一致就取消保存并提醒
-    Array.from(all('.my_base .title')).forEach((x,i) => {
+    Array.from(all('.my_base .title')).forEach((x, i) => {
         if (x.innerHTML == title1 && mid != all('.my_base li')[i].querySelector('.modleId').innerHTML) {
             $('.learn_page .popup2 .popup_box').innerHTML = '标题不能重复';
             $('.learn_page .popup2').style.display = 'block';
@@ -280,24 +280,42 @@ $('.learn_page .finish').onclick = () => {
         let poststr = '';
         let newinfo = info1.replace(/&nbsp;/g, '<空格>');
         console.log(newinfo);
-        if (mStatus == 1) {
-            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
-        } else {
-            poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=${labelId1(label1)}&modleId=${mid}`
-        }
-        ajax(`http://8.134.104.234:8080/ReciteMemory/modle/MakeModle`, 'post', poststr, (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr);
-            if (mStatus == 1) {
-                let modle = newstr.data.modle;
-                newTPFlag = true;
-                newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
-                mStatus = 0;
-                $('.footer_nav li')[0].onclick();
-                bianji = false;
+        // if (mStatus == 1) {
+        //     poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
+        // } else {
+        //     poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=${labelId1(label1)}&modleId=${mid}`
+        // }
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
+            type: "post",
+            data: {
+                userId: curr.userId,
+                context: newinfo,
+                modleTitle: title1,
+                overWrite: 1 - mStatus,
+                modleLabel: labelId1(label1),
+                modleId: mid
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg);
+                if (mStatus == 1) {
+                    let modle = msg.data.modle;
+                    newTPFlag = true;
+                    newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
+                    mStatus = 0;
+                    $('.footer_nav li')[0].onclick();
+                    bianji = false;
+                }
+                xrcomTP();
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-            xrcomTP();
-        }, true);
+        });
     }
 
 }
@@ -368,7 +386,7 @@ let label_flag1 = true;
 //点击出现下拉列表
 $('.learn_page .label').onclick = (e) => {
     e.stopPropagation();
-    if(bianji){
+    if (bianji) {
         if (label_flag1) {
             $('.learn_page .label_menu').style.transform = 'scale(1)';
             label_flag1 = false;
@@ -377,7 +395,7 @@ $('.learn_page .label').onclick = (e) => {
             label_flag1 = true;
         }
     }
-    
+
 }
 
 //事件委托，为li绑定事件

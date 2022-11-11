@@ -96,20 +96,36 @@ for (let i = 0; i < inputs.length; i++) {
         let reg = new RegExp(`${inputs[i].pattern}`);
         if (i < 2) {
             let url = '';
-            if (i == 0)
-                url = `http://8.134.104.234:8080/ReciteMemory/inf.get/checkUsedNumber?phone=${inputs[i].value}`;
-            else
-                url = `http://8.134.104.234:8080/ReciteMemory/inf.get/checkUserNickName?username=${inputs[i].value}`;
+            let inputdata = {};
+            if (i == 0){
+                url = `http://8.134.104.234:8080/ReciteMemory/inf.get/checkUsedNumber`;
+                inputdata = {phone: inputs[i].value}
+            }else{
+                url = `http://8.134.104.234:8080/ReciteMemory/inf.get/checkUserNickName`;
+                inputdata = {username: inputs[i].value}
+            }
+                
             //如果格式正确则发送get请求
             if (reg.test(inputs[i].value)) {
-                ajax(url, 'get', '', (str) => {
-                    let newstr = JSON.parse(str).msg;
-                    console.log(newstr);
-                    if (!newstr.data.isOk) {
-                        $('label')[i].innerHTML = newstr.content;
-                        $('label')[i].style.color = 'red';
+                ajax({
+                    url: url,
+                    type: "get",
+                    data: inputdata,
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let msg = JSON.parse(res).msg;
+                        console.log(msg);
+                        if (!msg.data.isOk) {
+                            $('label')[i].innerHTML = msg.content;
+                            $('label')[i].style.color = 'red';
+                        }
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
                     }
-                }, true)
+                });
             } else if (inputs[i].value != '') {
                 if (i == 0)
                     $('label')[i].innerHTML = '手机号格式错误';
@@ -190,22 +206,36 @@ $('.register button').onclick = (e) => {
         for (let x of $('.register_data')) {
             a.push(x.value);
         }
-        ajax('http://8.134.104.234:8080/ReciteMemory/user.do/Reg', 'post', `phone=${a[0]}&password=${a[2]}&username=${a[1]}`, (str) => {
-        
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr);
-            if (newstr.data.isSuccess) {
-                //将当前登录的用户保存到本地
-                let curr = {};
-                curr['auto'] = false;
-                curr['userId'] = newstr.data.userId;
-                curr['phone'] = a[0];
-                saveData('current_user', curr);
-                location.href = './index.html';               
-            } else {
-                alert('注册失败，请重新注册');
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/Reg",
+            type: "post",
+            data: {
+                phone: a[0],
+                username: a[1],
+                password: a[2]
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg);
+                if (msg.data.isSuccess) {
+                    //将当前登录的用户保存到本地
+                    let curr = {};
+                    curr['auto'] = false;
+                    curr['userId'] = msg.data.userId;
+                    curr['phone'] = a[0];
+                    saveData('current_user', curr);
+                    location.href = './index.html';
+                } else {
+                    alert('注册失败，请重新注册');
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-        }, true)
+        });
     } else {
         $('.register .err').style.opacity = '1';
     }
@@ -220,30 +250,44 @@ $('.login button').onclick = (e) => {
             a.push(x.value);
         }
 
-        ajax('http://8.134.104.234:8080/ReciteMemory/user.do/Login', 'post', `phone=${a[0]}&password=${a[1]}`, (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr);
-            //登录成功
-            if (newstr.data.isSuccess) {
-                //将当前登录的用户手机号保存到本地
-                let curr = {};
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/Login",
+            type: "post",
+            data: {
+                phone: a[0],
+                password: a[1]
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg);
+                //登录成功
+                if (msg.data.isSuccess) {
+                    //将当前登录的用户手机号保存到本地
+                    let curr = {};
 
-                //如果用户勾选自动登录，则将数据存储在本地
-                if ($('.auto').checked) {
-                    curr['auto'] = true;
-                } else {
-                    curr['auto'] = false;
+                    //如果用户勾选自动登录，则将数据存储在本地
+                    if ($('.auto').checked) {
+                        curr['auto'] = true;
+                    } else {
+                        curr['auto'] = false;
+                    }
+                    curr['userId'] = msg.data.token;
+                    curr['phone'] = $('.login_data')[0].value;
+                    saveData('current_user', curr);
+                    location.href = './index.html';
                 }
-                curr['userId'] = newstr.data.token;
-                curr['phone'] = $('.login_data')[0].value;
-                saveData('current_user', curr);
-                location.href = './index.html';
+                //如果返回的结果错误则提醒
+                else {
+                    $('.login .err').style.opacity = '1';
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-            //如果返回的结果错误则提醒
-            else {
-                $('.login .err').style.opacity = '1';
-            }
-        }, true);
+        });
     } else {
         $('.login .err').style.opacity = '1';
     }

@@ -45,55 +45,67 @@ generateCalendar = (month, year) => {
     let clock_day = [];
 
     //获取所有的日期
-    ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/getClockInRecord?userId=${curr.userId}&year=${year}&month=${month+1}`, 'get', '', (str) => {
-        calendar_days.innerHTML = ''
-        let newstr = JSON.parse(str).msg.data;
-        console.log(newstr);
-        let dateList = newstr.dateList;
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/user.do/getClockInRecord",
+        type: "get",
+        data: {
+            userId: curr.userId,
+            year: year,
+            month: month + 1
+        },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            calendar_days.innerHTML = ''
+            let data = JSON.parse(res).msg.data;
+            console.log(data);
+            let dateList = data.dateList;
 
-        if (newstr.searchSuccess) {
-            for (let i = 0; i < dateList.length; i++) {
-                if (dateList[i].split('-')[2].charAt(0) == '0') {
-                    clock_day[i] = dateList[i].split('-')[2].split('0')[1];
-                } else {
-                    clock_day[i] = dateList[i].split('-')[2];
-                }
-            }
-        }
-
-
-
-        //获取每个月的第一天
-        let first_day = new Date(year, month, 1);
-
-        for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-            let day = document.createElement('div');
-            if (i >= first_day.getDay()) {
-                day.classList.add('calendar_day_hover')
-                for (let x of clock_day) {
-                    if (x == i - 1) {
-                        day.classList.add('clock_in');
+            if (data.searchSuccess) {
+                for (let i = 0; i < dateList.length; i++) {
+                    if (dateList[i].split('-')[2].charAt(0) == '0') {
+                        clock_day[i] = dateList[i].split('-')[2].split('0')[1];
+                    } else {
+                        clock_day[i] = dateList[i].split('-')[2];
                     }
                 }
-
-                day.innerHTML = i - first_day.getDay() + 1;
-                // day.innerHTML += `<span></span>
-                //                 <span></span>
-                //                 <span></span>
-                //                 <span></span>`
-                if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
-                    day.classList.add('curr_date');
-                    if (day.classList.contains('clock_in')) {
-                        $('.calendar_footer .situation')[0].innerHTML = '今日已打卡';
-                        $('.calendar_footer .situation')[1].innerHTML = '已签到';
-                    }
-                    Today = day;
-                }
             }
-            calendar_days.appendChild(day);
-        }
 
-    }, true);
+            //获取每个月的第一天
+            let first_day = new Date(year, month, 1);
+
+            for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+                let day = document.createElement('div');
+                if (i >= first_day.getDay()) {
+                    day.classList.add('calendar_day_hover')
+                    for (let x of clock_day) {
+                        if (x == i - 1) {
+                            day.classList.add('clock_in');
+                        }
+                    }
+
+                    day.innerHTML = i - first_day.getDay() + 1;
+                    // day.innerHTML += `<span></span>
+                    //                 <span></span>
+                    //                 <span></span>
+                    //                 <span></span>`
+                    if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
+                        day.classList.add('curr_date');
+                        if (day.classList.contains('clock_in')) {
+                            $('.calendar_footer .situation')[0].innerHTML = '今日已打卡';
+                            $('.calendar_footer .situation')[1].innerHTML = '已签到';
+                        }
+                        Today = day;
+                    }
+                }
+                calendar_days.appendChild(day);
+            }
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
+        }
+    });
 }
 
 let month_list = calendar.querySelector('.month_list');
@@ -148,14 +160,28 @@ document.querySelector('#next_year').onclick = () => {
 //日历月份的点击事件
 $('.calendar_footer .situation')[1].onclick = () => {
     let poststr = `userId=${curr.userId}&date=${dateFromat(currDate)}`
-    if($('.calendar_footer .situation')[1].innerHTML == '签到'){
-        ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/clockIn`, 'post', poststr, (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr);
-            if (newstr.data.isSuccess) {
-                Today.classList.add('clock_in');
+    if ($('.calendar_footer .situation')[1].innerHTML == '签到') {
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/clockIn",
+            type: "post",
+            data: {
+                userId: curr.userId,
+                date: dateFromat(currDate)
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg);
+                if (msg.data.isSuccess) {
+                    Today.classList.add('clock_in');
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-        }, true);
+        });
     }
     $('.calendar_footer .situation')[0].innerHTML = '今日已打卡';
     $('.calendar_footer .situation')[1].innerHTML = '已签到';
@@ -183,6 +209,6 @@ $('.calendar_page .left').onclick = () => {
     $('.calendar_page').style.left = '-100%';
     let curr_month = { value: currDate.getMonth() }
     let curr_year = { value: currDate.getFullYear() }
-        //退出的时候重置操作
+    //退出的时候重置操作
     generateCalendar(curr_month.value, curr_year.value);
 }

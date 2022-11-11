@@ -34,55 +34,95 @@ $('.modify .confirm').onclick = (e) => {
     e.stopPropagation();
     console.log(modifyNum);
     if (modifyNum == 0 && nameReg.test(modify_value)) {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?nickName=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr, modifyNum);
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
+            type: "get",
+            data: {
+                userId: curr.userId,
+                nickName: modify_value
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg, modifyNum);
 
-            if (newstr.data.isSuccess) {
-                for (let x of $('.idname'))
-                    x.innerHTML = modify_value;
-                $('.modify_title .left').onclick();
-                $('.modify_succ').classList.add('modify_succani');
-                curr.userInfo.nickName = modify_value;
-                saveData('current_user', curr);
-            } else {
-                $('.modify_err').innerHTML = '用户名已被使用';
-                $('.modify_err').style.opacity = '1';
+                if (msg.data.isSuccess) {
+                    for (let x of $('.idname'))
+                        x.innerHTML = modify_value;
+                    $('.modify_title .left').onclick();
+                    $('.modify_succ').classList.add('modify_succani');
+                    curr.userInfo.nickName = modify_value;
+                    saveData('current_user', curr);
+                } else {
+                    $('.modify_err').innerHTML = '用户名已被使用';
+                    $('.modify_err').style.opacity = '1';
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-
-        }, true);
+        });
     }
     //修改手机号
     else if (modifyNum == 1 && phoneReg.test(modify_value)) {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?phone=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr, modifyNum);
-            if (newstr.data.isSuccess) {
-                $('.modify_value')[modifyNum].innerHTML = modify_value;
-                $('.modify_title .left').onclick();
-                $('.modify_succ').classList.add('modify_succani');
-                curr.userInfo.phone = modify_value;
-                saveData('current_user', curr);
-            } else {
-                $('.modify_err').innerHTML = '手机号已被注册';
-                $('.modify_err').style.opacity = '1';
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
+            type: "get",
+            data: {
+                userId: curr.userId,
+                phone: modify_value
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg, modifyNum);
+                if (msg.data.isSuccess) {
+                    $('.modify_value')[modifyNum].innerHTML = modify_value;
+                    $('.modify_title .left').onclick();
+                    $('.modify_succ').classList.add('modify_succani');
+                    curr.userInfo.phone = modify_value;
+                    saveData('current_user', curr);
+                } else {
+                    $('.modify_err').innerHTML = '手机号已被注册';
+                    $('.modify_err').style.opacity = '1';
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-
-        }, true);
+        });
     }
     //修改密码
     else if (modifyNum == 2 && passwordReg.test(modify_value)) {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage?password=${modify_value}&userId=${curr.userId}`, 'get', '', (str) => {
-            let newstr = JSON.parse(str).msg;
-            console.log(newstr, modifyNum);
-            if (newstr.data.isSuccess) {
-                $('.modify_title .left').onclick();
-                $('.modify_succ').classList.add('modify_succani');
-            } else {
-                $('.modify_err').innerHTML = '修改密码失败';
-                $('.modify_err').style.opacity = '1';
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
+            type: "get",
+            data: {
+                userId: curr.userId,
+                password: modify_value
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg, modifyNum);
+                if (msg.data.isSuccess) {
+                    $('.modify_title .left').onclick();
+                    $('.modify_succ').classList.add('modify_succani');
+                } else {
+                    $('.modify_err').innerHTML = '修改密码失败';
+                    $('.modify_err').style.opacity = '1';
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
             }
-        }, true);
+        });
     } else {
         $('.modify_err').innerHTML = modifyErrArr[modifyNum];
         $('.modify_err').style.opacity = '1';
@@ -106,7 +146,7 @@ $('.personal .head_portrait input').onchange = function (e) {
         reader.readAsDataURL(fileList[0]);
         reader.onloadend = function (e) {
             $("#canvas_img").src = e.target.result;
-            
+
             $('.CaptureAvatar_page').style.display = 'block';
             setTimeout(() => {
                 loadCapture();
@@ -121,11 +161,22 @@ $('.personal .head_portrait input').onchange = function (e) {
                 x.src = base64;
             }
             fd.append("image", tofile);
-            ajax(`http://8.134.104.234:8080/ReciteMemory/upload/uploadImg?userId=${curr.userId}`, 'post', fd, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-                $('.CaptureAvatar_page').style.display = 'none';
-            }, false);
+            ajax({
+                url: `http://8.134.104.234:8080/ReciteMemory/upload/uploadImg?userId=${curr.userId}`,
+                type: "post",
+                data: fd,
+                dataType: "json",
+                flag: false,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    $('.CaptureAvatar_page').style.display = 'none';
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
+                }
+            });
         }
     }
 }
@@ -140,3 +191,12 @@ function dataURLtoFile(dataURL, fileName, fileType) {
     return new File([u8arr], fileName, { type: fileType || 'image/jpg' });
 }
 
+//点击进入新手教程
+$('.system_settings .common')[0].onclick = () => {
+    $('.NoviceTutorial_page').classList.remove('scroll_top')
+}
+
+//新手教程点击返回
+$('.NoviceTutorial_page .icon-xiangzuojiantou').onclick = () => {
+    $('.NoviceTutorial_page').classList.add('scroll_top')
+}

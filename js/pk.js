@@ -20,58 +20,84 @@ let pkstars = 0;
 let img_box = document.querySelector(".img_box");
 //排行榜渲染
 function rlRendering() {
-    ajax(`http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList?userId=${curr.userId}`, 'get', ``, (str) => {
-        let newstr = JSON.parse(str).msg;
-        console.log(newstr);
-        let ranking = newstr.data.ranking;
-        Array.from(ranking).forEach((x, i) => {
-            $('.others_nav')[i].querySelectorAll('.left span')[1].innerHTML = x.nickName;
-            $('.others_nav')[i].querySelector('.right').innerHTML = `${x.stars}颗星`;
-        })
-    }, true);
-    ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/userRanking`, 'post', `userId=${curr.userId}`, (str) => {
-        let newstr = JSON.parse(str).msg;
-        console.log(newstr);
-        let userdata = newstr.data.userData;
-        $('.ranking_list .mine .rank').innerHTML = `第${userdata.userRanking}名`;
-        $('.ranking_list .mine .score').innerHTML = `${userdata.user.stars}颗星`;
-        $('.pk_page .integral .cur').innerHTML = userdata.user.points;
-        pkstars = userdata.user.stars;
-        switch (Math.floor(pkstars / 5)) {
-            case 0:
-                $('.competition_season .season_name').innerHTML = '初级学士';
-                $('.competition_season .role img').src = './images/段位/1.png';
-                break;
-            case 1:
-                $('.competition_season .season_name').innerHTML = '中级学士';
-                $('.competition_season .role img').src = './images/段位/2.png';
-                break;
-            case 2:
-                $('.competition_season .season_name').innerHTML = '高级学士';
-                $('.competition_season .role img').src = './images/段位/4.png';
-                break;
-            case 3:
-                $('.competition_season .season_name').innerHTML = '初级硕士';
-                $('.competition_season .role img').src = './images/段位/3.png';
-                break;
-            case 4:
-                $('.competition_season .season_name').innerHTML = '高级硕士';
-                $('.competition_season .role img').src = './images/段位/5.png';
-                break;
-            case 5:
-                $('.competition_season .season_name').innerHTML = '博士';
-                $('.competition_season .role img').src = './images/段位/6.png';
-                break;
-            default:
-                $('.competition_season .season_name').innerHTML = '博士';
-                $('.competition_season .role img').src = './images/段位/6.png';
-                break;
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList",
+        type: "get",
+        data: {
+            userId: curr.userId
+        },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            let msg = JSON.parse(res).msg;
+            console.log(msg);
+            let ranking = msg.data.ranking;
+            Array.from(ranking).forEach((x, i) => {
+                $('.others_nav')[i].querySelectorAll('.left span')[1].innerHTML = x.nickName;
+                $('.others_nav')[i].querySelector('.right').innerHTML = `${x.stars}颗星`;
+            })
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
         }
-        let star = pkstars >= 30 ? 5 : pkstars % 5;
-        for (let i = 0; i < star; i++) {
-            $('.pk_page .start i')[i].classList.add('active')
+    });
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/user.do/userRanking",
+        type: "post",
+        data: {
+            userId: curr.userId
+        },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            let msg = JSON.parse(res).msg;
+            console.log(msg);
+            let userdata = msg.data.userData;
+            $('.ranking_list .mine .rank').innerHTML = `第${userdata.userRanking}名`;
+            $('.ranking_list .mine .score').innerHTML = `${userdata.user.stars}颗星`;
+            $('.pk_page .integral .cur').innerHTML = userdata.user.points;
+            pkstars = userdata.user.stars;
+            switch (Math.floor(pkstars / 5)) {
+                case 0:
+                    $('.competition_season .season_name').innerHTML = '初级学士';
+                    $('.competition_season .role img').src = './images/段位/1.png';
+                    break;
+                case 1:
+                    $('.competition_season .season_name').innerHTML = '中级学士';
+                    $('.competition_season .role img').src = './images/段位/2.png';
+                    break;
+                case 2:
+                    $('.competition_season .season_name').innerHTML = '高级学士';
+                    $('.competition_season .role img').src = './images/段位/4.png';
+                    break;
+                case 3:
+                    $('.competition_season .season_name').innerHTML = '初级硕士';
+                    $('.competition_season .role img').src = './images/段位/3.png';
+                    break;
+                case 4:
+                    $('.competition_season .season_name').innerHTML = '高级硕士';
+                    $('.competition_season .role img').src = './images/段位/5.png';
+                    break;
+                case 5:
+                    $('.competition_season .season_name').innerHTML = '博士';
+                    $('.competition_season .role img').src = './images/段位/6.png';
+                    break;
+                default:
+                    $('.competition_season .season_name').innerHTML = '博士';
+                    $('.competition_season .role img').src = './images/段位/6.png';
+                    break;
+            }
+            let star = pkstars >= 30 ? 5 : pkstars % 5;
+            for (let i = 0; i < star; i++) {
+                $('.pk_page .start i')[i].classList.add('active')
+            }
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
         }
-    }, true);
+    });
 }
 
 

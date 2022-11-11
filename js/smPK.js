@@ -12,7 +12,7 @@ let endAnswerArr = []; //存放所有答案
 
 function ConnectionClicked() {
     try {
-        ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/${curr.userId}/${modle_id}/${difficult}`) //连接服务器
+        ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/userId=${curr.userId}/${modle_id}/${difficult}`) //连接服务器
         ws.onopen = function(event) {
             console.log("已经与服务器建立了连接当前连接状态：" + this.readyState);
         };
@@ -20,6 +20,7 @@ function ConnectionClicked() {
         let msgCount = 0; //接收信息的次数
         let timeLimits_record;
         let timeCount = 0;
+        let judge_run = true;
         ws.onmessage = function(event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
@@ -44,7 +45,7 @@ function ConnectionClicked() {
                     Refresh_id(res.enemyInf.nickName);
                     Refresh_img(res.enemyInf);
                     Refresh_Template(res.context);
-                    $('.enterPk  .other_blood_change').style.width = '53.33vw';
+                    $('.enterPk  .other_blood_change')[0].style.width = '38.13vw';
                     $('.enterPk  .other').style.backgroundColor = '#90909078';
                     $('.enterPk  .other_name').style.opacity = '1';
                     $('.enterPk  .other_blook').style.opacity = '1';
@@ -82,13 +83,14 @@ function ConnectionClicked() {
                 //对方已经逃跑
                 if (res.ENEMY_EXIT && !res.MATCH_END) {
                     $('.runle').style.display = 'block';
-                    $('.enterPk  .other_blood_change').style.width = '0';
+                    $('.enterPk .other_blood_change')[0].style.width = '0';
                     $('.enterPk  .other').style.backgroundColor = 'transparent';
                     setTimeout(() => {
                         $('.enterPk  .other_name').style.opacity = '0';
                         $('.enterPk  .other_blook').style.opacity = '0';
-                    }, 700)
-
+                        $('.enterPk  .other .head_portrait img').src = './images/头像/连接断开.png';
+                    }, 700);
+                    judge_run = false;
                 }
 
                 //比赛结束之后
@@ -114,7 +116,7 @@ function ConnectionClicked() {
                     }
                     endAnswerArr = [];
                     $('.runle').style.display = 'none';
-                    ws.onclose = wsonclose(true, ws);
+                    ws.onclose = wsonclose(judge_run, ws);
                 }
 
 
@@ -493,19 +495,24 @@ function animate_pkend() {
 
 //刷线血条和血量
 function Refresh_blook(data) {
+    console.log(curr.userId)
     if (data[0].userId == curr.userId) {
-        $('.enterPk .mine .mine_blood_change').style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .mine .mine_blood_change')[0].style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .mine .mine_blood_change')[1].style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
         $('.enterPk .name_blood .mine_blook').innerHTML = Math.round(data[0].hp) + '%';
     } else {
-        $('.enterPk .other .other_blood_change').style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .other .other_blood_change')[0].style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .other .other_blood_change')[1].style.width = (Math.round(data[0].hp) / 100) * 38.13 + 'vw';
         $('.enterPk .name_blood .other_blook').innerHTML = Math.round(data[0].hp) + '%';
     }
 
     if (data[1].userId == curr.userId) {
-        $('.enterPk .mine .mine_blood_change').style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .mine .mine_blood_change')[0].style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .mine .mine_blood_change')[1].style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
         $('.enterPk .name_blood .mine_blook').innerHTML = Math.round(data[1].hp) + '%';
     } else {
-        $('.enterPk .other .other_blood_change').style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .other .other_blood_change')[0].style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
+        $('.enterPk .other .other_blood_change')[1].style.width = (Math.round(data[1].hp) / 100) * 38.13 + 'vw';
         $('.enterPk .name_blood .other_blook').innerHTML = Math.round(data[1].hp) + '%';
     }
 

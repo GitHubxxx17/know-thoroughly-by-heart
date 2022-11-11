@@ -1,9 +1,6 @@
 //out:../css/
 @import 'base';
 @vw: 3.95vw;
-body{
-    background-color: #f6f7fb;
-}
 
 .Tutorial{
     width: 100vw;
@@ -37,7 +34,8 @@ body{
     }
     main{
         .novice_title{
-            margin: 0 auto;
+            margin: (20/@vw) auto;
+            margin-bottom: (50/@vw);
             // width: (100/@vw);
             height: (30/@vw);
             line-height: (30/@vw);
@@ -46,20 +44,25 @@ body{
         }
 
         .common{
-            margin-top: (30/@vw);
+            margin-top: (10/@vw);
             padding: 0 (30/@vw);
 
             .function_title{
                 margin: 0 auto;
-                margin-top: (50/@vw);
-                height: (30/@vw);
-                line-height: (30/@vw);
+                margin-top: (20/@vw);
+                margin-bottom: (30/@vw);
+                width: (100/@vw);
+                height: (40/@vw);
+                line-height: (40/@vw);
+                border-radius: (10/@vw);
+                color: #ffffff;
+                background-color:#51399f;
                 font-size: (20/@vw);
                 text-align: center;
             }
 
             .com_step{
-                margin-top: (20/@vw);
+                // margin-top: (20/@vw);
                 font-size: (26/@vw);
                 color: #00000091;
             }
@@ -72,6 +75,11 @@ body{
             .com_image{
                 margin-top: (20/@vw);
                 padding: 0 (12/@vw);
+
+                img{
+                    margin-bottom: (50/@vw);
+                    box-shadow: (1/@vw) (1/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.38);
+                }
             }
         } 
     }

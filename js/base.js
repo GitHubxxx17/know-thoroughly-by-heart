@@ -12,29 +12,82 @@ function all(selectors) {
 }
 
 //封装一个发送ajax请求和处理数据的的函数
-function ajax(url, method, req, funC, flag) {
-    //1.创建Ajax对象
-    var xhr = null;
+// function ajax(url, method, req, funC, flag) {
+//     //1.创建Ajax对象
+//     var xhr = null;
+//     if (window.XMLHttpRequest) {
+//         xhr = new XMLHttpRequest();
+//     } else {
+//         xhr = new ActiveXObject("Microsoft.XMLHTTP");
+//     }
+//     //2.连接服务器
+//     xhr.open(method, url);
+//     //3.设置请求头
+//     if (flag)
+//         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//     //4.发送请求
+//     xhr.send(req);
+//     //5.接收服务器的返回
+//     xhr.onreadystatechange = () => {
+//         if (xhr.readyState === 4) {
+//             if (xhr.status >= 200 && xhr.status < 300) {
+//                 funC(xhr.responseText);
+//             }
+//         }
+//     }
+// }
+
+
+function ajax(options) {
+    options = options || {};
+    options.type = (options.type || "GET").toUpperCase();
+    options.dataType = options.dataType || "json";
+    let params = null;
+    if(options.flag){
+        params = formatParams(options.data);
+    } 
+    else{
+        params = options.data;
+    }
+        
+    let xhr = null;
+    //创建 - 非IE6 - 第一步
     if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
-    } else {
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    } else { //IE6及其以下版本浏览器
+        xhr = new ActiveXObject('Microsoft.XMLHTTP');
     }
-    //2.连接服务器
-    xhr.open(method, url);
-    //3.设置请求头
-    if (flag)
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //4.发送请求
-    xhr.send(req);
-    //5.接收服务器的返回
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                funC(xhr.responseText);
+
+    //接收 - 第三步
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let status = xhr.status;
+            if (status >= 200 && status < 300) {
+                options.success && options.success(xhr.responseText, xhr.responseXML);
+            } else {
+                options.fail && options.fail(status);
             }
         }
     }
+    //连接 和 发送 - 第二步
+    if (options.type == "GET") {
+        xhr.open("GET", options.url + "?" + params, true);
+        xhr.send(null);
+    } else if (options.type == "POST") {
+        xhr.open("POST", options.url, true);
+        //设置表单提交时的内容类型
+        if (options.flag)
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");         
+        xhr.send(params);
+    }
+}
+//格式化参数
+function formatParams(data) {
+    let arr = [];
+    for (let name in data) {
+        arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+    }
+    return arr.join("&");
 }
 
 //读取本地存储数据
@@ -55,7 +108,7 @@ function saveData(name, data) {
 
 
 //为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
-Array.prototype.remove = function(val) {
+Array.prototype.remove = function (val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
@@ -118,13 +171,13 @@ function comTP(title, context, modleId, label, base64, username, likeNum, likeSt
     // }
     //点赞状态
     let dz = ''
-    if(likeStatus){
+    if (likeStatus) {
         dz = `<span class="dainzan orange">
                 <i class="iconfont icon-dianzan1"></i>
                 <i class="wenzi">${likeNum}</i>
                 <span class="circle blink_circle"></span>
             </span>`
-    }else{
+    } else {
         dz = `<span class="dainzan">
                 <i class="iconfont icon-dianzan"></i>
                 <i class="wenzi">点赞</i>

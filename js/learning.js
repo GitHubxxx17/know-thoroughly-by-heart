@@ -160,23 +160,52 @@ $('.tijiao').onclick = () => {
         //如果正在复习
         if (flag_review) {
             //更改复习周期
-            ajax(`http://8.134.104.234:8080/ReciteMemory/review/FinishOnceReview?userId=${curr.userId}&modleId=${modleId.innerHTML}`, 'get', '', (str) => {
-                let newstr = JSON.parse(str).msg.content;
-                console.log(newstr);
-                if (newstr == '恭喜你完成这个周期的复习啦，下个周期见吧') {
-                    flag_review = false;
-                    fxPeriod();
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/review/FinishOnceReview",
+                type: "get",
+                data: {
+                    userId: curr.userId,
+                    modleId: modleId.innerHTML
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let content = JSON.parse(res).msg.content;
+                    console.log(content);
+                    if (content == '恭喜你完成这个周期的复习啦，下个周期见吧') {
+                        flag_review = false;
+                        fxPeriod();
+                    }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
                 }
-            }, true);
+            });
         } else {
             if (label.nextElementSibling.querySelector('span').innerText != '复习中') {
                 //更改学习状态
-                ajax(`http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane?userId=${curr.userId}&modleId=${mid}&studyStatus=复习中`, 'get', '', (str) => {
-                    let newstr = JSON.parse(str).msg.content;
-                    console.log(newstr);
-                    label.nextElementSibling.querySelector('span').innerText = '复习中';
-                    label.nextElementSibling.className = 'learning reviewing';
-                }, true);
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
+                    type: "get",
+                    data: {
+                        userId: curr.userId,
+                        modleId: mid,
+                        studyStatus: '复习中'
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let content = JSON.parse(res).msg.content;
+                        console.log(content);
+                        label.nextElementSibling.querySelector('span').innerText = '复习中';
+                        label.nextElementSibling.className = 'learning reviewing';
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
+                    }
+                });
             }
         }
         studyNums++;
@@ -184,10 +213,24 @@ $('.tijiao').onclick = () => {
         Alltime += (Ltimeend - Ltimestart) / 1000;
         if (Alltime >= 60) {
             console.log(Alltime);
-            ajax(`http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD?userId=${curr.userId}`, 'post', `studyTime=${Math.round(Alltime / 60)}`, (str) => {
-                let newstr = JSON.parse(str).msg;
-                console.log(newstr);
-            }, true)
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD",
+                type: "post",
+                data: {
+                    userId: curr.userId,
+                    studyTime: Math.round(Alltime / 60)
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
+                }
+            });
         }
         getStoreDSSD(false)
         answerReset();
@@ -219,12 +262,27 @@ $('.learn_page .header_left').onclick = () => {
     $('.learn_page header').style.opacity = '0';
     learnReset()
     if (!learn_flag_1 && label.nextElementSibling.querySelector('span').innerText == '未学习') {
-        ajax(`http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane?userId=${curr.userId}&modleId=${mid}&studyStatus=复习中`, 'get', '', (str) => {
-            let newstr = JSON.parse(str).msg.content;
-            console.log(newstr);
-            label.nextElementSibling.querySelector('span').innerText = '学习中';
-            label.nextElementSibling.className = 'learning startlearn';
-        }, true);
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
+            type: "get",
+            data: {
+                userId: curr.userId,
+                modleId: mid,
+                studyStatus: '复习中'
+            },
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let content = JSON.parse(res).msg.content;
+                console.log(content);
+                label.nextElementSibling.querySelector('span').innerText = '学习中';
+                label.nextElementSibling.className = 'learning startlearn';
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
+            }
+        });
     }
 }
 
