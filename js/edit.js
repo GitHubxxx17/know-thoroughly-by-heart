@@ -280,11 +280,6 @@ $('.learn_page .finish').onclick = () => {
         let poststr = '';
         let newinfo = info1.replace(/&nbsp;/g, '<空格>');
         console.log(newinfo);
-        // if (mStatus == 1) {
-        //     poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=0&modleLabel=${labelId1(label1)}&modleId=${mid}`
-        // } else {
-        //     poststr = `context=${newinfo}&userId=${curr.userId}&modleTitle=${title1}&overWrite=1&modleLabel=${labelId1(label1)}&modleId=${mid}`
-        // }
         ajax({
             url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
             type: "post",
@@ -333,15 +328,9 @@ function CancelHollowing(e, n) {
     let txt = window.getSelection();
     let range = txt.getRangeAt(0);
 
-    //将选中区域改成节点的文本内容
-    // range.selectNodeContents(e);
-    // //将选中节点从数组中删除
-    // arr.remove(e);
     // //将选中节点的文本内容克隆一份
     let nonestr = document.createTextNode('');
     let text = document.createTextNode(range.toString());
-    // //将选中节点区域扩大到整个节点
-    // range.selectNode(e);
     // //将选中节点删除
     txt.deleteFromDocument();
     // //在原来的位置重新将文本插入

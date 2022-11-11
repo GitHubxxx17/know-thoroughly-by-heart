@@ -3,12 +3,7 @@ let answerArr = []; //存放当前答案
 let UserSelectArr = []; //存放当前用户选择的答案是否正确
 let selectArr = []; //下面选项的答案
 let again_count = 0;
-
 let endAnswerArr = []; //存放所有答案
-
-
-
-
 
 function ConnectionClicked() {
     try {
@@ -468,8 +463,6 @@ function animate_pkend() {
     $('.enterPk .head_nav_pk').classList.add('animated');
     $('.enterPk .pk_blood .mine').classList.add('disLeft');
     $('.enterPk .pk_blood .mine').classList.add('animated');
-    // $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
-    // $('.enterPk .pk_blood .enter_vs').classList.add('animated');
     $('.enterPk .pk_blood .time').classList.add('disappear');
     $('.enterPk .pk_blood .time').classList.add('animated');
     $('.enterPk .pk_blood .other').classList.add('disRight');
@@ -562,7 +555,6 @@ $(".pk_end .click_back ").addEventListener('click', () => {
     img_box.classList.remove("disappear_xz");
     $('.newwaitPK .mine').classList.remove('disappearup')
     $('.newwaitPK .other').classList.remove('disappearbottom')
-
     $('.enterPk .pk_blood .time').classList.remove('disappear');
     $('.enterPk .pk_blood .time').classList.remove('animated');
     $('.enterPk .head_nav_pk').classList.remove('disappear');
@@ -570,7 +562,6 @@ $(".pk_end .click_back ").addEventListener('click', () => {
     $('.enterPk .pk_blood .other').classList.remove('disRight');
     $('.enterPk .text_box').classList.remove('disappear');
     $('.enterPk .option').classList.remove('disappear');
-
     $('.enterPk').style.display = 'none';
     $('.pk_end').classList.add('disappear');
     $('.pk_end .mine').classList.add('disLeft');
@@ -581,6 +572,5 @@ $(".pk_end .click_back ").addEventListener('click', () => {
         $('.pk_end').style.display = 'none';
         $('.pk_end .win_lose .bgc').style.display = 'none';
         $('.pk_end .win_lose .win').style.display = 'none';
-
     }, 1300);
 })

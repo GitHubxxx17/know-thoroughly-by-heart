@@ -43,15 +43,10 @@ $(".Making_page .text_box").onkeyup = (e) => {
     if (e.keyCode == 13) {
         let txt = window.getSelection();
         let range = txt.getRangeAt(0);
-        console.log(range, range.anchorOffset);
-
         for (let x of all(".Making_page .text_box div")) {
             if (!x.classList.contains('highhight')) {
-
                 let br = document.createElement("br");
-
                 range.setStartBefore(x)
-
                 range.insertNode(br)
                 range.setStartAfter(br)
                 range.setEndAfter(br)
@@ -66,7 +61,6 @@ $(".Making_page .text_box").onkeyup = (e) => {
                 for (let i = 0; i < arrr.length; i++) {
                     if (i == arrr.length - 1 && arrr[i].nodeName == 'BR')
                         continue;
-                    console.log(arrr[i]);
                     $('.Making_page .text_box').insertBefore(arrr[i], x);
                 }
                 if (keycode == 13) {
@@ -77,5 +71,9 @@ $(".Making_page .text_box").onkeyup = (e) => {
         }
     }
     keycode = e.keyCode;
+
+    $(".Making_page .text_box").onclick = () => {
+        keycode = 0;
+    }
 }
 
