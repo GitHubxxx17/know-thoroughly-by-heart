@@ -106,6 +106,7 @@ a {
   background-color: #ecedef;
   font-size: 4vw;
   border: 0;
+  letter-spacing: 0.23rem;
 }
 .search_page header .header_search button {
   width: 8vw;

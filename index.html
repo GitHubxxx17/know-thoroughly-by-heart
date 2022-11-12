@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./css/search.css">
     <link rel="stylesheet" href="./css/CaptureAvatar.css">
     <link rel="stylesheet" href="./css/NoviceTutorial.css">
+    <link rel="stylesheet" href="./css/generateRules.css">
 </head>
 
 <body>
@@ -39,7 +40,6 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="ht_2">
                         <div class="header_left">
                             <span class="icon iconfont icon-guanbi"></span>
@@ -73,12 +73,12 @@
                                 <div class="box">
                                     <div class="com time">
                                         <div class="com_title"> <i class="iconfont icon-shijian"></i> 学习时长</div>
-                                        <div class="data"><span class="cur_data">28 </span><span>分钟</span></div>
+                                        <div class="data"><span class="cur_data">0</span><span>分钟</span></div>
                                     </div>
                                     <div class="splitLine"></div>
                                     <div class="com  page">
                                         <div class="com_title"> <i class="iconfont icon-tongji1"></i> 学习篇数</div>
-                                        <div class="data"><span class="cur_data">2 </span><span>篇</span></div>
+                                        <div class="data"><span class="cur_data">0</span><span>篇</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                     <div class="tr_top">
                                         <h3>
                                             今日复习任务&nbsp;
-                                            <span class="cur">0</span><span>/</span><span class="sum">4</span>
+                                            <span class="cur">0</span><span>/</span><span class="sum">0</span>
                                         </h3>
                                         <div class="rule"><span class="iconfont icon-zhuyi
                                             "></span> 查看生成规则</div>
@@ -160,6 +160,31 @@
                     </ul>
                 </div>
             </header>
+        </div>
+        <!-- 规则页面 -->
+        <div class="rules_pageAll scroll_top">
+            <div class="rules">
+                <header>
+                    <div class="header_left">
+                        <span class="icon iconfont icon-xiangzuojiantou"></span>
+                    </div>
+                    <div class="header_title">
+                        复习功能介绍
+                    </div>
+                    <div></div>
+                </header>
+                <main>
+                    <div class="rules_title">复习任务生成规则：</div>
+                    <div class="rules_page page1">1. 本平台是根据艾宾浩斯遗忘曲线生成复习计划</div>
+                    <div class="rules_page">2. 首次复习的模板将会出现在“待复习列表”内，24小时后出现在“今日复习任务”板块。</div>
+                    <div class="rules_page">3. 艾宾浩斯复习周期：隔1天、隔2天、隔4天、隔7天、隔15天、隔31天、隔3个月、隔6个月复习，共八个周期。</div>
+                    <div class="rules_page">4. 完成上一周期复习，该模板自动进入下一周期。</div>
+                    <img src="./images/rules.jpg" alt="">
+                    <div class="rules_title">使用步骤:</div>
+                    <div class="rules_page page1">1.选择“学习页面—今日计划”页面</div>
+                    <div class="rules_page">2.选择复习周期内的模板，点击“去复习”键进行复习。</div>
+                </main>
+            </div>
         </div>
         <!-- 学习页面 -->
         <div class="learn_page">
@@ -267,7 +292,6 @@
                         <span class="icon iconfont icon-sousuo3"></span>
                     </button>
                 </div>
-
             </header>
             <div class="container">
                 <div id="paragraph">
@@ -596,7 +620,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text_box ">
+            <div class="text_box">
                 <!-- 一、世界观与哲学的基本问题
                 <br>&nbsp;&nbsp;&nbsp;&nbsp;1、世界观与哲学的基本问题
                 <div class="highlight ">世界观</div>是人们对世界关系的根本观点。
@@ -679,7 +703,7 @@
                             </div>
                         </div>
                         <div class="other_name ">hahahah</div>
-                        <div class="xingxing ">
+                        <div class="xingxing">
                             <i class="add_reduce other_add_reduce ">-1</i> <i
                                 class="active iconfont icon-shoucang "></i>
                         </div>
@@ -793,6 +817,10 @@
         </div>
         <!-- 社区页面 -->
         <div class="community main_page scroll_top ">
+            <div class="popup_box dianzan_fast">请勿操作过快</div>
+            <!-- <div class="popup2 modify_succani2">
+
+            </div> -->
             <header class="scroll_top ">
                 <div class="search ">
                     <div class="upload ">
@@ -820,102 +848,16 @@
             <main>
                 <div class="zhanwei "></div>
                 <!-- <div class="commutity_box "> -->
+                <div class="com_loading_up"><span class="icon iconfont icon-a-zhongzhishuaxin"></span></div>
                 <div class="com_loading"></div>
                 <ul class="community_ul ">
-                    <!-- <li>
-                        <div class="modleId ">112</div>
-                        <div class="color ">
-                            <div class="upper ">
-                                <div class="head_portrait ">
-                                    <img src="./images/头像/头像-女学生2.png " alt=" ">
-                                </div>
-                                <div class="idname1 ">发际线与我作队</div>
-                            </div>
-
-                            <div class="content ">
-                                <h4 class="title ellipsis ">马原基础原理</h4>
-                                <div class="info_box ">
-                                    <div class="info ellipsis ">内容内容很多内容文本jashdjask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容文容内容文本</div>
-                                </div>
-                            </div>
-                            <div class="click ">
-                                <div class="label ">
-                                    <span class="iconfont icon-shuqianguanli "></span>
-                                    <span>考研资料</span>
-                                </div>
-                                <div class="inter_box " id="interactive ">
-                                    <div class="interactive ">
-                                        <span class="dainzan iconfont icon-shoucang ">&nbsp;&nbsp; <i>收藏</i></span>
-                                        <span class="jifen iconfont icon-jifenhuiyuan "> &nbsp;<i>打赏</i></span>
-                                    </div>
-                                </div>
-                                <i class=" menu iconfont icon-shixincaidan "></i>
-                            </div>
+                    <li class="footer">
+                        <div class="footer_loading">
+                            <span class="icon iconfont icon-a-zhongzhishuaxin"></span>
+                            <span>正在加载中······</span>
                         </div>
+                        <div class="footer_end">已经到底啦~~</div>
                     </li>
-                    <li>
-                        <div class="modleId ">112</div>
-                        <div class="color ">
-                            <div class="upper ">
-                                <div class="head_portrait ">
-                                    <img src="./images/头像/头像-女学生2.png " alt=" ">
-                                </div>
-                                <div class="idname1 ">发际线与我作队</div>
-                            </div>
-
-                            <div class="content ">
-                                <h4 class="title ellipsis ">马原基础原理</h4>
-                                <div class="info_box ">
-                                    <div class="info ellipsis ">内容内容很多内容文本jashdjask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容文容内容文本</div>
-                                </div>
-                            </div>
-                            <div class="click ">
-                                <div class="label ">
-                                    <span class="iconfont icon-shuqianguanli "></span>
-                                    <span>考研资料</span>
-                                </div>
-                                <div class="inter_box " id="interactive ">
-                                    <div class="interactive ">
-                                        <span class="dainzan iconfont icon-shoucang ">&nbsp;&nbsp; <i>收藏</i></span>
-                                        <span class="jifen iconfont icon-jifenhuiyuan "> &nbsp;<i>打赏</i></span>
-                                    </div>
-                                </div>
-                                <i class=" menu iconfont icon-shixincaidan "></i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="modleId ">112</div>
-                        <div class="color ">
-                            <div class="upper ">
-                                <div class="head_portrait ">
-                                    <img src="./images/头像/头像-女学生2.png " alt=" ">
-                                </div>
-                                <div class="idname1 ">发际线与我作队</div>
-                            </div>
-
-                            <div class="content ">
-                                <h4 class="title ellipsis ">马原基础原理</h4>
-                                <div class="info_box ">
-                                    <div class="info ellipsis ">内容内容很多内容文本jashdjask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容ask hhsajh hask 内容内容文容内容文容内容文容内容文本</div>
-                                </div>
-                            </div>
-                            <div class="click ">
-                                <div class="label ">
-                                    <span class="iconfont icon-shuqianguanli "></span>
-                                    <span>考研资料</span>
-                                </div>
-                                <div class="inter_box " id="interactive ">
-                                    <div class="interactive ">
-                                        <span class="dainzan iconfont icon-shoucang ">&nbsp;&nbsp; <i>收藏</i></span>
-                                        <span class="jifen iconfont icon-jifenhuiyuan "> &nbsp;<i>打赏</i></span>
-                                    </div>
-                                </div>
-                                <i class=" menu iconfont icon-shixincaidan "></i>
-                            </div>
-                        </div>
-                    </li> -->
-                    <li class="footer "></li>
                 </ul>
                 <!-- </div> -->
 

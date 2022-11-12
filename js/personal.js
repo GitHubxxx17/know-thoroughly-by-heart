@@ -1,7 +1,5 @@
 $('.personal .exit').onclick = () => {
-    if (!curr.auto) {
-        window.localStorage.clear();
-    }
+    window.localStorage.clear();
     location.href = './login.html';
 }
 

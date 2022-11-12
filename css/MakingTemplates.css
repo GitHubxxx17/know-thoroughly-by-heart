@@ -350,6 +350,8 @@ a {
   font-size: 4.55696203vw;
   border: none;
   background-color: #eeedf5;
+  padding: 0 2.53164557vw;
+  letter-spacing: 0.23rem;
 }
 .Making_page .container .text_box {
   background-color: #fafafa;

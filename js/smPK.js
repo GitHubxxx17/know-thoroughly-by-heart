@@ -3,7 +3,14 @@ let answerArr = []; //存放当前答案
 let UserSelectArr = []; //存放当前用户选择的答案是否正确
 let selectArr = []; //下面选项的答案
 let again_count = 0;
+
 let endAnswerArr = []; //存放所有答案
+let isend = false;
+let judge_refleshIndex = false;
+
+
+
+
 
 function ConnectionClicked() {
     try {
@@ -15,7 +22,8 @@ function ConnectionClicked() {
         let msgCount = 0; //接收信息的次数
         let timeLimits_record;
         let timeCount = 0;
-        let judge_run = true;
+        let judge_run = true; //判断是否有人逃跑
+        let judge_run_reflesh = true; //判断是否有人逃跑
         ws.onmessage = function(event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
@@ -71,21 +79,34 @@ function ConnectionClicked() {
                 //发送AGAIN之后再刷新模板
                 if (res.OPERATE) {
                     //刷新模板
-                    animate($('.enterPk .text_box'), 0, $('.enterPk .text_box').scrollTop)
-                    Refresh_Template(res.digedContent);
+                    // animate($('.enterPk .text_box'), 0, $('.enterPk .text_box').scrollTop)
+                    if (judge_run_reflesh && judge_refleshIndex) {
+                        setTimeout(() => {
+                            Refresh_Template(res.digedContent);
+                        }, 1000)
+                    } else if (judge_run_reflesh) {
+                        Refresh_Template(res.digedContent);
+                    } else {
+                        ws.send("plzEndThisFKGame");
+                    }
+
 
                 }
                 //对方已经逃跑
                 if (res.ENEMY_EXIT && !res.MATCH_END) {
                     $('.runle').style.display = 'block';
                     $('.enterPk .other_blood_change')[0].style.width = '0';
-                    $('.enterPk  .other').style.backgroundColor = 'transparent';
+                    // $('.enterPk  .other').style.backgroundColor = 'transparent';
                     setTimeout(() => {
                         $('.enterPk  .other_name').style.opacity = '0';
                         $('.enterPk  .other_blook').style.opacity = '0';
                         $('.enterPk  .other .head_portrait img').src = './images/头像/连接断开.png';
                     }, 700);
-                    judge_run = false;
+                    if (curr.userId == res.runId) {
+                        console.log("judge_run = false;");
+                        judge_run = false;
+                    }
+                    judge_run_reflesh = false;
                 }
 
                 //比赛结束之后
@@ -96,7 +117,6 @@ function ConnectionClicked() {
                         $(".show_answer .answer").innerHTML += `<div class="an">${x}</div>`;
                     }
                     //渲染当前用户的答案对错
-
                     for (let i = 0; i < UserSelectArr.length; i++) {
                         if (UserSelectArr[i] == "right") {
                             $(".show_answer .mine_an").innerHTML += `<div class="dui">√</div>`;
@@ -109,51 +129,23 @@ function ConnectionClicked() {
                             $(".show_answer .mine_an").innerHTML += `<div class="cuo">?</div>`;
                         }
                     }
+                    isend = true;
                     endAnswerArr = [];
                     $('.runle').style.display = 'none';
                     ws.onclose = wsonclose(judge_run, ws);
                 }
 
-
+                if (res.CONNECTION && isend) {
+                    console.log(res.winnerId);
+                    //渲染对方答案对错
+                    RefreshXing(res.winnerId);
+                    RefreshWin_Lose(res.winnerId);
+                }
 
                 if (msgCount == 1) {
                     ws.onclose = wsonclose(false, ws);
                 }
 
-                //渲染对方答案对错
-                if (res.records) {
-                    RefreshXing(res.winnerId);
-                    RefreshWin_Lose(res.winnerId);
-
-                    for (let x of res.records) {
-                        if (x.userId != curr.userId) {
-                            let other_answer = x.answersRecord;
-                            console.log(other_answer);
-                            $(".show_answer .other_an").innerHTML = ``;
-
-                            for (let i = 0; i < other_answer.length; i++) {
-                                if (other_answer[i].right) {
-                                    $(".show_answer .other_an").innerHTML += `
-                                    <div class="dui">√</div>
-                                    `;
-                                } else {
-                                    $(".show_answer .other_an").innerHTML += `
-                                        <div class="cuo">×</div>`;
-                                }
-                                if (i == endAnswerArr.length - 1) {
-                                    break;
-                                }
-                            }
-                            if (other_answer.length < endAnswerArr.length) {
-                                for (let j = 0; j < endAnswerArr.length - other_answer.length; j++) {
-                                    $(".show_answer .other_an").innerHTML += `
-                                    <div class="cuo">?</div>`;
-                                }
-                            }
-                        }
-                    }
-
-                }
             }
         };
 
@@ -287,19 +279,19 @@ function Refresh_Template(data) {
 }
 
 /*窗口滚动缓动动画*/
-function animate(obj, target, stop) {
-    obj.scrollTop = stop;
-    clearInterval(obj.timerx);
-    obj.timerx = setInterval(function() {
-        var step = (target - obj.scrollTop) / 15; //缓动动画位移
-        if (obj.scrollTop.toFixed() == target.toFixed()) {
-            clearInterval(obj.timerx); //如果运动到目标值时清除定时器
-        };
+// function animate(obj, target, stop) {
+//     obj.scrollTop = stop;
+//     clearInterval(obj.timerx);
+//     obj.timerx = setInterval(function() {
+//         var step = (target - obj.scrollTop) / 15; //缓动动画位移
+//         if (obj.scrollTop.toFixed() == target.toFixed()) {
+//             clearInterval(obj.timerx); //如果运动到目标值时清除定时器
+//         };
 
-        obj.scroll(0, obj.scrollTop + step);
+//         obj.scroll(0, obj.scrollTop + step);
 
-    }, 10);
-}
+//     }, 10);
+// }
 
 //刷新答案
 function Refresh_answer() {
@@ -364,6 +356,8 @@ function Refresh_answer() {
                     //再次刷新题目
                     ws.send("AGAIN");
                     console.log("发送再次刷新模板请求！");
+                    //延时回到顶部
+                    judge_refleshIndex = true;
                 }
 
             }
@@ -418,16 +412,24 @@ function Refresh_answer() {
         for (let x of $('.enterPk .option .answer')) {
             x.innerHTML = slArr[n++];
         }
-        if (answerIndex < all('.enterPk .highlight').length) {
-            let picsTop = all('.enterPk .highlight')[answerIndex].offsetTop - $('.enterPk .text_box').offsetTop;
 
-            if (picsTop >= $('.enterPk .text_box').offsetTop / 2) {
-                setTimeout(function() {
-                    animate($('.enterPk .text_box'), picsTop - $('.enterPk .text_box').clientHeight / 2, $('.enterPk .text_box').scrollTop)
-                }, 1000);
+        $(".enterPk .text_box").scrollTo({
+            top: all('.enterPk .highlight')[answerIndex].offsetTop - 400,
+            behavior: "smooth"
+        });
 
-            }
-        }
+
+
+        // if (answerIndex < all('.enterPk .highlight').length) {
+        //     let picsTop = all('.enterPk .highlight')[answerIndex].offsetTop - $('.enterPk .text_box').offsetTop;
+
+        //     if (picsTop >= $('.enterPk .text_box').offsetTop / 2) {
+        //         setTimeout(function() {
+        //             animate($('.enterPk .text_box'), picsTop - $('.enterPk .text_box').clientHeight / 2, $('.enterPk .text_box').scrollTop)
+        //         }, 1000);
+
+        //     }
+        // }
     }
     answerSelect();
     gameInit();
@@ -463,6 +465,8 @@ function animate_pkend() {
     $('.enterPk .head_nav_pk').classList.add('animated');
     $('.enterPk .pk_blood .mine').classList.add('disLeft');
     $('.enterPk .pk_blood .mine').classList.add('animated');
+    // $('.enterPk .pk_blood .enter_vs').classList.add('disappear');
+    // $('.enterPk .pk_blood .enter_vs').classList.add('animated');
     $('.enterPk .pk_blood .time').classList.add('disappear');
     $('.enterPk .pk_blood .time').classList.add('animated');
     $('.enterPk .pk_blood .other').classList.add('disRight');
@@ -542,6 +546,8 @@ function RefreshWin_Lose(winnerId) {
         } else {
             $('.pk_end .win_lose .bgc').src = "./images/pk/defeat_bgc .png";
             $('.pk_end .win_lose .win').src = "./images/pk/defeat.png";
+            $('.pk_end .win_lose .win').src = "./images/pk/defeat.png";
+            $('.pk_end .win_lose .win').classList.add("lose");
             $('.pk_end .win_lose .win').style.width = "29.33vw";
             $('.pk_end .win_lose .win').style.left = "2vh";
         }
@@ -550,11 +556,14 @@ function RefreshWin_Lose(winnerId) {
 
 //结算界面点击退出
 $(".pk_end .click_back ").addEventListener('click', () => {
+    //去掉lose图标的大小限制
+    $('.pk_end .win_lose .win').classList.remove("lose");
     resetPK();
     $('.enterPk').classList.remove('appear');
     img_box.classList.remove("disappear_xz");
     $('.newwaitPK .mine').classList.remove('disappearup')
     $('.newwaitPK .other').classList.remove('disappearbottom')
+
     $('.enterPk .pk_blood .time').classList.remove('disappear');
     $('.enterPk .pk_blood .time').classList.remove('animated');
     $('.enterPk .head_nav_pk').classList.remove('disappear');
@@ -562,6 +571,7 @@ $(".pk_end .click_back ").addEventListener('click', () => {
     $('.enterPk .pk_blood .other').classList.remove('disRight');
     $('.enterPk .text_box').classList.remove('disappear');
     $('.enterPk .option').classList.remove('disappear');
+
     $('.enterPk').style.display = 'none';
     $('.pk_end').classList.add('disappear');
     $('.pk_end .mine').classList.add('disLeft');
@@ -572,5 +582,6 @@ $(".pk_end .click_back ").addEventListener('click', () => {
         $('.pk_end').style.display = 'none';
         $('.pk_end .win_lose .bgc').style.display = 'none';
         $('.pk_end .win_lose .win').style.display = 'none';
+
     }, 1300);
 })

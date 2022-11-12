@@ -225,33 +225,34 @@ $('.ht_2 .header_right').onclick = () => {
     //删除模板
     for (let x of all('.my_base li')) {
         if (x.querySelector('.select').classList.contains('selected')) {
-            ajax({
-                url: "http://8.134.104.234:8080/ReciteMemory/modle/deleteModle",
-                type: "post",
-                data: {
-                    userId: curr.userId,
-                    modleId: x.querySelector('.modleId').innerHTML
-                },
-                dataType: "json",
-                flag: true,
-                success: function (res, xml) {
-                    let msg = JSON.parse(res).msg;
-                    console.log(msg);
-                    if (msg.content == '删除成功') {
-                        x.querySelector('.select').classList.remove('selected');
-                        x.classList.add('baseLis_del2');
-                        x.addEventListener('animationend', () => {
-                            x.classList.add('hidden');
-                        })
-                    } else {
-                        alert('删除模板失败');
+            setTimeout(() => {
+                ajax({
+                    url: "http://8.134.104.234:8080/ReciteMemory/modle/deleteModle",
+                    type: "post",
+                    data: {
+                        userId: curr.userId,
+                        modleId: x.querySelector('.modleId').innerHTML
+                    },
+                    dataType: "json",
+                    flag: true,
+                    success: function (res, xml) {
+                        let msg = JSON.parse(res).msg;
+                        console.log(msg);
+                        if (msg.content == '删除成功') {
+                            x.querySelector('.select').classList.remove('selected');
+                            x.classList.add('baseLis_del2');
+                            x.addEventListener('animationend', () => {
+                                x.classList.add('hidden');
+                            })
+                        }
+                    },
+                    fail: function (status) {
+                        // 此处放失败后执行的代码
+                        console.log(status);
                     }
-                },
-                fail: function (status) {
-                    // 此处放失败后执行的代码
-                    console.log(status);
-                }
-            });
+                });
+            }, 10)
+
         }
     }
     //取消收藏
@@ -462,4 +463,14 @@ console.log(1 / 2 * $('.review_line').offsetWidth);
 function digitChange(i) {
     let arr = ['一', '二', '三', '四', '五', '六', '七', '八'];
     return arr[i];
+}
+
+//点击进入规则页面
+$('.today_review .rule').onclick = () => {
+    $('.rules_pageAll').classList.remove('scroll_top');
+}
+
+//点击退出规则页面
+$('.rules_pageAll .header_left').onclick = () => {
+    $('.rules_pageAll').classList.add('scroll_top');
 }

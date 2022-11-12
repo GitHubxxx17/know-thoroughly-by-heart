@@ -270,14 +270,13 @@ $('.learn_page .finish').onclick = () => {
             if (newTPFlag) {
                 all('.my_base li')[0].querySelector('.title').innerHTML = title1;
                 all('.my_base li')[0].querySelector('.info').innerHTML = info1;
-                all('.my_base li')[0].querySelector('.label span')[1].innerHTML = label1;
+                all('.my_base li')[0].querySelector('.label_title').innerHTML = label1;
             } else {
                 title.innerHTML = title1;
                 info.innerHTML = info1;
                 label.querySelectorAll('span')[1].innerHTML = label1;
             }
         }
-        let poststr = '';
         let newinfo = info1.replace(/&nbsp;/g, '<空格>');
         console.log(newinfo);
         ajax({
@@ -303,8 +302,9 @@ $('.learn_page .finish').onclick = () => {
                     mStatus = 0;
                     $('.footer_nav li')[0].onclick();
                     bianji = false;
+                }else{
+                    xrcomTP();
                 }
-                xrcomTP();
             },
             fail: function (status) {
                 // 此处放失败后执行的代码

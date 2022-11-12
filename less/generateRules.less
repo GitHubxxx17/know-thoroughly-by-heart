@@ -1,0 +1,60 @@
+//out:../css/
+@import 'base';
+@vw: 3.75vw;
+
+.rules{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f6f7fb;
+    header{
+        z-index: 1000;
+        transition: left .2s;
+        width: 100vw;
+        height: (58 / @vw);
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 (30 / @vw) 0 (10 / @vw);
+
+
+        .header_left {
+            width: (30/@vw);
+            height: (30/@vw);
+            line-height: (30/@vw);
+            text-align: center;
+            .icon {
+                font-weight: 700;
+                font-size: (15 / @vw);
+            }
+        }
+
+        .header_title {
+            display: flex;
+            align-items: center;
+            padding: 0 (10 / @vw);
+            height: (30 / @vw);
+        
+        }
+    }
+
+    main{
+        padding: 0 (30/@vw);
+        img{
+            border-radius: (5/@vw);
+        }
+        
+        .rules_title{
+            margin: (30/@vw) 0;
+            margin-bottom: 0;
+            font-weight: 700;
+        }
+
+        .rules_page.page1{
+            margin-top: (10/@vw);
+        }
+        .rules_page{
+            margin: (20/@vw) 0;
+        }
+    }
+}

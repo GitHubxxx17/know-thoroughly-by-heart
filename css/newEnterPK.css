@@ -175,7 +175,7 @@ a {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #6e6e6e00;
+  background-color: #90909078;
 }
 .enterPk .pk_blood .other .blook_change {
   position: fixed;
@@ -778,6 +778,11 @@ a {
   left: 3vh;
   width: 21.33333333vw;
   height: auto;
+}
+.pk_end .pk_interface .win_lose .win.lose {
+  top: 5vh;
+  left: 0vh;
+  width: 36vw;
 }
 .pk_end .pk_interface .other {
   width: 40%;

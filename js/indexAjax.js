@@ -14,7 +14,7 @@ function UserMemory() {
         flag: true,
         dataType: "json",
         flag: true,
-        success: function (res, xml) {
+        success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             if (msg.data.userModle) {
                 let tparr = msg.data.userModle;
@@ -39,7 +39,7 @@ function UserMemory() {
                 $('.footer_nav li')[0].onclick();
             }
         },
-        fail: function (status) {
+        fail: function(status) {
             // 此处放失败后执行的代码
             console.log(status);
         }
@@ -54,7 +54,7 @@ ajax({
     data: { userId: curr.userId },
     dataType: "json",
     flag: true,
-    success: function (res, xml) {
+    success: function(res, xml) {
         let msg = JSON.parse(res).msg;
         let userInfo = msg.data.user;
         curr['userInfo'] = userInfo;
@@ -75,7 +75,7 @@ ajax({
             }
         }
     },
-    fail: function (status) {
+    fail: function(status) {
         // 此处放失败后执行的代码
         console.log(status);
     }
@@ -86,6 +86,7 @@ ajax({
 var Alltime = 0;
 var studyNums = 0;
 getStoreDSSD(true)
+
 function getStoreDSSD(flag) {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/inf.get/studyData",
@@ -93,7 +94,7 @@ function getStoreDSSD(flag) {
         data: { userId: curr.userId },
         dataType: "json",
         flag: true,
-        success: function (res, xml) {
+        success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             console.log(msg);
             if (msg.content == "获取失败") {
@@ -111,7 +112,7 @@ function getStoreDSSD(flag) {
             if (flag)
                 fxPeriod();
         },
-        fail: function (status) {
+        fail: function(status) {
             // 此处放失败后执行的代码
             console.log(status);
         }
@@ -120,7 +121,7 @@ function getStoreDSSD(flag) {
 
 
 //上传文件
-$('.Making_page .header_left input').onchange = function (e) {
+$('.Making_page .header_left input').onchange = function(e) {
     console.log(e.target.files);
     let file = e.target.files[0];
     if (e.target.files.length != 0) {
@@ -132,7 +133,7 @@ $('.Making_page .header_left input').onchange = function (e) {
             data: fd,
             dataType: "json",
             flag: false,
-            success: function (res, xml) {
+            success: function(res, xml) {
                 $('.Making_page .loading').style.display = 'none';
                 let msg = JSON.parse(res).msg;
                 let context = msg.data.context;
@@ -142,7 +143,7 @@ $('.Making_page .header_left input').onchange = function (e) {
                 $('.Making_page .text_box').innerHTML = newcon;
                 e.target.value = '';
             },
-            fail: function (status) {
+            fail: function(status) {
                 // 此处放失败后执行的代码
                 console.log(status);
             }
@@ -187,48 +188,13 @@ $('.Making_page .popup .popup_box').onclick = (e) => e.stopPropagation();
 $('.Making_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
 
 //点击保存文件
-$('.Making_page .popup_box button')[0].onclick = () => {
+$('.Making_page .popup .popup_box button')[0].onclick = () => {
+
     // 如果标题和内容不为空
     if (newtitle != '' && newcontext != '') {
         //创建模板
         let newcon = newcontext.replace(/&nbsp;/g, '<空格>');
         let contect = encodeURI(newcon);
-        ajax({
-            url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
-            type: "post",
-            data: {
-                context: contect,
-                userId: curr.userId,
-                modleTitle: newtitle,
-                overWrite: 0,
-                modleLabel: labelId1(newlabel)
-            },
-            dataType: "json",
-            flag: true,
-            success: function (res, xml) {
-                let msg = JSON.parse(res).msg;
-                let modle = msg.data.modle;
-                console.log(msg)
-                newTP(newtitle, newcontext, modle.modleId, newlabel, 0, '未学习', true);
-                resetbase();
-                MakingTP();
-            },
-            fail: function (status) {
-                // 此处放失败后执行的代码
-                console.log(status);
-            }
-        });
-    }
-    // 隐藏弹窗
-    $('.Making_page .popup').style.display = 'none';
-}
-//点击进入编辑页面
-$('.Making_page .popup_box button')[1].onclick = () => {
-    // 如果标题和内容不为空
-    if (newtitle != '' && newcontext != '') {
-        //创建模板
-        let newcon = newcontext.replace(/&nbsp;/g, '<空格>').replace(/<div>/g, '').replace(/<\/div>/g, '');
-        let poststr = `context=${newcon}&userId=${curr.userId}&modleTitle=${newtitle}&overWrite=0&modleLabel=${labelId1(newlabel)}`
 
         ajax({
             url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
@@ -242,7 +208,48 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             },
             dataType: "json",
             flag: true,
-            success: function (res, xml) {
+            success: function(res, xml) {
+                let msg = JSON.parse(res).msg;
+                let modle = msg.data.modle;
+                console.log(msg)
+                newTP(newtitle, newcontext, modle.modleId, newlabel, 0, '未学习', true);
+                resetbase();
+                MakingTP();
+                $('.Making_page .popup').style.display = 'none';
+                $('.Making_page .popup2 .popup_box').innerHTML = '保存成功';
+                $('.Making_page .popup2').style.display = 'block';
+            },
+            fail: function(status) {
+                // 此处放失败后执行的代码
+                $('.Making_page .popup').style.display = 'none';
+                $('.Making_page .popup2 .popup_box').innerHTML = '保存失败';
+                $('.Making_page .popup2').style.display = 'block';
+                console.log(status);
+            }
+        });
+    }
+}
+
+//点击进入编辑页面
+$('.Making_page .popup_box button')[1].onclick = () => {
+    // 如果标题和内容不为空
+    if (newtitle != '' && newcontext != '') {
+        //创建模板
+        let newcon = newcontext.replace(/&nbsp;/g, '<空格>').replace(/<div>/g, '').replace(/<\/div>/g, '');
+
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
+            type: "post",
+            data: {
+                context: newcon,
+                userId: curr.userId,
+                modleTitle: newtitle,
+                overWrite: 0,
+                modleLabel: labelId1(newlabel)
+            },
+            dataType: "json",
+            flag: true,
+            success: function(res, xml) {
                 let msg = JSON.parse(res).msg;
                 let modle = msg.data.modle;
                 newTPFlag = true;
@@ -257,7 +264,7 @@ $('.Making_page .popup_box button')[1].onclick = () => {
                 $('.learn_page header').style.opacity = '1';
                 MakingTP();
             },
-            fail: function (status) {
+            fail: function(status) {
                 // 此处放失败后执行的代码
                 console.log(status);
             }

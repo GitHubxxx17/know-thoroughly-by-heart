@@ -223,7 +223,7 @@ $('.register button').onclick = (e) => {
                     //将当前登录的用户保存到本地
                     let curr = {};
                     curr['auto'] = false;
-                    curr['userId'] = msg.data.userId;
+                    curr['userId'] = msg.data.token;
                     curr['phone'] = a[0];
                     saveData('current_user', curr);
                     location.href = './index.html';

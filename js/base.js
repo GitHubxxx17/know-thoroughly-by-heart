@@ -15,13 +15,12 @@ function all(selectors) {
 function ajax(options) {
     options.type = (options.type || "GET").toUpperCase();
     let params = null;
-    if(options.flag){
+    if (options.flag) {
         params = formatParams(options.data);
-    } 
-    else{
+    } else {
         params = options.data;
     }
-        
+
     let xhr = null;
     //创建 - 非IE6 - 第一步
     if (window.XMLHttpRequest) {
@@ -31,17 +30,17 @@ function ajax(options) {
     }
 
     //接收 - 第三步
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            let status = xhr.status;
-            if (status >= 200 && status < 300) {
-                options.success && options.success(xhr.responseText, xhr.responseXML);
-            } else {
-                options.fail && options.fail(status);
+    xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                let status = xhr.status;
+                if (status >= 200 && status < 300) {
+                    options.success && options.success(xhr.responseText, xhr.responseXML);
+                } else {
+                    options.fail && options.fail(status);
+                }
             }
         }
-    }
-    //连接 和 发送 - 第二步
+        //连接 和 发送 - 第二步
     if (options.type == "GET") {
         xhr.open("GET", options.url + "?" + params, true);
         xhr.send(null);
@@ -49,7 +48,7 @@ function ajax(options) {
         xhr.open("POST", options.url, true);
         //设置表单提交时的内容类型
         if (options.flag)
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");         
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(params);
     }
 }
@@ -80,7 +79,7 @@ function saveData(name, data) {
 
 
 //为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
-Array.prototype.remove = function (val) {
+Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
@@ -215,7 +214,12 @@ function comTP(title, context, modleId, label, base64, username, likeNum, likeSt
                             </div>
                         </div>`
 
-    $('.community_ul').prepend(li);
+    if (nextcom)
+        $('.community_ul').insertBefore(li, $('.community_ul .footer'));
+    else
+        $('.community_ul').prepend(li);
+    if (refreshcom)
+        li.classList.add('comlifadein');
     // <div class="inter_box" id="interactive">
     //     <div class="interactive">
     //         ${interactive}
@@ -259,10 +263,14 @@ function UploadTP(title, context, modleId, label, common) {
 function labelId1(str) {
     if (str == '教资')
         return 1;
-    if (str == '考研')
+    else if (str == '考研')
         return 2;
-    if (str == '通识课')
+    else if (str == '通识课')
         return 3;
+    else {
+        return 0;
+    }
+
 }
 
 //转换id成标签
