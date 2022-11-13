@@ -36,7 +36,6 @@ $('.modify .confirm').onclick = (e) => {
             url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
             type: "get",
             data: {
-                userId: curr.userId,
                 nickName: modify_value
             },
             dataType: "json",
@@ -51,7 +50,12 @@ $('.modify .confirm').onclick = (e) => {
                     $('.modify_title .left').onclick();
                     $('.modify_succ').classList.add('modify_succani');
                     curr.userInfo.nickName = modify_value;
-                    saveData('current_user', curr);
+                    if(auto){
+                        localSaveData('current_user', curr);
+                    }else{
+                        sessionSaveData('current_user',curr);
+                    }
+                    
                 } else {
                     $('.modify_err').innerHTML = '用户名已被使用';
                     $('.modify_err').style.opacity = '1';
@@ -69,7 +73,6 @@ $('.modify .confirm').onclick = (e) => {
             url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
             type: "get",
             data: {
-                userId: curr.userId,
                 phone: modify_value
             },
             dataType: "json",
@@ -82,7 +85,11 @@ $('.modify .confirm').onclick = (e) => {
                     $('.modify_title .left').onclick();
                     $('.modify_succ').classList.add('modify_succani');
                     curr.userInfo.phone = modify_value;
-                    saveData('current_user', curr);
+                    if(auto){
+                        localSaveData('current_user', curr);
+                    }else{
+                        sessionSaveData('current_user',curr);
+                    }
                 } else {
                     $('.modify_err').innerHTML = '手机号已被注册';
                     $('.modify_err').style.opacity = '1';
@@ -100,7 +107,6 @@ $('.modify .confirm').onclick = (e) => {
             url: "http://8.134.104.234:8080/ReciteMemory/user.do/ReMessage",
             type: "get",
             data: {
-                userId: curr.userId,
                 password: modify_value
             },
             dataType: "json",
@@ -160,7 +166,7 @@ $('.personal .head_portrait input').onchange = function (e) {
             }
             fd.append("image", tofile);
             ajax({
-                url: `http://8.134.104.234:8080/ReciteMemory/upload/uploadImg?userId=${curr.userId}`,
+                url: `http://8.134.104.234:8080/ReciteMemory/upload/uploadImg`,
                 type: "post",
                 data: fd,
                 dataType: "json",

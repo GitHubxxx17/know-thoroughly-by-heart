@@ -1,4 +1,11 @@
-let curr = getData('current_user');
+let auto = localGetData('auto');
+let curr = {};
+if(auto){
+    curr = localGetData('current_user');
+}else{
+    curr = sessionGetData('current_user');
+}
+
 
 //登录拦截
 if (curr.length == 0) {
@@ -9,7 +16,7 @@ if (curr.length == 0) {
 for (let i = 0; i < $('.hb_btn').length; i++) {
     $('.hb_btn')[i].onclick = () => {
         let x = -100 * i;
-        $('.container_scroll').style.left = `${x}vw`;
+        $('.memory_base .container_scroll').style.left = `${x}vw`;
         for (let k of $('.hb_btn')) {
             k.classList.remove('btn_line')
         }
@@ -222,74 +229,65 @@ $('.ht_2 .header_left').onclick = () => {
 
 //点击删除模板
 $('.ht_2 .header_right').onclick = () => {
-    //删除模板
-    for (let x of all('.my_base li')) {
-        if (x.querySelector('.select').classList.contains('selected')) {
-            setTimeout(() => {
-                ajax({
-                    url: "http://8.134.104.234:8080/ReciteMemory/modle/deleteModle",
-                    type: "post",
-                    data: {
-                        userId: curr.userId,
-                        modleId: x.querySelector('.modleId').innerHTML
-                    },
-                    dataType: "json",
-                    flag: true,
-                    success: function (res, xml) {
-                        let msg = JSON.parse(res).msg;
-                        console.log(msg);
-                        if (msg.content == '删除成功') {
-                            x.querySelector('.select').classList.remove('selected');
-                            x.classList.add('baseLis_del2');
-                            x.addEventListener('animationend', () => {
-                                x.classList.add('hidden');
-                            })
-                        }
-                    },
-                    fail: function (status) {
-                        // 此处放失败后执行的代码
-                        console.log(status);
-                    }
-                });
-            }, 10)
-
+    let baseName = $('.base_btn').querySelectorAll('span')[0].innerHTML;
+    let url = '';
+    let data = {};
+    let my_baseLis = [];
+    let index = 0;
+    if(baseName == '个人库'){
+        url = 'http://8.134.104.234:8080/ReciteMemory/modle/deleteModle';
+        for (let x of all('.my_base li')) {
+            if (x.querySelector('.select').classList.contains('selected')) {
+                my_baseLis.push(x);
+            }
         }
+        data = {modleId: my_baseLis[index].querySelector('.modleId').innerHTML}
+        delBaseLi();
+    }else{
+        url = 'http://8.134.104.234:8080/ReciteMemory/modle/Collection';
+        for (let x of all('.collection_base li')) {
+            if (x.querySelector('.select').classList.contains('selected')) {
+                my_baseLis.push(x);
+            }
+        }
+        data = {mStatus: 0}
+        delBaseLi();
     }
-    //取消收藏
-    for (let x of all('.collection_base li')) {
-        if (x.querySelector('.select').classList.contains('selected')) {
+    //删除模板或取消收藏
+    function delBaseLi() {
+        if(index >= my_baseLis.length){
+            return;
+        }else{
+            data['modleId'] = my_baseLis[index].querySelector('.modleId').innerHTML;
             ajax({
-                url: "http://8.134.104.234:8080/ReciteMemory/modle/Collection",
+                url: url,
                 type: "post",
-                data: {
-                    userId: curr.userId,
-                    modleId: x.querySelector('.modleId').innerHTML,
-                    mStatus: 0
-                },
+                data: data,
                 dataType: "json",
                 flag: true,
                 success: function (res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
-                    if (msg.content == '取消收藏成功') {
-                        x.querySelector('.select').classList.remove('selected');
-                        x.classList.add('baseLis_del2');
-                        x.addEventListener('animationend', () => {
-                            x.classList.add('hidden');
+                    if (msg.content == '删除成功' || msg.content == '取消收藏成功') {
+                        my_baseLis[index].querySelector('.select').classList.remove('selected');
+                        my_baseLis[index].classList.add('baseLis_del2');
+                        my_baseLis[index].addEventListener('animationend', (e) => {
+                            e.target.classList.add('hidden');
                         })
-                    } else {
-                        alert('取消收藏失败');
                     }
+                    index++;
+                    delBaseLi();
                 },
                 fail: function (status) {
                     // 此处放失败后执行的代码
+                    index++;
+                    delBaseLi();
                     console.log(status);
                 }
             });
         }
     }
     $('.delnum').innerHTML = `共0项`
-
 }
 
 //点击出现打卡页面
@@ -322,7 +320,6 @@ $(".review_list").addEventListener('click', () => {
                 url: "http://8.134.104.234:8080/ReciteMemory/review/RemoveFromPlan",
                 type: "get",
                 data: {
-                    userId: curr.userId,
                     modleId: k.querySelector('.modleId').innerHTML,
                     studyStatus: '已学习'
                 },
@@ -382,7 +379,7 @@ function fxPeriod() {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/review/GetPeriodModle",
         type: "get",
-        data: { userId: curr.userId },
+        data: {},
         dataType: "json",
         flag: true,
         success: function (res, xml) {

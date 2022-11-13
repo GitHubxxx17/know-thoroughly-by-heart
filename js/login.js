@@ -222,10 +222,10 @@ $('.register button').onclick = (e) => {
                 if (msg.data.isSuccess) {
                     //将当前登录的用户保存到本地
                     let curr = {};
-                    curr['auto'] = false;
                     curr['userId'] = msg.data.token;
                     curr['phone'] = a[0];
-                    saveData('current_user', curr);
+                    localSaveData('auto',false);
+                    sessionSaveData('current_user',curr);
                     location.href = './index.html';
                 } else {
                     alert('注册失败，请重新注册');
@@ -264,18 +264,18 @@ $('.login button').onclick = (e) => {
                 console.log(msg);
                 //登录成功
                 if (msg.data.isSuccess) {
-                    //将当前登录的用户手机号保存到本地
+                    //将当前登录的用户信息保存到本地
                     let curr = {};
-
-                    //如果用户勾选自动登录，则将数据存储在本地
-                    if ($('.auto').checked) {
-                        curr['auto'] = true;
-                    } else {
-                        curr['auto'] = false;
-                    }
                     curr['userId'] = msg.data.token;
                     curr['phone'] = $('.login_data')[0].value;
-                    saveData('current_user', curr);
+                    //如果用户勾选自动登录，则将数据存储在本地
+                    if ($('.auto').checked) {
+                        localSaveData('auto',true);
+                        localSaveData('current_user', curr);
+                    } else {
+                        localSaveData('auto',false);
+                        sessionSaveData('current_user',curr);
+                    }         
                     location.href = './index.html';
                 }
                 //如果返回的结果错误则提醒

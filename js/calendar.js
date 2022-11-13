@@ -49,7 +49,6 @@ generateCalendar = (month, year) => {
         url: "http://8.134.104.234:8080/ReciteMemory/user.do/getClockInRecord",
         type: "get",
         data: {
-            userId: curr.userId,
             year: year,
             month: month + 1
         },
@@ -165,7 +164,6 @@ $('.calendar_footer .situation')[1].onclick = () => {
             url: "http://8.134.104.234:8080/ReciteMemory/user.do/clockIn",
             type: "post",
             data: {
-                userId: curr.userId,
                 date: dateFromat(currDate)
             },
             dataType: "json",

@@ -10,7 +10,7 @@ function $(selectors) {
 function all(selectors) {
     return document.querySelectorAll(selectors);
 }
-
+let curr1 = localGetData('current_user')
 
 function ajax(options) {
     options.type = (options.type || "GET").toUpperCase();
@@ -30,25 +30,28 @@ function ajax(options) {
     }
 
     //接收 - 第三步
-    xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                let status = xhr.status;
-                if (status >= 200 && status < 300) {
-                    options.success && options.success(xhr.responseText, xhr.responseXML);
-                } else {
-                    options.fail && options.fail(status);
-                }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let status = xhr.status;
+            if (status >= 200 && status < 300) {
+                options.success && options.success(xhr.responseText, xhr.responseXML);
+            } else {
+                options.fail && options.fail(status);
             }
         }
-        //连接 和 发送 - 第二步
+    }
+    //连接 和 发送 - 第二步
+
     if (options.type == "GET") {
         xhr.open("GET", options.url + "?" + params, true);
+        xhr.setRequestHeader("authorization", curr1.userId);
         xhr.send(null);
     } else if (options.type == "POST") {
         xhr.open("POST", options.url, true);
         //设置表单提交时的内容类型
         if (options.flag)
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("authorization", curr1.userId);
         xhr.send(params);
     }
 }
@@ -62,8 +65,18 @@ function formatParams(data) {
 }
 
 //读取本地存储数据
-function getData(name) {
+function localGetData(name) {
     let data = localStorage.getItem(name);
+    if (data !== null) {
+        //把字符串转换成对象
+        return JSON.parse(data);
+    } else {
+        return [];
+    }
+}
+//读取session中的数据
+function sessionGetData(name) {
+    let data = sessionStorage.getItem(name);
     if (data !== null) {
         //把字符串转换成对象
         return JSON.parse(data);
@@ -73,13 +86,16 @@ function getData(name) {
 }
 
 //保存本地存储数据
-function saveData(name, data) {
+function localSaveData(name, data) {
     localStorage.setItem(name, JSON.stringify(data));
 }
-
+//保存session存储
+function sessionSaveData(name, data) {
+    sessionStorage.setItem(name, JSON.stringify(data));
+}
 
 //为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
-Array.prototype.remove = function(val) {
+Array.prototype.remove = function (val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
@@ -130,16 +146,6 @@ function newTP(title, context, modleId, label, common, studyStatus, flag) {
 
 //社区渲染
 function comTP(title, context, modleId, label, base64, username, likeNum, likeStatus, name_flag) {
-    // let interactive = '';
-    // if (name_flag) {
-    //     interactive = `<span class="dainzan  iconfont icon-shoucang">&nbsp;<i>收藏</i></span>
-    //                     <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>`
-    // } else {
-    //     interactive = `<span class="dainzan  iconfont icon-shoucang hidden">&nbsp;<i>收藏</i></span>
-    //                     <span class="shanchu iconfont icon-a-shanchulajitong"> &nbsp;<i>删除</i></span>
-    //                     <span class="jifen iconfont icon-jifenhuiyuan"> &nbsp;<i>${dzNum}</i></span>
-    //                     `
-    // }
     //点赞状态
     let dz = ''
     if (likeStatus) {
@@ -220,26 +226,10 @@ function comTP(title, context, modleId, label, base64, username, likeNum, likeSt
         $('.community_ul').prepend(li);
     if (refreshcom)
         li.classList.add('comlifadein');
-    // <div class="inter_box" id="interactive">
-    //     <div class="interactive">
-    //         ${interactive}
-    //     </div>
-    // </div><i class=" menu iconfont icon-shixincaidan"></i>
-
 }
 
 //上传页面渲染模板
 function UploadTP(title, context, modleId, label, common) {
-    let select = '';
-    if (common == 1) {
-        select = `<div class="circle selected">
-                    <i class="iconfont icon-xuanze1"></i>
-                </div>`
-    } else {
-        select = `<div class="circle">
-                    <i class="iconfont icon-xuanze1"></i>
-                </div>`
-    }
     let li = document.createElement('li');
     li.innerHTML = `<div class="modleId">${modleId}</div>
                     <div class="content">
@@ -251,8 +241,15 @@ function UploadTP(title, context, modleId, label, common) {
                             <div class="info ellipsis">${context}</div>
                         </div>
                     </div>
-                    <div class="select">${select}</div>`
-    $('.upload_page ul').prepend(li);
+                    <div class="select">
+                        <div class="circle">
+                            <i class="iconfont icon-xuanze1"></i>
+                        </div>
+                    </div>`
+    if (common == 1)
+        $('.upload_page .Uploaded ul').prepend(li);
+    else
+        $('.upload_page .notUploaded ul').prepend(li);
 }
 
 

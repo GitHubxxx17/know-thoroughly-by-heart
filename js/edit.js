@@ -283,7 +283,6 @@ $('.learn_page .finish').onclick = () => {
             url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
             type: "post",
             data: {
-                userId: curr.userId,
                 context: newinfo,
                 modleTitle: title1,
                 overWrite: 1 - mStatus,

@@ -10,7 +10,7 @@ function UserMemory() {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/modle/UserMemory",
         type: "GET",
-        data: { userId: curr.userId },
+        data: {},
         flag: true,
         dataType: "json",
         flag: true,
@@ -51,7 +51,7 @@ UserMemory();
 ajax({
     url: "http://8.134.104.234:8080/ReciteMemory/user.do/UserMsg",
     type: "GET",
-    data: { userId: curr.userId },
+    data: {},
     dataType: "json",
     flag: true,
     success: function(res, xml) {
@@ -59,7 +59,11 @@ ajax({
         let userInfo = msg.data.user;
         curr['userInfo'] = userInfo;
         console.log(curr);
-        saveData('current_user', curr);
+        if(auto){
+            localSaveData('current_user', curr);
+        }else{
+            sessionSaveData('current_user',curr);
+        }
         //个人页面渲染
         for (let x of $('.idname'))
             x.innerHTML = curr.userInfo.nickName;
@@ -91,7 +95,7 @@ function getStoreDSSD(flag) {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/inf.get/studyData",
         type: "GET",
-        data: { userId: curr.userId },
+        data: {},
         dataType: "json",
         flag: true,
         success: function(res, xml) {
@@ -128,7 +132,7 @@ $('.Making_page .header_left input').onchange = function(e) {
         $('.Making_page .loading').style.display = 'block';
         let fd = new FormData($('.upload_form'));
         ajax({
-            url: `http://8.134.104.234:8080/ReciteMemory/upload/parseContent?userId=${curr.userId}`,
+            url: `http://8.134.104.234:8080/ReciteMemory/upload/parseContent`,
             type: "post",
             data: fd,
             dataType: "json",
@@ -201,7 +205,6 @@ $('.Making_page .popup .popup_box button')[0].onclick = () => {
             type: "post",
             data: {
                 context: contect,
-                userId: curr.userId,
                 modleTitle: newtitle,
                 overWrite: 0,
                 modleLabel: labelId1(newlabel)
@@ -242,7 +245,6 @@ $('.Making_page .popup_box button')[1].onclick = () => {
             type: "post",
             data: {
                 context: newcon,
-                userId: curr.userId,
                 modleTitle: newtitle,
                 overWrite: 0,
                 modleLabel: labelId1(newlabel)

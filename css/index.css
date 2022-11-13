@@ -1098,8 +1098,7 @@ body {
   padding: 0 3.79746835vw;
   width: 100%;
   height: 12.65822785vw;
-  background-color: #ededed;
-  box-shadow: 0 0.25316456vw 2.53164557vw rgba(0, 0, 0, 0.141);
+  background-color: #ffffff;
 }
 .upload_page header .icon-xiangzuojiantou {
   font-weight: 700;
@@ -1125,11 +1124,55 @@ body {
   color: #fff;
   border: 0;
 }
+.upload_page .select_btns {
+  margin-top: 12.65822785vw;
+  width: 100%;
+  height: 10.12658228vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+.upload_page .select_btns .sb_btn {
+  position: relative;
+  flex: 2;
+  height: 100%;
+  text-align: center;
+  line-height: 10.12658228vw;
+  font-size: 4.05063291vw;
+}
+.upload_page .select_btns .sb_btn::after {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  content: '';
+  width: 7.59493671vw;
+  height: 0.50632911vw;
+  background-color: #5c4eaf;
+  border-radius: 1.26582278vw;
+}
+.upload_page .select_btns .sbtn_line::after {
+  display: block;
+}
 .upload_page .container {
   position: relative;
   width: 100vw;
-  height: 100vh;
-  margin-top: 12.65822785vw;
+}
+.upload_page .container .container_scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100%;
+  display: flex;
+  transition: all 0.1s;
+}
+.upload_page .container .notUploaded,
+.upload_page .container .Uploaded {
+  width: 100vw;
+  height: 88vh;
   overflow: scroll;
 }
 .upload_page .container ul {
@@ -1140,11 +1183,12 @@ body {
 .upload_page .container li {
   width: 100vw;
   margin-top: 2.53164557vw;
-  background-color: #fff;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5.06329114vw;
+  opacity: 1;
 }
 .upload_page .container li .modleId {
   display: none;
@@ -1213,7 +1257,7 @@ body {
 }
 .upload_page footer {
   width: 100%;
-  height: 16.4556962vw;
+  height: 6.32911392vw;
 }
 .canwrite {
   outline: 0;

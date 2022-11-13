@@ -23,9 +23,7 @@ function rlRendering() {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/inf.get/rankingList",
         type: "get",
-        data: {
-            userId: curr.userId
-        },
+        data: {},
         dataType: "json",
         flag: true,
         success: function (res, xml) {
@@ -45,9 +43,7 @@ function rlRendering() {
     ajax({
         url: "http://8.134.104.234:8080/ReciteMemory/user.do/userRanking",
         type: "post",
-        data: {
-            userId: curr.userId
-        },
+        data: {},
         dataType: "json",
         flag: true,
         success: function (res, xml) {

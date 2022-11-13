@@ -164,7 +164,6 @@ $('.tijiao').onclick = () => {
                 url: "http://8.134.104.234:8080/ReciteMemory/review/FinishOnceReview",
                 type: "get",
                 data: {
-                    userId: curr.userId,
                     modleId: modleId.innerHTML
                 },
                 dataType: "json",
@@ -189,7 +188,6 @@ $('.tijiao').onclick = () => {
                     url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
                     type: "get",
                     data: {
-                        userId: curr.userId,
                         modleId: mid,
                         studyStatus: '复习中'
                     },
@@ -217,7 +215,6 @@ $('.tijiao').onclick = () => {
                 url: "http://8.134.104.234:8080/ReciteMemory/user.do/storeDSSD",
                 type: "post",
                 data: {
-                    userId: curr.userId,
                     studyTime: Math.round(Alltime / 60)
                 },
                 dataType: "json",
@@ -266,7 +263,6 @@ $('.learn_page .header_left').onclick = () => {
             url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
             type: "get",
             data: {
-                userId: curr.userId,
                 modleId: mid,
                 studyStatus: '复习中'
             },
