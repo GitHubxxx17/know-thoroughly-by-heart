@@ -9,7 +9,7 @@ if(auto){
 
 //登录拦截
 if (curr.length == 0) {
-    location.href = './login.html';
+    location.href = './homePage.html';
 }
 
 //今日计划和记忆库切换

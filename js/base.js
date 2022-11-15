@@ -10,7 +10,13 @@ function $(selectors) {
 function all(selectors) {
     return document.querySelectorAll(selectors);
 }
-let curr1 = localGetData('current_user')
+let auto1 = localGetData('auto');
+let curr1 = {};
+if(auto1){
+    curr1 = localGetData('current_user');
+}else{
+    curr1 = sessionGetData('current_user');
+}
 
 function ajax(options) {
     options.type = (options.type || "GET").toUpperCase();
@@ -44,14 +50,19 @@ function ajax(options) {
 
     if (options.type == "GET") {
         xhr.open("GET", options.url + "?" + params, true);
-        xhr.setRequestHeader("authorization", curr1.userId);
+        if (curr1.length != 0) {
+            xhr.setRequestHeader("authorization", curr1.userId);
+        }
         xhr.send(null);
     } else if (options.type == "POST") {
         xhr.open("POST", options.url, true);
         //设置表单提交时的内容类型
         if (options.flag)
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.setRequestHeader("authorization", curr1.userId);
+        if (curr1.length != 0) {
+            xhr.setRequestHeader("authorization", curr1.userId);
+        }
+        
         xhr.send(params);
     }
 }

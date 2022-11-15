@@ -1224,6 +1224,7 @@ body {
 }
 .upload_page .container li .content .info_box .info {
   word-break: break-all;
+  -webkit-line-clamp: 1;
 }
 .upload_page .container li .content .ellipsis {
   overflow: hidden;
@@ -1313,6 +1314,13 @@ body {
   justify-content: center;
   color: #a1a4b4;
   transition: all 0.2s ease-in-out;
+}
+.footer_nav footer li:nth-child(2) .icon {
+  margin-top: 0.50632911vw;
+  font-size: 6.58227848vw;
+}
+.footer_nav footer li:nth-child(2) .name {
+  margin-top: 0.50632911vw;
 }
 .footer_nav footer li .icon {
   font-size: 7.59493671vw;

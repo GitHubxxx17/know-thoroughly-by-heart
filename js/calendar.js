@@ -76,7 +76,6 @@ generateCalendar = (month, year) => {
             for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
                 let day = document.createElement('div');
                 if (i >= first_day.getDay()) {
-                    day.classList.add('calendar_day_hover')
                     for (let x of clock_day) {
                         if (x == i - 1) {
                             day.classList.add('clock_in');

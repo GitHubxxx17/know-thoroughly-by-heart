@@ -150,6 +150,8 @@ $('.Making_page .header_left input').onchange = function(e) {
             fail: function(status) {
                 // 此处放失败后执行的代码
                 console.log(status);
+                $('.Making_page .popup2 .popup_box').innerHTML = '文件解析失败';
+                $('.Making_page .popup2').style.display = 'block';
             }
         });
     }

@@ -23,7 +23,9 @@ function learnReset() {
     learn_flag_1 = true;
     learn_flag_2 = true;
 
-
+    //背诵睁眼闭眼
+    $('.beisong .icon').classList.add('icon-yanjing');
+    $('.beisong .icon').classList.remove('icon-biyanjing');
     //如果是新建模板
     if (newTPFlag) {
         mid = all('.my_base li')[0].querySelector('.modleId').innerHTML;
@@ -57,6 +59,7 @@ $('.moxie').onclick = () => {
         arr2 = [];
         //利用循环将选中的节点内容替换
         for (let x of all('.learn_page .highlight')) {
+            console.log(x);
             arr2.push(x.innerText);
             x.setAttribute('contenteditable', true)
             x.innerHTML = '请输入答案';
@@ -112,6 +115,8 @@ $('.beisong').onclick = () => {
             answerReset()
         }
         learnReset()
+        $('.beisong .icon').classList.remove('icon-yanjing');
+        $('.beisong .icon').classList.add('icon-biyanjing');
         $('.beisong').classList.add('choice');
         //利用循环将选中的节点添加类
         let n = 0;
@@ -135,27 +140,61 @@ $('.beisong').onclick = () => {
 $('.tijiao').onclick = () => {
     if (!learn_flag_1) {
         learn_flag_1 = true;
-        let n = 0;
-        let sum = 0;
-        for (let x of all('.learn_page .highlight')) {
-            if (x.innerHTML == arr2[n])
-                sum++;
-            n++;
-        }
-        let score = Math.round((sum / n) * 100);
-        $('.learn_page .popup .popup_box .score').innerHTML = score;
-        $('.learn_page .popup .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
-        if (score < 60) {
-            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
-            $('.learn_page .popup .popup_box .circle').innerHTML = '陌生'
-        } else if (score < 80) {
-            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
-            $('.learn_page .popup .popup_box .circle').innerHTML = '一般'
-        } else {
-            $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
-            $('.learn_page .popup .popup_box .circle').innerHTML = '熟练'
-        }
-        $('.learn_page .popup').style.display = 'block';
+        // let n = 0;
+        // let sum = 0;
+        // for (let x of all('.learn_page .highlight')) {
+        //     if (x.innerHTML == arr2[n])
+        //         sum++;
+        //     n++;
+        // }
+        // let score = Math.round((sum / n) * 100);
+        // $('.learn_page .popup .popup_box .score').innerHTML = score;
+        // $('.learn_page .popup .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
+        // if (score < 60) {
+        //     $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
+        //     $('.learn_page .popup .popup_box .circle').innerHTML = '陌生'
+        // } else if (score < 80) {
+        //     $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
+        //     $('.learn_page .popup .popup_box .circle').innerHTML = '一般'
+        // } else {
+        //     $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
+        //     $('.learn_page .popup .popup_box .circle').innerHTML = '熟练'
+        // }
+        // $('.learn_page .popup').style.display = 'block';
+        let data = {'"data"':'"data"'}
+        console.log(typeof data);
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/inf.get/getAccuracy",
+            type: "post",
+            data: {'"data"':'"data"'},
+            dataType: "json",
+            flag: true,
+            success: function (res, xml) {
+                let msg = JSON.parse(res).msg;
+                console.log(msg);
+                if(msg.content == '计算成功'){
+                    let score = msg.data.accuracy.split('%');
+                    $('.learn_page .popup .popup_box .score').innerHTML = score;
+                    $('.learn_page .popup .popup_box .score_title').innerHTML = `本次正确率：${score}%`;
+                    if (score < 60) {
+                        $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#fda71c ${score}%, #fef6ea 0%)`
+                        $('.learn_page .popup .popup_box .circle').innerHTML = '陌生'
+                    } else if (score < 80) {
+                        $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#02c287 ${score}%, #e1fbf2 0%)`
+                        $('.learn_page .popup .popup_box .circle').innerHTML = '一般'
+                    } else {
+                        $('.learn_page .popup .popup_box .left').style.background = `conic-gradient(#5133febc ${score}%, #bcb0ffbc 0%)`
+                        $('.learn_page .popup .popup_box .circle').innerHTML = '熟练'
+                    }
+                    $('.learn_page .popup').style.display = 'block';
+                }
+            },
+            fail: function (status) {
+                // 此处放失败后执行的代码
+                console.log(status);
+            }
+        });
+        console.log(data);
 
         //如果正在复习
         if (flag_review) {
@@ -281,4 +320,3 @@ $('.learn_page .header_left').onclick = () => {
         });
     }
 }
-

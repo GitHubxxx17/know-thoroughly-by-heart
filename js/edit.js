@@ -5,9 +5,6 @@ function editReset() {
         x.onclick = null;
         x.style.userSelect = '';
     }
-    for (let x of $('.learn_page footer li')) {
-        x.classList.remove('choice');
-    }
     $('.learn_page .text_box').removeAttribute('contenteditable');
     $('.learn_page .text_box').classList.remove('del');
     // $('.learn_page .title').classList.remove('canwrite');
@@ -34,64 +31,67 @@ $('.zidingyi').onclick = () => {
 //点击编辑
 $('.bianji').onclick = () => {
     editReset();
-    $('.learn_page .title').disabled = false;
-    $('.learn_page .text_box').setAttribute('contenteditable', true);
-    $('.bianji').classList.add('choice');
+    $('.wakong').classList.remove('choice');
+    $('.bianji').classList.toggle('choice'); 
     // $('.learn_page .title').classList.add('canwrite');
-    bianji = true;
-    let keycode = 0;
-    //当用户按下回车时
-    $(".learn_page .text_box").onkeyup = (e) => {
+    if ($('.bianji').classList.contains('choice')) {
+        $('.learn_page .title').disabled = false;
+        $('.learn_page .text_box').setAttribute('contenteditable', true);
+        bianji = true;
+        let keycode = 0;
+        //当用户按下回车时
+        $(".learn_page .text_box").onkeyup = (e) => {
 
-        //将嵌套在高亮标签中的br拿到外面，并删除该标签
-        for (let x of all(".learn_page .highlight")) {
-            if (x.innerHTML == '<br>') {
-                $('.learn_page .text_box').insertBefore(x.childNodes[0], x);
-                $(".learn_page .text_box").removeChild(x);
-            }
-
-        }
-
-        if (e.keyCode == 13) {
-
-            let txt = window.getSelection();
-            let range = txt.getRangeAt(0);
-
-            for (let x of all(".learn_page .text_box div")) {
-                if (!x.classList.contains('highlight')) {
-                    let br = document.createElement("br");
-                    range.setStartBefore(x)
-                    range.insertNode(br);
-                    range.setStartAfter(br);
-                    range.setEndAfter(br);
-                    //将节点放入数组并逐个插入
-                    let arrr = [];
-                    for (let k of x.childNodes) {
-                        if (k.nodeType == '3' && (k.textContent == '\n' || k.textContent == ''))
-                            continue;
-                        arrr.push(k);
-                    }
-
-                    for (let i = 0; i < arrr.length; i++) {
-                        if (i == arrr.length - 1 && arrr[i].nodeName == 'BR')
-                            continue;
-                        console.log(arrr[i]);
-                        $('.learn_page .text_box').insertBefore(arrr[i], x);
-                    }
-                    if (keycode == 13) {
-                        $(".learn_page .text_box").removeChild(br);
-                    }
+            //将嵌套在高亮标签中的br拿到外面，并删除该标签
+            for (let x of all(".learn_page .highlight")) {
+                if (x.innerHTML == '<br>') {
+                    $('.learn_page .text_box').insertBefore(x.childNodes[0], x);
                     $(".learn_page .text_box").removeChild(x);
                 }
+
             }
+            //如果是回车则删除富文本编辑器自动添加的div
+            if (e.keyCode == 13) {
+
+                let txt = window.getSelection();
+                let range = txt.getRangeAt(0);
+
+                for (let x of all(".learn_page .text_box div")) {
+                    if (!x.classList.contains('highlight')) {
+                        let br = document.createElement("br");
+                        range.setStartBefore(x)
+                        range.insertNode(br);
+                        range.setStartAfter(br);
+                        range.setEndAfter(br);
+                        //将节点放入数组并逐个插入
+                        let arrr = [];
+                        for (let k of x.childNodes) {
+                            if (k.nodeType == '3' && (k.textContent == '\n' || k.textContent == ''))
+                                continue;
+                            arrr.push(k);
+                        }
+
+                        for (let i = 0; i < arrr.length; i++) {
+                            if (i == arrr.length - 1 && arrr[i].nodeName == 'BR')
+                                continue;
+                            console.log(arrr[i]);
+                            $('.learn_page .text_box').insertBefore(arrr[i], x);
+                        }
+                        if (keycode == 13) {
+                            $(".learn_page .text_box").removeChild(br);
+                        }
+                        $(".learn_page .text_box").removeChild(x);
+                    }
+                }
+            }
+
+            keycode = e.keyCode;
         }
 
-        keycode = e.keyCode;
-    }
 
-
-    $(".learn_page .text_box").onclick = () => {
-        keycode = 0;
+        $(".learn_page .text_box").onclick = () => {
+            keycode = 0;
+        }
     }
 }
 
@@ -104,8 +104,9 @@ let arr = [];
 
 //点击挖空进入挖空模式
 $('.wakong').onclick = () => {
-    editReset()
-    $('.wakong').classList.add('choice');
+    editReset();
+    $('.bianji').classList.remove('choice');
+    $('.wakong').classList.toggle('choice');
     flag = true;
     //当长按屏幕触屏结束时，选中文本 
     $('.learn_page .text_box').ontouchstart = () => {
@@ -301,7 +302,7 @@ $('.learn_page .finish').onclick = () => {
                     mStatus = 0;
                     $('.footer_nav li')[0].onclick();
                     bianji = false;
-                }else{
+                } else {
                     xrcomTP();
                 }
             },
