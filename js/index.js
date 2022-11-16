@@ -1,8 +1,8 @@
 let auto = localGetData('auto');
 let curr = {};
-if(auto){
+if (auto) {
     curr = localGetData('current_user');
-}else{
+} else {
     curr = sessionGetData('current_user');
 }
 
@@ -53,7 +53,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
         if (i == 0) {
             $('.memory_base header').classList.remove('scroll_top');
         }
-        if(i != 0){
+        if (i != 0) {
             $('.hb_btn')[0].onclick();
         }
         if (i == 1) {
@@ -63,7 +63,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
             $('.community header').classList.remove('scroll_top');
             $('.community header .label li')[0].onclick();
         }
-        if(i != 1 && !judge){
+        if (i != 1 && !judge) {
             laqu.onclick()
         }
         if (i != 2) {
@@ -120,6 +120,7 @@ var mStatus = 0;
 //是否为复习
 var flag_review = false;
 
+
 //为模板添加事件
 function TP() {
     Array.from(all('.tp_inner')).forEach((x, i) => {
@@ -129,10 +130,10 @@ function TP() {
             e.stopPropagation();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
                 let time2 = new Date().getSeconds();
                 if (l == 0) {
@@ -237,30 +238,30 @@ $('.ht_2 .header_right').onclick = () => {
     let data = {};
     let my_baseLis = [];
     let index = 0;
-    if(baseName == '个人库'){
+    if (baseName == '个人库') {
         url = 'http://8.134.104.234:8080/ReciteMemory/modle/deleteModle';
         for (let x of all('.my_base li')) {
             if (x.querySelector('.select').classList.contains('selected')) {
                 my_baseLis.push(x);
             }
         }
-        data = {modleId: my_baseLis[index].querySelector('.modleId').innerHTML}
+        data = { modleId: my_baseLis[index].querySelector('.modleId').innerHTML }
         delBaseLi();
-    }else{
+    } else {
         url = 'http://8.134.104.234:8080/ReciteMemory/modle/Collection';
         for (let x of all('.collection_base li')) {
             if (x.querySelector('.select').classList.contains('selected')) {
                 my_baseLis.push(x);
             }
         }
-        data = {mStatus: 0}
+        data = { mStatus: 0 }
         delBaseLi();
     }
     //删除模板或取消收藏
     function delBaseLi() {
-        if(index >= my_baseLis.length){
+        if (index >= my_baseLis.length) {
             return;
-        }else{
+        } else {
             data['modleId'] = my_baseLis[index].querySelector('.modleId').innerHTML;
             ajax({
                 url: url,
@@ -268,7 +269,7 @@ $('.ht_2 .header_right').onclick = () => {
                 data: data,
                 dataType: "json",
                 flag: true,
-                success: function (res, xml) {
+                success: function(res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     if (msg.content == '删除成功' || msg.content == '取消收藏成功') {
@@ -281,7 +282,7 @@ $('.ht_2 .header_right').onclick = () => {
                     index++;
                     delBaseLi();
                 },
-                fail: function (status) {
+                fail: function(status) {
                     // 此处放失败后执行的代码
                     index++;
                     delBaseLi();
@@ -307,7 +308,7 @@ $(".review_list").addEventListener('click', () => {
     removeRecite = false;
     //复习列表渲染
     $('.reciteCon ul').innerHTML = '';
-    for(let x of all('.review_cycle li')){
+    for (let x of all('.review_cycle li')) {
         $('.reciteCon ul').innerHTML += `<li>
                                             <div class="modleId">${x.querySelector('.modleId').innerHTML}</div>
                                             <span class="title ellipsis">${x.querySelector('.title').innerHTML}</span>
@@ -327,7 +328,7 @@ $(".review_list").addEventListener('click', () => {
                 },
                 dataType: "json",
                 flag: true,
-                success: function (res, xml) {
+                success: function(res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     //将记忆库对应的模板改成已学习
@@ -342,7 +343,7 @@ $(".review_list").addEventListener('click', () => {
                         for (let j = 0; j < ModlesOfPeriod[i].length; j++) {
                             if (ModlesOfPeriod[i][j].modleId == k.querySelector('.modleId').innerHTML) {
                                 let removearr = ModlesOfPeriod[i];
-                                console.log(removearr,removearr[j]);
+                                console.log(removearr, removearr[j]);
                                 removearr.remove(removearr[j]);
                                 break;
                             }
@@ -352,7 +353,7 @@ $(".review_list").addEventListener('click', () => {
                     //删除复习周期中的li
                     k.classList.add('review_del');
                 },
-                fail: function (status) {
+                fail: function(status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -365,7 +366,7 @@ $(".review_list").addEventListener('click', () => {
 $(".removeRecite .back").addEventListener('click', () => {
     $(".removeRecite").classList.add("scroll_top");
     $(".removeRecite .headBox").classList.add("scroll_top");
-    if(removeRecite){
+    if (removeRecite) {
         modle_Period();
     }
 })
@@ -381,14 +382,14 @@ function fxPeriod() {
         data: {},
         dataType: "json",
         flag: true,
-        success: function (res, xml) {
+        success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             console.log(msg);
             ModlesOfPeriod = msg.data.ModlesOfPeriod;
             console.log(ModlesOfPeriod);
             modle_Period();
         },
-        fail: function (status) {
+        fail: function(status) {
             // 此处放失败后执行的代码
             console.log(status);
         }

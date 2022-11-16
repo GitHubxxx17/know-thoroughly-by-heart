@@ -101,16 +101,27 @@ a {
   font-size: 7.59493671vw;
   text-align: center;
 }
-.Tutorial main .common {
+.Tutorial main .common.no_bgc {
   margin-top: 2.53164557vw;
+}
+.Tutorial main .bcg {
+  position: absolute;
+  width: 100%;
+  height: 50.63291139vw;
+  background: url(../images/新手教程/新手教程中间.jpg) no-repeat;
+  background-size: 100% 100%;
+  z-index: -1;
+}
+.Tutorial main .common {
+  z-index: 100;
   padding: 0 7.59493671vw;
 }
 .Tutorial main .common .function_title {
   margin: 0 auto;
-  margin-top: 5.06329114vw;
   margin-bottom: 7.59493671vw;
   width: 25.3164557vw;
   height: 10.12658228vw;
+  z-index: 100;
   line-height: 10.12658228vw;
   border-radius: 2.53164557vw;
   color: #ffffff;

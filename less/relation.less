@@ -1,0 +1,91 @@
+//out:../css/
+@import 'base';
+@vw: 3.95vw;
+
+.relation{
+    header{
+        z-index: 1000;
+        transition: left .2s;
+        width: 100vw;
+        height: (58 / @vw);
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 (30 / @vw) 0 (10 / @vw);
+
+
+        .header_left {
+            width: (30/@vw);
+            height: (30/@vw);
+            line-height: (30/@vw);
+            text-align: center;
+            .icon {
+                font-weight: 700;
+                font-size: (15 / @vw);
+            }
+        }
+    }
+
+    main{
+        margin: (0/@vw) (20/@vw);
+        .my_logo{
+            margin: (20/@vw) 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: (80/@vw);
+           img{
+                width: (80/@vw);
+                
+           }
+        }
+
+        .my_title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: (10/@vw);
+            font-size: (20/@vw);
+        }
+
+        .common{
+            border-top: 1px solid #cfcece;
+            margin-top: (60/@vw);
+            padding: (20/@vw) (20/@vw);
+        }
+
+        .hou{
+            border-top: 0px solid #cfcece;
+            margin-top: (0/@vw);
+            padding: (10/@vw) (20/@vw);
+        }
+
+        .she{
+            border-top: 0px solid #cfcece;
+            margin-top: (0/@vw);
+            padding: (20/@vw) (20/@vw);
+        }
+
+        .zongzhi{
+            margin-top: (0/@vw);
+            line-height: (40/@vw);
+            border-bottom: 1px solid #cfcece;
+        }
+    }
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: (50/@vw);
+    .foot{
+        width: 100%;
+        height: (100/@vw);
+        text-align: center;
+        color: #ababab;
+    }
+    
+}

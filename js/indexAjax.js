@@ -5,6 +5,7 @@ let newlabel = null;
 var newTPFlag = false;
 let pk = [];
 let scModleId = []; //收藏的模板id
+let hasrecords = []; //保存返回的没有记录的模板
 //获取用户模板
 function UserMemory() {
     ajax({

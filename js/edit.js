@@ -16,9 +16,10 @@ function editReset() {
 }
 
 let bianji = false;
-
+let zidingyi = false;
 //点击自定义
 $('.zidingyi').onclick = () => {
+    zidingyi = true;
     if (!learn_flag_1) {
         answerReset()
     }
@@ -32,7 +33,7 @@ $('.zidingyi').onclick = () => {
 $('.bianji').onclick = () => {
     editReset();
     $('.wakong').classList.remove('choice');
-    $('.bianji').classList.toggle('choice'); 
+    $('.bianji').classList.toggle('choice');
     // $('.learn_page .title').classList.add('canwrite');
     if ($('.bianji').classList.contains('choice')) {
         $('.learn_page .title').disabled = false;
@@ -87,7 +88,6 @@ $('.bianji').onclick = () => {
 
             keycode = e.keyCode;
         }
-
 
         $(".learn_page .text_box").onclick = () => {
             keycode = 0;
@@ -196,9 +196,12 @@ $('.wakong').onclick = () => {
                 let x = all('.learn_page .highlight')[i];
                 //清除高亮标签后面的空文本
                 function clean() {
-                    if (x.nextSibling.textContent == '') {
-                        $('.learn_page .text_box').removeChild(x.nextSibling);
+                    if (x.nextSibling) {
+                        if (x.nextSibling.textContent == '') {
+                            $('.learn_page .text_box').removeChild(x.nextSibling);
+                        }
                     }
+
                 }
                 clean();
                 //如果两个标签相邻时合并
@@ -228,6 +231,12 @@ $('.wakong').onclick = () => {
         // $('.learn_page .text_box').style.userSelect = 'none';
     }
 }
+
+//点击弹出系统挖空弹窗
+$('.xtwakong').onclick = () => {
+    $('.learn_page .popup4').style.display = 'block';
+}
+
 let mid = null;
 //点击保存
 $('.learn_page .finish').onclick = () => {
@@ -246,8 +255,7 @@ $('.learn_page .finish').onclick = () => {
     }
 
     editReset();
-    $('.learn_page .footer_1').style.display = 'block';
-    $('.learn_page .footer_2').style.display = 'none';
+
     //如果是新建模板
     if (newTPFlag) {
         mid = all('.my_base li')[0].querySelector('.modleId').innerHTML;
@@ -295,13 +303,20 @@ $('.learn_page .finish').onclick = () => {
             success: function (res, xml) {
                 let msg = JSON.parse(res).msg;
                 console.log(msg);
+                zidingyi = false;
+                bianji = false;
+                $('.learn_page .popup2 .popup_box').innerHTML = '保存成功';
+                $('.learn_page .popup2').style.display = 'block';
+                $('.learn_page .footer_1').style.display = 'block';
+                $('.learn_page .footer_2').style.display = 'none';
                 if (mStatus == 1) {
                     let modle = msg.data.modle;
                     newTPFlag = true;
                     newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
                     mStatus = 0;
                     $('.footer_nav li')[0].onclick();
-                    bianji = false;
+
+
                 } else {
                     xrcomTP();
                 }
@@ -309,6 +324,8 @@ $('.learn_page .finish').onclick = () => {
             fail: function (status) {
                 // 此处放失败后执行的代码
                 console.log(status);
+                $('.learn_page .popup2 .popup_box').innerHTML = '保存失败';
+                $('.learn_page .popup2').style.display = 'block';
             }
         });
     }
@@ -316,9 +333,67 @@ $('.learn_page .finish').onclick = () => {
 }
 
 //点击关闭弹窗
-$('.edit_page .popup').onclick = () => $('.edit_page .popup').style.display = 'none';
+$('.learn_page .popup4').onclick = () => $('.learn_page .popup4').style.display = 'none';
 //阻止事件冒泡
-$('.edit_page .popup .popup_box').onclick = (e) => e.stopPropagation();
+$('.learn_page .popup4 .popup_box').onclick = (e) => e.stopPropagation();
+
+//选择难度
+for (let x of $('.select_diff .com')) {
+    x.onclick = () => {
+        editReset();
+        for (let k of $('.select_diff .com')) {
+            k.classList.remove('active');
+        }
+        x.classList.add('active');
+    }
+}
+
+//选中进入系统挖空
+$('.learn_page .popup4 .context').onclick = () => {
+    for (let x of $('.select_diff .com')) {
+        if (x.classList.contains('active')) {
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/autoDig",
+                type: "post",
+                data: {
+                    difficulty: difficulty(x.innerHTML),
+                    modleId: modleId.innerHTML
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    if (msg.content == '挖空成功') {
+                        $('.learn_page .text_box').innerHTML = msg.data.content;
+                        for (let k of all('.learn_page .text_box div')) {
+                            k.classList.add('highlight');
+                        }
+
+                    }
+                    $('.learn_page .popup4').style.display = 'none';
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
+                    $('.learn_page .popup4').style.display = 'none';
+                }
+            });
+        }
+
+    }
+
+
+    function difficulty(str) {
+        if (str == '简单') {
+            return 'easy';
+        } else if (str == '中等') {
+            return 'normal';
+        } else if (str == '困难') {
+            return 'hard';
+        }
+    }
+}
 
 //选择节点函数点击选中div中所有内容，点击取消挖空,参数e为选中节点，n为判断是否自动点击
 function CancelHollowing(e, n) {

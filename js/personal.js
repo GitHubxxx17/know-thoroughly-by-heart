@@ -204,3 +204,13 @@ $('.system_settings .common')[0].onclick = () => {
 $('.NoviceTutorial_page .icon-xiangzuojiantou').onclick = () => {
     $('.NoviceTutorial_page').classList.add('scroll_top')
 }
+
+//点击进入关于我们
+$('.system_settings .common')[2].onclick = () => {
+    $('.relation').classList.remove('scroll_top')
+}
+
+//关于我们点击返回
+$('.relation .header_left').onclick = () => {
+    $('.relation').classList.add('scroll_top')
+}

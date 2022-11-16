@@ -105,7 +105,10 @@ function communityTP() {
                             let newres = JSON.parse(res);
                             console.log(newres);
                             console.log(parseInt(x.querySelector('.wenzi').innerText), x.querySelector('.wenzi').innerText);
-                            if (parseInt(x.querySelector('.wenzi').innerText) - 1 < 1000) {
+                            if(parseInt(x.querySelector('.wenzi').innerText) - 1 == 0){
+                                x.querySelector('.wenzi').innerHTML = '点赞'
+                            }
+                            else if (parseInt(x.querySelector('.wenzi').innerText) - 1 < 1000) {
                                 x.querySelector('.wenzi').innerHTML = `&nbsp;${parseInt(x.querySelector('.wenzi').innerText) - 1}&nbsp;&nbsp;`;
                             } else {
                                 x.querySelector('.wenzi').innerHTML = `${parseInt(x.querySelector('.wenzi').innerText) - 1}`;
@@ -230,7 +233,8 @@ function communityTP() {
                 $('.viewTemplate .dainzan .iconfont').classList.add('icon-dianzan1');
                 $('.viewTemplate .dainzan .vt_text').classList.add('orange');
                 $('.viewTemplate .dainzan .vt_text').innerHTML = x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML;
-
+            }else{
+                $('.viewTemplate .dainzan .vt_text').innerHTML = x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML;
             }
 
             $('.viewTemplate').classList.remove('scroll_top');
@@ -374,7 +378,15 @@ function communityTP() {
                 success: function(res, xml) {
                     let newres = JSON.parse(res);
                     console.log(newres);
-                    $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞';
+                    console.log(parseInt($('.viewTemplate .dainzan .vt_text').innerText));
+                    if(parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1 == 0){
+                        $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞'
+                    }
+                    else if (parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1 < 1000) {
+                        $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1}&nbsp;&nbsp;`;
+                    } else {
+                        $('.viewTemplate .dainzan .vt_text').innerHTML = `${parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1}`;
+                    }
                     if (!searchcom)
                         browse.querySelector('.dainzan .wenzi').innerHTML = '点赞';
                     for (let x of commonArr) {

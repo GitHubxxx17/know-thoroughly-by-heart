@@ -5,8 +5,11 @@ function learnReset() {
             x.removeAttribute('contenteditable');
             x.className = 'highlight';
             x.onclick = null;
+            x.onkeydown = null;
+            x.onkeyup = null;
+            x.onfocus = null;
+            x.onblur = null;
             x.style.userSelect = '';
-
         }
     }
     for (let x of $('.learn_page footer li')) {
@@ -22,7 +25,7 @@ function learnReset() {
     flag1 = false;
     learn_flag_1 = true;
     learn_flag_2 = true;
-
+    moxiele = false;
     //背诵睁眼闭眼
     $('.beisong .icon').classList.add('icon-yanjing');
     $('.beisong .icon').classList.remove('icon-biyanjing');
@@ -46,39 +49,68 @@ let Ltimeend = 0;
 let btn = $('.learn_page .header_right li');
 let learn_flag_1 = true;
 let learn_flag_2 = true;
+let moxiele = false;
+//存放用户的输入的答案 
+let userAnswer;
+let tempAnswer;
+let timerm = null;
 //点击进入默写模式
 $('.moxie').onclick = () => {
     if (learn_flag_1 && document.querySelector('.learn_page .highlight')) {
+        //计时
         Ltimeend = new Date().getTime();
         if (Ltimestart != 0)
             Alltime += (Ltimeend - Ltimestart) / 1000;
         console.log(Alltime);
         Ltimestart = new Date().getTime();
+        //重置状态
         learnReset();
         $('.moxie').classList.add('choice');
         arr2 = [];
-        //利用循环将选中的节点内容替换
-        for (let x of all('.learn_page .highlight')) {
-            arr2.push(x.innerText);
-            x.setAttribute('contenteditable', true)
-            x.innerHTML = '请输入答案';
 
+        //利用循环将选中的节点内容替换
+        for (let i = 0; i < all('.learn_page .highlight').length; i++) {
+            let x = all('.learn_page .highlight')[i]
+            arr2.push(x.innerText);
+            x.setAttribute('data-after', x.innerText);
+            x.setAttribute('contenteditable', true)
+            x.innerHTML = '';
+            x.classList.add('input');
             // 点击可输入答案
             x.onclick = (e) => {
-                answer(x);
                 e.stopPropagation();
             }
-            x.classList.add('input');
-        }
-
-        function answer(x) {
-            for (let k of all('.learn_page .highlight')) {
-                if (k.innerHTML == '')
-                    k.innerHTML = '请输入答案';
+            x.onfocus = () => {
+                $('.learn_page footer').style.display = 'none';
+                $('.learn_page .text_box').style.height = 'calc(100vh - 18vw)';
+                x.onkeydown = (e) => {
+                    moxiele = true;
+                    if(e.keyCode == 8){
+                        console.log(e.keyCode);
+                        x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
+                    }
+                }
+                x.onkeyup = (e) => {
+                    console.log(e.keyCode);
+                    if(e.keyCode != 8){
+                        x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
+                    }
+                }
+                // timerm = setInterval(() => {
+                //     x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
+                // },10);
             }
-            if (x.innerHTML == '请输入答案')
-                x.innerHTML = '';
+            x.onblur = () => {
+                $('.learn_page footer').style.display = 'block';
+                $('.learn_page .text_box').style.height = 'calc(100vh - 38vw)';
+                x.onkeydown = null;
+                x.onkeyup = null;
+                timerm = null;
+            }
+
         }
+        // get_learn_ajax();
+        save_learning = true;
         learn_flag_1 = false;
         learn_flag_2 = true;
     } else {
@@ -93,27 +125,35 @@ $('.moxie').onclick = () => {
     }
 }
 
+
 //点击页面其他地方时，如果填入内容为空则将内容修改
 $('.learn_page').onclick = () => {
-    if (document.querySelector('.learn_page .highlight')) {
-        for (let x of all('.learn_page .input')) {
-            if (x.innerHTML == '')
-                x.innerHTML = '请输入答案';
-        }
-    }
     $('.learn_page .label_menu').style.transform = 'scale(0)';
     label_flag1 = true;
 }
+
 //点击进入背诵模式
 $('.beisong').onclick = () => {
+
     if (learn_flag_2 && document.querySelector('.learn_page .highlight')) {
+        if (moxiele)
+            getUserAnswer();
+        console.log(userAnswer)
+        if (userAnswer) {
+            if (userAnswer.arr.length != 0) {
+                save_learn_ajax(userAnswer);
+            }
+        }
+
+
         Ltimeend = new Date().getTime();
         if (Ltimestart != 0)
             Alltime += (Ltimeend - Ltimestart) / 1000;
         console.log(Alltime);
         Ltimestart = new Date().getTime();
+
         if (!learn_flag_1) {
-            answerReset()
+            answerReset();
         }
         learnReset()
         $('.beisong .icon').classList.remove('icon-yanjing');
@@ -137,13 +177,14 @@ $('.beisong').onclick = () => {
         Ltimestart = 0;
         learn_flag_2 = true;
     }
-}
+};
+
 //点击提交答案
 $('.tijiao').onclick = () => {
     if (!learn_flag_1) {
         learn_flag_1 = true;
         let data = {}
-        for(let i = 0;i < all('.learn_page .highlight').length;i++){
+        for (let i = 0; i < all('.learn_page .highlight').length; i++) {
             data[arr2[i]] = all('.learn_page .highlight')[i].innerHTML;
         }
         ajax({
@@ -157,7 +198,7 @@ $('.tijiao').onclick = () => {
             success: function (res, xml) {
                 let msg = JSON.parse(res).msg;
                 console.log(msg);
-                if(msg.content == '计算成功'){
+                if (msg.content == '计算成功') {
                     let score = msg.data.accuracy.split('%')[0];
                     console.log(score);
                     $('.learn_page .popup .popup_box .score').innerHTML = score;
@@ -178,7 +219,7 @@ $('.tijiao').onclick = () => {
             fail: function (status) {
                 // 此处放失败后执行的代码
                 console.log(status);
-                
+
             }
         });
 
@@ -271,6 +312,27 @@ function answerReset() {
     }
 }
 
+//获取用户输入的答案
+function getUserAnswer() {
+    tempAnswer = [];
+    for (let i = 0; i < all('.learn_page .highlight').length; i++) {
+        tempAnswer.push(all('.learn_page .highlight')[i].innerHTML);
+    }
+    userAnswer = { arr: tempAnswer };
+    console.log(userAnswer);
+}
+
+//渲染学习记录
+function fill_userAnswer(userAnswer) {
+    for (let i = 0; i < userAnswer.length; i++) {
+        let x = all('.learn_page .highlight')[i];
+        x.innerHTML = userAnswer[i];
+        x.setAttribute('data-after', arr2[i].substring(userAnswer[i].length));
+    }
+
+}
+
+
 //点击关闭弹窗
 $('.learn_page .popup').onclick = () => $('.learn_page .popup').style.display = 'none';
 //阻止事件冒泡
@@ -282,6 +344,35 @@ $('.learn_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
 
 //点击返回隐藏学习页面
 $('.learn_page .header_left').onclick = () => {
+    if (zidingyi) {
+        $('.learn_page .footer_1').style.display = 'block';
+        $('.learn_page .footer_2').style.display = 'none';
+        editReset()
+        zidingyi = false;
+    } else {
+        if (userAnswer) {
+            console.log(userAnswer)
+            $(".popup3").style.display = 'block';
+            $(".popup3 .selection .yes").onclick = () => {
+                console.log("请求保存记录");
+                //ajax请求
+                save_learn_ajax(userAnswer);
+                exitlearning();
+            }
+            $(".popup3 .selection .no").onclick = () => {
+                console.log("不保存记录");
+                //ajax请求
+                userAnswer = {};
+                save_learn_ajax(userAnswer);
+                exitlearning();
+            }
+        } else {
+            exitlearning();
+        }
+    }
+}
+
+function exitlearning() {
     $('.learn_page').style.left = '100%';
     $('.learn_page header').style.left = '100%';
     $('.learn_page header').style.opacity = '0';
@@ -308,4 +399,52 @@ $('.learn_page .header_left').onclick = () => {
             }
         });
     }
+    $(".popup3").style.display = 'none';
+}
+
+
+//保存学习记录的ajax封装函数
+function save_learn_ajax(blankArr) {
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/modle/SaveStudyRecord",
+        type: "post",
+        data: {
+            modleId: modleId.innerHTML,
+            blanks: JSON.stringify(blankArr)
+        },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            let msg = JSON.parse(res).msg;
+            console.log(msg);
+            console.log("保存成功");
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
+        }
+    });
+};
+
+//获取学习记录
+function get_learn_ajax() {
+    ajax({
+        url: "http://8.134.104.234:8080/ReciteMemory/modle/GetStudyRecord",
+        type: "get",
+        data: {
+            modleId: modleId.innerHTML
+        },
+        dataType: "json",
+        flag: true,
+        success: function (res, xml) {
+            let msg = JSON.parse(res).msg;
+            console.log(msg);
+            fill_userAnswer(msg.data.record);
+            console.log("获取记录成功");
+        },
+        fail: function (status) {
+            // 此处放失败后执行的代码
+            console.log(status);
+        }
+    });
 }

@@ -48,7 +48,14 @@ function drawline(canvas, context) {
     context.stroke();
 }
 
-
+$('.items span').onclick = () => {
+    if($('.items input').checked == true){
+        $('.items input').checked = false;
+    }else{
+        $('.items input').checked = true;
+    }
+    
+}
 
 /*生成验证码*/
 function createCode() {
