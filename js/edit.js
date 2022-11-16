@@ -390,7 +390,7 @@ $('.learn_page .label').onclick = (e) => {
 //事件委托，为li绑定事件
 $('.learn_page .label_menu ul').onclick = (e) => {
     if (e.target.tagName == 'LI') {
-        $('.learn_page .label span').innerHTML = e.target.innerHTML;
+        $('.learn_page .header_right .label').innerHTML = e.target.innerHTML;
     }
 }
 

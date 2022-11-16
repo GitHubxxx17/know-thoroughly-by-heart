@@ -19,33 +19,34 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
         }
     } else {
         tp_inner = all(".community .community_ul li");
-        console.log(tp_inner)
         console.log("社区搜索");
-        // for (let x of tp_inner) {
-        //     if (!x.classList.contains('footer')) {
-        //         let model_id = x.childNodes[0];
-        //         let model_title = x.querySelector('.title');
-        //         let model_label = x.querySelector('.label_title');
-        //         let model_info = x.querySelector('.info_box .info');
-        //         arr.push({ model_id: model_id.innerHTML, model_title: model_title.innerHTML, model_label: model_label.innerHTML, model_info: model_info.innerHTML })
-        //     }
-        // }
         for (let x of commonArr) {
             for (let k of x) {
                 let model_id = k.modleId;
                 let model_title = k.modleTitle;
                 let model_label = labelId2(k.modleLabel);
-                let model_info = k.content;
-                arr.push({ model_id: model_id, model_title: model_title, model_label: model_label, model_info: model_info });
+                let model_info = k.content.replace(/<空格>/g, '&nbsp;');
+                let judge_add = true;
+                for (let a of arr) {
+                    if (a.model_id == k.modleId) {
+                        judge_add = false;
+                        break;
+                    }
+                }
+                if (judge_add) {
+                    arr.push({ model_id: model_id, model_title: model_title, model_label: model_label, model_info: model_info });
+                }
             }
         }
     }
+
+
+
     //获取搜索框的值
     var search_value = header_search_memory.value;
 
     let arrnew = arr.map((item, index) => {
         //Object.assign方法用来将源对象（source）的所有可枚举属性，复制到目标对象（target）。
-        console.log(item.model_title);
         return Object.assign({}, {
             'model_title': item.model_title,
             'model_id': item.model_id,
@@ -225,12 +226,14 @@ let judeg = true;
 //记忆库点击进入搜索
 $('.memory_base .header_search').onclick = () => {
     $('.search_page').style.display = 'block';
+    header_search_memory.focus();
     judeg = true;
 }
 
 //社区点击进入搜索
 $('.community .header_search').onclick = () => {
     $('.search_page').style.display = 'block';
+    header_search_memory.focus();
     judeg = false;
 }
 
@@ -258,10 +261,10 @@ function memsearchTP() {
             e.stopPropagation();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
                 if (l == 0) {
                     console.log(3);
@@ -292,10 +295,10 @@ function comsearchTP() {
             e.stopPropagation();
             let disX = e.changedTouches[0].clientX;
             // 滑动模板出现按钮
-            x.addEventListener('touchmove', function (e) {
-                l = e.changedTouches[0].clientX - disX;
-            })
-            //如果没有滑动则进入学习页面
+            x.addEventListener('touchmove', function(e) {
+                    l = e.changedTouches[0].clientX - disX;
+                })
+                //如果没有滑动则进入学习页面
             x.parentNode.ontouchend = () => {
                 if (l == 0) {
                     modleId = all('.search_page .tp_inner .modleId')[i].innerHTML;
@@ -319,21 +322,21 @@ function comsearchTP() {
                                     $('.viewTemplate footer .shoucang .iconfont').classList.add('icon-a-shanchulajitong');
                                     $('.viewTemplate footer .shoucang .iconfont').classList.remove('icon-shoucang1');
                                     $('.viewTemplate footer .shoucang .vt_text').innerHTML = '删除';
-                                    
+
                                 } else {
                                     $('.viewTemplate footer .shoucang .iconfont').classList.remove('icon-a-shanchulajitong');
                                     $('.viewTemplate footer .shoucang .iconfont').classList.add('icon-shoucang1');
                                     $('.viewTemplate footer .shoucang .vt_text').innerHTML = '收藏';
 
-                                    for(let n of all('.collection_base .modleId')){
+                                    for (let n of all('.collection_base .modleId')) {
 
-                                        if(n.innerHTML == k.modleId){
+                                        if (n.innerHTML == k.modleId) {
                                             $('.viewTemplate .shoucang .iconfont').classList.add('icon-shoucang');
                                             $('.viewTemplate .shoucang .iconfont').classList.remove('icon-shoucang1');
                                             $('.viewTemplate .shoucang .vt_text').classList.add('orange');
                                         }
                                     }
-                                    
+
                                 }
                                 searchcom = true;
                                 //渲染浏览页面的点赞

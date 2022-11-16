@@ -23,7 +23,6 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    overflow: scroll;
     transition: left .2s;
     background-color: #f6f7fb;
 
@@ -276,9 +275,6 @@ body {
                         width: 45%;
                         height: (80/@vw);
                         text-align: center;
-                        // background-color: #fff;
-                        // border-radius: 5%;
-                        // box-shadow: (1/@vw) (1/@vw) (4/@vw) (1/@vw)rgba(121, 121, 121, 0.38);
 
                         .com_title {
                             line-height: (40/@vw);
@@ -332,16 +328,12 @@ body {
             }
 
             .plan_box {
-                // margin: (0) (10/@vw); 
                 overflow: hidden;
                 padding-top: (15/@vw);
                 background-color: #fff;
                 height: 100%;
                 width: 100%;
                 overflow: scroll;
-
-                // border-radius: (10 / @vw);
-                // box-shadow: (1/@vw) (2/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.38);
                 &::-webkit-scrollbar {
                     display: none;
                 }
@@ -371,12 +363,8 @@ body {
 
             .review_container {
                 margin: (10/@vw) (15/@vw);
-                // height: 85%;
                 width: (365 / @vw);
-                // background-color: #fff;
                 padding: 0 (20 / @vw);
-                // border-radius: (10 / @vw);
-                // box-shadow: (1/@vw) (2/@vw) (5/@vw) (0/@vw)rgba(121, 121, 121, 0.38);
 
                 .today_review {
                     width: 100%;
@@ -424,7 +412,7 @@ body {
                             background-color: #dbd4f7aa;
 
                             .now_line {
-                                width: 10%;
+                                width: 0;
                                 height: 100%;
                                 background-color: #5f4fb8;
                                 border-radius: (10 / @vw);
@@ -770,7 +758,7 @@ body {
                 transform-origin: top right;
                 // transform: scale(0);
                 // display: none;
-                clip-path: circle((26.5 / @vw) at 87vw -5vw);
+                clip-path: circle((26.5 / @vw) at 87vw -7vw);
                 transition: all .5s;
 
                 li {
@@ -784,7 +772,7 @@ body {
             }
 
             .clip_path_change2 {
-                clip-path: circle((26.5 / @vw) at 87vw -5vw);
+                clip-path: circle((26.5 / @vw) at 87vw -7vw);
             }
 
         }
@@ -862,8 +850,11 @@ body {
         box-shadow: 0 (1 / @vw) (6 / @vw) rgba(0, 0, 0, 0.133);
         opacity: 0;
         transition: all .4s ease-in-out;
+        user-select: none;
 
         .header_left {
+            width: (40/@vw);
+            user-select: none;
             .icon {
                 font-weight: 700;
                 font-size: (20 / @vw);
@@ -878,11 +869,12 @@ body {
             outline: 0;
             border: none;
             background-color: transparent;
+            user-select: none;
         }
 
         .header_right {
             position: relative;
-
+            user-select: none;
 
             .label {
                 display: block;
@@ -915,13 +907,7 @@ body {
                     transform: rotate(45deg);
                     background-color: rgb(255, 255, 255);
                     z-index: 5;
-
-                    // z-index: 1000;
                     border: 1px solid rgba(0, 0, 0, 0.132);
-                    // border-top-color: transparent;
-                    // border-bottom-color: #f6f7fb;
-                    // border-left-color: transparent;
-                    // border-right-color: transparent;
                 }
 
                 ul {
@@ -1007,7 +993,6 @@ body {
             .right {
                 width: 50%;
                 height: (100/@vw);
-                // background-color: red;
                 padding: (20/@vw) 0;
                 font-size: (16/@vw);
 
@@ -1042,7 +1027,6 @@ body {
         .popup_box {
             position: absolute;
             width: (140 / @vw);
-            // padding: 0(20/@vw);
             height: (60 / @vw);
             top: 8%;
             left: 50%;
@@ -1094,6 +1078,7 @@ body {
                 transition: all .3s;
                 outline: 0;
                 border: none;
+                border-radius: (5 / @vw);
 
                 &::selection {
                     background: #fdbe3b !important;
@@ -1111,6 +1096,7 @@ body {
                 position: relative;
                 border-bottom: (2 / @vw) rgb(63, 63, 63) solid;
                 position: relative;
+                
 
                 // &::after {
                 //     position: absolute;
@@ -1142,7 +1128,7 @@ body {
         bottom: 0;
         left: 0;
         transition: all .3s;
-
+        user-select: none;
         // background-color: #b8b2c9;
         &::after {
             z-index: -1;

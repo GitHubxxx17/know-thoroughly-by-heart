@@ -5,8 +5,8 @@ let selectArr = []; //下面选项的答案
 let again_count = 0;
 
 let endAnswerArr = []; //存放所有答案
-let isend = false;
-let judge_refleshIndex = false;
+let isend = false; //判断是否有人逃跑的结束
+let judge_refleshIndex = false; //判断是否刷新下面答案
 
 
 
@@ -15,7 +15,7 @@ let judge_refleshIndex = false;
 function ConnectionClicked() {
     try {
         ws = new WebSocket(`ws://8.134.104.234:8080/ReciteMemory/PK/userId=${curr.userId}/${modle_id}/${difficult}`) //连接服务器
-        ws.onopen = function (event) {
+        ws.onopen = function(event) {
             console.log("已经与服务器建立了连接当前连接状态：" + this.readyState);
         };
 
@@ -24,7 +24,7 @@ function ConnectionClicked() {
         let timeCount = 0;
         let judge_run = true; //判断是否有人逃跑
         let judge_run_reflesh = true; //判断是否有人逃跑
-        ws.onmessage = function (event) {
+        ws.onmessage = function(event) {
             console.log("接收到服务器发送的数据：" + event.data + "haha" + msgCount);
             msgCount++;
             if (event.data) {
@@ -187,7 +187,7 @@ function ConnectionClicked() {
             $('.enterPk .option').classList.add('animated');
             $('.enterPk .option').classList.add('disappear');
             $('.runle').style.display = 'none';
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.enterPk').style.display = 'none';
                 $('.pk_end').style.display = 'none';
                 $('.enterPk .head_nav_pk').classList.remove('disappear');
@@ -210,7 +210,7 @@ function ConnectionClicked() {
             console.log("已经与服务器断开连接当前连接状态：" + ws.readyState);
         };
 
-        ws.onerror = function (event) {
+        ws.onerror = function(event) {
             console.log("WebSocket异常！");
         };
     } catch (ex) {
@@ -297,7 +297,7 @@ function Refresh_answer() {
 
     // 随机排列数组
     function sortArr(arr) {
-        arr.sort(function () {
+        arr.sort(function() {
             return 0.5 - Math.random();
         })
         return arr.slice(0, 4);
@@ -327,6 +327,7 @@ function Refresh_answer() {
 
                 } else {
                     all('.enterPk .highlight')[answerIndex].classList.add('wrong');
+                    x.classList.add("shake");
                     UserSelectArr.push("wrong");
                     console.log(UserSelectArr)
                     ws.send(JSON.stringify({
@@ -388,11 +389,11 @@ function Refresh_answer() {
                 slArr.push(str);
             }
         }
-        
+
         slArr.push(answerArr[answerIndex]);
-        if(slArr.length < 4){
-            console.log(slArr);
-            for(let i = 0; i <= 4 - slArr.length; i++){
+        if (slArr.length < 4) {
+            let len = slArr.length;
+            for (let i = 0; i < 4 - len; i++) {
                 slArr.push(answerArr[answerIndex]);
             }
         }
@@ -422,7 +423,7 @@ function Refresh_answer() {
 
 //匹配成功之后的动画
 function animate_success() {
-    setTimeout(function () {
+    setTimeout(function() {
         $('.img_box img').style.opacity = '0';
         $('.enterPk').style.display = 'block';
         $('.enterPk').classList.add('appear');
@@ -456,7 +457,7 @@ function animate_pkend() {
     $('.enterPk .option').classList.add('animated');
     $('.enterPk .option').classList.add('disappear');
     $('.runle').style.display = 'none';
-    setTimeout(function () {
+    setTimeout(function() {
         $('.pk_end').style.display = 'block';
         setTimeout(() => {
             $('.win_lose .win').style.display = "block";
@@ -565,3 +566,18 @@ $(".pk_end .click_back ").addEventListener('click', () => {
 
     }, 1300);
 })
+
+//抖动动画监听
+
+function endAnimation() {
+    for (let x of $('.enterPk .option .com')) {
+        x.classList.remove("shake");
+    }
+}
+for (let x of $('.enterPk .option .com')) {
+    x.addEventListener("webkitAnimationEnd", endAnimation, false);
+    x.addEventListener("mozAnimationEnd", endAnimation, false);
+    x.addEventListener("MSAnimationEnd", endAnimation, false);
+    x.addEventListener("oanimationend", endAnimation, false);
+    x.addEventListener("animationend", endAnimation, false);
+}

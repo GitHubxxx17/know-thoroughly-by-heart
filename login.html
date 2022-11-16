@@ -43,24 +43,24 @@
                 <div class="logo"></div>
                 <form action="./index.html">
                     <div class="form_control">
-                        <input class='register_data' type="text" name="phone" required="required" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
+                        <input class='register_data input' type="number" name="phone" required="required" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
                         <label>请输入手机号</label>
                     </div>
                     <div class="form_control">
-                        <input class='register_data' type="text" name="username" required="required" pattern="^[0-9a-zA-Z\u4e00-\u9fa5]{1,6}$" title="请输入正确的昵称,不包括特殊字符" />
+                        <input class='register_data input' type="text" name="username" required="required" pattern="^[0-9a-zA-Z\u4e00-\u9fa5]{1,6}$" title="请输入正确的昵称,不包括特殊字符" />
                         <label>请输入昵称</label>
                     </div>
                     <div class="form_control">
-                        <input class='register_data' type="password" name="password1" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" title="密码为6到16位（字母，数字，下划线）" />
+                        <input class='register_data input' type="password" name="password1" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" title="密码为6到16位（字母，数字，下划线）" />
                         <label>请输入密码</label>
                     </div>
                     <div class="form_control">
-                        <input type="password" name="password2" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" title="密码为6到16位（字母，数字，下划线）" />
+                        <input class="input" type="password" name="password2" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" title="密码为6到16位（字母，数字，下划线）" />
                         <label>请确认密码</label>
                     </div>
                     <div class="captcha">
                         <div class="form_control">
-                            <input type="text" name="captcha" required="required">
+                            <input class="input" type="text" name="captcha" required="required">
                             <label>请输入验证码</label>
                         </div>
                         <canvas class="search_canvas"></canvas>
@@ -84,11 +84,11 @@
                     <div class="logo"></div>
                     <form action="./index.html" class="form">
                         <div class="form_control">
-                            <input class='login_data' type="text" name="identification" required="required" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
+                            <input class='login_data input' type="number" name="identification" required="required" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
                             <label>请输入手机号</label>
                         </div>
                         <div class="form_control">
-                            <input class='login_data' type="password" name="password" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" />
+                            <input class='login_data input' type="password" name="password" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" />
                             <label>请输入密码</label>
                         </div>
                         <div class="err">

@@ -8,7 +8,7 @@ server.on('request', (req, res) => {
     const url = req.url;
     let fpath = '';
     if (url === '/')
-        fpath = path.join(__dirname, './CaptureAvatar.html');
+        fpath = path.join(__dirname, './login.html');
     else
         fpath = path.join(__dirname, url);
     // res.setHeader('Content-Type','text/html;charset=utf-8');

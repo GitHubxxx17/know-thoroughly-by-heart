@@ -2,6 +2,16 @@
 window.onload = () => {
     $(".container").style.opacity = '1';
     $('.login').style.top = '142vw'
+    
+    setTimeout(() => {
+        for(let x of $('.input')){
+            console.log(x.value);
+            if(x.value != ''){
+                x.onfocus();
+                x.onblur();
+            }
+        }
+    },100);
 }
 
 
@@ -9,8 +19,11 @@ let code = "";
 //将函数返回值赋给code
 createCode();
 //点击canvas图片更换验证码
-$('canvas').onclick = function () {
+$('canvas').onclick = function (e) {
     createCode();
+    e.stopPropagation();
+    inputs[4].focus();
+    
 };
 
 function rand() {
@@ -222,7 +235,7 @@ $('.register button').onclick = (e) => {
                 if (msg.data.isSuccess) {
                     //将当前登录的用户保存到本地
                     let curr = {};
-                    curr['userId'] = msg.data.token;
+                    curr['userId'] = msg.data.userId;
                     curr['phone'] = a[0];
                     localSaveData('auto',false);
                     sessionSaveData('current_user',curr);

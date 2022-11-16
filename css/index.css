@@ -84,7 +84,6 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: scroll;
   transition: left 0.2s;
   background-color: #f6f7fb;
 }
@@ -404,7 +403,7 @@ body {
   background-color: #dbd4f7aa;
 }
 .memory_base .container .today_plan .review_container .today_review .tr_bottom .review_line .now_line {
-  width: 10%;
+  width: 0;
   height: 100%;
   background-color: #5f4fb8;
   border-radius: 2.53164557vw;
@@ -711,7 +710,7 @@ body {
   background-color: #f6f7fb;
   z-index: 100;
   transform-origin: top right;
-  clip-path: circle(6.70886076vw at 87vw -5vw);
+  clip-path: circle(6.70886076vw at 87vw -7vw);
   transition: all 0.5s;
 }
 .memory_base .container .me_base .collection_base li {
@@ -721,7 +720,7 @@ body {
   clip-path: circle(100%);
 }
 .memory_base .container .me_base .clip_path_change2 {
-  clip-path: circle(6.70886076vw at 87vw -5vw);
+  clip-path: circle(6.70886076vw at 87vw -7vw);
 }
 .memory_base .container .hidden {
   display: none !important;
@@ -782,6 +781,11 @@ body {
   box-shadow: 0 0.25316456vw 1.51898734vw rgba(0, 0, 0, 0.133);
   opacity: 0;
   transition: all 0.4s ease-in-out;
+  user-select: none;
+}
+.learn_page header .header_left {
+  width: 10.12658228vw;
+  user-select: none;
 }
 .learn_page header .header_left .icon {
   font-weight: 700;
@@ -795,9 +799,11 @@ body {
   outline: 0;
   border: none;
   background-color: transparent;
+  user-select: none;
 }
 .learn_page header .header_right {
   position: relative;
+  user-select: none;
 }
 .learn_page header .header_right .label {
   display: block;
@@ -971,6 +977,7 @@ body {
   transition: all 0.3s;
   outline: 0;
   border: none;
+  border-radius: 1.26582278vw;
 }
 .learn_page .container .text_box .highlight::selection {
   background: #fdbe3b !important;
@@ -1000,6 +1007,7 @@ body {
   bottom: 0;
   left: 0;
   transition: all 0.3s;
+  user-select: none;
 }
 .learn_page footer::after {
   z-index: -1;

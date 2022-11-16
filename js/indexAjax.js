@@ -32,7 +32,7 @@ function UserMemory() {
                     }
 
                 }
-                $('.numOfArticles').innerHTML = `${fxnum} 篇`;
+                // $('.numOfArticles').innerHTML = `${fxnum} 篇`;
                 $('.footer_nav li')[0].onclick();
             } else {
                 //刷新仓库
@@ -59,10 +59,10 @@ ajax({
         let userInfo = msg.data.user;
         curr['userInfo'] = userInfo;
         console.log(curr);
-        if(auto){
+        if (auto) {
             localSaveData('current_user', curr);
-        }else{
-            sessionSaveData('current_user',curr);
+        } else {
+            sessionSaveData('current_user', curr);
         }
         //个人页面渲染
         for (let x of $('.idname'))
@@ -150,6 +150,7 @@ $('.Making_page .header_left input').onchange = function(e) {
             fail: function(status) {
                 // 此处放失败后执行的代码
                 console.log(status);
+                $('.Making_page .loading').style.display = 'none';
                 $('.Making_page .popup2 .popup_box').innerHTML = '文件解析失败';
                 $('.Making_page .popup2').style.display = 'block';
             }

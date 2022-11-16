@@ -22,12 +22,12 @@ for (let i = 0; i < $('.hb_btn').length; i++) {
         }
         $('.hb_btn')[i].classList.add('btn_line')
         if (i == 0) {
-            let fxnum = 0;
-            for (let x of all('.my_base .learning')) {
-                if (x.innerText == '复习中')
-                    fxnum++;
-            }
-            $('.numOfArticles').innerHTML = `${fxnum} 篇`;
+            // let fxnum = 0;
+            // for (let x of all('.my_base .learning')) {
+            //     if (x.innerText == '复习中')
+            //         fxnum++;
+            // }
+            // $('.numOfArticles').innerHTML = `${fxnum} 篇`;
             $('.icon_btn').style.display = 'none';
             $('.base_btn').querySelector('span').innerText = '记忆库';
         } else {
@@ -53,6 +53,9 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
         if (i == 0) {
             $('.memory_base header').classList.remove('scroll_top');
         }
+        if(i != 0){
+            $('.hb_btn')[0].onclick();
+        }
         if (i == 1) {
             $('.pk_page .pk_footer').classList.remove('scroll_top');
         }
@@ -60,7 +63,7 @@ for (let i = 0; i < $('.footer_nav li').length; i++) {
             $('.community header').classList.remove('scroll_top');
             $('.community header .label li')[0].onclick();
         }
-        if (i != 1 && !judge) {
+        if(i != 1 && !judge){
             laqu.onclick()
         }
         if (i != 2) {
@@ -296,21 +299,20 @@ $('.ht_1 .header_left').onclick = () => {
 }
 
 
-
+let removeRecite = false;
 //点击复习列表进入可移除复习列表页面
 $(".review_list").addEventListener('click', () => {
     $(".removeRecite").classList.remove("scroll_top");
     $(".removeRecite .headBox").classList.remove("scroll_top");
+    removeRecite = false;
     //复习列表渲染
     $('.reciteCon ul').innerHTML = '';
-    for (let x of all('.my_base li')) {
-        if (x.querySelector('.learning span').innerHTML == '复习中') {
-            $('.reciteCon ul').innerHTML += `<li>
-                                                <div class="modleId">${x.querySelector('.modleId').innerHTML}</div>
-                                                <span class="title ellipsis">${x.querySelector('.title').innerHTML}</span>
-                                                <span class="goReview">移除</span>
-                                            </li>`
-        }
+    for(let x of all('.review_cycle li')){
+        $('.reciteCon ul').innerHTML += `<li>
+                                            <div class="modleId">${x.querySelector('.modleId').innerHTML}</div>
+                                            <span class="title ellipsis">${x.querySelector('.title').innerHTML}</span>
+                                            <span class="goReview">移除</span>
+                                        </li>`
     }
     //点击删除复习
     for (let k of all('.reciteCon li')) {
@@ -329,7 +331,7 @@ $(".review_list").addEventListener('click', () => {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     //将记忆库对应的模板改成已学习
-                    for (let x of all('.my_base li')) {
+                    for (let x of all('.me_base li')) {
                         if (k.querySelector('.modleId').innerHTML == x.querySelector('.modleId').innerHTML) {
                             x.querySelector('.learning span').innerHTML = '已学习';
                             x.querySelector('.learning').className = 'learning learned';
@@ -340,12 +342,13 @@ $(".review_list").addEventListener('click', () => {
                         for (let j = 0; j < ModlesOfPeriod[i].length; j++) {
                             if (ModlesOfPeriod[i][j].modleId == k.querySelector('.modleId').innerHTML) {
                                 let removearr = ModlesOfPeriod[i];
-                                Array.remove(removearr[j]);
+                                console.log(removearr,removearr[j]);
+                                removearr.remove(removearr[j]);
                                 break;
                             }
                         }
                     }
-                    modle_Period();
+                    removeRecite = true;
                     //删除复习周期中的li
                     k.classList.add('review_del');
                 },
@@ -362,13 +365,9 @@ $(".review_list").addEventListener('click', () => {
 $(".removeRecite .back").addEventListener('click', () => {
     $(".removeRecite").classList.add("scroll_top");
     $(".removeRecite .headBox").classList.add("scroll_top");
-    //修改复习篇数
-    let fxnum = 0;
-    for (let x of all('.my_base .learning')) {
-        if (x.innerText == '复习中')
-            fxnum++;
+    if(removeRecite){
+        modle_Period();
     }
-    $('.numOfArticles').innerHTML = `${fxnum} 篇`;
 })
 
 
@@ -396,11 +395,12 @@ function fxPeriod() {
     });
 }
 
-
+// let PeriodNum = 0;
 //渲染复习周期
 function modle_Period() {
+    $('.review_cycle').innerHTML = '';
     let ulIndex = 0;
-    let num = 0;
+    let PeriodNum = 0;
     for (let i = 0; i < 8; i++) {
         if (ModlesOfPeriod[i].length != 0) {
             $('.review_cycle').innerHTML += `<div class="cycle_1">
@@ -416,12 +416,13 @@ function modle_Period() {
                                                                             <span class="title ellipsis">${ModlesOfPeriod[i][j].modleTitle}</span> 
                                                                             <span class="goReview">去复习</span>
                                                                         </li>`
-                num++;
+                PeriodNum++;
             }
             ulIndex++;
         }
     }
-    $('.today_review .sum').innerHTML = parseInt($('.today_review .cur').innerHTML) + num;
+    $('.numOfArticles').innerHTML = `${PeriodNum} 篇`;
+    $('.today_review .sum').innerHTML = parseInt($('.today_review .cur').innerHTML) + PeriodNum;
     console.log($('.today_review .sum').innerHTML, $('.today_review .cur').innerHTML);
     if (parseInt($('.today_review .cur').innerHTML) > 0) {
         $('.now_line').style.width = $('.today_review .cur').innerHTML / $('.today_review .sum').innerHTML * $('.review_line').offsetWidth + 'px';
@@ -455,7 +456,6 @@ function modle_Period() {
 
 }
 
-console.log(1 / 2 * $('.review_line').offsetWidth);
 //数字转换成文字
 function digitChange(i) {
     let arr = ['一', '二', '三', '四', '五', '六', '七', '八'];

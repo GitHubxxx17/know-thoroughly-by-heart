@@ -159,16 +159,23 @@ function newTP(title, context, modleId, label, common, studyStatus, flag) {
 function comTP(title, context, modleId, label, base64, username, likeNum, likeStatus, name_flag) {
     //点赞状态
     let dz = ''
+    let like = ''
+    if(likeNum == 0){
+        like = '点赞'
+    }else{
+        like = likeNum;
+    }
+
     if (likeStatus) {
         dz = `<span class="dainzan orange">
                 <i class="iconfont icon-dianzan1"></i>
-                <i class="wenzi">${likeNum}</i>
+                <i class="wenzi">${like}</i>
                 <span class="circle blink_circle"></span>
             </span>`
     } else {
         dz = `<span class="dainzan">
                 <i class="iconfont icon-dianzan"></i>
-                <i class="wenzi">点赞</i>
+                <i class="wenzi">${like}</i>
                 <span class="circle"></span>
             </span>`
     }
@@ -269,14 +276,17 @@ function UploadTP(title, context, modleId, label, common) {
 
 //转换标签成id
 function labelId1(str) {
-    if (str == '教资')
+    if(str == '系统模板'){
+         return 0;
+    } 
+    else if (str == '教资')
         return 1;
     else if (str == '考研')
         return 2;
     else if (str == '通识课')
         return 3;
-    else {
-        return 0;
+    else if (str == '热门推荐'){
+        return 4;
     }
 
 }

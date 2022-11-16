@@ -85,6 +85,9 @@ function rlRendering() {
                     break;
             }
             let star = pkstars >= 30 ? 5 : pkstars % 5;
+            for(let i = 0;i < 5;i++){
+                $('.pk_page .start i')[i].classList.remove('active')
+            }
             for (let i = 0; i < star; i++) {
                 $('.pk_page .start i')[i].classList.add('active')
             }
