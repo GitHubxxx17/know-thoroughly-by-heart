@@ -126,23 +126,56 @@ a {
 .Making_page header .header_right .icon {
   font-size: 5.82278481vw;
 }
+.Making_page header .header_left {
+  width: 44.30379747vw;
+  padding: 0 2.53164557vw;
+  padding-right: 3.79746835vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Making_page header .header_left .daoru {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.26582278vw;
+}
+.Making_page header .header_left .shuxian {
+  color: #c9c9ca;
+}
+.Making_page header .header_left .kuohao {
+  margin-left: 2.02531646vw;
+  display: flex;
+  align-items: center;
+}
+.Making_page header .header_left .kuohao .icon-tuoyuankaobei {
+  font-size: 3.03797468vw;
+  color: #a0a0a1;
+}
 .Making_page header .switch {
   position: relative;
   background-color: #8777ae;
-  width: 17.72151899vw;
-  height: 7.59493671vw;
+  width: 11.39240506vw;
+  height: 5.06329114vw;
   border-radius: 15.18987342vw;
   box-shadow: inset 0.25316456vw 0.25316456vw 2.53164557vw rgba(0, 0, 0, 0.224);
 }
 .Making_page header .switch .ball {
   position: absolute;
-  width: 7.59493671vw;
-  height: 7.59493671vw;
+  width: 5.06329114vw;
+  height: 5.06329114vw;
   background-color: #b6a2f0;
   border-radius: 50%;
   transition: 0.3s;
   left: 0;
   box-shadow: 0.25316456vw 0.25316456vw 2.53164557vw rgba(0, 0, 0, 0.224);
+}
+.Making_page header .switch .ball.kai {
+  background-color: #ffd161;
+}
+.Making_page header .switch.kai {
+  background-color: #fac338;
 }
 .Making_page .loading {
   display: none;

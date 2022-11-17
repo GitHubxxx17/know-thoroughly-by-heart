@@ -19,10 +19,15 @@ function UserMemory() {
         success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             console.log(msg)
-            for (let x of msg.data.haveRecord) {
-                console.log(x)
-            }
-            hasrecords = [];
+                // console.log(msg.data.haveRecord)
+                // hasrecords = [];
+                // for (e in msg.data.haveRecord) {
+                //     if (msg.data.haveRecord[e] == true) {
+                //         hasrecords.push(e);
+                //         console.log(hasrecords);
+                //     }
+                // }
+
             if (msg.data.userModle) {
                 let tparr = msg.data.userModle;
                 let fxnum = 0;
@@ -139,7 +144,7 @@ $('.Making_page .header_left input').onchange = function(e) {
         $('.Making_page .loading').style.display = 'block';
         let fd = new FormData($('.upload_form'));
         ajax({
-            url: `http://8.134.104.234:8080/ReciteMemory/upload/parseContent`,
+            url: `http://8.134.104.234:8080/ReciteMemory/upload/parseContent?kuohao=${kuohao}`,
             type: "post",
             data: fd,
             dataType: "json",

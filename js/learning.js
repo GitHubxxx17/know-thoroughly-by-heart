@@ -25,7 +25,7 @@ function learnReset() {
     flag1 = false;
     learn_flag_1 = true;
     learn_flag_2 = true;
-    moxiele = false;
+    // moxiele = false;
     //背诵睁眼闭眼
     $('.beisong .icon').classList.add('icon-yanjing');
     $('.beisong .icon').classList.remove('icon-biyanjing');
@@ -54,8 +54,13 @@ let moxiele = false;
 let userAnswer;
 let tempAnswer;
 let timerm = null;
+
+let judge_ifSave = 1;
+let judge_restart = 0;
 //点击进入默写模式
 $('.moxie').onclick = () => {
+    $(".popup3").style.display = 'block';
+    $(".popup3 .save_tips").innerHTML = "检测到您有学习记录，请问是否继续上次的学习？";
     if (learn_flag_1 && document.querySelector('.learn_page .highlight')) {
         //计时
         Ltimeend = new Date().getTime();
@@ -85,17 +90,17 @@ $('.moxie').onclick = () => {
                 $('.learn_page .text_box').style.height = 'calc(100vh - 18vw)';
                 x.onkeydown = (e) => {
                     moxiele = true;
-                    if(e.keyCode == 8){
+                    if (e.keyCode == 8) {
                         console.log(e.keyCode);
                         x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
                     }
                 }
                 x.onkeyup = (e) => {
                     console.log(e.keyCode);
-                    if(e.keyCode != 8){
+                    if (e.keyCode != 8) {
                         x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
                     }
-                }
+                };
                 // timerm = setInterval(() => {
                 //     x.setAttribute('data-after', arr2[i].substring(x.innerHTML.length));
                 // },10);
@@ -109,7 +114,7 @@ $('.moxie').onclick = () => {
             }
 
         }
-        // get_learn_ajax();
+        get_learn_ajax();
         save_learning = true;
         learn_flag_1 = false;
         learn_flag_2 = true;
@@ -144,7 +149,6 @@ $('.beisong').onclick = () => {
                 save_learn_ajax(userAnswer);
             }
         }
-
 
         Ltimeend = new Date().getTime();
         if (Ltimestart != 0)
@@ -195,7 +199,7 @@ $('.tijiao').onclick = () => {
             },
             dataType: "json",
             flag: true,
-            success: function (res, xml) {
+            success: function(res, xml) {
                 let msg = JSON.parse(res).msg;
                 console.log(msg);
                 if (msg.content == '计算成功') {
@@ -216,7 +220,7 @@ $('.tijiao').onclick = () => {
                     $('.learn_page .popup').style.display = 'block';
                 }
             },
-            fail: function (status) {
+            fail: function(status) {
                 // 此处放失败后执行的代码
                 console.log(status);
 
@@ -234,7 +238,7 @@ $('.tijiao').onclick = () => {
                 },
                 dataType: "json",
                 flag: true,
-                success: function (res, xml) {
+                success: function(res, xml) {
                     let content = JSON.parse(res).msg.content;
                     console.log(content);
                     if (content == '恭喜你完成这个周期的复习啦，下个周期见吧') {
@@ -242,7 +246,7 @@ $('.tijiao').onclick = () => {
                         fxPeriod();
                     }
                 },
-                fail: function (status) {
+                fail: function(status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -260,13 +264,13 @@ $('.tijiao').onclick = () => {
                     },
                     dataType: "json",
                     flag: true,
-                    success: function (res, xml) {
+                    success: function(res, xml) {
                         let content = JSON.parse(res).msg.content;
                         console.log(content);
                         label.nextElementSibling.querySelector('span').innerText = '复习中';
                         label.nextElementSibling.className = 'learning reviewing';
                     },
-                    fail: function (status) {
+                    fail: function(status) {
                         // 此处放失败后执行的代码
                         console.log(status);
                     }
@@ -288,11 +292,11 @@ $('.tijiao').onclick = () => {
                 },
                 dataType: "json",
                 flag: true,
-                success: function (res, xml) {
+                success: function(res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                 },
-                fail: function (status) {
+                fail: function(status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -310,6 +314,83 @@ function answerReset() {
     for (let i = 0; i < all('.learn_page .highlight').length; i++) {
         all('.learn_page .highlight')[i].innerHTML = arr2[i];
     }
+}
+
+//点击关闭弹窗
+$('.learn_page .popup').onclick = () => $('.learn_page .popup').style.display = 'none';
+//阻止事件冒泡
+$('.learn_page .popup .popup_box').onclick = (e) => e.stopPropagation();
+//点击关闭弹窗
+$('.learn_page .popup2').onclick = () => $('.learn_page .popup2').style.display = 'none';
+//阻止事件冒泡
+$('.learn_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
+
+//点击返回隐藏学习页面
+$('.learn_page .header_left').onclick = () => {
+    if (zidingyi) {
+        $('.learn_page .footer_1').style.display = 'block';
+        $('.learn_page .footer_2').style.display = 'none';
+        editReset()
+        zidingyi = false;
+    } else {
+        if (userAnswer) {
+            if (moxiele) {
+                console.log(userAnswer);
+                $(".popup3").style.display = 'block';
+                $(".popup3 .save_tips").innerHTML = "是否要保存当前的学习记录？";
+                $(".popup3 .selection .yes").onclick = () => {
+                    judge_ifSave = 1;
+                    console.log("请求保存记录" + judge_ifSave);
+                    //ajax请求
+                    save_learn_ajax(userAnswer);
+                    exitlearning();
+                }
+                $(".popup3 .selection .no").onclick = () => {
+                    console.log("不保存记录" + judge_ifSave);
+                    judge_ifSave = 0;
+                    //ajax请求
+                    userAnswer = { arr: [] };
+                    save_learn_ajax(userAnswer);
+                    exitlearning();
+                }
+            } else {
+                exitlearning();
+            }
+        } else {
+            exitlearning();
+        }
+    }
+}
+
+function exitlearning() {
+    moxiele = false;
+    $('.learn_page').style.left = '100%';
+    $('.learn_page header').style.left = '100%';
+    $('.learn_page header').style.opacity = '0';
+    learnReset()
+    if (!learn_flag_1 && label.nextElementSibling.querySelector('span').innerText == '未学习') {
+        ajax({
+            url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
+            type: "get",
+            data: {
+                modleId: mid,
+                studyStatus: '复习中'
+            },
+            dataType: "json",
+            flag: true,
+            success: function(res, xml) {
+                let content = JSON.parse(res).msg.content;
+                console.log(content);
+                label.nextElementSibling.querySelector('span').innerText = '学习中';
+                label.nextElementSibling.className = 'learning startlearn';
+            },
+            fail: function(status) {
+                // 此处放失败后执行的代码
+                console.log(status);
+            }
+        });
+    }
+    $(".popup3").style.display = 'none';
 }
 
 //获取用户输入的答案
@@ -333,76 +414,6 @@ function fill_userAnswer(userAnswer) {
 }
 
 
-//点击关闭弹窗
-$('.learn_page .popup').onclick = () => $('.learn_page .popup').style.display = 'none';
-//阻止事件冒泡
-$('.learn_page .popup .popup_box').onclick = (e) => e.stopPropagation();
-//点击关闭弹窗
-$('.learn_page .popup2').onclick = () => $('.learn_page .popup2').style.display = 'none';
-//阻止事件冒泡
-$('.learn_page .popup2 .popup_box').onclick = (e) => e.stopPropagation();
-
-//点击返回隐藏学习页面
-$('.learn_page .header_left').onclick = () => {
-    if (zidingyi) {
-        $('.learn_page .footer_1').style.display = 'block';
-        $('.learn_page .footer_2').style.display = 'none';
-        editReset()
-        zidingyi = false;
-    } else {
-        if (userAnswer) {
-            console.log(userAnswer)
-            $(".popup3").style.display = 'block';
-            $(".popup3 .selection .yes").onclick = () => {
-                console.log("请求保存记录");
-                //ajax请求
-                save_learn_ajax(userAnswer);
-                exitlearning();
-            }
-            $(".popup3 .selection .no").onclick = () => {
-                console.log("不保存记录");
-                //ajax请求
-                userAnswer = {};
-                save_learn_ajax(userAnswer);
-                exitlearning();
-            }
-        } else {
-            exitlearning();
-        }
-    }
-}
-
-function exitlearning() {
-    $('.learn_page').style.left = '100%';
-    $('.learn_page header').style.left = '100%';
-    $('.learn_page header').style.opacity = '0';
-    learnReset()
-    if (!learn_flag_1 && label.nextElementSibling.querySelector('span').innerText == '未学习') {
-        ajax({
-            url: "http://8.134.104.234:8080/ReciteMemory/review/JoinThePlane",
-            type: "get",
-            data: {
-                modleId: mid,
-                studyStatus: '复习中'
-            },
-            dataType: "json",
-            flag: true,
-            success: function (res, xml) {
-                let content = JSON.parse(res).msg.content;
-                console.log(content);
-                label.nextElementSibling.querySelector('span').innerText = '学习中';
-                label.nextElementSibling.className = 'learning startlearn';
-            },
-            fail: function (status) {
-                // 此处放失败后执行的代码
-                console.log(status);
-            }
-        });
-    }
-    $(".popup3").style.display = 'none';
-}
-
-
 //保存学习记录的ajax封装函数
 function save_learn_ajax(blankArr) {
     ajax({
@@ -410,16 +421,17 @@ function save_learn_ajax(blankArr) {
         type: "post",
         data: {
             modleId: modleId.innerHTML,
-            blanks: JSON.stringify(blankArr)
+            blanks: JSON.stringify(blankArr),
+            ifSave: judge_ifSave
         },
         dataType: "json",
         flag: true,
-        success: function (res, xml) {
+        success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             console.log(msg);
             console.log("保存成功");
         },
-        fail: function (status) {
+        fail: function(status) {
             // 此处放失败后执行的代码
             console.log(status);
         }
@@ -432,17 +444,23 @@ function get_learn_ajax() {
         url: "http://8.134.104.234:8080/ReciteMemory/modle/GetStudyRecord",
         type: "get",
         data: {
-            modleId: modleId.innerHTML
+            modleId: modleId.innerHTML,
+            restart: judge_restart
         },
         dataType: "json",
         flag: true,
-        success: function (res, xml) {
+        success: function(res, xml) {
             let msg = JSON.parse(res).msg;
             console.log(msg);
-            fill_userAnswer(msg.data.record);
-            console.log("获取记录成功");
+            // if (msg.data.record == false) {
+            //     console.log(msg.content)
+            // } else {
+            //     fill_userAnswer(msg.data.record);
+            //     console.log("获取记录成功");
+            // }
+
         },
-        fail: function (status) {
+        fail: function(status) {
             // 此处放失败后执行的代码
             console.log(status);
         }

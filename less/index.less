@@ -1315,8 +1315,14 @@ body {
             display: none;
 
             li {
-                flex: 3;
+                flex: 4;
+
+                &:nth-child(2) .icon,
+                &:nth-child(3) .icon {
+                    font-size: (30 / @vw);
+                }
             }
+
         }
 
         .choice {

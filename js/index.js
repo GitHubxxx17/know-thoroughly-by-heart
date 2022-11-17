@@ -148,6 +148,7 @@ function TP() {
                         $('.learn_page').style.left = '0';
                         $('.learn_page header').style.left = '0';
                         $('.learn_page header').style.opacity = '1';
+                        $('.learn_page .zidingyi').style.display = '';
                         flag_learn = true;
                     } else {
                         let delnum = 0;
@@ -448,6 +449,7 @@ function modle_Period() {
                     $('.learn_page').style.left = '0';
                     $('.learn_page header').style.left = '0';
                     $('.learn_page header').style.opacity = '1';
+                    $('.learn_page .zidingyi').style.display = 'none';
                     flag_review = true;
                 }
             }

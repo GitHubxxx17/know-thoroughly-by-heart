@@ -77,13 +77,13 @@ $(".Making_page .text_box").onkeyup = (e) => {
     }
 }
 
-
+let kuohao = false;
 $('.Making_page .switch').onclick = () => {
-    if($('.Making_page .ball').offsetLeft == 0){
-        $('.Making_page .ball').style.left = 40/3.95 + 'vw';
-    } 
-    else{
+    if ($('.Making_page .ball').offsetLeft == 0) {
+        $('.Making_page .ball').style.left = 25 / 3.95 + 'vw';
+        kuohao = true;
+    } else {
         $('.Making_page .ball').style.left = 0 + 'px';
+        kuohao = false;
     }
-        
 }

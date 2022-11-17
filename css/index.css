@@ -1174,7 +1174,11 @@ body {
   display: none;
 }
 .learn_page footer .footer_2 li {
-  flex: 3;
+  flex: 4;
+}
+.learn_page footer .footer_2 li:nth-child(2) .icon,
+.learn_page footer .footer_2 li:nth-child(3) .icon {
+  font-size: 7.59493671vw;
 }
 .learn_page footer .choice {
   color: #84b3ff !important;

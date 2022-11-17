@@ -66,26 +66,65 @@
             }
         }
 
+        .header_left{
+            width: (175/@vw);
+            padding: 0 (10/@vw);
+            padding-right: (15/@vw);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .daoru{
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: (5/@vw);
+            }
+
+            .shuxian{
+                color: #c9c9ca;
+            }
+
+            .kuohao{
+                margin-left: (8/@vw);
+                display: flex;
+                align-items: center;
+
+                .icon-tuoyuankaobei{
+                    font-size: (12/@vw);
+                    color: #a0a0a1;
+                }
+            }
+        }
+
 
         .switch {
             position: relative;
             background-color: #8777ae;
-            width: (70 / @vw);
-            height: (30 / @vw);
+            width: (45 / @vw);
+            height: (20 / @vw);
             border-radius: (60 / @vw);
             box-shadow: inset (1 / @vw) ( 1/ @vw) (10 / @vw) rgba(0, 0, 0, 0.224);
             .ball {
                 position: absolute;
-                width: (30 / @vw);
-                height: (30 / @vw);
+                width: (20 / @vw);
+                height: (20 / @vw);
                 background-color: #b6a2f0;
                 border-radius: 50%;
                 transition: .3s;
                 left: 0;
                 box-shadow: (1 / @vw) ( 1/ @vw) (10 / @vw) rgba(0, 0, 0, 0.224);
             }
-        }
 
+            .ball.kai{
+                background-color: #ffd161;
+            }
+        }
+        
+        .switch.kai{
+            
+            background-color: #fac338;
+        }
     }
 
     .loading {
