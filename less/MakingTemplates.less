@@ -66,6 +66,26 @@
             }
         }
 
+
+        .switch {
+            position: relative;
+            background-color: #8777ae;
+            width: (70 / @vw);
+            height: (30 / @vw);
+            border-radius: (60 / @vw);
+            box-shadow: inset (1 / @vw) ( 1/ @vw) (10 / @vw) rgba(0, 0, 0, 0.224);
+            .ball {
+                position: absolute;
+                width: (30 / @vw);
+                height: (30 / @vw);
+                background-color: #b6a2f0;
+                border-radius: 50%;
+                transition: .3s;
+                left: 0;
+                box-shadow: (1 / @vw) ( 1/ @vw) (10 / @vw) rgba(0, 0, 0, 0.224);
+            }
+        }
+
     }
 
     .loading {
@@ -160,7 +180,7 @@
             }
         }
     }
-    
+
     .popup {
         display: none;
         z-index: 20000;
@@ -264,6 +284,7 @@
                     font-size: (18 / @vw);
                     font-weight: 700;
                 }
+
                 .label_menu {
                     position: absolute;
                     top: (50 / @vw);
@@ -275,7 +296,7 @@
                     border-radius: (10/@vw);
                     box-shadow: (1/@vw) (1/@vw) (6/@vw) (1/@vw)rgba(121, 121, 121, 0.38);
 
-                    .triangle{
+                    .triangle {
                         position: absolute;
                         top: (-18 / @vw);
                         left: (20/@vw);
@@ -294,8 +315,9 @@
                         height: (160/@vw);
                         padding: (5/@vw) (10/@vw);
                         background-color: #ffffff;
-                        
+
                         border-radius: (10/@vw);
+
                         li {
                             width: 100%;
                             height: (50 / @vw);
@@ -305,12 +327,12 @@
                             text-align: center;
                             line-height: (30 / @vw);
 
-                            &:last-child{
+                            &:last-child {
                                 border-bottom: (0/@vw);
                             }
                         }
 
-                        
+
                     }
                 }
 
@@ -342,7 +364,7 @@
             box-shadow: (2 / @vw) (2 / @vw) (10 / @vw) rgba(0, 0, 0, 0.349);
             line-height: (35/@vw);
             letter-spacing: 0.43rem;
-            word-break:break-all;
+            word-break: break-all;
         }
     }
 
@@ -385,7 +407,7 @@
 }
 
 .modify_succani2 {
-    animation: modify_succani2  3s forwards;
+    animation: modify_succani2 3s forwards;
 }
 
 @keyframes modify_succani2 {
@@ -393,14 +415,17 @@
         opacity: 0.1;
         top: -10%;
     }
-    40%{
+
+    40% {
         opacity: 1;
         top: 1%;
     }
-    70%{
+
+    70% {
         opacity: 1;
         top: 1%;
     }
+
     100% {
         opacity: 0.1;
         top: -15%;

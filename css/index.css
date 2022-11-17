@@ -1125,7 +1125,6 @@ body {
   bottom: 0;
   left: 0;
   transition: all 0.3s;
-  user-select: none;
 }
 .learn_page footer::after {
   z-index: -1;
@@ -1463,6 +1462,14 @@ body {
 }
 .footer_nav footer li .name {
   position: relative;
+}
+.no-touch {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 @keyframes changeani {
   0% {

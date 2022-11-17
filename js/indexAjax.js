@@ -6,6 +6,7 @@ var newTPFlag = false;
 let pk = [];
 let scModleId = []; //收藏的模板id
 let hasrecords = []; //保存返回的没有记录的模板
+
 //获取用户模板
 function UserMemory() {
     ajax({
@@ -17,6 +18,11 @@ function UserMemory() {
         flag: true,
         success: function(res, xml) {
             let msg = JSON.parse(res).msg;
+            console.log(msg)
+            for (let x of msg.data.haveRecord) {
+                console.log(x)
+            }
+            hasrecords = [];
             if (msg.data.userModle) {
                 let tparr = msg.data.userModle;
                 let fxnum = 0;

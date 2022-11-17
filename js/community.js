@@ -20,7 +20,7 @@ function communityTP() {
             }
         }
 
-        x.addEventListener('click', function(event) {
+        x.addEventListener('click', function (event) {
             //如果模板被收藏
             if (x.classList.contains('orange')) {
                 //对比循环收藏库中的模板找出对应模板
@@ -35,14 +35,16 @@ function communityTP() {
                             },
                             dataType: "json",
                             flag: true,
-                            success: function(res, xml) {
+                            success: function (res, xml) {
                                 let msg = JSON.parse(res).msg;
                                 console.log(msg);
                                 $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
                                 //刷新仓库
                                 resetbase();
+                                $('.community .popup_box').innerHTML = '取消收藏成功';
+                                $('.community .popup_box').style.display = 'block';
                             },
-                            fail: function(status) {
+                            fail: function (status) {
                                 // 此处放失败后执行的代码
                                 console.log(status);
                             }
@@ -61,14 +63,16 @@ function communityTP() {
                     },
                     dataType: "json",
                     flag: true,
-                    success: function(res, xml) {
+                    success: function (res, xml) {
                         let msg = JSON.parse(res).msg;
                         console.log(msg);
                         newTP(all('.community_ul .title')[i].innerHTML, all('.community_ul .info')[i].innerHTML, all('.community_ul .modleId')[i].innerHTML, all('.community_ul .label')[i].querySelectorAll('span')[1].innerHTML, 1, '未学习', false);
                         //刷新仓库
                         resetbase();
+                        $('.community .popup_box').innerHTML = '收藏成功';
+                        $('.community .popup_box').style.display = 'block';
                     },
-                    fail: function(status) {
+                    fail: function (status) {
                         // 此处放失败后执行的代码
                         console.log(status);
                     }
@@ -84,119 +88,126 @@ function communityTP() {
         })
     });
 
+    let dz_curr = [];
+    let timer = null;
     //点赞
     Array.from(all('.community_ul .dainzan')).forEach((x, i) => {
-        let isclick = true;
-        x.addEventListener('click', function(e) {
-            if (isclick) {
-                // isclick = false;
-                if (x.classList.contains('orange')) {
-                    console.log("取消点赞成功！！！！")
-                    ajax({
-                        url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
-                        type: "get",
-                        data: {
-                            modleId: all('.community_ul .modleId')[i].innerHTML,
-                            likeStatus: false
-                        },
-                        dataType: "json",
-                        flag: true,
-                        success: function(res, xml) {
-                            let newres = JSON.parse(res);
-                            console.log(newres);
-                            console.log(parseInt(x.querySelector('.wenzi').innerText), x.querySelector('.wenzi').innerText);
-                            if(parseInt(x.querySelector('.wenzi').innerText) - 1 == 0){
-                                x.querySelector('.wenzi').innerHTML = '点赞'
-                            }
-                            else if (parseInt(x.querySelector('.wenzi').innerText) - 1 < 1000) {
-                                x.querySelector('.wenzi').innerHTML = `&nbsp;${parseInt(x.querySelector('.wenzi').innerText) - 1}&nbsp;&nbsp;`;
-                            } else {
-                                x.querySelector('.wenzi').innerHTML = `${parseInt(x.querySelector('.wenzi').innerText) - 1}`;
-                            }
-                            for (let x of commonArr) {
-                                for (let k of x) {
-                                    if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                        k.likeStatus = false;
-                                    }
-                                }
-                            }
-                            setTimeout(() => {
-                                isclick = true;
-                            }, 450)
-                        },
-                        fail: function(status) {
-                            // 此处放失败后执行的代码
-                            console.log(status);
-                        }
-                    });
-                } else {
-                    console.log("点赞成功！！！！")
+        
+        x.addEventListener('click', function (e) {
 
-                    ajax({
-                        url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
-                        type: "get",
-                        data: {
-                            modleId: all('.community_ul .modleId')[i].innerHTML,
-                            likeStatus: true
-                        },
-                        dataType: "json",
-                        flag: true,
-                        success: function(res, xml) {
-                            let msg = JSON.parse(res).msg;
-                            console.log(msg);
-
-                            if (msg.data.likeNum < 1000) {
-                                x.querySelector('.wenzi').innerHTML = `&nbsp;${msg.data.likeNum}&nbsp;&nbsp;`;
-                            } else {
-                                x.querySelector('.wenzi').innerHTML = `${msg.data.likeNum}`;
-                            }
-
-                            for (let x of commonArr) {
-                                for (let k of x) {
-                                    if (k.modleId == all('.community_ul .modleId')[i].innerHTML) {
-                                        k.likeStatus = true;
-                                        k.likeNum = msg.data.likeNum;
-                                    }
-                                }
-                            }
-                            setTimeout(() => {
-                                isclick = true;
-                            }, 500);
-                        },
-                        fail: function(status) {
-                            // 此处放失败后执行的代码
-                            console.log(status);
-                        }
-                    });
-                }
-
-                x.classList.toggle("scale");
-                x.querySelector(".circle").style.display = 'block';
-                x.querySelector(".circle").classList.toggle("blink_circle");
-                x.classList.toggle("orange");
-                x.querySelector('.iconfont').classList.toggle("icon-dianzan");
-                x.querySelector('.iconfont').classList.toggle("icon-dianzan1");
-                // setTimeout(() => {
-
-                // }, 450)
-                setTimeout(() => {
-                    x.classList.toggle("scale");
-                }, 500)
-                setTimeout(() => {
-                    x.querySelector(".circle").style.display = 'none';
-                }, 800)
-                e.stopPropagation(); //阻止冒泡
+            clearTimeout(timer);
+            if (x.classList.contains('orange')) {
+                console.log("取消点赞成功！！！！")
+                dz_judge(false,x.querySelector('.wenzi'),all('.community_ul .modleId')[i].innerHTML)
             } else {
-                console.log("不能重复点赞");
-                $('.community .popup_box').innerHTML = '请勿操作过快';
-                $('.community .popup_box').style.display = 'block';
+                console.log("点赞成功！！！！")
+                dz_judge(true,x.querySelector('.wenzi'),all('.community_ul .modleId')[i].innerHTML)
             }
+
+            timer = setTimeout(() => {
+                dz_ajax(dz_curr);
+            }, 800);
+
+            x.classList.toggle("scale");
+            // x.querySelector(".circle").style.display = 'block';
+            // x.querySelector(".circle").classList.toggle("blink_circle");
+            x.classList.toggle("orange");
+            x.querySelector('.iconfont').classList.toggle("icon-dianzan");
+            x.querySelector('.iconfont').classList.toggle("icon-dianzan1");
+            setTimeout(() => {
+                x.classList.toggle("scale");
+            }, 500)
+            // setTimeout(() => {
+            //     x.querySelector(".circle").style.display = 'none';
+            // }, 800)
+            e.stopPropagation(); //阻止冒泡
+
 
         })
     });
 
+    //点赞发送ajax
+    function dz_ajax(dz_curr) {
+        if (dz_curr.length == 0) {
+            return;
+        } else {
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
+                type: "get",
+                data: {
+                    modleId: dz_curr[0].modleId,
+                    likeStatus: dz_curr[0].likeStatus
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    console.log(dz_curr[0].modleId,dz_curr[0].likeStatus);
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    dz_curr.shift();
+                    console.log(dz_curr.length);
+                    dz_ajax(dz_curr);
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    $('.community .popup_box').innerHTML = '操作失败';
+                    $('.community .popup_box').style.display = 'block';
+                    console.log(status);
+                }
+            });
+        }
+
+    }
+
+    //改变点赞数
+    function dz_judge(flag,x,modleId) {
+        let likeNum = null;
+        if(flag){
+            if (x.innerText == '点赞') {
+                x.innerHTML = 1;
+            } else if (parseInt(x.innerText) + 1 < 1000) {
+                x.innerHTML = `&nbsp;${parseInt(x.innerText) + 1}&nbsp;&nbsp;`;
+            } else {
+                x.innerHTML = `${parseInt(x.innerText) + 1}`;
+            }
+            likeNum = x.innerText;
+           
+        }else{
+            if (parseInt(x.innerText) - 1 == 0) {
+                x.innerHTML = '点赞'
+            } else if (parseInt(x.innerText) - 1 < 1000) {
+                x.innerHTML = `&nbsp;${parseInt(x.innerText) - 1}&nbsp;&nbsp;`;
+            } else {
+                x.innerHTML = `${parseInt(x.innerText) - 1}`;
+            }
+            likeNum = x.innerText; 
+            if (x.innerHTML == '点赞') {
+                likeNum = 0;
+            }
+        }
+        for (let x of commonArr) {
+            for (let k of x) {
+                if (k.modleId == modleId) {
+                    k.likeStatus = flag;
+                    k.likeNum = likeNum;
+                    let i = 0;
+                    for (i = 0; i < dz_curr.length; i++) {
+                        if (dz_curr[i].modleId == k.modleId) {
+                            break;
+                        }
+                    }
+                    if (i == dz_curr.length) {
+                        dz_curr.unshift(k);
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
     //点击页面隐藏菜单
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         for (let k of all('.inter_box')) {
             k.style.width = "0";
         }
@@ -206,7 +217,7 @@ function communityTP() {
 
     //点击浏览模板
     Array.from(all('.community_ul .content')).forEach((x, i) => {
-        x.addEventListener('click', function(event) {
+        x.addEventListener('click', function (event) {
             searchcom = false;
             $('.viewTemplate .modleId').innerHTML = all('.community_ul .modleId')[i].innerHTML;
             $('.community').onclick();
@@ -233,7 +244,7 @@ function communityTP() {
                 $('.viewTemplate .dainzan .iconfont').classList.add('icon-dianzan1');
                 $('.viewTemplate .dainzan .vt_text').classList.add('orange');
                 $('.viewTemplate .dainzan .vt_text').innerHTML = x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML;
-            }else{
+            } else {
                 $('.viewTemplate .dainzan .vt_text').innerHTML = x.nextElementSibling.querySelector('.dainzan .wenzi').innerHTML;
             }
 
@@ -264,7 +275,7 @@ function communityTP() {
                 },
                 dataType: "json",
                 flag: true,
-                success: function(res, xml) {
+                success: function (res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     if (msg.code == '200') {
@@ -285,7 +296,7 @@ function communityTP() {
                         }
                     }
                 },
-                fail: function(status) {
+                fail: function (status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -306,14 +317,14 @@ function communityTP() {
                             },
                             dataType: "json",
                             flag: true,
-                            success: function(res, xml) {
+                            success: function (res, xml) {
                                 let msg = JSON.parse(res).msg;
                                 console.log(msg);
                                 $('.collection_base .base_lis').removeChild(k.parentNode.parentNode);
                                 //刷新仓库
                                 resetbase();
                             },
-                            fail: function(status) {
+                            fail: function (status) {
                                 // 此处放失败后执行的代码
                                 console.log(status);
                             }
@@ -331,14 +342,14 @@ function communityTP() {
                     },
                     dataType: "json",
                     flag: true,
-                    success: function(res, xml) {
+                    success: function (res, xml) {
                         let msg = JSON.parse(res).msg;
                         console.log(msg);
                         newTP($('.viewTemplate .title').innerHTML, $('.viewTemplate .text_box').innerHTML, $('.viewTemplate .modleId').innerHTML, $('.viewTemplate .label').innerHTML, 1, '未学习', false);
                         //刷新仓库
                         resetbase();
                     },
-                    fail: function(status) {
+                    fail: function (status) {
                         // 此处放失败后执行的代码
                         console.log(status);
                     }
@@ -365,83 +376,24 @@ function communityTP() {
 
     //浏览模板点赞
     $('.viewTemplate .dainzan').onclick = () => {
+        clearTimeout(timer);
+
         if ($('.viewTemplate .dainzan .iconfont').classList.contains('icon-dianzan1')) {
-            ajax({
-                url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
-                type: "get",
-                data: {
-                    modleId: $('.viewTemplate .modleId').innerHTML,
-                    likeStatus: false
-                },
-                dataType: "json",
-                flag: true,
-                success: function(res, xml) {
-                    let newres = JSON.parse(res);
-                    console.log(newres);
-                    console.log(parseInt($('.viewTemplate .dainzan .vt_text').innerText));
-                    if(parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1 == 0){
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = '点赞'
-                    }
-                    else if (parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1 < 1000) {
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1}&nbsp;&nbsp;`;
-                    } else {
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = `${parseInt($('.viewTemplate .dainzan .vt_text').innerText) - 1}`;
-                    }
-                    if (!searchcom)
-                        browse.querySelector('.dainzan .wenzi').innerHTML = '点赞';
-                    for (let x of commonArr) {
-                        for (let k of x) {
-                            if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
-                                k.likeStatus = false;
-                            }
-                        }
-                    }
-                },
-                fail: function(status) {
-                    // 此处放失败后执行的代码
-                    console.log(status);
-                }
-            });
+            dz_judge(false,$('.viewTemplate .dainzan .vt_text'),$('.viewTemplate .modleId').innerHTML);
         } else {
-            ajax({
-                url: "http://8.134.104.234:8080/ReciteMemory/modle/LikeOrDisLike",
-                type: "get",
-                data: {
-                    modleId: $('.viewTemplate .modleId').innerHTML,
-                    likeStatus: true
-                },
-                dataType: "json",
-                flag: true,
-                success: function(res, xml) {
-                    let msg = JSON.parse(res).msg;
-                    console.log(msg);
-                    if (msg.data.likeNum < 1000) {
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = `&nbsp;${msg.data.likeNum}&nbsp;&nbsp;`;
-                    } else {
-                        $('.viewTemplate .dainzan .vt_text').innerHTML = `${msg.data.likeNum}`;
-                    }
-                    if (!searchcom)
-                        browse.querySelector('.dainzan .wenzi').innerHTML = msg.data.likeNum;
-                    for (let x of commonArr) {
-                        for (let k of x) {
-                            if (k.modleId == $('.viewTemplate .modleId').innerHTML) {
-                                k.likeStatus = true;
-                                k.likeNum = msg.data.likeNum;
-                            }
-                        }
-                    }
-                },
-                fail: function(status) {
-                    // 此处放失败后执行的代码
-                    console.log(status);
-                }
-            });
+            dz_judge(true,$('.viewTemplate .dainzan .vt_text'),$('.viewTemplate .modleId').innerHTML);
         }
+        
+        timer = setTimeout(() => {
+            dz_ajax(dz_curr);
+        }, 800);
+
         $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan');
         $('.viewTemplate .dainzan .iconfont').classList.toggle('icon-dianzan1');
         $('.viewTemplate .dainzan .vt_text').classList.toggle('orange');
 
         if (!searchcom) {
+            browse.querySelector('.dainzan .wenzi').innerHTML = $('.viewTemplate .dainzan .vt_text').innerHTML;
             if ($('.viewTemplate .dainzan .vt_text').classList.contains('orange')) {
                 browse.querySelector('.dainzan').classList.add("orange");
                 browse.querySelector('.dainzan .iconfont').classList.add("icon-dianzan1");
@@ -480,7 +432,7 @@ function communityTP() {
                 },
                 dataType: "json",
                 flag: true,
-                success: function(res, xml) {
+                success: function (res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     if (msg.code == '200') {
@@ -493,7 +445,7 @@ function communityTP() {
                         $('.community header .label li')[0].onclick();
                     }
                 },
-                fail: function(status) {
+                fail: function (status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -538,7 +490,7 @@ function xrcomTP() {
                 },
                 dataType: "json",
                 flag: true,
-                success: function(res, xml) {
+                success: function (res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     if (msg.content != '参数获取失败') {
@@ -556,7 +508,7 @@ function xrcomTP() {
                     index++;
                     AllLabelcomTP();
                 },
-                fail: function(status) {
+                fail: function (status) {
                     // 此处放失败后执行的代码
                     console.log(status);
                 }
@@ -571,7 +523,7 @@ function xrcomTP() {
             },
             dataType: "json",
             flag: true,
-            success: function(res, xml) {
+            success: function (res, xml) {
                 let msg = JSON.parse(res).msg;
                 console.log(msg);
                 if (msg.content == '获取成功') {
@@ -589,7 +541,7 @@ function xrcomTP() {
                 communityTP();
                 $('.com_loading').style.display = 'none';
             },
-            fail: function(status) {
+            fail: function (status) {
                 // 此处放失败后执行的代码
                 console.log(status);
             }
@@ -688,7 +640,7 @@ $('.uploadMP').onclick = () => {
                 },
                 dataType: "json",
                 flag: true,
-                success: function(res, xml) {
+                success: function (res, xml) {
                     let msg = JSON.parse(res).msg;
                     console.log(msg);
                     for (let k of all('.my_base li')) {
@@ -700,7 +652,7 @@ $('.uploadMP').onclick = () => {
                     index++;
                     batchUploadTP();
                 },
-                fail: function(status) {
+                fail: function (status) {
                     // 此处放失败后执行的代码
                     $('.community .popup_box').innerHTML = '上传失败';
                     $('.community .popup_box').style.display = 'block';
@@ -780,12 +732,12 @@ $('.community_ul').ontouchstart = (e) => {
         $('.com_loading_up').style.transition = '';
     }
     $('.community_ul').ontouchmove = (e) => {
-        
+
         if ($('.community_ul').scrollTop == 0) {
             touch_e1 = e.changedTouches[0].clientY;
             if (touch_e1 - touch_s > 10 && touch_e1 - touch_s < 110) {
                 for (let x of $('.community header .label li')) {
-                    if (x.classList.contains('active') && labelId1(x.querySelector('span').innerHTML) != 4){
+                    if (x.classList.contains('active') && labelId1(x.querySelector('span').innerHTML) != 4) {
                         $('.com_loading_up').style.top = (touch_e1 - touch_s + 40) / 3.95 + 'vw';
                         $('.com_loading_up').style.opacity = (touch_e1 - touch_s + 40) / 150;
                     }
@@ -806,47 +758,47 @@ $('.community_ul').ontouchstart = (e) => {
             $('.com_loading_up .icon').classList.add('rotateLoading');
 
             for (let x of $('.community header .label li')) {
-                    if (x.classList.contains('active') && labelId1(x.querySelector('span').innerHTML) != 4) {
-                        ajax({
-                            url: "http://8.134.104.234:8080/ReciteMemory/inf.get/getRandomModles",
-                            type: "get",
-                            data: {
-                                modleLabel: labelId1(x.querySelector('span').innerHTML),
-                            },
-                            dataType: "json",
-                            flag: true,
-                            success: function(res, xml) {
-                                let msg = JSON.parse(res).msg;
-                                console.log(msg);
-                                if (msg.content != '参数获取失败') {
-                                    nextpage[labelId1(x.querySelector('span').innerHTML)] = 0;
-                                    let comarr = [];
-                                    for (let x of msg.data.modle) {
-                                        if (x.common != 0) {
-                                            comarr.unshift(x);
-                                        }
+                if (x.classList.contains('active') && labelId1(x.querySelector('span').innerHTML) != 4) {
+                    ajax({
+                        url: "http://8.134.104.234:8080/ReciteMemory/inf.get/getRandomModles",
+                        type: "get",
+                        data: {
+                            modleLabel: labelId1(x.querySelector('span').innerHTML),
+                        },
+                        dataType: "json",
+                        flag: true,
+                        success: function (res, xml) {
+                            let msg = JSON.parse(res).msg;
+                            console.log(msg);
+                            if (msg.content != '参数获取失败') {
+                                nextpage[labelId1(x.querySelector('span').innerHTML)] = 0;
+                                let comarr = [];
+                                for (let x of msg.data.modle) {
+                                    if (x.common != 0) {
+                                        comarr.unshift(x);
                                     }
-                                    commonArr[labelId1(x.querySelector('span').innerHTML)] = comarr;
-                                    console.log(comarr, commonArr);
                                 }
-                                timer11 = setTimeout(() => {
-                                    $('.com_loading_up').style.transition = 'all .5s';
-                                    $('.com_loading_up').style.top = '10vw';
-                                    $('.com_loading_up').style.opacity = '0';
-                                    $('.com_loading_up .icon').classList.remove('rotateLoading');
-                                    clearTimeout(timer11);
-                                }, 1000);
-                                communityTP();
-                                refreshcom = true;
-                                x.onclick();
-                                $('.com_loading').style.display = 'none';
-                            },
-                            fail: function(status) {
-                                // 此处放失败后执行的代码
-                                console.log(status);
+                                commonArr[labelId1(x.querySelector('span').innerHTML)] = comarr;
+                                console.log(comarr, commonArr);
                             }
-                        });
-                    }
+                            timer11 = setTimeout(() => {
+                                $('.com_loading_up').style.transition = 'all .5s';
+                                $('.com_loading_up').style.top = '10vw';
+                                $('.com_loading_up').style.opacity = '0';
+                                $('.com_loading_up .icon').classList.remove('rotateLoading');
+                                clearTimeout(timer11);
+                            }, 1000);
+                            communityTP();
+                            refreshcom = true;
+                            x.onclick();
+                            $('.com_loading').style.display = 'none';
+                        },
+                        fail: function (status) {
+                            // 此处放失败后执行的代码
+                            console.log(status);
+                        }
+                    });
+                }
             }
 
 
@@ -882,7 +834,7 @@ $('.community_ul').ontouchstart = (e) => {
                             },
                             dataType: "json",
                             flag: true,
-                            success: function(res, xml) {
+                            success: function (res, xml) {
 
                                 let msg = JSON.parse(res).msg;
                                 console.log(msg);
@@ -891,6 +843,12 @@ $('.community_ul').ontouchstart = (e) => {
                                     $('.community_ul .footer').style.height = '46vw';
                                     $('.footer_end').style.display = 'flex';
                                     $('.footer_loading').style.display = 'none';
+                                    timer12 = setTimeout(() => {
+                                        $('.community_ul').scrollTop = ul_stop;
+                                        $('.community_ul .footer').style.height = '32vw';
+                                        $('.footer_loading .icon').classList.remove('rotateLoading');
+                                        clearTimeout(timer12);
+                                    }, 1000);
                                     return;
                                 }
                                 if (msg.content != '参数获取失败') {
@@ -905,10 +863,10 @@ $('.community_ul').ontouchstart = (e) => {
                                             }
 
                                         }
-                                        if (flag){
+                                        if (flag) {
                                             commonArr[labelId1(x.querySelector('span').innerHTML)].unshift(k);
                                             len++;
-                                        }     
+                                        }
                                     }
                                     console.log(commonArr[labelId1(x.querySelector('span').innerHTML)].length % 5);
                                     for (let i = len - 1; i >= 0; i--) {
@@ -934,7 +892,7 @@ $('.community_ul').ontouchstart = (e) => {
 
 
                             },
-                            fail: function(status) {
+                            fail: function (status) {
                                 // 此处放失败后执行的代码
                                 console.log(status);
                             }
@@ -947,6 +905,10 @@ $('.community_ul').ontouchstart = (e) => {
                     $('.community_ul .footer').style.height = '46vw';
                     $('.footer_end').style.display = 'flex';
                     $('.footer_loading').style.display = 'none';
+                    timer12 = setTimeout(() => {
+                        $('.community_ul .footer').style.height = '32vw';
+                        clearTimeout(timer12);
+                    }, 1000);
                 }
 
             }

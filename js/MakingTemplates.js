@@ -77,3 +77,13 @@ $(".Making_page .text_box").onkeyup = (e) => {
     }
 }
 
+
+$('.Making_page .switch').onclick = () => {
+    if($('.Making_page .ball').offsetLeft == 0){
+        $('.Making_page .ball').style.left = 40/3.95 + 'vw';
+    } 
+    else{
+        $('.Making_page .ball').style.left = 0 + 'px';
+    }
+        
+}

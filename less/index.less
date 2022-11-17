@@ -334,6 +334,7 @@ body {
                 height: 100%;
                 width: 100%;
                 overflow: scroll;
+
                 &::-webkit-scrollbar {
                     display: none;
                 }
@@ -855,6 +856,7 @@ body {
         .header_left {
             width: (40/@vw);
             user-select: none;
+
             .icon {
                 font-weight: 700;
                 font-size: (20 / @vw);
@@ -1066,10 +1068,11 @@ body {
             height: (145 / @vw);
             font-size: (18 / @vw);
 
-            .save_tips{
+            .save_tips {
                 margin: (25/@vw) (25/@vw);
             }
-           .selection{
+
+            .selection {
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -1080,19 +1083,19 @@ body {
                 align-items: center;
                 border-top: 1px solid #d4d2d2;
                 //background-color: rgba(68, 26, 126, 0.555);
-                border-radius: 0  0 (10 / @vw) (10 / @vw);
+                border-radius: 0 0 (10 / @vw) (10 / @vw);
 
                 .yes,
-                .no{
+                .no {
                     color: rgba(85, 38, 138, 0.502);
                     flex: 1;
                     text-align: center;
                 }
 
-                .yes{
+                .yes {
                     border-right: 1px solid #d4d2d2;
                 }
-           }
+            }
         }
     }
 
@@ -1119,17 +1122,17 @@ body {
             height: (200 / @vw);
             font-size: (18 / @vw);
 
-            .dif_title{
+            .dif_title {
                 font-size: (20 / @vw);
             }
 
-            .select_diff{
+            .select_diff {
                 margin-top: (20/@vw);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
 
-                .com{
+                .com {
                     text-align: center;
                     padding: (10/@vw);
                     flex: 1;
@@ -1138,12 +1141,12 @@ body {
                     font-size: (16/@vw);
                 }
 
-                .active{
+                .active {
                     background-color: rgba(68, 26, 126, 0.461);
                 }
             }
 
-            .selection{
+            .selection {
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -1155,8 +1158,9 @@ body {
                 align-items: center;
                 border-top: 1px solid #d4d2d2;
                 background-color: rgba(68, 26, 126, 0.461);
-                border-radius: 0  0 (10 / @vw) (10 / @vw);
-                .context{
+                border-radius: 0 0 (10 / @vw) (10 / @vw);
+
+                .context {
                     width: (150/@vw);
                     height: (30/@vw);
                     border-radius: (20/@vw);
@@ -1230,6 +1234,7 @@ body {
                     height: (30 / @vw);
                     width: 100%;
                 }
+
                 -webkit-user-modify: read-write-plaintext-only;
             }
 
@@ -1251,7 +1256,8 @@ body {
         bottom: 0;
         left: 0;
         transition: all .3s;
-        user-select: none;
+
+
         // background-color: #b8b2c9;
         &::after {
             z-index: -1;
@@ -1442,7 +1448,7 @@ body {
     .container {
         position: relative;
         width: 100vw;
-        
+
 
         .container_scroll {
             position: absolute;
@@ -1635,11 +1641,12 @@ body {
             color: #a1a4b4;
             transition: all .2s ease-in-out;
 
-            &:nth-child(2){
+            &:nth-child(2) {
                 .icon {
                     margin-top: (2 / @vw);
                     font-size: (26 / @vw);
-                } 
+                }
+
                 .name {
                     margin-top: (2 / @vw);
                 }
@@ -1654,6 +1661,16 @@ body {
             }
         }
     }
+}
+
+.no-touch {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
 }
 
 @keyframes changeani {

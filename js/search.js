@@ -122,24 +122,6 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
                         }
                         x.model_title = new_title;
                     }
-                    // content += `
-                    // <li class="baseLis_fadeIn">
-                    //     <div class="tp_inner">
-                    //         <div class="modleId">${x.model_id}</div>
-                    //         <div class="content">
-                    //             <h3 class="title ellipsis">${x.model_title}</h3>
-                    //             <div class="info ellipsis">${x.model_info}</div>
-                    //         </div>
-                    //         <div class="tip">
-                    //             <div class="date">2022-10-15</div>
-                    //             <div class="label">
-                    //                 <span class="iconfont icon-shuqianguanli"></span>
-                    //                 <span>${x.model_label}</span>
-                    //             </div>
-                    //         </div>
-                    //         <div class="common"></div>
-                    //     </div>
-                    // </li>`
 
                     content += `
                     <li class="baseLis_fadeIn">
@@ -199,13 +181,6 @@ function createTemp(judge_personal) { //judge_personal：用于去判断是否�
         }
     }
 }
-
-let haha = '<km>haha';
-console.log(haha);
-haha = haha.replace(`<km>`, `<span class="searched">`)
-console.log(haha);
-
-
 
 //判断是否含有相同字符串
 function hasSameCharacter(str1, str2) {

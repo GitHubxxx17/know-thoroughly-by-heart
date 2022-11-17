@@ -469,6 +469,12 @@ $('.learn_page .label_menu ul').onclick = (e) => {
     }
 }
 
+//富文本防注入
+$(".learn_page .text_box").onpaste = () => {
+    setTimeout(() => {
+        $(".learn_page .text_box").innerHTML = clearHtml($(".learn_page .text_box").innerHTML);
+    }, 10);
+}
 
 
 

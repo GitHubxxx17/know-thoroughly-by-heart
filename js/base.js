@@ -12,9 +12,9 @@ function all(selectors) {
 }
 let auto1 = localGetData('auto');
 let curr1 = {};
-if(auto1){
+if (auto1) {
     curr1 = localGetData('current_user');
-}else{
+} else {
     curr1 = sessionGetData('current_user');
 }
 
@@ -36,17 +36,17 @@ function ajax(options) {
     }
 
     //接收 - 第三步
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            let status = xhr.status;
-            if (status >= 200 && status < 300) {
-                options.success && options.success(xhr.responseText, xhr.responseXML);
-            } else {
-                options.fail && options.fail(status);
+    xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                let status = xhr.status;
+                if (status >= 200 && status < 300) {
+                    options.success && options.success(xhr.responseText, xhr.responseXML);
+                } else {
+                    options.fail && options.fail(status);
+                }
             }
         }
-    }
-    //连接 和 发送 - 第二步
+        //连接 和 发送 - 第二步
 
     if (options.type == "GET") {
         xhr.open("GET", options.url + "?" + params, true);
@@ -62,7 +62,7 @@ function ajax(options) {
         if (curr1.length != 0) {
             xhr.setRequestHeader("authorization", curr1.userId);
         }
-        
+
         xhr.send(params);
     }
 }
@@ -106,7 +106,7 @@ function sessionSaveData(name, data) {
 }
 
 //为数组对象添加自定义方法remove,可通过元素的值查找元素并删除
-Array.prototype.remove = function (val) {
+Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
@@ -160,23 +160,27 @@ function comTP(title, context, modleId, label, base64, username, likeNum, likeSt
     //点赞状态
     let dz = ''
     let like = ''
-    if(likeNum == 0){
+    if (likeNum == 0) {
         like = '点赞'
-    }else{
-        like = likeNum;
+    } else {
+        if(likeNum < 1000){
+            like = `&nbsp;${likeNum}&nbsp;&nbsp;`;
+        }else{
+            like = likeNum;
+        }
     }
 
     if (likeStatus) {
         dz = `<span class="dainzan orange">
                 <i class="iconfont icon-dianzan1"></i>
                 <i class="wenzi">${like}</i>
-                <span class="circle blink_circle"></span>
+             
             </span>`
     } else {
         dz = `<span class="dainzan">
                 <i class="iconfont icon-dianzan"></i>
                 <i class="wenzi">${like}</i>
-                <span class="circle"></span>
+                
             </span>`
     }
 
@@ -276,16 +280,15 @@ function UploadTP(title, context, modleId, label, common) {
 
 //转换标签成id
 function labelId1(str) {
-    if(str == '系统模板'){
-         return 0;
-    } 
-    else if (str == '教资')
+    if (str == '系统模板') {
+        return 0;
+    } else if (str == '教资')
         return 1;
     else if (str == '考研')
         return 2;
     else if (str == '通识课')
         return 3;
-    else if (str == '热门推荐'){
+    else if (str == '热门推荐') {
         return 4;
     }
 
