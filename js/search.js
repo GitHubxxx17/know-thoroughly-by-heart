@@ -255,6 +255,7 @@ function memsearchTP() {
                     $('.learn_page header').style.opacity = '1';
 
                     flag_learn = true;
+                    flag_review = false;
                 }
 
 

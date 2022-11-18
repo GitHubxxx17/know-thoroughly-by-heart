@@ -150,6 +150,7 @@ function TP() {
                         $('.learn_page header').style.opacity = '1';
                         $('.learn_page .zidingyi').style.display = '';
                         flag_learn = true;
+                        flag_review = false;
                     } else {
                         let delnum = 0;
                         $('.ht_1').style.display = 'none';

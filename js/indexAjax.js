@@ -122,7 +122,7 @@ function getStoreDSSD(flag) {
                 $('.plan_box .record_box .cur_data')[0].innerHTML = studyData.studyTime;
                 $('.plan_box .record_box .cur_data')[1].innerHTML = studyData.studyNums;
                 $('.today_review .cur').innerHTML = studyData.reviewNums;
-                Alltime = studyData.studyTime;
+                Alltime = studyData.studyTime*60;
                 studyNums = studyData.studyNums;
             }
             if (flag)

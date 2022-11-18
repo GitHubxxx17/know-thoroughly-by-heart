@@ -81,9 +81,33 @@ let kuohao = false;
 $('.Making_page .switch').onclick = () => {
     if ($('.Making_page .ball').offsetLeft == 0) {
         $('.Making_page .ball').style.left = 25 / 3.95 + 'vw';
+        $('.Making_page .ball').style.backgroundColor = '#b6a2f0';
+        $('.Making_page .switch').style.backgroundColor = '#8777ae';
         kuohao = true;
     } else {
         $('.Making_page .ball').style.left = 0 + 'px';
+        $('.Making_page .ball').style.backgroundColor = '#bfbfbf';
+        $('.Making_page .switch').style.backgroundColor = '#b1adbb';
         kuohao = false;
     }
+}
+
+//点击出现小提示
+let tip_flag = true;
+$(".Making_page .icon-tuoyuankaobei").onclick = (e) => {
+
+    if (tip_flag) {
+        $('.Making_page .tips').style.transform = 'scale(1)';
+        tip_flag = false;
+    } else {
+        $('.Making_page .tips').style.transform = 'scale(0)';
+        tip_flag = true;
+    }
+    e.stopPropagation();
+};
+$(".Making_page").onclick = () => {
+    $('.Making_page .tips').style.transform = 'scale(0)';
+    tip_flag = true;
+    $('.Making_page .label_menu').style.transform = 'scale(0)';
+    label_flag = true;
 }

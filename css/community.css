@@ -181,12 +181,16 @@ a {
 }
 .community header .label ul {
   display: flex;
+  justify-content: space-evenly;
   padding: 0 4vw;
   padding-bottom: 5.33333333vw;
 }
 .community header .label ul li {
   text-align: center;
   padding: 2.66666667vw 2.93333333vw;
+}
+.community header .label ul li span {
+  font-size: 3.73333333vw;
 }
 .community header .label ul .active {
   border-bottom: 2px solid #ab97c9;

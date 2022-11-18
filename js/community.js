@@ -8,12 +8,18 @@ let commonArr = [];
 let searchcom = false;
 let browse = null;
 
+
+let sc_curr = [];
+let timer_sc = null;
+let dz_curr = [];
+let timer_dz = null;
+
 //封装社区模板所有事件函数
 function communityTP() {
-    let sc_curr = [];
-    let timer_sc = null;
+    
     //点击收藏
     Array.from(all('.community_ul .shoucang')).forEach((x, i) => {
+        
         for (let k of all('.collection_base .modleId')) {
             if (k.innerHTML == x.parentNode.parentNode.parentNode.previousElementSibling.innerHTML) {
                 x.querySelector('.iconfont').classList.add("icon-shoucang");
@@ -22,7 +28,7 @@ function communityTP() {
             }
         }
 
-        x.addEventListener('click', function (event) {
+        x.onclick = (e) => {
             clearTimeout(timer_sc);
             //如果模板被收藏
             if (x.classList.contains('orange')) {
@@ -57,8 +63,10 @@ function communityTP() {
             x.querySelector('.iconfont').classList.toggle("icon-shoucang");
             x.querySelector('.iconfont').classList.toggle("icon-shoucang1");
             // setTimeout(() => all('.inter_box')[i].style.width = "0", 600);
-            event.stopPropagation(); //阻止冒泡
-        })
+            e.stopPropagation(); //阻止冒泡
+        }
+
+
     });
 
 
@@ -103,32 +111,31 @@ function communityTP() {
         }
     }
 
-    let dz_curr = [];
-    let timer = null;
+    
     //点赞
     Array.from(all('.community_ul .dainzan')).forEach((x, i) => {
-
-        x.addEventListener('click', function (e) {
-
-            clearTimeout(timer);
+        x.onclick = (e) => {
+            console.log('1hdsajkfasjdhjkd'+ i);
+            clearTimeout(timer_dz);
             if (x.classList.contains('orange')) {
                 console.log("取消点赞成功！！！！")
-                dz_judge(false, x.querySelector('.wenzi'), all('.community_ul .modleId')[i].innerHTML)
+                dz_judge(false, x.querySelector('.wenzi'), all('.community_ul .modleId')[i].innerHTML);
+                x.classList.remove("orange");
             } else {
                 console.log("点赞成功！！！！")
-                dz_judge(true, x.querySelector('.wenzi'), all('.community_ul .modleId')[i].innerHTML)
+                dz_judge(true, x.querySelector('.wenzi'), all('.community_ul .modleId')[i].innerHTML);
+                x.classList.add("orange");
             }
 
-            timer = setTimeout(() => {
+            timer_dz = setTimeout(() => {
                 dz_ajax(dz_curr);
             }, 800);
-
             x.classList.toggle("scale");
-            // x.querySelector(".circle").style.display = 'block';
-            // x.querySelector(".circle").classList.toggle("blink_circle");
-            x.classList.toggle("orange");
             x.querySelector('.iconfont').classList.toggle("icon-dianzan");
             x.querySelector('.iconfont').classList.toggle("icon-dianzan1");
+            // x.querySelector(".circle").style.display = 'block';
+            // x.querySelector(".circle").classList.toggle("blink_circle");
+
             setTimeout(() => {
                 x.classList.toggle("scale");
             }, 500)
@@ -138,8 +145,21 @@ function communityTP() {
             e.stopPropagation(); //阻止冒泡
 
 
-        })
+        }
     });
+
+    //数组去重
+    function removeDuplicate(arr) {
+        const newArr = []
+        arr.forEach(item => {
+          if (newArr.indexOf(item) === -1) {
+          newArr.push(item)
+         }
+      })
+      console.log(newArr);
+      return newArr // 返回一个新数组
+     }
+     
 
     //点赞发送ajax
     function dz_ajax(dz_curr) {
@@ -223,7 +243,7 @@ function communityTP() {
 
     //点击浏览模板
     Array.from(all('.community_ul .content')).forEach((x, i) => {
-        x.addEventListener('click', function (event) {
+        x.onclick = (e) => {
             searchcom = false;
             $('.viewTemplate .modleId').innerHTML = all('.community_ul .modleId')[i].innerHTML;
             $('.community').onclick();
@@ -261,10 +281,10 @@ function communityTP() {
             $('.viewTemplate .text_box').innerHTML = all('.community_ul .info')[i].innerHTML;
             $('.viewTemplate .label').innerHTML = all('.community_ul .label')[i].innerHTML;
             $('.viewTemplate .head_portrait').innerHTML = all('.community_ul .head_portrait')[i].innerHTML;
-            event.stopPropagation(); //阻止冒泡
+            e.stopPropagation(); //阻止冒泡
 
             browse = x.nextElementSibling;
-        });
+        }
     })
 
     //浏览模板点击收藏或删除
@@ -355,7 +375,7 @@ function communityTP() {
 
     //浏览模板点赞
     $('.viewTemplate .dainzan').onclick = () => {
-        clearTimeout(timer);
+        clearTimeout(timer_dz);
 
         if ($('.viewTemplate .dainzan .iconfont').classList.contains('icon-dianzan1')) {
             dz_judge(false, $('.viewTemplate .dainzan .vt_text'), $('.viewTemplate .modleId').innerHTML);
@@ -363,7 +383,7 @@ function communityTP() {
             dz_judge(true, $('.viewTemplate .dainzan .vt_text'), $('.viewTemplate .modleId').innerHTML);
         }
 
-        timer = setTimeout(() => {
+        timer_dz = setTimeout(() => {
             dz_ajax(dz_curr);
         }, 800);
 

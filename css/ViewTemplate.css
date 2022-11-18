@@ -213,8 +213,8 @@ body {
 }
 .text_box .input {
   width: auto;
-  background-color: transparent !important;
-  color: rgba(188, 56, 244, 0.861) !important;
+  background-color: transparent;
+  color: rgba(188, 56, 244, 0.861);
   border-bottom: 0.50632911vw #000000 solid;
   height: 7.59493671vw;
   outline: none;

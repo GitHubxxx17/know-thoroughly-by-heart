@@ -150,22 +150,39 @@ a {
   align-items: center;
 }
 .Making_page header .header_left .kuohao .icon-tuoyuankaobei {
-  font-size: 3.03797468vw;
+  margin-left: 0.50632911vw;
+  font-size: 3.5443038vw;
   color: #a0a0a1;
+}
+.Making_page header .header_left .tips {
+  display: block;
+  position: absolute;
+  color: #a0a0a1;
+  font-size: 3.03797468vw;
+  width: 24.05063291vw;
+  background-color: #fff;
+  top: 7.08860759vw;
+  right: -20.25316456vw;
+  padding: 1.26582278vw;
+  border-radius: 1.26582278vw;
+  transition: all 0.3s;
+  transform-origin: left top;
+  transform: scale(0);
 }
 .Making_page header .switch {
   position: relative;
-  background-color: #8777ae;
+  background-color: #b1adbb;
   width: 11.39240506vw;
   height: 5.06329114vw;
   border-radius: 15.18987342vw;
   box-shadow: inset 0.25316456vw 0.25316456vw 2.53164557vw rgba(0, 0, 0, 0.224);
+  transition: 0.3s;
 }
 .Making_page header .switch .ball {
   position: absolute;
   width: 5.06329114vw;
   height: 5.06329114vw;
-  background-color: #b6a2f0;
+  background-color: #bfbfbf;
   border-radius: 50%;
   transition: 0.3s;
   left: 0;

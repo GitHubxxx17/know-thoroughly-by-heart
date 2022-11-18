@@ -93,6 +93,9 @@ a {
   border-radius: 100%;
   background-color: rgba(0, 0, 0, 0.31);
 }
+.Tutorial main {
+  position: relative;
+}
 .Tutorial main .novice_title {
   margin: 5.06329114vw auto;
   margin-bottom: 12.65822785vw;
@@ -103,14 +106,6 @@ a {
 }
 .Tutorial main .common.no_bgc {
   margin-top: 2.53164557vw;
-}
-.Tutorial main .bcg {
-  position: absolute;
-  width: 100%;
-  height: 50.63291139vw;
-  background: url(../images/新手教程/新手教程中间.jpg) no-repeat;
-  background-size: 100% 100%;
-  z-index: -1;
 }
 .Tutorial main .common {
   z-index: 100;
@@ -146,6 +141,7 @@ a {
   box-shadow: 0.25316456vw 0.25316456vw 1.51898734vw 0.25316456vw rgba(121, 121, 121, 0.38);
 }
 .Tutorial footer {
+  z-index: -1;
   margin-top: -75.94936709vw;
   width: 100%;
   height: 50vh;

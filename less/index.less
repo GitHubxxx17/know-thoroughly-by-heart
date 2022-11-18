@@ -1058,14 +1058,14 @@ body {
 
         .popup_box {
             position: absolute;
-            width: (230 / @vw);
+            width: (285 / @vw);
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             background-color: #fff;
             z-index: 10000;
             border-radius: (10 / @vw);
-            height: (145 / @vw);
+            height: (136 / @vw);
             font-size: (18 / @vw);
 
             .save_tips {
@@ -1215,8 +1215,8 @@ body {
 
             .input {
                 width: auto;
-                background-color: transparent !important;
-                color: rgb(117, 74, 255) !important;
+                background-color: transparent;
+                color: rgb(117, 74, 255);
                 outline: none;
                 display: inline;
                 user-select: none !important;
@@ -1224,7 +1224,6 @@ body {
                 border-bottom: (2 / @vw) rgb(63, 63, 63) solid;
                 position: relative;
                 border-radius: 0;
-
                 &::after {
                     // position: absolute;
                     // left: 0;
@@ -1235,7 +1234,68 @@ body {
                     width: 100%;
                 }
 
-                -webkit-user-modify: read-write-plaintext-only;
+            }
+
+            .myAnswer1 {
+                // color: rgb(255, 255, 255);
+                color: #cc1212;
+                // background-color: #cc1212;
+                font-weight: 700;
+                border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+            .myAnswer2 {
+                color: rgb(255, 255, 255);
+                background-color: #d35b5b;
+                font-weight: 700;
+                // border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+            .myAnswer3 {
+                color: rgb(255, 255, 255);
+                background-color: #e47c7c;
+                font-weight: 700;
+                // border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+
+            .myAnswer4 {
+                color: rgb(255, 255, 255);
+                background-color: #a1e09f;
+                font-weight: 700;
+                // border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+            .myAnswer5 {
+                color: rgb(255, 255, 255);
+                background-color: #86c080;
+                font-weight: 700;
+                // border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+            .myAnswer6 {
+                color:#39bd2b ;
+                // color: rgb(255, 255, 255);
+                // background-color: #39bd2b;
+                font-weight: 700;
+                // border-bottom: none;
+                // border-radius: (5 / @vw);
+            }
+
+            .noneAnswer {
+                border-bottom: (2 / @vw) rgb(63, 63, 63) solid;
+            }
+
+            .rightAnswer {
+                color: #333;
+                background: #fdbe3b;
+                border-bottom: none;
+                // border-radius: (5 / @vw);
             }
 
             .recite {

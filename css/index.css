@@ -959,14 +959,14 @@ body {
 }
 .learn_page .popup3 .popup_box {
   position: absolute;
-  width: 58.2278481vw;
+  width: 72.15189873vw;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   z-index: 10000;
   border-radius: 2.53164557vw;
-  height: 36.70886076vw;
+  height: 34.43037975vw;
   font-size: 4.55696203vw;
 }
 .learn_page .popup3 .popup_box .save_tips {
@@ -1094,21 +1094,57 @@ body {
 }
 .learn_page .container .text_box .input {
   width: auto;
-  background-color: transparent !important;
-  color: #754aff !important;
+  background-color: transparent;
+  color: #754aff;
   outline: none;
   display: inline;
   user-select: none !important;
   border-bottom: 0.50632911vw #3f3f3f solid;
   position: relative;
   border-radius: 0;
-  -webkit-user-modify: read-write-plaintext-only;
 }
 .learn_page .container .text_box .input::after {
   color: transparent !important;
   content: attr(data-after);
   height: 7.59493671vw;
   width: 100%;
+}
+.learn_page .container .text_box .myAnswer1 {
+  color: #cc1212;
+  font-weight: 700;
+  border-bottom: none;
+}
+.learn_page .container .text_box .myAnswer2 {
+  color: #ffffff;
+  background-color: #d35b5b;
+  font-weight: 700;
+}
+.learn_page .container .text_box .myAnswer3 {
+  color: #ffffff;
+  background-color: #e47c7c;
+  font-weight: 700;
+}
+.learn_page .container .text_box .myAnswer4 {
+  color: #ffffff;
+  background-color: #a1e09f;
+  font-weight: 700;
+}
+.learn_page .container .text_box .myAnswer5 {
+  color: #ffffff;
+  background-color: #86c080;
+  font-weight: 700;
+}
+.learn_page .container .text_box .myAnswer6 {
+  color: #39bd2b;
+  font-weight: 700;
+}
+.learn_page .container .text_box .noneAnswer {
+  border-bottom: 0.50632911vw #3f3f3f solid;
+}
+.learn_page .container .text_box .rightAnswer {
+  color: #333;
+  background: #fdbe3b;
+  border-bottom: none;
 }
 .learn_page .container .text_box .recite {
   height: 7.59493671vw;

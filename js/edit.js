@@ -19,8 +19,13 @@ let bianji = false;
 let zidingyi = false;
 //点击自定义
 $('.zidingyi').onclick = () => {
+    if (moxiele) {
+        getUserAnswer();
+        console.log("默写了，保存当前答案！")
+    }
     zidingyi = true;
-    if (!learn_flag_1) {
+    judge_hasRecord_ajax();
+    if (!judge_firstEdit) {
         answerReset()
     }
     learnReset();
@@ -104,10 +109,35 @@ let arr = [];
 
 //点击挖空进入挖空模式
 $('.wakong').onclick = () => {
-    editReset();
+    if (judeg_hasRecord == 1) {
+        $(".popup3").style.height = 164/3.95 + 'px';
+        $(".popup3").style.display = 'block';
+        $(".popup3 .save_tips").innerHTML = "检测到您有学习记录，重新挖空后会将学习记录清除，您确定要继续吗？";
+        $(".popup3 .selection .yes").onclick = () => {
+            $(".popup3").style.height = 136/3.95 + 'px';
+            judge_firstEdit = true
+            judge_restart = 1;
+            get_learn_ajax();
+            editReset();
+            $('.wakong').classList.add('choice');
+            flag = true;
+            $(".popup3").style.display = 'none';
+        }
+        $(".popup3 .selection .no").onclick = () => {
+            $(".popup3").style.height = 136/3.95 + 'px';
+            $('.wakong').classList.remove('choice');
+            flag = false;
+            $(".popup3").style.display = 'none';
+        }
+    } else {
+        editReset();
+        $('.wakong').classList.add('choice');
+        flag = true;
+    }
+
+
+
     $('.bianji').classList.remove('choice');
-    $('.wakong').classList.toggle('choice');
-    flag = true;
     //当长按屏幕触屏结束时，选中文本 
     $('.learn_page .text_box').ontouchstart = () => {
         $('.learn_page .text_box').style.userSelect = '';
@@ -117,6 +147,7 @@ $('.wakong').onclick = () => {
     }
     $('.learn_page .text_box').ontouchend = wakong;
     $('.learn_page .text_box').onmouseup = wakong;
+
     function wakong() {
         //判断当前是否为挖空模式
         if ($('.wakong').classList.contains('choice')) {
@@ -151,10 +182,10 @@ $('.wakong').onclick = () => {
                 //防止出现空节点
                 if (!(x instanceof Node)) {
                     arr.remove(x);
-                }//选中文本包含之前被选中的节点的全部
+                } //选中文本包含之前被选中的节点的全部
                 else if (txt.containsNode(x, false)) {
                     continue;
-                }//选中文本包含之前被选中的节点的一部分时，给之前被选中的节点添加id可标识
+                } //选中文本包含之前被选中的节点的一部分时，给之前被选中的节点添加id可标识
                 else if (txt.containsNode(x, true)) {
                     x.setAttribute('id', 'merge');
                     n++;
@@ -234,7 +265,26 @@ $('.wakong').onclick = () => {
 
 //点击弹出系统挖空弹窗
 $('.xtwakong').onclick = () => {
-    $('.learn_page .popup4').style.display = 'block';
+    editReset();
+    if (judeg_hasRecord == 1) {
+        $(".popup3").style.height = 164/3.95 + 'px';
+        $(".popup3").style.display = 'block';
+        $(".popup3 .save_tips").innerHTML = "检测到您有学习记录，重新挖空后会将学习记录清除，您确定要继续吗？";
+        $(".popup3 .selection .yes").onclick = () => {
+            $(".popup3").style.height = 136/3.95 + 'px';
+            judge_firstEdit = true
+            judge_restart = 1;
+            get_learn_ajax();
+            $('.learn_page .popup4').style.display = 'block';
+            $(".popup3").style.display = 'none';
+        }
+        $(".popup3 .selection .no").onclick = () => {
+            $(".popup3").style.height = 136/3.95 + 'px';
+            $(".popup3").style.display = 'none';
+        }
+    } else {
+        $('.learn_page .popup4').style.display = 'block';
+    }
 }
 
 let mid = null;
@@ -275,59 +325,68 @@ $('.learn_page .finish').onclick = () => {
     })
 
     if (fal) {
-        if (mStatus == '0') {
-            if (newTPFlag) {
-                all('.my_base li')[0].querySelector('.title').innerHTML = title1;
-                all('.my_base li')[0].querySelector('.info').innerHTML = info1;
-                all('.my_base li')[0].querySelector('.label_title').innerHTML = label1;
-            } else {
-                title.innerHTML = title1;
-                info.innerHTML = info1;
-                label.querySelectorAll('span')[1].innerHTML = label1;
-            }
-        }
-        let newinfo = info1.replace(/&nbsp;/g, '<空格>');
-        console.log(newinfo);
-        ajax({
-            url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
-            type: "post",
-            data: {
-                context: newinfo,
-                modleTitle: title1,
-                overWrite: 1 - mStatus,
-                modleLabel: labelId1(label1),
-                modleId: mid
-            },
-            dataType: "json",
-            flag: true,
-            success: function (res, xml) {
-                let msg = JSON.parse(res).msg;
-                console.log(msg);
-                zidingyi = false;
-                bianji = false;
-                $('.learn_page .popup2 .popup_box').innerHTML = '保存成功';
-                $('.learn_page .popup2').style.display = 'block';
-                $('.learn_page .footer_1').style.display = 'block';
-                $('.learn_page .footer_2').style.display = 'none';
-                if (mStatus == 1) {
-                    let modle = msg.data.modle;
-                    newTPFlag = true;
-                    newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
-                    mStatus = 0;
-                    $('.footer_nav li')[0].onclick();
-
-
+        $(".popup3").style.display = 'block';
+        $(".popup3 .save_tips").innerHTML = "是否保存当前挖空？";
+        $(".popup3 .selection .yes").onclick = () => {
+            if (mStatus == '0') {
+                if (newTPFlag) {
+                    all('.my_base li')[0].querySelector('.title').innerHTML = title1;
+                    all('.my_base li')[0].querySelector('.info').innerHTML = info1;
+                    all('.my_base li')[0].querySelector('.label_title').innerHTML = label1;
                 } else {
-                    xrcomTP();
+                    title.innerHTML = title1;
+                    info.innerHTML = info1;
+                    label.querySelectorAll('span')[1].innerHTML = label1;
                 }
-            },
-            fail: function (status) {
-                // 此处放失败后执行的代码
-                console.log(status);
-                $('.learn_page .popup2 .popup_box').innerHTML = '保存失败';
-                $('.learn_page .popup2').style.display = 'block';
             }
-        });
+            let newinfo = info1.replace(/&nbsp;/g, '<空格>');
+            console.log(newinfo);
+            ajax({
+                url: "http://8.134.104.234:8080/ReciteMemory/modle/MakeModle",
+                type: "post",
+                data: {
+                    context: newinfo,
+                    modleTitle: title1,
+                    overWrite: 1 - mStatus,
+                    modleLabel: labelId1(label1),
+                    modleId: mid
+                },
+                dataType: "json",
+                flag: true,
+                success: function (res, xml) {
+                    let msg = JSON.parse(res).msg;
+                    console.log(msg);
+                    zidingyi = false;
+                    bianji = false;
+                    $('.learn_page .popup2 .popup_box').innerHTML = '保存成功';
+                    $('.learn_page .popup2').style.display = 'block';
+                    $('.learn_page .footer_1').style.display = 'block';
+                    $('.learn_page .footer_2').style.display = 'none';
+                    if (mStatus == 1) {
+                        let modle = msg.data.modle;
+                        newTPFlag = true;
+                        newTP(title1, info1, modle.modleId, label1, 0, '未学习', true);
+                        mStatus = 0;
+                        $('.footer_nav li')[0].onclick();
+
+
+                    } else {
+                        xrcomTP();
+                    }
+                },
+                fail: function (status) {
+                    // 此处放失败后执行的代码
+                    console.log(status);
+                    $('.learn_page .popup2 .popup_box').innerHTML = '保存失败';
+                    $('.learn_page .popup2').style.display = 'block';
+                }
+            });
+            $(".popup3").style.display = 'none';
+        }
+        $(".popup3 .selection .no").onclick = () => {
+            $(".popup3").style.display = 'none';
+        }
+
     }
 
 }
@@ -475,6 +534,4 @@ $(".learn_page .text_box").onpaste = () => {
         $(".learn_page .text_box").innerHTML = clearHtml($(".learn_page .text_box").innerHTML);
     }, 10);
 }
-
-
 
